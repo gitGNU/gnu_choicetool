@@ -786,7 +786,7 @@ sub lexer_callback {
 		
 		return ('T_WORD', $buffer);
 	    } else {
-		bug("Undefined lexer input at line" . $lineno);
+		bug("Undefined lexer input at line " . $lineno);
 	    }
 	}
 
