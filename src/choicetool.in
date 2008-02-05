@@ -169,12 +169,16 @@ assert(defined($input_file));
 assert(defined($output_file));
 
 #
-# Parsing input file
+# Parse the input file
 #
 
 my $string;
+my $tree;
 
-if (!Choicetool::Parse::parse($input_file, \$string)) {
+$tree = Choicetool::Tree->new(0);
+assert(defined($tree));
+
+if (!Choicetool::Parse::parse($input_file, \$string, \$tree)) {
     error("Failed to parse file `" . $input_file . "\'");
     exit 1;
 }

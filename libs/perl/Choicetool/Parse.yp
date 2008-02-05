@@ -29,6 +29,8 @@ use diagnostics;
 use Choicetool::Autoconfig;
 use Choicetool::Base::Trace;
 use Choicetool::Base::Debug;
+use Choicetool::OS::File;
+use Choicetool::Tree;
 
 BEGIN {
     use Exporter ();
@@ -820,42 +822,27 @@ sub error_callback {
     error("Unexpected \`" . $value . "'");
 }
 
-sub parse ($$)
+sub parse ($$$)
 {
     my $input_filename = shift;
     my $string_ref     = shift;
+    my $tree_ref       = shift;
+
+    assert(defined($input_filename));
+    assert(defined($string_ref));
+    assert(defined($tree_ref));
 
     debug("Parsing file \`" . $input_filename . "'");
 
-    if (! -e $input_filename) {
-	error("Input file \`" . $input_filename . "' is missing");
+    if (!file_ispresent($input_filename)) {
 	return 0;
-    }
-
-    if (! -f $input_filename) {
-        error("Cannot open file `" .
-              $input_filename      . 
-	      "\' "                .
-              "for input, it is missing");
-        return 0;
-    }
-
-    my $filehandle;
-
-    if (!open($filehandle, "<", $input_filename)) {
-        error("Cannot open `" . $input_filename . "\' for input");
-        return 0;
     }
 
     my $string;
 
-    $string = "";
-
-    while (<$filehandle>) {
-        $string = $string . $_;
+    if (!file_tostring($input_filename, \$string)) {
+	return 0;
     }
-
-    close($filehandle);
 
     # Parse !
     my $parser;
