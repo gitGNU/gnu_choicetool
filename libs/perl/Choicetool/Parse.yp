@@ -431,8 +431,6 @@ source_stmt:
 
     assert(defined($filename));
 
-    debug("Including file `" . $filename . "\'");
-
     if (!source_file($filename, \$string_ref)) {
 	exit 1;
     }
@@ -446,6 +444,8 @@ sub source_file($$)
 {
     my $input_file = shift;
     my $reference  = shift;
+
+    debug("Including file \`" . $input_file . "'");
 
     if (!&parse($input_file, $reference)) {
 	exit 1;
