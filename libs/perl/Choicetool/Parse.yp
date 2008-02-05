@@ -548,7 +548,7 @@ sub lexer_callback {
 	$help_start      = 0;
 
 	debug("Found token: T_HELPTEXT");
-	debug("  Passing string: `" . $help_text . "\'");
+	debug("  Passing string: \`" . $help_text . "'");
 
 	return ('T_HELPTEXT', $help_text);
     }
@@ -648,7 +648,7 @@ sub lexer_callback {
 		    ($last_char !~ /\\/)) {
 
 		    debug("Found token: T_WORD_QUOTE");
-		    debug("  Passing string: `" . $buffer . "\'");
+		    debug("  Passing string: \`" . $buffer . "'");
 
 		    return ('T_WORD_QUOTE', $buffer);
 		}
@@ -782,7 +782,7 @@ sub lexer_callback {
 
 	    } elsif ($buffer =~ /^([a-zA-Z][a-zA-Z0-9_]*)$/) {
 		debug("Found token: T_WORD");
-		debug("  Passing string: `" . $buffer . "\'");
+		debug("  Passing string: \`" . $buffer . "'");
 		
 		return ('T_WORD', $buffer);
 	    } else {
