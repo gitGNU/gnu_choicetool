@@ -1,0 +1,609 @@
+0.0.78:
+2004-11-11 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* configure.ac: Added missing macros (AC_PROG_CC, AC_PROG_CC_C_O
+	and AC_HEADER_STDC) in order to check for compiler.
+	* configure.ac: Removed LibOpts related things.
+	* tools/autotools: Removed useless scripts (coming from libtool and
+	sons).
+	* libopts: Removed.
+	* Makefile.am: Fixed in order to not enter into libopts anymore.
+	* src/parser.y: Added more tokens.
+
+0.0.77:
+2004-11-10 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* ChangeLog: Fixed typos.
+	* tools/bootstrap.sh: Added libopts related setup, fixed in order to
+	generate patch to libopts.m4 (every time).
+	* lib/libopts: Moved to libopts (in order to be as more compatible
+	as described in the autoopts manual).
+	* configure.ac: Fixed in order to generate libopts/Makefile.
+	* Makefile.am: Fixed in order to enter into libopts.
+
+0.0.76:
+2004-11-06 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/data.h: Added.
+	* src/Makefile.am: Fixed.
+	* src/parser.y, src/scanner.l: Added data.h inclusion.
+	* tests/defs.in: Added flags.
+	* tests/defs.in: Fixed VERBOSE and DEBUG variable handling.
+	* tests/basic.test: Fixed input file name, temporarely removed old
+	code.
+	* src/main.c: Added call to parser.
+	* src/scanner.l: Added nobackuo.
+
+0.0.75:
+2004-11-04 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/scanner.l: Added initial code.
+	* src/main.c, src/log.c, src/log.h, src/utility.h, src/argument.def:
+	Added copyright notices.
+	* src/parser.y: Added initial code.
+
+0.0.74:
+2004-11-04 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* tools/bootstrap.sh: Fixed typos.
+	* plugins/guile: Added.
+	* src/log.c, src/log.h: Added.
+	* src/mainc.: Added default input and output file.
+	* src/utility.h: Added file and ASSERT macro.
+	* src/argument.def.def, src/argument.def.tpl: Fixed arg-default.
+	* src/main.c: Added ASSERTs.
+	* src/main.c: Added stat() call for input file. Added missing includes
+	too.
+
+0.0.73:
+2004-11-04 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/argument.def.in: Added.
+	* tools/bootstrap.sh: Fixed autogen bootstrap.
+	* src/argument.def.def, src/argument.def.tpl: Added.
+	* src/Makefile.am: Fixed.
+	* tools/bootstrap.sh, tools/configure.sh, tools/install.sh,
+	tools/uninstall.sh: Added PATH and LD_LIBRARY_PATH fixes.
+
+0.0.72:
+2004-11-03 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/Choicetool.in: Removed (replaced by c structure).
+	* lib/perl: Removed (useless).
+	* src/main.c: Added initial code.
+	* src/Makefile.am: Fixed.
+	* lib/Makefile.am:
+	* src/configure.ac: Added AM_PROG_LEX and AC_PROG_YACC macro calls.
+	* modules.python: Added.
+	* src/option.def: Added.
+	* src/Makefile.am: Added CFLAGS and LIBS variables to autofeature
+	program.
+	* configure.ac: Added AM_CONFIG_HEADER macro call.
+	* src/argument.def: Fixed.
+
+0.0.71:
+2004-11-01 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/prolog2schelog.in: Removed
+	* trash: Added.
+	* src/parser.y, src/scanner.l: Added.
+
+0.0.70:
+2004-11-01 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/autofeature.in: Added definitions checking.
+	* src/autofeature.in: Fixed passes.
+	* src/autofeature.in: Added parse(), check(), mangle(), produce(),
+	linearize and render().
+
+0.0.69:
+2004-11-01 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/autogen/autofeature.tpl: Fixed typos.
+	* lib/autogen/autofeature.tpl: Added library inclusion.
+	* src/autofeature.in: Added initial skeleton (parse input file,
+	enhance definitions, output enhanced defitinitions and produce
+	output file from template and definitions).
+	* lib/aclocal/autofeature.m4: Fixed typos.
+
+0.0.68:
+2004-10-30 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/perl/Autosite/Template.in: Fixed again.
+
+0.0.67:
+2004-10-30 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* ChangeLog: Fixed typos.
+	* tests/basic.test: Added features.af dump.
+	* lib/autogen/autofeature.tpl: Changed comments.
+	* lib/guile: Renamed autofeature.scm and autogen.scm libraries in 
+	autofeature-lib.scm and autogen-lib.scm.
+	* lib/perl/Choicetool/Template.in: Fixed definitions processing.
+
+0.0.66:
+2004-10-30 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/autogen/autofeature.tpl: Added template and definition
+	output.
+	* tests/wrapper.in: Re-added (in order to avoid environment variable
+	clashing (perllibdir is used both by auto* and autofeature but they
+	must be different ...)).
+	* configure.ac: Fixed.
+	* tests/Makefile.am: Fixed.
+
+0.0.65:
+2004-10-29 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* tests/wrapper.in: Added aclocallibdib.
+	* tests/wrapper.in: Removed (useless).
+	* tests/defs.in: Fixed testSubDir handling.
+	* src/Makefile.am: Fixed check-local target and tags related
+	rules.
+
+0.0.64:
+2004-10-28 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/prolog2schelog.in: Fixed Options mofule usage.
+	* src/prolog2schelog.in, src/autofeature.in: Fixed option parse
+	error reporting.
+
+0.0.63:
+2004-10-28 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/perl/Choicetool/Template.in: Removed comments.
+
+0.0.62:
+2004-10-28 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/perl/Choicetool/*: Removed in order to be replaced to library
+	coming from autosite project.
+	* lib/perl/Choicetool/Makefile.am: Fixed.
+	* doc: Renamed as docs.
+	* Makefile.am, configure.ac: Fixed.
+	* src/autofeature.in: Fixed Options.pm modules usage.
+
+0.0.61:
+2004-10-27 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* configure.ac: Fixed perl and guile check.
+	* tools/autotools/perl-mod: Added from autosite project.
+	* modules.af: Renamed as modules.guile.
+	* modules.perl: Added.
+	* tools/autotools/m4: Removed useless garbage, added new files from
+	autosite project.
+	* docs/man/Makefile.am: Fixed.
+	* tools/autotools/m4/aclocal.m4: Removed (it is in the root directory).
+	
+0.0.60:
+2004-09-28 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* plugins/Makefile.am: Added.
+	* Makefile.am: Fixed in order to use plugins/Makefile.am recursively.
+
+0.0.59:
+2004-09-27 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* tests/wrapper.in: Fixed 'check' target.
+	* src/autofeature.in, src/prolog2schelog, 
+	tests/wrapper.in: Changed mode (removed x flag).
+
+0.0.58:
+2004-09-27 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/Makefile.am: Fixed autofeature.scm related rule.
+	* tests/wrapper.in: Fixed guilelibdir.
+
+0.0.57:
+2004-09-27 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* VERSION: Added.
+	* configure.ac: Added trick in order to gather version number from
+	VERSION file.
+
+0.0.56:
+2004-08-10 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/autogen/autogen.tpl: Added help field.
+	* tests/basic.test: Upgraded.
+
+0.0.55:
+2004-07-13 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/file.scm: Fixed af-save-features and af-load-features 
+	lambda
+	* tests/basic.test: Added some echos.
+
+0.0.54:
+2004-07-13 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/perl/Choicetool/Config.in: Removed an useless exported
+	variable (datadir).
+	* Makefile.sub: Removed useless substitution (datadir).
+
+0.0.53:
+2004-07-11 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/perl/Choicetool/Config.in: Fixed autogenlibdir variable.
+	* src/Makefile.am: Fixed CLEANFILES.
+
+0.0.52:
+2004-07-11 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/messages.scm: Introduced af-print lambda in order to be 
+	the common root for all messages.scm primitives.
+
+0.0.51:
+2004-07-11 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* tests/basic.test: Changed.
+	* lib/guile/file.scm: Removed global variables.
+	* lib/guile/menu.scm, lib/guile/main.scm: Fixed.
+
+0.0.50:
+2004-07-11 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/core.scm: Renamed as file.scm:
+	* lib/guile/Makefile.am: Fixed.
+	* lib/guile/file.scm: Added af-open-file-for-writing and
+	af-open-file-for-reading lambdas.
+	* lib/guile/main.scm: Changed input/output file from features.af to
+	features.cfg.
+	* lib/guile/messages.scm: Added af-warning lambda.
+	* lib/guile/messages.scm: Added af-debugging? lambda.
+	* lib/guile/globals.scm: Re-added.
+
+0.0.49:
+2004-07-10 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/menu.scm: Fixed af-menu-child.
+	* lib/guile/core.scm: Changed af-dump-features in af-save-features,
+	added af-load-features.
+	* lib/guile/main.scm: Added af-load-features and af-save-features.
+	* test/basic.test: Removed cat.
+	* lib/guile/messages.scm: Added variable numbers of arguments in
+	af-* lambdas.
+
+0.0.48:
+2004-07-09 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* THANKS: Fixed typo.
+	* lib/guile/interface.scm, lib/guile/menu.scm: Changed interface
+	handling related code.
+
+0.0.47:
+2004-07-08 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/perl/Choicetool/Template.in: Renamed as Autogen.in.
+	* lib/perl/Choicetool/Makefile.am: Fixed.
+	* lib/perl/Choicetool/Autogen.in: Fixed.
+	* src/autofeature.in: Fixed.
+
+0.0.46:
+2004-07-08 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* plugins: Created.
+	* configure.ac: Added AC_CONFIG_SUBDIRS macro call.
+	* plugins/console: Created.
+	* configure.ac: Added plugins related code.
+	* Makefile.am: Fixed.
+	* configure.ac: Added --enable-plugins option (grabbed from glibc
+	configure.ac).
+
+0.0.45:
+2004-07-06 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/core.scm: Fixed indentation.
+	* src/Makefile.am: Fixed EXTRA_DIST variable.
+	* Makefile.am: Fixed EXTRA_DIST variable.
+	* lib/aclocal/Makefile.am: Fixed aclocal_DATA variable (changed to
+	dist_aclocal_DATA).
+	* doc/man/Makefile.am: Fixed man_aux variable.
+
+0.0.44:
+2004-07-05 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/menu.scm: Changed af-navigate-child-next and
+	af-navigate-child-previous into af-navigate-child.
+	* lib/guile/interface.scm: Changed af-interface-update parameters.
+
+0.0.43:
+2004-07-04 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/main.scm: Changed some af-display to af-debug.
+	* lib/perl/Choicetool/Makefile.am: Fixed EXTRA_DIST variable.
+
+0.0.42:
+2004-07-03 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/interface.scm: Fixed af-interface-update labda.
+	* lib/guile/menu.scm: Fixed.
+	* lib/guile/globals.scm: Removed.
+	* lib/guile/Makefile.am: Fixed interface.scm and messages.scm
+	inclusion order.
+
+0.0.41:
+2004-07-01 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/menu.scm: Added more code to menu handling, fixed 
+	af-menu-navigate-* lambdas.
+	* lib/guile/readstring.scm: Removed (useless).
+	* lib/guile/interface.scm: Added.
+	* lib/guile/globals.scm: Added.
+	* lib/guile/Makefile.am: Fixed.
+	* lib/guile/Makefile.am: Fixed ALL_SCHEME_SOURCES variable.
+
+0.0.40:
+2004-07-01 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/core.scm: Added.
+	* lib/autogen/autofeature.tpl: Moved af-dump-features to
+	lib/guile/core.scm.
+	* lib/guile/Makefile.am: Added core.scm file in CHOICETOOLLIB_SOURCES
+	variable.
+	* lib/guile/main.scm: Added while loop until user exit.
+	* lib/guile/messages.scm: Added af-debug lambda.
+	* lib/guile/menu.scm: Added af-menu-update and af-menu-choice lambdas.
+	* lib/guile/menu.scm: Fixed af-menu-navigate-* lambdas.
+
+0.0.39:
+2004-07-01 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/autogen/autofeature.tpl: Fixed parent menu "pointer".
+	* lib/guile/menu.scm: Fixed menu handling.
+
+0.0.38:
+2004-06-31 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/autogen/autofeature.tpl: Added parent menu "pointer".
+	
+0.0.37:
+2004-06-29 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* tests/basic.test, lib/autogen/autofeature.tpl: Added features and
+	feature item under menu.
+	* tests/basic.test, lib/autogen/autofeature.tpl: changed menu-hash
+	and features-hash in af-menus-hash and af-features-hash.
+	* lib/guile/main.scm: Added af-dump-features at last :-).
+	* lib/guile/messages.scm: Changed names.
+	* lib/guile/ui.scm: Renamed as menu.scm, fixed Makefile.am related
+	entry.
+	* lib/guile/menu.scm: Fixed af-menu, added string extraction.
+	
+0.0.36:
+2004-06-29 Francesco Salvestrini <salvestrini@users.sourceforge.net>	
+	* lib/autogen/autofeature.tpl: Added root menu detection related
+	guile code.
+	* lib/guile/Makefile.am: Temporarely removed schelog.scm from 
+	CHOICETOOLLIB_SOURCES variable.
+	* ChangeLog: Fixed typos.
+	* lib/autogen/autofeature.tpl: Added feature and menu fix.
+	
+0.0.35:
+2004-06-28 Francesco Salvestrini <salvestrini@users.sourceforge.net>	
+	* tests/basic.test: Added menu.
+	* lib/autogen/autofeature.tpl: Added menu-hash generation.
+
+0.0.34:
+2004-06-28 Francesco Salvestrini <salvestrini@users.sourceforge.net>	
+	* src/autofeature.in: Renamed include() as concatenate().
+	* src/autofeature.in: Added concatenate() calls, fixed include().
+	* lib/guile/ui.scm: Fixed.
+
+0.0.33:
+2004-06-28 Francesco Salvestrini <salvestrini@users.sourceforge.net>	
+	* lib/autogen/autofeature.tpl: Added af-boolean->scheme,
+	af->string->scheme, af-hexadecimal->scheme, transformation.
+	* lib/autogen/autofeature.tpl: Added decimal number type.
+	* lib/autogen/autofeature.tpl: Added type check.
+
+0.0.32:
+2004-06-26 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/autogen/autofeature.tpl: Added more guile code in order to check
+	the input.
+
+0.0.31:
+2004-06-25 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/autogen/autofeature.tpl: Fixed.
+	* lib/autogen/autofeature.tpl: Added features count.
+	* lib/guile/uname.scm: Fixed uname-nodename and uname-sysname lambdas.
+	* lib/autogen/autotemplate.tpl: Added features hash table.
+
+0.0.30:
+2004-06-25 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/autogen/autofeature.tpl: Added more code.
+	* lib/guile/messages.scm: Added.
+	* lib/guile/Makefile.am: Added messages.scm to autofeature and
+	autogen scheme library.
+	* lib/guile/ui.scm: Removed useless lambdas.
+	* tests/defs.in: Fixed typos.
+	* tests/basic.test: Extended.
+	* lib/autogen/autofeature.tpl: Added new types (hexadecimale and
+	string).
+
+0.0.29:
+2004-06-24 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/Makefile.am , src/autofeature.in: Renamed
+	autofeature-lib.scm to autofeature.scm.
+	* lib/autogen/autofeature.tpl: Added
+	* lib/perl/Choicetool/Template.in: Fixed, removed old code and
+	cleaned-up remaning lines.
+	* lib/perl/Choicetool/Config.in: Added autogenlibdir.
+	* lib/guile/autogen.scm: Added.
+	* lib/guile/Makefile.am: Fixed in order to generate autogen.scm new
+	file.
+	* lib/guile/time.scm: Added.
+	* lib/perl/Choicetool/Template.in: Fixed return value at the end of 
+	render() method.
+	* lib/guile/time.scm: Fixed.
+
+0.0.28:
+2004-06-24 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/perl/Choicetool/*.in: Added Emacs mode suggestion.
+	* lib/perl/Choicetool/Template.in: Changed code in render() method.
+	* lib/autogen: Added directory.
+	* lib/autogen/Makefile.am, lib/autogen/autofeature.tpl: Added.
+
+0.0.27:
+2004-06-24 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* tools/autotools/m4/ax_prog_perl_version.m4: Added
+	PERL_VERSION2PERL_USE macro.
+	* configure.ac: Added PERL_VERSION2USE_VERSION macro call.
+	* lib/perl/*.in: Fixed in order to use the PERL_VERSION variable
+	correctly
+
+0.0.26:
+2004-06-23 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/perl/Choicetool/Template.pm: Created.
+	* src/autotemplate.in, src/Makefile.am: Removed autotemplate.
+	* Makefile.sub: Added AUTOGEN variable substitution.
+	* tools/autotools/m4/ax_prog_perl.m4: Added PERL_VERSION AC_SUBST.
+	* Makefile.sub: Added PERL_VERSION substitution.
+	* configure.ac: Removed confitional checks for guile and perl (
+	otherwise PERL, PERL_VERSION, GUILE and other related variables won't
+	be substituted).
+	* lib/perl/Choicetool/*.pm: Renamed as *.in, added PERL_VERSION
+	substitution.
+	* tools/configure.sh: Added.
+	* tools/install.sh, tools/configure.sh: Splitted configuration from
+	installation.
+	* tests/basic.test: Fixed.
+
+0.0.25:
+2004-06-22 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/autotemplate.in: Imported from autiste packeage.
+	* configure.ac: Added Autogen related macros.
+	* tools/autotools/m4/autoopts.m4: Added.
+
+0.0.24:
+2004-06-22 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/aclocal/autofeature.m4: Added AF_SET_VARIABLE_VALUE and
+	AF_GET_VARIABLE_VALUE macros.
+	* src/autofeaure.in: Added parse_input() sub.
+	* src/autofeature.in: Changed default input file name from 
+	configure.ac to features.def. We should parse our own input file
+	instead of the configure.ac (we will only put the required macros in 
+	configure.ac).
+
+0.0.23:
+2004-06-21 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/ui.scm: Fixed ui:display and ui:error.
+	* lib/guile/Makefile.am: Added autofeature-lib.scm generation in order
+	to have a single scheme file to include instead of lot of scheme
+	libraries ...
+	* TODO: Added.
+	
+0.0.22:
+2004-06-21 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/aclocal/autofeature.m4: Added guile execution code.
+	* src/autofeature.in: Fixed source inclusion related code.
+
+0.0.21:
+2004-06-20 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/aclocal/autofeature.m4: Fixed guile code.
+	* src/autofeature.in: Added assert calls for undefined input and output
+	filename.
+	* tests/basic.test: Fixed.
+	* lib/aclocal/autofeature.m4: Added AF_USE_AT_YOUR_OWN_RISK_NOTICE
+	macro.
+
+0.0.20:
+2004-06-20 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/aclocal/autofeature.m4: Fixed typos, added AS_IF when
+	--interactive is specified.
+	* tools/autotools/m4/ax_prog_guile.m4: Fixed typo, added more checks.
+	* lib/aclocal/autofeature.m4: Fixed.
+
+0.0.19:
+2004-06-19 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/guile/main.scm: Added.
+	* lib/guile/Makefile.am: Fixed in order to take care of newly
+	introduced main.scm file.
+	* lib/aclocal: Created.
+	* lib/Makefile.am: Fixed in order to enter into aclocal subdir too.
+	* configure.ac: Fixed.
+	* Makefile.am: Fixed.
+
+0.0.18:
+2004-06-19 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/pl2sl.in: Renamed as prolog2schelog.in.
+	* src/Makefile.am: Fixed.
+	* lib/perl/Choicetool/Config.in: Fixed $libdir, added $datadir and
+	$guilelibdir.
+	* src/prolog2schelog.in: Fixed option parsing.
+
+0.0.17:
+2004-06-15 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/buile/ui.scm: Added.
+	* lib/guile/Makefile.am: Fixed.
+
+0.0.16:
+2004-06-15 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* data/autofeature.m4: Removed useless garbage, added --interactive
+	feature (default enabled).
+
+0.0.15:
+2004-06-15 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* tools/autotools/m4/autoopts.m4: Removed.
+	* tools/autotools/m4/ax_config_feature.m4: Removed.
+	* data/schelog.scm: Moved to lib/guile directory.
+	* data/Makefile.am: Fixed.
+	* data/Makefile.am: Fixed shipping of autofeature.m4 macro.
+
+0.0.14:
+2004-06-15 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* tools/*.sh: Upgraded.
+	* lib/guile: Created.
+	* lib/guile/Makefile.am: Added.
+	* lib/Make.file.am: Fixed.
+	* modules.af: Added.
+	* configure.ac: Fixed.
+	* src/pl2sl.in: Added pkgvdatadir substitution.
+	* configure.ac: Changed AC_PREREQ macro call.
+	* configure.ac: Fixed perl and guile checks.
+	
+0.0.13:
+2004-05-18 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* tests/defs.in: Fixed.
+	* tests/basic.test: Fixed.
+
+0.0.12:
+2004-05-17 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* data/autofeature.m4: Added.
+	* data/Makefile.am: Fixed.
+	* tests/basic.test: Fixed.
+
+0.0.11:
+2004-05-16 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/autofeature.in: Fixed help().
+	* src/pl2sl.in: Fixed, added code (moved from autofeature.in).
+
+0.0.10:
+2004-05-16 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* Makefile.am: Fixed SUBDIRS variable.
+
+0.0.9:
+2004-05-16 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/pl2sl.in: Added.
+	* src/Makefile.am: Fixed.
+	* src/autofeature.in: Moved shelog inclusion at the top of the output
+	file.
+	* doc/man/common.x, doc/man/autofeature.x: Added.
+	* doc/man/Makefile.am: Fixed.
+
+0.0.8:
+2004-05-11 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* data/schelog.scm: Added (confiscated from Dorai Sitaram
+	Schelog package).
+	* data/Makefile.am: Added.
+	* configure.ac: Fixed.
+	* src/autofeature.in: Added schelog related code.
+
+0.0.7:
+2004-05-10 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/autofeature.in: Added parsing related code.
+	* tests/basic.test: Added.
+	* tests/Makefile.am: Fixed.
+
+0.0.6:
+2004-05-10 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/autofeature.in: Added input/output code.
+
+0.0.5:
+2004-05-10 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* tests/Makefile.am: Fixed.
+	* tests/wrapper.in: Added (confiscated from autosite project).
+	* configure.ac: Fixed.
+
+0.0.4:
+2004-05-10 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* lib/emacs, lib/perl: Created.
+	* lib/Makefile.am, lib/emacs/Makefile.am, lib/perl/Makefile.am:
+	Created.
+	* configure.ac: Fixed.
+	* autofeature-mode.el: Moved to lib/emacs directory.
+	* lib/perl/Choicetool/Config.in, lib/perl/Autofeature/Options.pm,
+	lib/perl/Choicetool/Logs.pm, lib/perl/Autofeature/Utilities.pm,
+	lib/perl/Choicetool/Version.pm, lib/perl/Autofeature/Utilities.pm:
+	Confiscated from autosite project.
+
+0.0.3:
+2004-05-9 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/autofeature.in: Added initial code.
+
+0.0.2:
+2004-05-8 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* configure.ac: Added perl related macros.
+	* src/Makefile.am: Fixed.
+	* configure.ac: Fixed AC_CONFIG_SRCDIR macro.
+
+0.0.1:
+2004-05-7 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* Makefile.am, src/Makefile.am, lib/Makefile.am, tests/Makefile.am,
+	doc/Makefile.am, doc/man/Makefile.am, doc/info/Makefile.am: Fixed
+	copyright dates.
+	* configure.ac: Added python related macros.
+	* src/autofeature.py: Added.
+
+0.0.0:
+2004-05-7 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* ./, src, lib, test, tools, doc, doc/man, doc/info: Created and
+	filled with Makefile.am.

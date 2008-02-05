@@ -1,0 +1,41 @@
+#! /bin/sh
+
+#
+# Copyright (C) 2007, 2008 Francesco Salvestrini
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+
+# Test to ensure that choicetool can work with the autotools
+# Report from Francesco Salvestrini
+
+. $testdir/defs || exit 1
+
+cat > ./configure.ac <<EOF
+AC_INIT([$me],[0.1])
+CT_INIT(some-kind-of-parameter)
+#AC_CONFIG_FILES([choose])
+AC_OUTPUT
+EOF
+
+cat > ./choose.ct <<EOF
+EOF
+
+$CHOICETOOL -i ./choose.ct || exit 1
+$ACLOCAL    || exit 1
+$AUTOCONF   || exit 1
+./configure || exit 1
+
+exit 0

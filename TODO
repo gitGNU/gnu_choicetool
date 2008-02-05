@@ -1,0 +1,35 @@
+NOTE:
+	TODOs are divided in three parts: TO-BE-DONE, DONE and DONE-RECHECK.
+	When a TODO has been completed must be moved to DONE or DONE-RECHECK
+	if needs further checking. In DONE and DONE-RECHECK a date or a
+	release version (the same that the ChangeLog shows) number should be
+	added too (in order to remember when that TODO has been declared
+	completed ...
+
+TO-BE-DONE:
+* Add -Wall -Werror options (like gcc)
+
+* Start a dialog-oriented (dialog-wrapper) to combine with choose.sh script;
+  obviously the `dialog' utility has to be installed on the system, however 
+  the package will give a simple text-based configuration.
+  [ALESSANDRO]
+
+* Add a dialog-wrapper in order to interface choose.sh to dialog executable.
+
+* Fix configure.ac in order to remove the crappy afbindir thing ...
+
+DONE:
+0.0.232:
+* Fix the nastyness of autogen enclosed in src/Makefile.am (truly ugly)
+
+* Find a way to handle different kinds of options in src/templates/options.tpl
+
+* Fix tools/bootstrap.sh, tools/autotools/perl-depmod and
+  tools/autotools/python-depmod files
+
+* Invoke 'grep -r -i autosite' in the whole package, may i have left autosite
+  traces somewhere
+
+DONE-RECHECK:
+
+* Remove from configure.ac all the unneeded things

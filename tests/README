@@ -1,0 +1,108 @@
+			    The Choicetool test suite
+
+
+User interface
+==============
+
+
+Running all tests
+-----------------
+
+  make check
+
+
+Interpretation
+--------------
+
+  Successes:
+    PASS  - success
+    XFAIL - expected failure
+
+  Failures:
+    FAIL  - failure
+    XPASS - unexpected success
+
+  Other:
+    SKIP  - skipped tests (third party tools not available)
+
+
+Getting details from failures
+-----------------------------
+
+  Each test is a script.  In a non-VPATH build you can run them
+  directly, they will be verbose.
+
+  Otherwise, you can invoke make as follows, just replace the list
+  of tests by those you want to check.
+
+    env VERBOSE=x TESTS='first.test second.test ...' make -e check
+
+
+Reporting failures
+------------------
+
+  Send verbose output of failing tests to <bug-choicetool@gnu.org>,
+  along with the usual version numbers (which Choicetool, which
+  operating system, which make version, which shell, etc.)
+
+
+
+Writing test cases
+==================
+
+
+Do
+--
+
+  If you plan to fix a bug, write the test case first.  This way you'll
+  make sure the test catches the bug, and that it succeeds once you have
+  fixed the bug.
+
+  Add a copyright/license paragraph.
+
+  Explain what the test does.
+
+  Cite the PR number (if any), and the original reporter (if any), so
+  we can find or ask for information if needed.
+
+  Use `required=...' for required tools.
+
+  Include ./defs (see other tests).
+
+  Use `set -e' to catch failures you might not have thought of.
+
+  Use $CHOICETOOL, $AUTOCONF, $PERL, $MAKE, $EGREP, and $FGREP etc. instead
+  of the corresponding commands.
+
+  Use $sleep when you have to make sure that some file is newer
+  than another.
+
+  Use `cat' or `grep' to display (part of) files that may be
+  interesting for debugging, so that when a user send a verbose
+  output we don't have to ask him for more details.
+
+  It's more important to make sure that a feature works, than
+  make sure that Choicetool's output looks correct.  It might look
+  correct and still fails to work.
+
+  Before commit: make sure the test is executable, add the tests to
+  TESTS in Makefile.am, add it to XFAIL_TESTS in addition if needed,
+  write a ChangeLog entry, send the diff to <choicetool-patches@gnu.org>.
+
+
+Do not
+------
+
+  Do not test an Choicetool error with `$CHOICETOOL && exit 1', or in three
+  years we'll discover that this test failed for some other bogus reason.
+  This happened many times.  Better use something like
+
+     COMMAND_fails $CHOICETOOL
+     grep 'expected diagnostic' stderr
+
+  (Note this doesn't prevent the test from failing for another
+  reason, but at least it makes sure the original error is still
+  here.)
+
+  Do not send a test case without signing a copyright disclaimer.
+  Ask <choicetool@gnu.org> for details.

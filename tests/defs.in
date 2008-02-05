@@ -1,0 +1,312 @@
+#
+# Copyright (C) 2007, 2008 Francesco Salvestrini
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+
+# Be Bourne compatible.
+# (Snippet copied from configure's initialization in Autoconf 2.57.)
+if test -n "${ZSH_VERSION+set}" && (emulate sh) >/dev/null 2>&1; then
+  emulate sh
+  NULLCMD=:
+  # Zsh 3.x and 4.x performs word splitting on ${1+"$@"}, which
+  # is contrary to our usage.  Disable this feature.
+  alias -g '${1+"$@"}'='"$@"'
+elif test -n "${BASH_VERSION+set}" && (set -o posix) >/dev/null 2>&1; then
+  set -o posix
+fi
+
+# Ensure we are running from the right directory.
+test -f ./defs || {
+   echo "defs: not found in current directory" 1>&2
+   exit 1
+}
+
+# If srcdir is not set, then we are not running from `make check', be verbose.
+if test -z "$srcdir"; then
+   test -z "$VERBOSE" && VERBOSE=x
+   # compute $srcdir.
+   srcdir=`echo "$0" | sed -e 's,/[^\\/]*$,,'`
+   test $srcdir = $0 && srcdir=.
+fi
+
+# Ensure $srcdir is set correctly.
+test -f $srcdir/defs.in || {
+   echo "$srcdir/defs.in not found, check \$srcdir" 1>&2
+   exit 1
+}
+
+me=`echo "$0" | sed -e 's,.*[\\/],,;s/\.test$//'`
+
+# See how redirections should work.  User can set VERBOSE to see all
+# output.
+test -z "$VERBOSE" && {
+    exec > /dev/null 2>&1
+}
+
+# Make sure we override the user shell.
+SHELL='@SHELL@'
+export SHELL
+
+# User can override various tools used.
+test -z "$PERL"    && PERL='@PERL@'
+test -z "$MAKE"    && MAKE=make
+
+# Always issue warnings ...
+FLAGS="$FLAGS --warnings all"
+
+test -n "$VERBOSE" && FLAGS="$FLAGS --verbose"
+test -n "$DEBUG"   && FLAGS="$FLAGS --debug"
+
+#
+# NOTE:
+#
+# The following definition are exported in wrapper.in:
+#
+#     schemelibdir=@abs_top_builddir@/libs/scheme
+#     export guilelibdir
+#     aclocallibdir=@abs_top_builddir@/libs/aclocal
+#     export aclocallibdir
+#
+
+#
+# NOTE:
+#     aclocallibdir is useful for aclocal only so it is exported for 
+#     ACLOCAL only ...
+#
+test -z "$CHOICETOOL" && CHOICETOOL="wrapper choicetool $FLAGS"
+test -z "$AUTOCONF"   && AUTOCONF="autoconf"
+test -z "$ACLOCAL"    && ACLOCAL="aclocal -I @abs_top_builddir@/data"
+
+PATH=`pwd`:$PATH
+echo $PATH
+
+if test -n "$required"
+then
+  for tool in $required
+  do
+    # Check that each required tool is present.
+    case $tool in
+      bison)
+	# Since bison is required, we pick YACC for ./configure.
+	YACC='bison -y'
+	export YACC
+	echo "$me: running bison --version"
+	( bison --version ) || exit 77
+	;;
+      bzip2)
+	# Do not use --version, bzip2 still tries to compress stdin.
+	echo "$me: running bzip2 --help"
+	( bzip2 --help ) || exit 77
+	;;
+      etags)
+	# Exuberant Ctags will create a TAGS file even
+	# when asked for --help or --version.  (Emacs's etags
+	# does not have such problem.)  Use -o /dev/null
+	# to make sure we do not pollute the tests/ directory.
+	echo "$me: running etags --version -o /dev/null"
+	( etags --version -o /dev/null ) || exit 77
+	;;
+      GNUmake)
+	# Use --version and -v, because SGI Make doesn't fail on --version.
+	echo "$me: running $MAKE --version -v"
+	( $MAKE --version -v ) || exit 77
+	;;
+      gcc)
+        # When gcc is required, export `CC=gcc' so that ./configure
+        # always use it.  This is important only when the user
+        # has defined CC in his environment, otherwise ./configure will
+        # prefer gcc to other compilers.
+        CC=gcc
+	export CC
+	echo "$me: running $CC --version"
+	( $CC --version ) || exit 77
+	;;
+      g++)
+        CXX=g++
+	export CXX
+	echo "$me: running $CXX --version"
+	( $CXX --version ) || exit 77
+	;;
+      icc)
+        CC=icc
+	export CC
+	# There is no way to ask *only* the compiler's version.
+	# This tool always want to do something (by default
+	# it will try link *nothing* and complain it cannot find
+	# main(); funny).  -dryrun is a workaround.
+	echo "$me: running $CC -V -dryrun"
+	( $CC -V -dryrun ) || exit 77
+	;;
+      makedepend)
+	echo "$me: running makedepend -f-"
+	( makedepend -f- ) || exit 77
+	;;
+      makeinfo-html)
+	# Make sure makeinfo understands --html.
+	echo "$me: running makeinfo --html --version"
+	( makeinfo --html --version ) || exit 77
+	;;
+      non-root)
+	# Skip this test case if the user is root.
+	# We try to append to a read-only file to detect this.
+	priv_check_temp=priv-check.$$
+	touch $priv_check_temp || exit 1
+	chmod a-w $priv_check_temp || exit 1
+	(echo foo >> $priv_check_temp) >/dev/null 2>&1
+	overwrite_status=$?
+	rm -f $priv_check_temp
+	test $overwrite_status = 0 && exit 77
+	;;
+      python)
+	# Python doesn't support --version, it has -V
+	echo "$me: running python -V"
+	( python -V ) || exit 77
+	;;
+      ro-dir)
+	# Skip this test case if read-only directories aren't supported
+	# (e.g., under DOS.)
+	ro_dir_temp=ro_dir.$$
+	mkdir $ro_dir_temp || exit 1
+	chmod a-w $ro_dir_temp || exit 1
+	(: > $ro_dir_temp/probe) >/dev/null 2>/dev/null
+	create_status=$?
+	rm -rf $ro_dir_temp
+	test $create_status = 0 && exit 77
+	;;
+      runtest)
+	# DejaGnu's runtest program. We rely on being able to specify
+	# the program on the runtest command-line. This requires
+	# DejaGnu 1.4.3 or later.
+	echo "$me: running runtest --version"
+	(runtest SOMEPROGRAM=someprogram --version) || exit 77
+	;;
+      tex)
+        # No all versions of Tex support `--version', so we use
+        # a configure check.
+        test -n "@TEX@" || exit 77
+	;;
+      texi2dvi-o)
+        # Texi2dvi supports `-o' since Texinfo 4.1.
+	echo "$me: running texi2dvi -o /dev/null --version"
+	( texi2dvi -o /dev/null --version ) || exit 77
+	;;
+      # Generic case: the tool must support --version.
+      *)
+	echo "$me: running $tool --version"
+	( $tool --version ) || exit 77
+	;;
+    esac
+    # Additional variables to define if some $tool is required.
+    case $tool in
+      gcc)
+	;;
+    esac
+  done
+fi
+
+# Always use an absolute srcdir.  Otherwise symlinks made in subdirs
+# of the test dir just won't work.
+case "$srcdir" in
+ [\\/]* | ?:[\\/]*)
+    ;;
+
+ *)
+    srcdir=`CDPATH=: && cd "$srcdir" && pwd`
+    ;;
+esac
+
+testname=`basename $0 .test`
+chmod -R a+rwx testSubDir-$testname > /dev/null 2>&1
+rm -rf testSubDir-$testname > /dev/null 2>&1
+mkdir testSubDir-$testname
+
+# Copy in some files we need.
+#for file in install-sh missing depcomp; do
+#   cp $srcdir/../libs/$file testSubDir/$file || exit 1
+#done
+
+cd ./testSubDir-$testname
+
+## Build appropriate environment in test directory.  Eg create
+## configure.in, touch all necessary files, etc.
+## Don't use AC_OUTPUT, but AC_CONFIG_FILES so that appending
+## still produces a valid configure.ac.  But then, tests running
+## config.status really need to append AC_OUTPUT.
+#cat > configure.in << END
+#AC_INIT([$me], [1.0])
+#AM_INIT_AUTOMAKE
+#AC_CONFIG_FILES([Makefile])
+#END
+#
+## Unset some MAKE... variables that may cause $MAKE to act like a
+## recursively invoked sub-make.  Any $MAKE invocation in a test is
+## conceptually an independent invocation, not part of the main
+## 'automake' build.
+#unset MFLAGS
+#unset MAKEFLAGS
+#unset MAKELEVEL
+#unset DESTDIR
+
+echo "=== Running test $0"
+
+# POSIX no longer requires 'egrep' and 'fgrep',
+# but some hosts lack 'grep -E' and 'grep -F'.
+EGREP='@EGREP@'
+FGREP='@FGREP@'
+
+# The amount we should wait after modifying files depends on the platform.
+# For instance, Windows '95, '98 and ME have 2-second granularity
+# and can be up to 3 seconds in the future w.r.t. the system clock.
+sleep='sleep @MODIFICATION_DELAY@'
+
+# The tests call `make -e' but we do not want $srcdir from the environment
+# to override the definition from the Makefile.
+testsrcdir=$srcdir
+unset srcdir
+
+# COMMAND_run STATUS COMMAND [OPTIONS...]
+# --------------------------------
+# Run COMMAND with OPTIONS, and fail if COMMAND
+# does not exit with STATUS.
+COMMAND_run ()
+{
+  expected_exitcode=$1
+  command=$2
+  shift
+  shift
+  exitcode=0
+  $command ${1+"$@"} 2>stderr >stdout || exitcode=$?
+  cat stderr
+  cat stdout
+  test $exitcode = $expected_exitcode || exit 1
+}
+
+# COMMAND_fails COMMAND [OPTIONS...]
+# ---------------------------
+# Run COMMAND with OPTIONS, and fail if COMMAND
+# does not exit with STATUS.
+COMMAND_fails ()
+{
+  COMMAND_run 1 ${1+"$@"}
+}
+
+# Turn on shell traces when VERBOSE=x.
+if test "x$VERBOSE" = xx; then
+  set -x
+else
+  :
+fi
+pwd

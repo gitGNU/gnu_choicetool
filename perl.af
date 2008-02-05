@@ -1,0 +1,13 @@
+files-glob src/.*in
+files-glob libs/perl/Choicetool/.*pm
+files-glob libs/perl/Choicetool/Base/.*pm
+files-glob libs/perl/Choicetool/OS/.*pm
+
+non-critical-internal Choicetool::.*
+
+non-critical-external strict[ \t]*.*
+non-critical-external diagnostics[ \t]*.*
+non-critical-external warnings[ \t]*.*
+non-critical-external vars[ \t]*.*
+non-critical-external [0-9]\..*
+non-critical-external POSIX[ \t]*.*

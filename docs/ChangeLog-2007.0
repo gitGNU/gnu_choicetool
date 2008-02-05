@@ -1,0 +1,378 @@
+0.0.271:
+2007-09-04 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/choicetool.sh.in: Added autogen definition file as input file.
+	* tests/definition-1.test: Added.
+	* tests/language-1.test, tests/language-2.test: Fixed typos.
+	* src/ctc-main.cxx, src/ctpp-main.cxx: Fixed typos.
+	* NEWS: XXXXX	
+
+0.0.270:
+2007-09-04 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/choicetool.sh.in: Updated and fixed. Added temporary file
+	removal related fixes. Removed useles ';'.
+	* src/main.cxx: Fixed definition file output.
+	* data/choicetool.m4: Replaced 'dnl' with '#'. Moved code to
+	data/core.m4.in, data/guile.m4.in. Removed data/choicetool.m4
+	* data/Makefile.am: Updated and fixed.
+
+0.0.269:
+2007-09-03 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* ChangeLog: Fixed typo.
+	* libs/sh/libcore.sh.in: Renamed as libs/sh/core.sh.in.
+	* libs/sh/libmisc.sh.in: Renamed as libs/sh/misc.sh.in.
+	* libs/sh/libtrace.sh.in: Renamed as libs/sh/trace.sh.in.
+	* libs/sh/Makefile.am: Fixed.
+	* libs/m4/libcore.m4: Renamed as libs/m4/core.m4.
+	* libs/m4/libmisc.m4: Renamed as libs/m4/misc.m4.
+	* libs/m4/libtrace.m4: Renamed as libs/m4/trace.m4.
+	* libs/m4/Makefile.am: Fixed.
+	* src/Makefile.am: Fixed ctc-parser.h dependency.
+
+0.0.268:
+2007-09-03 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/Makefile.am: Added ctc-parser.output to CLEANFILES
+	variable.
+	* Makefile.am: Updated.
+	* data/choose.tpl: Renamed as data/choose.tpl.in:
+	* data/choicetool.m4: Renamed as data/choicetool.m4.in:
+	* ChangeLog: Fixed typos.
+	* tests/wrapper.in, test/defs.in: Replaced abs_top_srcdir with
+	abs_top_builddir.
+
+0.0.267:
+2007-09-03 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/choicetool.sh.in: Updated. Fixed PROGVERSION variable.
+	* src/Makefile.am: Added PACKAGE_VERSION to the substitued
+	variables.
+	* src/ctc-main.cxx, src/ctpp-main.cxx: Fixed PROGRAM_NAME
+	definition.
+
+0.0.266:
+2007-09-03 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* ChangeLog: Fixed a typo.
+	* libs/m4: Added.
+	* libs/scheme: Added.
+	* libs/Makefile.am: Updated.
+	* data/ostyle-*.sh.in: Removed (useless).
+	* modules.guile: Updated.
+	* src/choicetool.sh.in: Updated and fixed.
+	* data/engine.tpl, data/database.tpl, data/interface.tpl,
+	data/header.tpl, data/footer.tpl: Removed.
+	* data/choose.tpl: Added (obtained by merging all *.tpl files).
+	* data/Makefile.am: Fixed.
+
+0.0.265:
+2007-09-03 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* data/choicetool.m4: Added chmod over output file.
+	* tests/autotools-1.test: Fixed.
+	* src/ctc-main.cxx, src/ctpp-main.cxx: Fixed input/output file
+	handling.
+	* src/choicetool.sh.in: Updated. Added further checks.
+	* tests/frontend-lkc-*.test: Renamed as language-*.test.
+	* tests/Makefile.am: Updated.
+	* tests/language-*.test: Fixed.
+	* tests/defs.in, tests/wrapper.in: Fixed paths.
+
+0.0.264:
+2007-09-01 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/choicetool.sh.in: Updated.
+	* data/choicetool.m4: Added checks for dialog and whiptail. Replaced
+	ct_input_file variable with "choose.ct".
+	* tests/autotools-1.test: Updated.
+	* tests/wrapper.in: Fixed aclocallibdir.
+	* tests/defs.in: Fixed ACLOCAL variable.
+
+0.0.263:
+2007-08-31 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/choicetool.sh.in: Updated.
+
+0.0.262:
+2007-08-31 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* data/interface.tpl, data/database.tpl, data/engine.tpl: Added.
+	* data/Makefile.am: Updated.
+	* tests/wrapper.in: Updated.
+	* src/choicetool.sh.in: Updated.
+
+0.0.261:
+2007-08-30 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/compiler-*: Moved to src/ctc-*.
+	* src/preprocessor-*: Moved to src/ctpp-*.
+	* src/Makefile.am: Fixed.
+	* src/choicetool.sh.in: Added missing options.
+
+0.0.260:
+2007-08-29 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* tools/autotooles/m4/ax_missing_package.m4: Added.
+	* configure.ac: Added checks for autogen program.
+	* src/frontends.cxx, src/frontends.h, src/ostyles.cxx, src/ostyles.h:
+	Removed.
+	* src/Makefile.am: Fixed.
+	* src/choicetool.in: Added.
+	* src/libs/sh: Created.
+	* src/libs/Makefile.am: Updated.
+	* tools/libs: Moved to root directory.
+	* Makefile.am: Fixed.
+	* configure.ac: Updated.
+	* src/libs/cxx: Moved to libs directory.
+	* src/libs: Removed.
+
+0.0.259:
+2007-08-29 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* data/*.scm: Removed.
+	* data/Makefile.am: Updated.
+	* src/Makefile.am: Removed linker related command.
+	* src/linker.cxx: Removed.
+
+0.0.258:
+2007-08-28 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/libs/m4/choicetool.m4: Moved to data directory.
+	* data/Makefile.am: Updated.
+	* src/Makefile.am: Renamed fe-lkc-* as *.
+	* src/fe-lkc-*: Renamed as src/*.
+	* src/compiler-scanner.lxx: Fixed includes.
+	* src/libs/Makefile.am: Fixed.
+
+0.0.257:
+2007-08-28 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* data: Created.
+	* src/be/*.in: Moved all backends to data directory.
+	* configure.ac: Added data/Makefile to AC_CONFIG_FILES.
+	* src/be/backends.cxx: Moved to src. Renamed as src/ostyles.cxx.
+	* src/be/backends.h: Moved to src. Renamed as src/ostyles.h.
+	* src/be: Removed.
+	* src/fe/frontends.cxx: Moved to src.
+	* src/fe/frontends.h: Moved to src.
+	* src/fe/Makefile.am: Updated.
+	* src/libs/scheme/*.scm: Moved to data directory.
+	* data/Makefile.am: Updated with src/libs/scheme/Makefile.am code.
+	* data/*.in: Renamed as data/ostyle-*.in.
+	* src/fe/fe-*: Moved to src directory.
+	* src/Makefile.am: Updated and fixed.
+
+0.0.256:
+2007-08-28 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/be/c.in, src/be/c++.in, src/be/cpp.in, src/be/java.in, 
+	src/be/lua.in, src/be/make.in, src/be/objc.in, src/be/perl.in, 
+	src/be/python.in, src/be/ruby.in, src/be/sh.in, src/be/xml.in,
+	src/be/scheme.in: Updated.
+
+0.0.255:
+2007-08-27 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/libs/m4/choicetool.m4: Updated.
+	* src/be/Makefile.am: Rearranged and updated.
+	* src/be/be-*.scm: Renamed as src/be/*.in.
+	* src/be/backends.cxx: Fixed.
+
+0.0.254:
+2007-08-27 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/libs/m4/choicetool.m4: Updated.
+	* tests/autotools-1.test: Fixed.
+
+0.0.253:
+2007-08-26 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* bootstrap: Updated.
+	* tools/libs: Created.
+	* tools/libs/sh: Created.
+	* configure.ac: Updated.
+	* tools/libs/Makefile.am: Added.
+	* tools/libs/sh/Makefile.am: Added.
+	* tools/libs/libcore.sh.in, tools/libs/libmisc.sh.in,
+	tools/libs/libtrace.sh.in: Added.
+	* tools/scripts/Makefile.am: Rearranged.
+	* */Makefile.am: Fixed date
+
+0.0.252:
+2007-03-05 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* attic: Populated.
+
+0.0.251:
+2007-02-04 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* tests/Makefile.am, tests/input.in: Fixed.
+
+0.0.250:
+2007-02-04 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/libs/cxx/run.cxx, src/libs/cxx/run.h: Removed useless parameter
+	from run_preprocesso() and run_compiler().
+	* src/libs/cxx/run.cxx, src/libs/cxx/run.h: Fixed prototypes.
+	Rearranged all the other code.
+	* src/be/backends.cxx, src/be/backends.h: Added.
+	* src/fe/frontends.cxx, src/fe/frontends.h: Added.
+	* src/choicetool.cxx: Fixed temp filenames. Fixed includes. Fixed
+	getopt_long() call.
+	* src/Makefile.am: Fixed linking.
+	* src/libs/cxx/file.cxx: Fixed includes.
+	* src/be/Makefile.am, src/fe/Makefile.am: Fixed distcheck targets.
+	* tests/include.in: Added from autosite package version 0.0.605.
+	* tests/Makefile.am: Added TEST_ENVIRONMENT variable.
+	* tests/*.test: Added $testdir prefix to defs inclusion.
+	
+0.0.249:
+2007-02-03 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/libs/scheme/choicetool-lib.scm: Removed (useless).
+	* src/fe/lkc: Moved to src/fe.
+	* src/choicetool.cxx: Fixed paths.
+	* configure.ac: Fixed and cleaned up from old comments. Fixed
+	variables.
+	* src/fe/*: Moved to src/fe/fe-*.
+	* src/fe/Makefile.am: Fixed.
+	* src/be/*: Moved to src/be/be-*.
+	* src/be/Makefile.am: Fixed.
+	* be-make.scm, be-perl.scm, be-python.scm, be-ruby.scm, be-sh.scm, 
+	be-c++.scm, be-c.scm, be-cpp.scm, be-java.scm, be-scheme.scm, 
+	be-objc.scm, be-lua.scm, be-xml.scm: Fixed header.
+	* src/fe/Makefile.am, src/fe/fe-lkc-compiler-scanner.lxx, 
+	src/fe/fe-lkc-compiler-main.cxx, src/fe/fe-lkc-preprocessor-main.cxx, 
+	src/fe/fe-lkc-compiler-parser.yxx, 
+	src/fe/fe-lkc-preprocessor-scanner.lxx: Fixed compilation problems.
+
+0.0.248:
+2007-02-02 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/main.cxx: Renamed as src/choicetool.cxx.
+	* src/Makefile.am: Fixed libs/scheme/engine.scm generation.
+	* src/be/Makefile.am: Re-added.
+	* src/fe/Makefile.am: Re-added.
+	* src/libs/Makefile.am: Re-added.
+	* src/libs/cxx/Makefile.am: Re-added.
+	* src/libs/m4/Makefile.am: Re-added.
+	* src/libs/scheme/Makefile.am: Re-added.
+
+0.0.247:
+2007-02-01 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/Makefile.am: Rearranged. Ranmed choicetool_sources variable in
+	choicetool_SOURCES.
+	* src/libs/cxx/run.cxx: Added debugging messages.
+	* src/main.cxx: Fixed paths.
+	* tests/wrapper.in: Fixed environment variables.
+	
+0.0.246:
+2007-01-31 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* configure.ac: Fixed CPPFLAGS substitution.
+	* src/main.cxx: Replaced CHOICETOOL_PATH with CHOICETOOL_BINPATH.
+	Replaced CHOICETOOL_LIBPATH with CHOICETOOL_SCMPATH. Fixed paths.
+	* src/Makefile.am: Fixed dist_m4_DATA. Renamed choicetool-lib.scm to
+	engine.scm.
+	* src/libs/backend-c++.scm, src/libs/backend-c.scm,
+	src/libs/backend-cpp.scm, src/libs/backend-java.scm,
+	src/libs/backend-lua.scm, src/libs/backend-make.scm,
+	src/libs/backend-objc.scm, src/libs/backend-perl.scm,
+	src/libs/backend-python.scm, src/libs/backend-ruby.scm,
+	src/libs/backend-scheme.scm, src/libs/backend-sh.scm,
+	src/libs/backend-xml.scm: Moved to src/be directory.
+	* src/main.cxx: Removed -L option (--libpath). Fixed orphaned '-s'
+	option. Fixed paths handling.
+	* tests/defs.in, tests/wrapper.in: Fixed variables exports.
+
+0.0.245:
+2007-01-31 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/libs/m4/choicetool.m4: Fixed macro.
+	* configure.ac: Removed subdir-objects from AM_INIT_AUTOMAKE macro
+	call.
+
+0.0.244:
+2007-01-30 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/libs/file.cxx, src/libs/file.h: Added (code moved from
+	src/main.cxx).
+	* src/Makefile.am: Fixed.
+	* src/libs/cxx/file.cxx: Fixed typos.
+	* src/fe/lkc: Added directory.
+	* src/fe/lkc-*: Moved to src/fe/lkc/* directory (renamed as well
+	removing the lkc- prefix).
+	* src/Makefile.am: Fixed. Fixed src/libs/choicetool-lib.scm generation.
+	Removed COMMON_SRCS variable.
+
+0.0.243:
+2007-01-30 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* libs/c++: Created.
+	* src/lib/*: Moved to libs/c++.
+	* src/lib: Removed.
+	* libs: Moved to src directory.
+	* src/libs/scheme/Makefile.am, src/libs/aclocal/Makefile.am: Removed.
+	* configure.ac: Fixed.
+	* src/Makefile.am: Fixed.
+	* modules.guile: Fixed files-glob variable for autofrisk execution.
+	* src/libs/aclocal: Renamed as src/libs/m4.
+	* src/libs/*/Makefile.am, src/libs/*/Makefile.in: Removed (they are
+	useless now).
+	* src/main.cxx: Fixed includes.
+	* src/fe/lkc-compiler-main.cxx, src/fe/lkc-preprocessor-main.cxx, 
+	src/be/linker.cxx, src/config.h.in, src/main.cxx: Fixed PROGRAM define.
+	* src/*: Fixed includes.
+	* src/libs/m4/choicetool.m4: Added AC_PREREQ macro call in
+	AF_INIT_CHOICETOOL macro.
+
+0.0.242:
+2007-01-30 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* configure.ac: Fixed AM_LFLAGS and AM_YFLAGS substitution.
+	* src/Makefile.am: Added AM_YFLAGS and AM_LFLAGS variables.
+
+0.0.241:
+2007-01-30 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/lib/menu.cxx: Renamed as src/lib/group.cxx. Fixed declarations.
+	* src/lib/menu.h: Renamed as src/lib/group.h. Fixed declarations.
+	* src/Makefile.am: Fixed.
+	* src/lib/feature.h, src/lib/feature.cxx: Fixed declarations.
+	* src/lib/environment.h, src/lib/environment.cxx: Added default
+	constructor and destructor.
+	* configure.ac: Replaced bison and flex --debug and --verbose flags
+	with short ones (-v and -d) for compatibility reasons.
+
+0.0.240:
+2007-01-29 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* utils/*: Updated from hybrid-kernel package version 0.0.1508.
+	* configure.ac: Added missing macro calls (AC_PROG_CXX_C_O and
+	AC_PROG_CXXCPP).
+
+0.0.239:
+2007-01-29 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* configure.ac: Added missing macros. Removed tests/defs and 
+	tests/wrapper creation (now they get built by make).
+	* tests/Makefile.am: Fixed builddir tests execution.
+	* src/lib/log.cxx: Fixed traces. Fixed other methods.
+
+0.0.238:
+2007-01-28 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/Makefile.am: Added AUTOMAKE_OPTIONS. Added subdir-objects option.
+	* src/be/linker.cxx: Moved from src directory. Fixed lbg call in main
+	loop.
+	* src/lib/run.cxx: Removed useless declarations (kit_t).
+	* src/main.cxx: Fixed frontend and backend searching related code.
+	Rearranged whole code.
+	* src/main.cxx, src/fe/lkc-compiler-parser.yxx, 
+	src/fe/lkc-compiler-main.cxx, src/fe/lkc-compiler-scanner.lxx, 
+	src/fe/lkc-preprocessor-scanner.lxx, src/be/linker.cxx, 
+	src/lib/shell.cxx, src/lib/environment.cxx, src/lib/log.h, 
+	src/lib/shell.h, src/lib/environment.h, src/lib/menu.cxx, 
+	src/lib/menu.h, src/lib/feature.h, src/lib/run.cxx, 
+	src/lib/log.cxx, src/lib/feature.cxx, src/lib/run.h, 
+	src/lib/expression.cxx, src/lib/expression.h,
+	src/fe/lkc-preprocessor-main.cxx, src/fe/lkc-preprocessor-scanner.hxx:
+	Fixed copyright dates.
+	* tests/frontend-lkc-source-[1234].test: Fixed (to be re-fixed ...).
+	
+0.0.237:
+2007-01-26 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* src/fe: Created front-end(s) related directory.
+	* src/be: Created back-end(s) related directory.
+	* tools/autotools/m4/ax_prog_bison.m4,
+	tools/autotools/m4/ax_prog_flex.m4: Added from hybrid-kernel package
+	version 0.0.1508.
+	* src/fe/Makefile.am: Added.
+	* src/be/Makefile.am: Added.
+	* src/lib/Makefile.am: Added.
+	* src/Makefile.am: Fixed.
+	* configure.ac: Rearranged.
+	* src/*: Moved all the sources (excluding main.cxx and linker.cxx) to
+	src/lib directory.
+
+0.0.236:
+2007-01-26 Francesco Salvestrini <salvestrini@users.sourceforge.net>
+	* docs/ChangeLog-200*: Moved there from root directory.
+	* Makefile.am: Completely rearranged. Fixed in order to support
+	distcheck target.
+	* bootstrap: Created from utils/bootstrap.sh and rearranged.
+	* configure.ac: Bumped autoconf required version to 2.61. Bumped
+	automake required version to 1.10. Fixed AC_CONFIG_HEADER macro call.
+	* tools/scripts/Makefile.am, tools/scriptsCL2NEWS.sh.in,
+	tools/scripts/libmisc.sh.in, tools/scripts/libtrace.sh.in: Imported 
+	from hybrid-system-0.0.77 package.
+	* src/main.cxx: Added errno.h inclusion.

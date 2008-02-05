@@ -1,0 +1,881 @@
+%{
+#
+# Parse.pm
+#
+# Copyright (C) 2007, 2008 Francesco Salvestrini
+#                          Alessandro Massignan
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+
+use 5.8.0;
+
+use warnings;
+use strict;
+use diagnostics;
+
+use Choicetool::Autoconfig;
+use Choicetool::Base::Trace;
+use Choicetool::Base::Debug;
+
+BEGIN {
+    use Exporter ();
+    our ($VERSION, @ISA, @EXPORT);
+
+    @ISA    = qw(Exporter);
+    @EXPORT = qw(&parse);
+}
+
+my $parsed_string      = "";
+my $help_text_parse    = 0;
+my $help_start         = 0;
+
+my $lineno             = 1;
+my $max_keyword_length = 10;
+
+my $prompt;
+my $symbol;
+
+%}
+
+%start input
+
+%%
+
+input: 
+{
+    debug("Entering rule: input");
+}
+       stmt_list
+     ;
+
+stmt_list: 
+{
+    debug("Entering rule: stmt_list");
+}
+          | stmt_list common_stmt
+          | stmt_list choice_stmt
+          | stmt_list menu_stmt
+          | stmt_list 'T_MAINMENU' prompt newlines
+          | stmt_list  end
+          ;
+
+newlines:
+{
+    debug("Entering rule: newlines");
+}
+          'T_EOL'
+        | newlines 'T_EOL'
+        ;
+
+prompt:
+{
+    debug("Entering rule: prompt");
+}
+        'T_WORD'
+{
+    assert(defined($_[1]));
+
+    $prompt = $_[1];
+}
+      | 'T_WORD_QUOTE'
+{
+    assert(defined($_[1]));
+
+    $prompt = $_[1];
+}
+      ;
+
+common_stmt:
+{
+    debug("Entering rule: common_stmt");
+}
+             'T_EOL'
+           | config_stmt
+           | if_stmt
+           | comment_stmt
+           | menuconfig_stmt
+           | source_stmt
+           ;
+
+config_stmt:
+{
+    debug("Entering rule: config_stmt");
+}
+             config_entry_start config_option_list
+           ;
+
+config_entry_start: 
+{
+    debug("Entering rule: config_entry_start");
+}
+                    'T_CONFIG' 'T_WORD' 'T_EOL'
+                  ;
+
+config_option_list:
+{
+    debug("Entering rule: config_option_list");
+}
+                  | config_option_list config_option
+                  | config_option_list symbol_option
+                  | config_option_list depends
+                  | config_option_list help
+                  | config_option_list 'T_EOL'
+                  ;
+
+config_option:
+{
+    debug("Entering rule: config_option");
+}
+               type_definition prompt_stmt_opt 'T_EOL'
+             | 'T_PROMPT' prompt if_expr 'T_EOL'
+             | 'T_DEFAULT' expr if_expr 'T_EOL'
+             | 'T_SELECT' 'T_WORD' if_expr 'T_EOL'
+             ;
+
+type_definition:
+{
+    debug("Entering rule: type_definition");
+}
+                 'T_BOOL'
+               | 'T_TRISTATE'
+               | 'T_STRING'
+               | 'T_HEX'
+               | 'T_INT'
+               ;
+
+prompt_stmt_opt:
+{
+    debug("Entering rule: prompt_stmt_opt");
+}
+                    | prompt if_expr
+                    ; 
+
+expr: 
+{
+    debug("Entering rule: expr");
+}
+      symbol
+    | symbol 'T_EQUAL' symbol
+    | symbol 'T_UNEQUAL' symbol
+    | 'T_OPEN_PAREN' expr 'T_CLOSE_PAREN'
+    | 'T_NOT' expr
+    | expr 'T_OR' expr
+    | expr 'T_AND' expr
+    ;
+
+symbol:
+{
+    debug("Entering rule: symbol");
+}
+        'T_WORD'
+{
+    assert(defined($_[1]));
+
+    $symbol = $_[1];
+}
+      | 'T_WORD_QUOTE'
+{
+    assert(defined($_[1]));
+
+    $symbol = $_[1];
+}
+      ;
+
+if_expr:
+{
+    debug("Entering rule: if_expr");
+}
+       | 'T_IF' expr
+       ;
+
+symbol_option:
+{
+    debug("Entering rule: symbol_option");
+}
+               'T_OPTION' symbol_option_list 'T_EOL'
+             ;
+
+symbol_option_list:
+{
+    debug("Entering rule: symbol_option_list");
+}
+
+                  | symbol_option_list 'T_WORD' symbol_option_arg
+                  ;
+
+symbol_option_arg:
+{
+    debug("Entering rule: config_option_arg");
+}
+
+                 | 'T_EQUAL' prompt
+                 ;
+
+depends:
+{
+    debug("Entering rule: depends");
+}
+         'T_DEPENDS' expr 'T_EOL'
+       | 'T_DEPENDS' 'T_ON' expr 'T_EOL'
+       | 'T_REQUIRES' expr 'T_EOL'
+       ;
+
+help:
+{
+    debug("Entering rule: help");
+}
+       help_start 'T_HELPTEXT'
+    ;
+
+help_start:
+{
+    debug("Entering rule: help_start");
+}
+            'T_HELP' 'T_EOL'
+          ;
+
+if_stmt:
+{
+    debug("Entering rule: if_stmt");
+}
+         if_entry if_block if_end
+       ;
+
+if_entry:
+{
+    debug("Entering rule: if_entry");
+}
+          'T_IF' expr newlines
+        ;
+
+if_block:
+{
+    debug("Entering rule: if_block");
+}
+
+        | if_block common_stmt
+        | if_block menu_stmt
+        | if_block choice_stmt
+        ;
+
+if_end:
+{
+    debug("Entering rule: if_end");
+}
+        end
+      ;
+
+end:
+{
+    debug("Entering rule: end");
+}
+     'T_ENDMENU' 'T_EOL'
+   | 'T_ENDCHOICE' 'T_EOL'
+   | 'T_ENDIF' 'T_EOL'
+   ;
+
+menu_stmt: 
+{
+    debug("Entering rule: menu_stmt");
+}
+           menu_entry menu_block menu_end
+         ;
+
+menu_entry:
+{
+    debug("Entering rule: menu_entry");
+}
+            menu depends_list
+          ;
+
+menu:
+{
+    debug("Entering rule: menu");
+}
+      'T_MENU' prompt 'T_EOL'
+    ;
+
+depends_list:
+{
+    debug("Entering rule: depends_list");
+}
+            | depends_list depends
+            | depends_list 'T_EOL'
+            ;
+
+menu_block:
+{
+    debug("Entering rule: menu_block");
+}
+
+          | menu_block common_stmt
+          | menu_block menu_stmt
+          | menu_block choice_stmt
+          ;
+
+menu_end:
+{
+    debug("Entering rule: menu_end");
+}
+          end
+        ;
+
+choice_stmt:
+{
+    debug("Entering rule: choice_stmt");
+}
+             choice_entry choice_block choice_end
+           ;
+
+choice_entry:
+{
+    debug("Entering rule: choice_entry");
+}
+              choice choice_option_list
+            ;
+
+choice:
+{
+    debug("Entering rule: choice");
+}
+        'T_CHOICE' 'T_EOL'
+      ;
+
+choice_option_list:
+{
+    debug("Entering rule: choice_option_list");
+}
+ 
+                  | choice_option_list choice_option
+                  | choice_option_list depends
+                  | choice_option_list help
+                  | choice_option_list 'T_EOL'
+                  ;
+
+choice_option:
+{
+    debug("Entering rule: choice_option");
+}
+               'T_PROMPT' prompt if_expr 'T_EOL'
+             | type_definition prompt_stmt_opt 'T_EOL'
+             | 'T_OPTIONAL' 'T_EOL'
+             | 'T_DEFAULT' 'T_WORD' if_expr 'T_EOL'
+             ;
+
+choice_block:
+{
+    debug("Entering rule: choice_block");
+}
+
+            | choice_block common_stmt
+            ;
+
+choice_end:
+{
+    debug("Entering rule: choice_end");
+}
+            end
+          ;
+
+comment_stmt:
+{
+    debug("Entering rule: comment_stmt");
+}
+              comment depends_list
+            ;
+
+comment:
+{
+    debug("Entering rule: comment");
+}
+         'T_COMMENT' prompt 'T_EOL'
+       ;
+
+menuconfig_stmt:
+{
+    debug("Entering rule: menuconfig_stmt");
+}
+                 menuconfig_entry_start config_option_list
+               ;
+
+menuconfig_entry_start:
+{
+    debug("Entering rule: menuconfig_entry_start");
+}
+                        'T_MENUCONFIG' 'T_WORD' 'T_EOL'
+                      ;
+
+source_stmt:
+{
+    debug("Entering rule: source_stmt");
+}
+             'T_SOURCE' prompt 'T_EOL'
+{
+    my $filename   = $prompt;
+    my $string_ref = "";
+
+    assert(defined($filename));
+
+    debug("Including file `" . $filename . "\'");
+
+    if (!source_file($filename, \$string_ref)) {
+	exit 1;
+    }
+}
+
+           ;
+
+%%
+
+sub source_file($$)
+{
+    my $input_file = shift;
+    my $reference  = shift;
+
+    if (!&parse($input_file, $reference)) {
+	exit 1;
+    }
+
+    return 1;
+}
+
+sub parse_help($$)
+{
+    my $stream_ref  = shift;
+    my $string_ref  = shift;
+    my $root_tab_no = 0;
+    my $root_ws     = "";
+
+    assert(defined($$stream_ref));
+    assert(defined($$string_ref));
+
+    while ($$stream_ref =~ s/^([^\n]*)\n//) {
+	my $string = $1;
+
+	$lineno++;
+
+	if ($string =~ s/^([ \t]+)(.*)$//) {
+
+	    my $curr_ws     = $1;
+	    my $curr_line   = $2;
+	    my $curr_tab_no = 0;
+	    
+	    my $tmp = $curr_ws;
+
+	    for (my $i = 0; $i < length($tmp); $i++) {
+		my $token = substr($tmp, 0, 1, "");
+		
+		if ($token =~ /\ /) {
+		    $curr_tab_no++;
+		} elsif ($token =~ /\t/) {
+		    $curr_tab_no += 8;
+		}
+	    }
+	    
+	    if (($root_tab_no == 0) &&
+		($root_ws eq ""))    {
+		$root_tab_no = $curr_tab_no;
+		$root_ws     = $curr_ws;
+	    }
+	    
+	    if ($curr_tab_no > $root_tab_no) {
+		$curr_ws     = s/^$root_ws//;
+		$$string_ref = $$string_ref . $curr_ws . $curr_line . "\n";
+	    } elsif ($curr_tab_no == $root_tab_no) {
+		$$string_ref = $$string_ref . $curr_line . "\n";
+	    } else {
+		$$stream_ref = $curr_ws . $curr_line . "\n" . $$stream_ref;
+		$lineno--;
+		last;
+	    }
+	} elsif ($string =~ s/^[ \t]*$//) {
+	    $$string_ref = $$string_ref . "\n";
+
+	} elsif ($string =~ s/^([^ \t])(.*)$//) {
+
+	    if (defined($2)) {
+		$$stream_ref = $2 . "\n" . $$stream_ref;
+		$$stream_ref = $1 . $$stream_ref;
+	    } else {
+		$$stream_ref = $1 . "\n". $$stream_ref;
+	    }
+
+	    $lineno--;
+	    last;
+	} else {
+	    bug("Unreachable!");
+	}
+    }
+
+    return 1;
+}
+
+sub lexer_callback {
+    my $parser     = shift;
+    my $help_text  = "";
+    my $buffer     = "";
+
+    assert(defined($parser));
+
+    if ((!defined($parser->YYData->{INPUT})) ||
+	($parser->YYData->{INPUT} eq "")) {
+	return ('', undef);
+    }
+
+    if ($help_text_parse == 1) {
+
+	if (!parse_help(\$parser->YYData->{INPUT}, \$help_text)) {
+	    error("Failed to parse help text");
+	    exit 1;
+	}
+
+	$help_text_parse = 0;
+	$help_start      = 0;
+
+	debug("Found token: T_HELPTEXT");
+	debug("  Passing string: `" . $help_text . "\'");
+
+	return ('T_HELPTEXT', $help_text);
+    }
+
+    while ($parser->YYData->{INPUT} ne "") {
+
+	my $char;
+
+	($char) = $parser->YYData->{INPUT} =~ /^(.)/;
+
+	if (defined($char)              && 
+	    ($char =~ /[\&\|\!\=\(\)]/)) {
+
+	    if ($buffer ne "") {
+		$parser->YYData->{INPUT} = " " . $parser->YYData->{INPUT};
+		next;
+	    }
+	}
+
+	if ($parser->YYData->{INPUT} =~ s/^\&\&//) {
+	    debug("Found token: T_AND");
+	    return ('T_AND', '');
+
+	} elsif ($parser->YYData->{INPUT} =~ s/^\|\|//) {
+	    debug("Found token: T_OR");
+	    return ('T_OR', '');
+
+	} elsif ($parser->YYData->{INPUT} =~ s/^\!\=//) {
+	    debug("Found token: T_UNEQUAL");
+	    return ('T_UNEQUAL', '');
+
+	} elsif ($parser->YYData->{INPUT} =~ s/^\!//) {
+	    debug("Found token: T_NOT");
+	    return ('T_NOT', '');
+
+	} elsif ($parser->YYData->{INPUT} =~ s/^\=//) {
+	    debug("Found token: T_EQUAL");
+	    return ('T_EQUAL', '');
+
+	} elsif ($parser->YYData->{INPUT} =~ s/^\)//) {
+	    debug("Found token: T_CLOSE_PAREN");
+	    return ('T_CLOSE_PAREN', '');
+
+	} elsif ($parser->YYData->{INPUT} =~ s/^\(//) {
+	    debug("Found token: T_OPEN_PAREN");
+	    return ('T_OPEN_PAREN', '');
+
+	} else {
+
+	}
+
+	$char = substr($parser->YYData->{INPUT}, 0, 1, "");
+
+	if ($char eq "\n") {
+
+	    if ($buffer ne "") {
+		$parser->YYData->{INPUT} = $char . $parser->YYData->{INPUT};
+
+	    } else {
+		debug("Found token: T_EOL");
+
+		if ($help_start == 1) {
+		    $help_text_parse = 1;
+		} else {
+		    # Remove useless white spaces
+		    $parser->YYData->{INPUT} =~ s/^[ \t]*//;
+		}
+
+		$lineno++;
+
+		return ('T_EOL', '');
+	    }
+	}
+
+	if ($char eq "#") {
+	    # Handling comments
+
+	    $parser->YYData->{INPUT} =~ s/^[^\n]*//;
+	    next;
+	}
+
+	if ($char =~ /\"/) {
+	    my $curr_char;
+	    my $last_char;
+
+	    $buffer = "";
+
+	    while ($parser->YYData->{INPUT} ne "") {
+		$curr_char = substr($parser->YYData->{INPUT}, 0, 1, "");
+
+		if (length($buffer) >= 2) {
+		    $buffer    =~ /(.)$/;
+		    $last_char = $1;
+		}
+
+		if (($curr_char =~ /\"/) &&
+		    ($last_char !~ /\\/)) {
+
+		    debug("Found token: T_WORD_QUOTE");
+		    debug("  Passing string: `" . $buffer . "\'");
+
+		    return ('T_WORD_QUOTE', $buffer);
+		}
+
+		if ($curr_char =~ /\n/) {
+		    error("Multiline quoted strings are not supported");
+		    return 0;
+		}
+
+		if (defined($buffer)) {
+		    $buffer = $buffer . $curr_char;
+		} else {
+		    $buffer = $curr_char;
+		}
+	    }
+	}
+
+	if ($char =~ /[ \t\n]+/) {
+
+	    if ($help_text_parse == 0) {
+		# Remove useless white spaces
+		$parser->YYData->{INPUT} =~ s/^[ \t]*//;
+	    }
+
+	    if ($buffer eq "") {
+		next;
+	    }
+
+	    if ($buffer eq "menuconfig") {
+		debug("Found token: T_MENUCONFIG");
+		return ('T_MENUCONFIG', '');
+
+	    } elsif ($buffer eq "endchoice") {
+		debug("Found token: T_ENDCHOICE");
+		return ('T_ENDCHOICE', '');
+
+	    } elsif ($buffer eq "mainmenu") {	
+		debug("Found token: T_MAINMENU");
+		return ('T_MAINMENU', '');
+
+	    } elsif ($buffer eq "requires") {
+		debug("Found token: T_REQUIRES");
+		return ('T_REQUIRES', '');
+
+	    } elsif ($buffer eq "optional") {
+		debug("Found token: T_OPTIONAL");
+		return ('T_OPTIONAL', '');
+
+	    } elsif ($buffer eq "tristate") {
+		debug("Found token: T_TRISTATE");
+		return ('T_TRISTATE', '');
+
+	    } elsif ($buffer eq "endmenu") {	
+		debug("Found token: T_ENDMENU");
+		return ('T_ENDMENU', '');
+
+	    } elsif ($buffer eq "comment") {
+		debug("Found token: T_COMMENT");
+		return ('T_COMMENT', '');
+
+	    } elsif ($buffer eq "depends") {
+		debug("Found token: T_DEPENDS");
+		return ('T_DEPENDS', '');
+
+	    } elsif ($buffer eq "default") {
+		debug("Found token: T_DEFAULT");
+		return ('T_DEFAULT', '');
+
+	    } elsif ($buffer eq "select") {
+		debug("Found token: T_SELECT");
+		return ('T_SELECT', '');
+
+	    } elsif ($buffer eq "config") {	
+		debug("Found token: T_CONFIG");
+		return ('T_CONFIG', '');
+
+	    } elsif ($buffer =~ "choice") {
+		debug("Found token: T_CHOICE");
+		return ('T_CHOICE', '');
+
+	    } elsif ($buffer eq "option") {
+		debug("Found token: T_OPTION");
+		return ('T_OPTION', '');
+
+	    } elsif ($buffer eq "source") {	
+		debug("Found token: T_SOURCE");
+		return ('T_SOURCE', '');
+
+	    } elsif ($buffer eq "prompt") {
+		debug("Found token: T_PROMPT");
+		return ('T_PROMPT', '');
+
+	    } elsif ($buffer eq "endif") {
+		debug("Found token: T_ENDIF");
+		return ('T_ENDIF', '');
+
+	    } elsif ($buffer eq "range") {
+		debug("Found token: T_RANGE");
+		return ('T_RANGE', '');
+
+	    } elsif ($buffer eq "menu") {	
+		debug("Found token: T_MENU");
+		return ('T_MENU', '');
+
+	    } elsif (($buffer eq "help")             ||
+		     ($buffer eq "\-\-\-help\-\-\-")) {
+		debug("Found token: T_HELP");
+
+		$help_start = 1;
+		return ('T_HELP', '');
+
+	    } elsif ($buffer eq "bool") {
+		debug("Found token: T_BOOL");
+		return ('T_BOOL', '');
+
+	    } elsif ($buffer eq "hex") {
+		debug("Found token: T_HEX");
+		return ('T_HEX', '');
+
+	    } elsif ($buffer eq "int") {
+		debug("Found token: T_INT");
+		return ('T_INT', '');
+
+	    } elsif ($buffer eq "if") {
+		debug("Found token: T_IF");
+		return ('T_IF', '');
+
+	    } elsif ($buffer eq "on") {
+		debug("Found token: T_ON");
+		return ('T_ON', '');
+
+	    } elsif ($buffer =~ /^([a-zA-Z][a-zA-Z0-9_]*)$/) {
+		debug("Found token: T_WORD");
+		debug("  Passing string: `" . $buffer . "\'");
+		
+		return ('T_WORD', $buffer);
+	    } else {
+		bug("Undefined lexer input at line" . $lineno);
+	    }
+	}
+
+	if (defined($buffer)) {
+	    $buffer = $buffer . $char;
+	} else {
+	    $buffer = $char;
+	}
+    }
+
+    bug("Unreacheable lexer code");
+}
+
+sub syntax_error {
+    my $message = shift;
+    my $lineno  = shift;
+
+    assert(defined($message));
+    assert(defined($lineno));
+
+    error("Syntax error at line " . $lineno . ": " . $message);
+    exit 1;
+}
+
+sub error_callback {
+    my $parser = shift;
+
+    assert(defined($parser));
+
+    my $value = $parser->YYCurtok;
+    assert(defined($value));
+
+    error("Unexpected \`" . $value . "'");
+}
+
+sub parse ($$)
+{
+    my $input_filename = shift;
+    my $string_ref     = shift;
+
+    debug("Parsing file \`" . $input_filename . "'");
+
+    if (! -e $input_filename) {
+	error("Input file \`" . $input_filename . "' is missing");
+	return 0;
+    }
+
+    if (! -f $input_filename) {
+        error("Cannot open file `" .
+              $input_filename      . 
+	      "\' "                .
+              "for input, it is missing");
+        return 0;
+    }
+
+    my $filehandle;
+
+    if (!open($filehandle, "<", $input_filename)) {
+        error("Cannot open `" . $input_filename . "\' for input");
+        return 0;
+    }
+
+    my $string;
+
+    $string = "";
+
+    while (<$filehandle>) {
+        $string = $string . $_;
+    }
+
+    close($filehandle);
+
+    # Parse !
+    my $parser;
+    $parser = Choicetool::Parse->new();
+    assert(defined($parser));
+
+    $parser->YYData->{INPUT} = $string;
+
+    my $result;
+    $result = $parser->YYParse(yylex   => \&lexer_callback,
+			       yyerror => \&error_callback);
+    
+    if ($parser->YYNberr() > 0) {
+	error("Cannot parse input file \`" . $input_filename . "'");
+	return 0;
+    }
+    
+    debug("Parsing completed successfully");
+
+    ${$string_ref} = $parsed_string;
+    
+    return 1;
+}
