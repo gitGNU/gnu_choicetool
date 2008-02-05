@@ -840,6 +840,7 @@ sub parse ($$$)
 
     my $string;
 
+    $string = "";
     if (!file_tostring($input_filename, \$string)) {
 	return 0;
     }
