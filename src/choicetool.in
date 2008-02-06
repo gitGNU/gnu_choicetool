@@ -60,6 +60,7 @@ use Choicetool::Base::Debug;
 use Choicetool::Base::Program;
 use Choicetool::OS::File;
 use Choicetool::OS::String;
+use Choicetool::OS::Home;
 use Choicetool::Parse;
 use Choicetool::Tree;
 
