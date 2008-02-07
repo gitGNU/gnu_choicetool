@@ -53,13 +53,13 @@ CHANGELOGS =					\
 	$(srcdir)/docs/ChangeLog-2005		\
 	$(srcdir)/docs/ChangeLog-2004
 
-EXTRA_DIST =						\
-	TODO README NEWS COPYING AUTHORS INSTALL THANKS	\
-	Makefile.sub					\
-	$(CHANGELOGS)					\
-	configure.ac.in					\
-	bootstrap					\
-	guile.af					\
+EXTRA_DIST =							\
+	BUGS TODO README NEWS COPYING AUTHORS INSTALL THANKS	\
+	Makefile.sub						\
+	$(CHANGELOGS)						\
+	configure.ac.in						\
+	bootstrap						\
+	guile.af						\
 	perl.af
 
 ##
