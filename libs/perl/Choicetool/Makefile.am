@@ -28,7 +28,8 @@ perllibdir = $(pkgvlibsdir)/perl/Choicetool
 
 dist_perllib_DATA =                             \
 	Parse.pm				\
-	Tree.pm
+	Tree.pm					\
+	Stack.pm
 
 nodist_perllib_DATA =                           \
 	Autoconfig.pm
