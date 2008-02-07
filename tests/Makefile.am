@@ -82,6 +82,7 @@ SUCCESS_TESTS +=				\
 	language-parse-1.test			\
 	language-comments-1.test		\
 	language-comments-2.test		\
+	language-comments-3.test		\
 	language-source-1.test			\
 	language-source-2.test			\
 	language-source-3.test			\
