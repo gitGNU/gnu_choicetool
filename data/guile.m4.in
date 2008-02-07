@@ -16,18 +16,6 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# @synopsis CT_PROG_GUILE([major.micro.minor])
-#
-# This macro checks for guile version >= major.minor.version
-# 
-# Use it in your configure.ac as:
-#
-#   CT_PROG_GUILE([1.6.4])
-#
-# Macro code based on AC_PKG_SWIG from Andrew Collier <colliera@nu.ac.za>
-#
-# @version $Id:$
-# @author Francesco Salvestrini <salvestrini@users.sourceforge.net>
 AC_DEFUN([CT_PROG_GUILE],[
   AC_PATH_PROG(GUILE,guile)
   if test "x$GUILE" = "x"; then

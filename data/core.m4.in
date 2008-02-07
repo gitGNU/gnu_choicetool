@@ -16,24 +16,12 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# @synopsis CT_SET_VARIABLE_VALUE
-#
-# @version $Id:$
-# @author Francesco Salvestrini <salvestrini@users.sourceforge.net>
 AC_DEFUN([CT_SET_VARIABLE],[
 ])
 
-# @synopsis CT_GET_VARIABLE_VALUE
-#
-# @version $Id:$
-# @author Francesco Salvestrini <salvestrini@users.sourceforge.net>
 AC_DEFUN([CT_GET_VARIABLE],[
 ])
 
-# @synopsis CT_USE_AT_YOUR_OWN_RISK_NOTICE
-#
-# @version $Id:$
-# @author Francesco Salvestrini <salvestrini@users.sourceforge.net>
 AC_DEFUN([CT_USE_AT_YOUR_OWN_RISK_NOTICE],[
   AC_MSG_NOTICE([])
   AC_MSG_NOTICE([ATTENTION:])
@@ -45,10 +33,6 @@ AC_DEFUN([CT_USE_AT_YOUR_OWN_RISK_NOTICE],[
   AC_MSG_NOTICE([])
 ])
 
-# @synopsis CT_INIT([output-file-name])
-#
-# @version $Id$
-# @author Francesco Salvestrini <salvestrini@users.sourceforge.net>
 AC_DEFUN([CT_INIT],[
   AC_PREREQ(2.61)
 
