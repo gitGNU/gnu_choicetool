@@ -447,7 +447,7 @@ sub source_file($$)
 
     debug("Including file \`" . $input_file . "'");
 
-    if (!&parse($input_file, $reference)) {
+    if (!&parse($input_file, $reference, undef)) {
 	exit 1;
     }
 
@@ -830,7 +830,7 @@ sub parse ($$$)
 
     assert(defined($input_filename));
     assert(defined($string_ref));
-    assert(defined($tree_ref));
+#    assert(defined($tree_ref));
 
     debug("Parsing file \`" . $input_filename . "'");
 
