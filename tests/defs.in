@@ -1,4 +1,6 @@
 #
+# defs
+#
 # Copyright (C) 2007, 2008 Francesco Salvestrini
 #
 # This program is free software; you can redistribute it and/or modify
@@ -53,39 +55,26 @@ me=`echo "$0" | sed -e 's,.*[\\/],,;s/\.test$//'`
 # See how redirections should work.  User can set VERBOSE to see all
 # output.
 test -z "$VERBOSE" && {
-    exec > /dev/null 2>&1
+   exec > /dev/null 2>&1
 }
+
+# The following definitions are needed in some tests ...
+PACKAGE="@PACKAGE@"
+API_VERSION="@API_VERSION@"
 
 # Make sure we override the user shell.
 SHELL='@SHELL@'
 export SHELL
 
 # User can override various tools used.
-test -z "$PERL"    && PERL='@PERL@'
-test -z "$MAKE"    && MAKE=make
+test -z "$PERL" && PERL='@PERL@'
+test -z "$MAKE" && MAKE=make
 
 # Always issue warnings ...
 FLAGS="$FLAGS --warnings all"
 
-test -n "$VERBOSE" && FLAGS="$FLAGS --verbose"
-test -n "$DEBUG"   && FLAGS="$FLAGS --debug"
-
-#
-# NOTE:
-#
-# The following definition are exported in wrapper.in:
-#
-#     schemelibdir=@abs_top_builddir@/libs/scheme
-#     export guilelibdir
-#     aclocallibdir=@abs_top_builddir@/libs/aclocal
-#     export aclocallibdir
-#
-
-#
-# NOTE:
-#     aclocallibdir is useful for aclocal only so it is exported for 
-#     ACLOCAL only ...
-#
+test -n "$VERBOSE"    && FLAGS="$FLAGS --verbose"
+test -n "$DEBUG"      && FLAGS="$FLAGS --debug"
 test -z "$CHOICETOOL" && CHOICETOOL="wrapper choicetool $FLAGS"
 test -z "$AUTOCONF"   && AUTOCONF="autoconf"
 test -z "$ACLOCAL"    && ACLOCAL="aclocal -I @abs_top_builddir@/data"
@@ -309,4 +298,5 @@ if test "x$VERBOSE" = xx; then
 else
   :
 fi
+
 pwd
