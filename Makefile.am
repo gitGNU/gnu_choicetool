@@ -28,7 +28,8 @@ SUBDIRS =					\
 	data					\
 	src					\
 	tests					\
-	docs 
+	docs					\
+	site
 
 # Base directories
 TOOLSDIR   = $(top_builddir)/tools
