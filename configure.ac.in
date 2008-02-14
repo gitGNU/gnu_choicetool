@@ -121,6 +121,8 @@ AC_CONFIG_FILES([
 
 	src/Makefile
 
+	site/Makefile
+
 	docs/Makefile
 	docs/info/Makefile
 	docs/man/Makefile
