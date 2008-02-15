@@ -23,7 +23,21 @@ include $(top_srcdir)/Makefile.sub
 EXTRA_DIST =					\
 	contents.as				\
 	files.as				\
+	footer.sxml				\
+	header.sxml				\
 	index.scm				\
+	layout.sxml				\
 	map.as					\
 	pages.as				\
-	site.as
+	site.as					\
+	site.css
+
+site:
+	$(SITETOOL) --initialize && \
+	$(SITETOOL) --build || { \
+		$(SITETOOL) --clean ; \
+		exit 1 ; \
+	}
+
+maintainer-clean-local:
+	$(SITETOOL) --clean || exit 1
