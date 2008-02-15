@@ -33,9 +33,9 @@ EXTRA_DIST =					\
 	site.css
 
 site:
-	$(SITETOOL) --initialize && \
-	$(SITETOOL) --build || { \
-		$(SITETOOL) --clean ; \
+	$(SITETOOL) -v --initialize && \
+	$(SITETOOL) -v --build || { \
+		$(SITETOOL) -v --clean ; \
 		exit 1 ; \
 	}
 
