@@ -6,13 +6,12 @@
 	(a (@ (href "http://kernel.org/doc/#kconfig"))
 	   "Linux kernel kconfig")
 	"."
-	(br)
 	"It uses an input description in order to know the configuration "
 	"symbols and their relations and creates a script that should be "
 	"shipped with a package in order to let the user be free to tweak "
 	"the configuration in its details without any fuss."
 	(br) (br)
-	"It should work with (and even without) the autotools.")
+	"Choicetool should work with (and even without) the autotools.")
 
      (h3 "AUTHORS")
      (p "Francesco Salvestrini <salvestrini AT gmail DOT com>"

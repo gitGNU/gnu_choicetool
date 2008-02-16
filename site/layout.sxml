@@ -49,11 +49,7 @@
       ))))
    (tbody
     (tr (@ (valign "top"))
-     (td (@ (width "20%"))
-      (div (@ (id "main_menu"))
-       ,as_page_content_MAP
-      ))
-     (td (@ (width "80%"))
+     (td
       (div (@ (id "main_body"))
        ,as_page_content_BODY
       ))))
