@@ -64,6 +64,7 @@ use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
 use Choicetool::Parse;
 use Choicetool::Tree;
+use Choicetool::Set;
 
 #
 # Globals
@@ -195,11 +196,15 @@ assert(defined($output_file));
 
 my $string;
 my $tree;
+my $set;
 
 $tree = Choicetool::Tree->new(0);
 assert(defined($tree));
 
-if (!Choicetool::Parse::parse($input_file, \$string, \$tree)) {
+$set = Choicetool::Set->new(0);
+assert(defined($set));
+
+if (!Choicetool::Parse::parse($input_file, \$tree, \$set)) {
     error("Failed to parse file `" . $input_file . "\'");
     exit 1;
 }
