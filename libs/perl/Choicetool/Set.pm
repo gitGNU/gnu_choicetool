@@ -26,6 +26,9 @@ use warnings;
 use strict;
 use diagnostics;
 
+use Choicetool::Base::Debug;
+use Choicetool::Base::Trace;
+
 sub new {
     my $class = shift;
 
@@ -89,7 +92,7 @@ sub foreach($$)
     assert(defined($callback_ref));
 
     for my $key (keys(%{$self->{DATA}})) {
-	\&callback_ref($key);
+	$callback_ref->($key);
     }
 
     return 1;
