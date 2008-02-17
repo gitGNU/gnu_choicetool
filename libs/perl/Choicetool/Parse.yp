@@ -447,9 +447,13 @@ sub source_file($$)
 
     debug("Including file \`" . $input_file . "'");
 
-    if (!&parse($input_file, $reference, undef)) {
-	exit 1;
-    }
+    #
+    # XXX FIXME: We need to stack the filehandle, we shouldn't call parse
+    #            recursively
+    #
+    #if (!&parse($input_file, $reference, undef)) {
+    #	exit 1;
+    #}
 
     return 1;
 }
@@ -825,12 +829,12 @@ sub error_callback {
 sub parse ($$$)
 {
     my $input_filename = shift;
-    my $string_ref     = shift;
     my $tree_ref       = shift;
+    my $set_ref        = shift;
 
     assert(defined($input_filename));
-    assert(defined($string_ref));
-#    assert(defined($tree_ref));
+    assert(defined($tree_ref));
+    assert(defined($set_ref));
 
     debug("Parsing file \`" . $input_filename . "'");
 
@@ -863,7 +867,5 @@ sub parse ($$$)
     
     debug("Parsing completed successfully");
 
-    ${$string_ref} = $parsed_string;
-    
     return 1;
 }
