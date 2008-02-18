@@ -272,16 +272,16 @@ assert(defined($output_file));
 #
 # Run the tool-chain
 #
-if (!run_tool("preprocess", $dry_run, "")) {
+if (!run_tool("preprocess", $dry_run, @options_slack)) {
     exit 1;
 }
-if (!run_tool("link", $dry_run, "")) {
+if (!run_tool("link", $dry_run, @options_slack)) {
     exit 1;
 }
-if (!run_tool("compile", $dry_run, "")) {
+if (!run_tool("compile", $dry_run, @options_slack)) {
     exit 1;
 }
-if (!run_tool("link", $dry_run, "")) {
+if (!run_tool("link", $dry_run, @options_slack)) {
     exit 1;
 }
 
