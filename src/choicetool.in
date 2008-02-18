@@ -62,9 +62,7 @@ use Choicetool::OS::File;
 use Choicetool::OS::String;
 use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
-use Choicetool::Parse;
-use Choicetool::Tree;
-use Choicetool::Set;
+use Choicetool::OS::Shell;
 
 #
 # Globals
@@ -76,6 +74,43 @@ my $OUTBASE = "choose";
 my $DFLTIN  = $OUTBASE . ".ct";
 my $DFLTOUT = $OUTBASE . ".in";
 
+my $input_file        = $DFLTIN; #File::Spec->catfile(File::Spec->curdir(), "choose.ct");
+my $preprocessed_file = File::Spec->catfile(File::Spec->curdir(), "choose.pp");
+my $parsed_file       = File::Spec->catfile(File::Spec->curdir(), "choose.pa");
+my $compiled_file     = File::Spec->catfile(File::Spec->curdir(), "choose.co");
+my $output_file       = $DFLTOUT; #File::Spec->catfile(File::Spec->curdir(), "choose.oo");
+
+my %tools = (
+    "preprocess" => {
+        HANDLER        => "choicetool-preprocessor",
+        DESCRIPTION    => undef,
+        FLAGS          => "-i $input_file -o $preprocessed_file",
+        PRE_REQUISITE  => [ ],
+        POST_REQUISITE => [ ],
+    },
+    "compile" => {
+        HANDLER        => "choicetool-parser",
+        DESCRIPTION    => undef,
+        FLAGS          => "-i $preprocessed_file -o $parsed_file",
+        PRE_REQUISITE  => [ ],
+        POST_REQUISITE => [ ],
+    },
+    "compiler" => {
+        HANDLER        => "choicetool-compiler",
+        DESCRIPTION    => undef,
+        FLAGS          => "-i $parsed_file -o $compiled_file",
+        PRE_REQUISITE  => [ ],
+        POST_REQUISITE => [ ],
+    },
+    "link" => {
+        HANDLER        => "choicetool-linker",
+        DESCRIPTION    => undef,
+        FLAGS          => "-i $compiled_file -o $output_file",
+        PRE_REQUISITE  => [ ],
+        POST_REQUISITE => [ ],
+    },
+    );
+
 sub help ()
 {
     print "Usage: $PROGRAM_NAME [OPTIONS]\n";
@@ -86,6 +121,7 @@ sub help ()
     print "\n";
     print "  -i, --input=FILE           get input from FILE\n";
     print "  -o, --output=FILE          output to file FILE\n";
+    print "  -n, --dry-run              display commands without modifying any files\n";
     print "  -W, --warnings=CATEGORY    report the warnings falling in CATEGORY\n";
     print "  -d, --debug                run in debugging mode\n";
     print "  -v, --verbose              verbose mode\n";
@@ -97,16 +133,55 @@ sub help ()
     print "Report bugs to <$PACKAGE_BUGREPORT>\n";
 }
 
+sub run_tool ($$@)
+{
+    my $tool    = shift;
+    my $dry_run = shift;
+    my @args    = @_;
+    
+    assert(defined($tool));
+    assert(defined($dry_run));
+    
+    verbose("Running \`" . $tool . "'");
+    
+    my $handler;
+    
+    $handler = $tools{$tool}{HANDLER};
+    debug("Handler is `$handler'");
+    assert(defined($handler));
+    
+    my $flags;
+    
+    $flags = $tools{$tool}{FLAGS} . " @args";
+    debug("Flags are `$flags'");
+    assert(defined($flags));
+    
+    my $command;
+    
+    $command = File::Spec->catfile($bin_dir, $handler) . " " . $flags;
+    
+    if ($dry_run) {
+        print $command . "\n";
+        return 1;
+    }
+    
+    if (!shell_execute($command)) {
+        return 0;
+    }
+    
+    return 1;
+}
+
 #
 # Main
 #
 
 trace_prefix_set($PROGRAM_NAME);
 
-my $input_file      = "";
-my $output_file     = "";
-my $definition_file = "";
+#my $input_file      = "";
+#my $output_file     = "";
 my $running_mode    = "";
+my $dry_run         = 0;
 my $force_mode      = 0;
 my @options_slack;
 
@@ -123,6 +198,10 @@ while ($i <= $#ARGV) {
     } elsif (($ARGV[$i] =~ /^\-o$/) || ($ARGV[$i] =~ /^\-\-output$/)) {
 	$i++;
 	$output_file = $ARGV[$i];
+    } elsif (($ARGV[$i] =~ /^\-n$/) || ($ARGV[$i] =~ /^\-\-dry\-run$/)) {
+	$dry_run = 1;
+    } elsif (($ARGV[$i] =~ /^\-f$/) || ($ARGV[$i] =~ /^\-\-force\-mode$/)) {
+	$force_mode = 1;
     } elsif (($ARGV[$i] =~ /^\-h$/) || ($ARGV[$i] =~ /^\-\-help$/)) {
         help();
         exit 0;
@@ -191,25 +270,18 @@ assert(defined($output_file));
 }
 
 #
-# Parse the input file
+# Run the tool-chain
 #
-
-my $string;
-my $tree;
-my $set;
-
-$tree = Choicetool::Tree->new(0);
-assert(defined($tree));
-
-$set = Choicetool::Set->new(0);
-assert(defined($set));
-
-if (!Choicetool::Parse::parse($input_file, \$tree, \$set)) {
-    error("Failed to parse file `" . $input_file . "\'");
+if (!run_tool("preprocess", $dry_run, "")) {
     exit 1;
 }
-
-if (!string_tofile("", $output_file)) {
+if (!run_tool("link", $dry_run, "")) {
+    exit 1;
+}
+if (!run_tool("compile", $dry_run, "")) {
+    exit 1;
+}
+if (!run_tool("link", $dry_run, "")) {
     exit 1;
 }
 
