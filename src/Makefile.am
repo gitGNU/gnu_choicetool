@@ -23,7 +23,11 @@ include $(top_srcdir)/Makefile.sub
 bin_SCRIPTS =					\
 	choicetool
 
-pkgvbin_SCRIPTS =
+pkgvbin_SCRIPTS =				\
+	choicetool-preprocessor			\
+	choicetool-parser			\
+	choicetool-compiler			\
+	choicetool-linker
 
 ## Make versioned links on bin_SCRIPTS.  We only run the transform on the
 ## root name; then we make a versioned link with the transformed base name.
@@ -46,7 +50,11 @@ uninstall-hook:
 	done
 
 pl_scripts_SRCS =				\
-	choicetool.in
+	choicetool.in				\
+	choicetool-preprocessor.in		\
+	choicetool-parser.in			\
+	choicetool-compiler.in			\
+	choicetool-linker.in
 
 EXTRA_DIST =					\
         $(pl_scripts_SRCS)
@@ -56,6 +64,46 @@ CLEANFILES = $(bin_SCRIPTS) $(pkgvbin_SCRIPTS)
 choicetool: Makefile $(srcdir)/choicetool.in
 	( rm -f $@ $@.tmp && \
 	  $(do_subst) < $(srcdir)/choicetool.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+choicetool-preprocessor: Makefile $(srcdir)/choicetool-preprocessor.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/choicetool-preprocessor.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+choicetool-parser: Makefile $(srcdir)/choicetool-parser.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/choicetool-parser.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+choicetool-compiler: Makefile $(srcdir)/choicetool-compiler.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/choicetool-compiler.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+choicetool-linker: Makefile $(srcdir)/choicetool-linker.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/choicetool-linker.in > $@.tmp && \
 	  chmod +x $@.tmp && \
 	  chmod a-w $@.tmp && \
 	  mv -f $@.tmp $@ ) || { \
