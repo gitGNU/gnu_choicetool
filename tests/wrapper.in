@@ -48,8 +48,7 @@ export aclocallibdir
 #export CHOICETOOL_DATA_PATH
 #CHOICETOOL_DATA_PATH=@abs_top_builddir@/data
 #export CHOICETOOL_DATA_PATH
-
-CHOICETOOL_LIBRARY_PATH=@abs_top_builddir@/libs@PATH_SEPARATOR@@abs_top_srcdir@/libs
-export CHOICETOOL_LIBRARY_PATH
+#CHOICETOOL_LIBRARY_PATH=@abs_top_builddir@/libs@PATH_SEPARATOR@@abs_top_srcdir@/libs
+#export CHOICETOOL_LIBRARY_PATH
 
 exec @abs_top_builddir@/src/$program $parameters

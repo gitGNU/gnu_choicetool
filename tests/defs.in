@@ -217,6 +217,20 @@ case "$srcdir" in
     ;;
 esac
 
+# Define and export useful test variables
+CHOICETOOL_LIBRARY_PATH=@abs_top_builddir@/libs@PATH_SEPARATOR@@abs_top_srcdir@/libs
+export CHOICETOOL_LIBRARY_PATH
+
+CHOICETOOL_DATA_PATH=@abs_top_srcdir@/data
+export CHOICETOOL_DATA_PATH
+
+CHOICETOOL_BINARY_PATH=@abs_top_srcdir@/src
+export CHOICETOOL_BINARY_PATH
+
+#CHOICETOOL=@abs_top_builddir@/src/sitetool
+#export CHOICETOOL
+
+
 testname=`basename $0 .test`
 chmod -R a+rwx testSubDir-$testname > /dev/null 2>&1
 rm -rf testSubDir-$testname > /dev/null 2>&1
