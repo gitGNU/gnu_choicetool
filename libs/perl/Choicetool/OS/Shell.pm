@@ -26,8 +26,8 @@ use warnings;
 use strict;
 use diagnostics;
 
-use Choicetool::Debug;
-use Choicetool::Trace;
+use Choicetool::Base::Debug;
+use Choicetool::Base::Trace;
 
 BEGIN {
     use Exporter ();
