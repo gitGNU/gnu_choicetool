@@ -1,0 +1,202 @@
+#! @PERL@
+
+#
+# choicetool-compiler
+#
+# Copyright (C) 2007, 2008 Francesco Salvestrini
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+
+eval 'case $# in 0) exec @PERL@ -S "$0";; *) exec @PERL@ -S "$0" "$@";; esac'
+    if 0;
+
+use File::Spec;
+
+BEGIN
+{
+    # Retrieve our perl libraries path
+    my $perllibdir;
+    
+    $perllibdir = defined($ENV{'CHOICETOOL_LIBRARY_PATH'}) ?
+	$ENV{'CHOICETOOL_LIBRARY_PATH'} : '@pkgvlibsdir@';
+    
+    unshift(@INC, map(File::Spec->catfile($_, "perl"),
+		      (split '@PATH_SEPARATOR@', $perllibdir)));
+    
+    # Override SHELL.  This is required on DJGPP so that system() uses
+    # bash, not COMMAND.COM which doesn't quote arguments properly.
+    # Other systems aren't expected to use $SHELL when Automake
+    # runs, but it should be safe to drop the `if DJGPP' guard if
+    # it turns up other systems need the same thing.  After all,
+    # if SHELL is used, ./configure's SHELL is always better than
+    # the user's SHELL (which may be something like tcsh).
+    $ENV{'SHELL'} = '@SHELL@' if exists $ENV{'DJGPP'};
+}
+
+#
+# Misc
+#
+
+use strict;
+use warnings;
+use diagnostics;
+
+use Choicetool::Autoconfig;
+use Choicetool::Base::Trace;
+use Choicetool::Base::Debug;
+use Choicetool::Base::Program;
+use Choicetool::OS::File;
+use Choicetool::OS::String;
+use Choicetool::OS::Home;
+use Choicetool::OS::Environment;
+#use Choicetool::Compile;
+
+#
+# Globals
+#
+
+our $PROGRAM_NAME = "choicetool-compiler";
+
+my $OUTBASE = "choose";
+my $DFLTIN  = $OUTBASE . ".ct";
+my $DFLTOUT = $OUTBASE . ".pp";
+
+sub help ()
+{
+    print "Usage: $PROGRAM_NAME [OPTIONS]\n";
+    print "\n";
+    print "Generate an interactive configuration script from an input file if\n";
+    print "given, or \`$DFLTIN' if present. Output is sent to the output file\n";
+    print "if it is given, otherwise into \`$DFLTOUT'.\n";
+    print "\n";
+    print "  -i, --input=FILE           get input from FILE\n";
+    print "  -o, --output=FILE          output to file FILE\n";
+    print "  -W, --warnings=CATEGORY    report the warnings falling in CATEGORY\n";
+    print "  -d, --debug                run in debugging mode\n";
+    print "  -v, --verbose              verbose mode\n";
+    print "  -h, --help                 print this help, then exit\n";
+    print "  -V, --version              print version number, then exit\n";
+    print "\n";
+    print "The environment variable CHOICETOOL_LIBRARY_PATH is honored.\n";
+    print "\n";
+    print "Report bugs to <$PACKAGE_BUGREPORT>\n";
+}
+
+#
+# Main
+#
+
+trace_prefix_set($PROGRAM_NAME);
+
+my $input_file      = "";
+my $output_file     = "";
+my $running_mode    = "";
+my $force_mode      = 0;
+my @options_slack;
+
+debug_set(0);
+verbose_set(0);
+warning_set("none");
+
+# Parse options
+my $i = 0;
+while ($i <= $#ARGV) {
+    if (($ARGV[$i] =~ /^\-i$/)      || ($ARGV[$i] =~ /^\-\-input$/)) {
+	$i++;
+	$input_file = $ARGV[$i];
+    } elsif (($ARGV[$i] =~ /^\-o$/) || ($ARGV[$i] =~ /^\-\-output$/)) {
+	$i++;
+	$output_file = $ARGV[$i];
+    } elsif (($ARGV[$i] =~ /^\-h$/) || ($ARGV[$i] =~ /^\-\-help$/)) {
+        help();
+        exit 0;
+    } elsif (($ARGV[$i] =~ /^\-W$/) || ($ARGV[$i] =~ /^\-\-warnings$/)) {
+        $i++;
+        warning_set($ARGV[$i]);
+    } elsif (($ARGV[$i] =~ /^\-d$/) || ($ARGV[$i] =~ /^\-\-debug$/)) {
+        debug_set(1);
+    } elsif (($ARGV[$i] =~ /^\-v$/) || ($ARGV[$i] =~ /^\-\-verbose$/)) {
+        verbose_set(1);
+    } elsif (($ARGV[$i] =~ /^\-V$/) || ($ARGV[$i] =~ /^\-\-version$/)) {
+        version();
+        exit 0;
+    } elsif ($ARGV[$i] =~ /^\-\-$/) {
+        $i++;
+        last;
+    } else {
+        error("Unknown option \`" . $ARGV[$i] . "'");
+        exit 1;
+    }
+
+    $i++;
+}
+
+debug("Running \`" . $PACKAGE_NAME . "' version \`" . $PACKAGE_VERSION . "'");
+
+@options_slack = @ARGV[$i .. $#ARGV];
+debug("Options slack is \`@options_slack'");
+
+#
+# Check parameters
+#
+if ($input_file eq "") {
+    $input_file = $DFLTIN;
+}
+
+if ($output_file eq "") {
+    $output_file = $DFLTOUT;
+}
+
+if (!file_ispresent($input_file)) {
+    error("Input file \`" . $input_file . "' is missing");
+    exit 1;
+}
+
+assert(defined($input_file));
+assert(defined($output_file));
+
+#
+# Dump the environment, useful for debugging purposes
+#
+{
+    sub callback ($$) {
+        my $key   = shift;
+        my $value = shift;
+	
+        if (!defined($key)) {
+            $key = "undef";
+        }
+        if (!defined($value)) {
+            $value = "undef";
+        }
+        debug("Environment `" . $key . "' = `" . $value . "'")
+    }
+    environment_foreach(\&callback)
+}
+
+#
+# Compile the input file
+#
+
+my $string;
+
+$string = "";
+
+if (!string_tofile($string, $output_file)) {
+    exit 1;
+}
+
+exit 0;
