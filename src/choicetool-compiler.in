@@ -168,24 +168,24 @@ if (!file_ispresent($input_file)) {
 assert(defined($input_file));
 assert(defined($output_file));
 
-#
-# Dump the environment, useful for debugging purposes
-#
-{
-    sub callback ($$) {
-        my $key   = shift;
-        my $value = shift;
-	
-        if (!defined($key)) {
-            $key = "undef";
-        }
-        if (!defined($value)) {
-            $value = "undef";
-        }
-        debug("Environment `" . $key . "' = `" . $value . "'")
-    }
-    environment_foreach(\&callback)
-}
+##
+## Dump the environment, useful for debugging purposes
+##
+#{
+#    sub callback ($$) {
+#        my $key   = shift;
+#        my $value = shift;
+#	
+#        if (!defined($key)) {
+#            $key = "undef";
+#        }
+#        if (!defined($value)) {
+#            $value = "undef";
+#        }
+#        debug("Environment `" . $key . "' = `" . $value . "'")
+#    }
+#    environment_foreach(\&callback)
+#}
 
 #
 # Compile the input file

@@ -78,7 +78,7 @@ my $input_file        = $DFLTIN; #File::Spec->catfile(File::Spec->curdir(), "cho
 my $preprocessed_file = File::Spec->catfile(File::Spec->curdir(), "choose.pp");
 my $parsed_file       = File::Spec->catfile(File::Spec->curdir(), "choose.pa");
 my $compiled_file     = File::Spec->catfile(File::Spec->curdir(), "choose.co");
-my $output_file       = $DFLTOUT; #File::Spec->catfile(File::Spec->curdir(), "choose.oo");
+my $output_file       = $DFLTOUT; #File::Spec->catfile(File::Spec->curdir(), "choose.in");
 
 my %tools = (
     "preprocess" => {
