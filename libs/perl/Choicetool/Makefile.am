@@ -27,7 +27,10 @@ SUBDIRS =					\
 perllibdir = $(pkgvlibsdir)/perl/Choicetool
 
 dist_perllib_DATA =                             \
+	Preprocess.pm				\
 	Parse.pm				\
+	Compile.pm				\
+	Link.pm					\
 	Tree.pm					\
 	Stack.pm				\
 	Set.pm					\
