@@ -62,7 +62,7 @@ use Choicetool::OS::File;
 use Choicetool::OS::String;
 use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
-#use Choicetool::Preprocess;
+use Choicetool::Preprocess;
 
 #
 # Globals
