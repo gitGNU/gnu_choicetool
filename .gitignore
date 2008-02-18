@@ -34,6 +34,10 @@ tools/autotools/m4/guile_autofrisk.m4
 docs/man/choicetool.1
 
 src/choicetool
+src/choicetool-preprocessor
+src/choicetool-parser
+src/choicetool-compiler
+src/choicetool-linker
 
 libs/m4/lib.m4
 libs/scheme/lib.scm
