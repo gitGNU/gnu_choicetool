@@ -203,13 +203,14 @@ assert(defined($tree));
 $set = Choicetool::Set->new(0);
 assert(defined($set));
 
+$string = "";
 #if (!Choicetool::Parse::parse($input_file, \$tree, \$set)) {
 #    error("Failed to parse file `" . $input_file . "\'");
 #    exit 1;
 #}
-#
-#if (!string_tofile("", $output_file)) {
-#    exit 1;
-#}
+
+if (!string_tofile("", $output_file)) {
+    exit 1;
+}
 
 exit 0;
