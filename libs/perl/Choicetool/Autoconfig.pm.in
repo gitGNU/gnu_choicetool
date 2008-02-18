@@ -54,8 +54,8 @@ $PACKAGE_NAME      = '@PACKAGE_NAME@';
 $PACKAGE_BUGREPORT = '@PACKAGE_BUGREPORT@';
 $PACKAGE_VERSION   = '@PACKAGE_VERSION@';
 
-$bin_dir           = "@pkgvbindir@";
-$libs_dir          = "@pkgvlibsdir@";
-$data_dir          = "@pkgvdatadir@";
+$bin_dir           = $ENV{CHOICETOOL_BINARY_PATH}  || "@pkgvbindir@";
+$libs_dir          = $ENV{CHOICETOOL_LIBRARY_PATH} || "@pkgvlibsdir@";
+$data_dir          = $ENV{CHOICETOOL_DATA_PATH}    || "@pkgvdatadir@";
 
 1;
