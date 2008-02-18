@@ -62,6 +62,7 @@ use Choicetool::OS::File;
 use Choicetool::OS::String;
 use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
+#use Choicetool::Preprocess;
 
 #
 # Globals
@@ -197,9 +198,9 @@ $string = "";
 #    error("Failed to preprocess file `" . $input_file . "\'");
 #    exit 1;
 #}
-#
-#if (!string_tofile($string, $output_file)) {
-#    exit 1;
-#}
+
+if (!string_tofile($string, $output_file)) {
+    exit 1;
+}
 
 exit 0;
