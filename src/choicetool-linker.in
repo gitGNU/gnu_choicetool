@@ -71,8 +71,8 @@ use Choicetool::OS::Environment;
 our $PROGRAM_NAME = "choicetool-linker";
 
 my $OUTBASE = "choose";
-my $DFLTIN  = $OUTBASE . ".ct";
-my $DFLTOUT = $OUTBASE . ".pp";
+my $DFLTIN  = $OUTBASE . ".co";
+my $DFLTOUT = $OUTBASE . ".in";
 
 sub help ()
 {

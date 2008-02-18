@@ -71,8 +71,8 @@ use Choicetool::OS::Environment;
 our $PROGRAM_NAME = "choicetool-compiler";
 
 my $OUTBASE = "choose";
-my $DFLTIN  = $OUTBASE . ".ct";
-my $DFLTOUT = $OUTBASE . ".pp";
+my $DFLTIN  = $OUTBASE . ".pa";
+my $DFLTOUT = $OUTBASE . ".co";
 
 sub help ()
 {
