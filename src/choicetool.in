@@ -88,14 +88,14 @@ my %tools = (
         PRE_REQUISITE  => [ ],
         POST_REQUISITE => [ ],
     },
-    "compile" => {
+    "parse" => {
         HANDLER        => "choicetool-parser",
         DESCRIPTION    => undef,
         FLAGS          => "-i $preprocessed_file -o $parsed_file",
         PRE_REQUISITE  => [ ],
         POST_REQUISITE => [ ],
     },
-    "compiler" => {
+    "compile" => {
         HANDLER        => "choicetool-compiler",
         DESCRIPTION    => undef,
         FLAGS          => "-i $parsed_file -o $compiled_file",
@@ -250,24 +250,24 @@ if (!file_ispresent($input_file)) {
 assert(defined($input_file));
 assert(defined($output_file));
 
-#
-# Dump the environment, useful for debugging purposes
-#
-{
-    sub callback ($$) {
-        my $key   = shift;
-        my $value = shift;
-	
-        if (!defined($key)) {
-            $key = "undef";
-        }
-        if (!defined($value)) {
-            $value = "undef";
-        }
-        debug("Environment `" . $key . "' = `" . $value . "'")
-    }
-    environment_foreach(\&callback)
-}
+##
+## Dump the environment, useful for debugging purposes
+##
+#{
+#    sub callback ($$) {
+#        my $key   = shift;
+#        my $value = shift;
+#	
+#        if (!defined($key)) {
+#            $key = "undef";
+#        }
+#        if (!defined($value)) {
+#            $value = "undef";
+#        }
+#        debug("Environment `" . $key . "' = `" . $value . "'")
+#    }
+#    environment_foreach(\&callback)
+#}
 
 #
 # Run the tool-chain
@@ -275,13 +275,13 @@ assert(defined($output_file));
 if (!run_tool("preprocess", $dry_run, @options_slack)) {
     exit 1;
 }
-if (!run_tool("link", $dry_run, @options_slack)) {
+if (!run_tool("parse",      $dry_run, @options_slack)) {
     exit 1;
 }
-if (!run_tool("compile", $dry_run, @options_slack)) {
+if (!run_tool("compile",    $dry_run, @options_slack)) {
     exit 1;
 }
-if (!run_tool("link", $dry_run, @options_slack)) {
+if (!run_tool("link",       $dry_run, @options_slack)) {
     exit 1;
 }
 
