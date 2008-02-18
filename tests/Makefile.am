@@ -79,6 +79,7 @@ SUCCESS_TESTS +=				\
 	success.test				\
 	arguments-1.test			\
 	arguments-2.test			\
+	dry-run.test				\
 	language-parse-1.test			\
 	language-comments-1.test		\
 	language-comments-2.test		\
