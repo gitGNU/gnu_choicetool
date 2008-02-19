@@ -41,10 +41,18 @@ nodist_perllib_DATA =                           \
 	Autoconfig.pm
 
 CLEANFILES     = $(nodist_perllib_DATA)
-DISTCLEANFILES = Parse.pm
+DISTCLEANFILES =				\
+	Parse.pm 				\
+	Preprocess.pm
 
 Parse.pm: Makefile $(srcdir)/Parse.yp
 	$(YAPP) -s -m Choicetool::Parse -o $@ $(srcdir)/Parse.yp || { \
+	        rm -f $@ ; \
+	        exit 1 ; \
+	}
+
+Preprocess.pm: Makefile $(srcdir)/Preprocess.yp
+	$(YAPP) -s -m Choicetool::Preprocess -o $@ $(srcdir)/Preprocess.yp || { \
 	        rm -f $@ ; \
 	        exit 1 ; \
 	}
@@ -58,6 +66,7 @@ Autoconfig.pm: Makefile $(srcdir)/Autoconfig.pm.in
 	        exit 1 ; \
 	}
 
-EXTRA_DIST =                                    \
-	Autoconfig.pm.in                        \
+EXTRA_DIST =					\
+	Autoconfig.pm.in			\
+	Preprocess.yp				\
 	Parse.yp
