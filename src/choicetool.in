@@ -29,13 +29,13 @@ BEGIN
 {
     # Retrieve our perl libraries path
     my $perllibdir;
-    
+
     $perllibdir = defined($ENV{'CHOICETOOL_LIBRARY_PATH'}) ?
 	$ENV{'CHOICETOOL_LIBRARY_PATH'} : '@pkgvlibsdir@';
-    
+
     unshift(@INC, map(File::Spec->catfile($_, "perl"),
 		      (split '@PATH_SEPARATOR@', $perllibdir)));
-    
+
     # Override SHELL.  This is required on DJGPP so that system() uses
     # bash, not COMMAND.COM which doesn't quote arguments properly.
     # Other systems aren't expected to use $SHELL when Automake
@@ -138,37 +138,37 @@ sub run_tool ($$@)
     my $tool    = shift;
     my $dry_run = shift;
     my @args    = @_;
-    
+
     assert(defined($tool));
     assert(defined($dry_run));
-    
+
     verbose("Running \`" . $tool . "'");
-    
+
     my $handler;
-    
+
     $handler = $tools{$tool}{HANDLER};
     debug("Handler is `$handler'");
     assert(defined($handler));
-    
+
     my $flags;
-    
+
     $flags = $tools{$tool}{FLAGS} . " @args";
     debug("Flags are `$flags'");
     assert(defined($flags));
-    
+
     my $command;
-    
+
     $command = File::Spec->catfile($bin_dir, $handler) . " " . $flags;
-    
+
     if ($dry_run) {
         print $command . "\n";
         return 1;
     }
-    
+
     if (!shell_execute($command)) {
         return 0;
     }
-    
+
     return 1;
 }
 
@@ -232,23 +232,42 @@ debug("Running \`" . $PACKAGE_NAME . "' version \`" . $PACKAGE_VERSION . "'");
 debug("Options slack is \`@options_slack'");
 
 #
-# Check parameters
+# Setup flags (used later on)
 #
-if ($input_file eq "") {
-    $input_file = $DFLTIN;
-}
+{
+    debug("Handling flags");
 
-if ($output_file eq "") {
-    $output_file = $DFLTOUT;
-}
+    my $flags = "";
 
-if (!file_ispresent($input_file)) {
-    error("Input file \`" . $input_file . "' is missing");
-    exit 1;
-}
+    if (verbose_get() != 0) {
+        $flags = "-v $flags";
+    }
+    if (debug_get() != 0) {
+        $flags = "-d $flags";
+    }
+    if ($force_mode != 0) {
+        $flags = "$flags -f";
+    }
+    $flags = "-W " . warning_get() . " " . $flags;
 
-assert(defined($input_file));
-assert(defined($output_file));
+    debug("Inherited flags are \`" . $flags . "'");
+
+    debug("Changing per-tool flags:");
+    for my $tool (keys(%tools)) {
+        debug("Tool "                          .
+              "\`" . $tool . "' "              .
+              "flags are "                     .
+              "\`" . $tools{$tool}{FLAGS} . "'");
+
+        assert(defined($tools{$tool}{FLAGS}));
+        $tools{$tool}{FLAGS} = $flags . " " . $tools{$tool}{FLAGS};
+
+        debug("Modified flags  for tool "      .
+              "\`" . $tool . "' "              .
+              "are "                           .
+              "\`" . $tools{$tool}{FLAGS} . "'");
+    }
+}
 
 ##
 ## Dump the environment, useful for debugging purposes
@@ -257,7 +276,7 @@ assert(defined($output_file));
 #    sub callback ($$) {
 #        my $key   = shift;
 #        my $value = shift;
-#	
+#
 #        if (!defined($key)) {
 #            $key = "undef";
 #        }
