@@ -194,10 +194,11 @@ assert(defined($output_file));
 my $string;
 
 $string = "";
-#if (!Choicetool::Preprocess::preprocess($input_file, \$string)) {
-#    error("Failed to preprocess file `" . $input_file . "\'");
-#    exit 1;
-#}
+
+if (!Choicetool::Preprocess::preprocess($input_file, \$string)) {
+    error("Failed to preprocess file `" . $input_file . "\'");
+    exit 1;
+}
 
 if (!string_tofile($string, $output_file)) {
     exit 1;

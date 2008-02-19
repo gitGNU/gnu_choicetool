@@ -62,7 +62,7 @@ use Choicetool::OS::File;
 use Choicetool::OS::String;
 use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
-#use Choicetool::Parse;
+use Choicetool::Parse;
 use Choicetool::Tree;
 use Choicetool::Set;
 
@@ -200,14 +200,14 @@ my $set;
 $tree = Choicetool::Tree->new(0);
 assert(defined($tree));
 
-$set = Choicetool::Set->new(0);
+$set  = Choicetool::Set->new();
 assert(defined($set));
 
 $string = "";
-#if (!Choicetool::Parse::parse($input_file, \$tree, \$set)) {
-#    error("Failed to parse file `" . $input_file . "\'");
-#    exit 1;
-#}
+if (!Choicetool::Parse::parse($input_file, \$tree, \$set)) {
+    error("Failed to parse file `" . $input_file . "\'");
+    exit 1;
+}
 
 if (!string_tofile("", $output_file)) {
     exit 1;
