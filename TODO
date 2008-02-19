@@ -7,29 +7,9 @@ NOTE:
 	completed ...
 
 TO-BE-DONE:
-* Add -Wall -Werror options (like gcc)
-
-* Start a dialog-oriented (dialog-wrapper) to combine with choose.sh script;
-  obviously the `dialog' utility has to be installed on the system, however 
-  the package will give a simple text-based configuration.
-  [ALESSANDRO]
-
-* Add a dialog-wrapper in order to interface choose.sh to dialog executable.
-
-* Fix configure.ac in order to remove the crappy afbindir thing ...
+* Add code into the libs/perl/Sitetool/Options.pm module in order to have a
+  cleaner option parsing method
 
 DONE:
-0.0.232:
-* Fix the nastyness of autogen enclosed in src/Makefile.am (truly ugly)
-
-* Find a way to handle different kinds of options in src/templates/options.tpl
-
-* Fix tools/bootstrap.sh, tools/autotools/perl-depmod and
-  tools/autotools/python-depmod files
-
-* Invoke 'grep -r -i autosite' in the whole package, may i have left autosite
-  traces somewhere
 
 DONE-RECHECK:
-
-* Remove from configure.ac all the unneeded things
