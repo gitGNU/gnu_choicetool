@@ -31,6 +31,7 @@ use Choicetool::Base::Trace;
 use Choicetool::Base::Debug;
 use Choicetool::OS::File;
 use Choicetool::Tree;
+use Choicetool::Set;
 
 BEGIN {
     use Exporter ();
@@ -529,7 +530,8 @@ sub parse_help($$)
     return 1;
 }
 
-sub lexer_callback {
+sub lexer_callback ($)
+{
     my $parser     = shift;
     my $help_text  = "";
     my $buffer     = "";
@@ -804,7 +806,8 @@ sub lexer_callback {
     bug("Unreacheable lexer code");
 }
 
-sub syntax_error {
+sub syntax_error ($$)
+{
     my $message = shift;
     my $lineno  = shift;
 
@@ -815,7 +818,8 @@ sub syntax_error {
     exit 1;
 }
 
-sub error_callback {
+sub error_callback ($)
+{
     my $parser = shift;
 
     assert(defined($parser));
