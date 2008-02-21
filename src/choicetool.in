@@ -58,6 +58,7 @@ use Choicetool::Autoconfig;
 use Choicetool::Base::Trace;
 use Choicetool::Base::Debug;
 use Choicetool::Base::Program;
+use Choicetool::Base::Options;
 use Choicetool::OS::File;
 use Choicetool::OS::String;
 use Choicetool::OS::Home;
