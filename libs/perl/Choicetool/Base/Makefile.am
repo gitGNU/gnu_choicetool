@@ -25,4 +25,5 @@ perllibdir = $(pkgvlibsdir)/perl/Choicetool/Base
 dist_perllib_DATA =				\
 	Debug.pm				\
 	Program.pm				\
-	Trace.pm
+	Trace.pm				\
+	Options.pm
