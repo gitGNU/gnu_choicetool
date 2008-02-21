@@ -27,8 +27,8 @@ use warnings;
 use strict;
 use diagnostics;
 
-use Sitetool::Base::Debug;
-use Sitetool::Base::Trace;
+use Choicetool::Base::Debug;
+use Choicetool::Base::Trace;
 
 sub new($)
 {
