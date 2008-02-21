@@ -27,81 +27,144 @@ use warnings;
 use strict;
 use diagnostics;
 
-use Choicetool::Base::Debug;
-use Choicetool::Base::Trace;
+use Sitetool::Base::Debug;
+use Sitetool::Base::Trace;
 
-sub new ($)
+sub new($)
 {
     my $class = shift;
 
     assert(defined($class));
 
-    my $self  = { };
+    my $self = { };
 
-    debug("Creating object for options handling");
+    bless($self, $class);
 
-    $self->{SHORT}     = { };
-    $self->{LONG}      = { };
-    $self->{CALLBACK}  = { };
-    $self->{ARGSCOUNT} = { };
- 
-    bless $self, $class;
+    $self->clean();
 
     return $self;
 }
 
-sub add ($$$$$$)
+sub clean($)
+{
+    my $self = shift;
+
+    assert(defined($self));
+
+    $self->{IDS}       = ( );
+    $self->{SHORT}     = { };
+    $self->{LONG}      = { };
+    $self->{CALLBACK}  = { };
+    $self->{ARGSMIN}   = { };
+    $self->{ARGSMAX}   = { };
+}
+
+sub add($$$$$$$)
 {
     my $self      = shift;
     my $id        = shift;
     my $short     = shift;
     my $long      = shift;
     my $callback  = shift;
-    my $argscount = shift;
+    my $argsmin   = shift;
+    my $argsmax   = shift;
 
     assert(defined($self));
     assert(defined($id));
     assert(defined($short) || defined($long));
-    assert($argscount >= 0);
-    assert(defined($callback));
+    assert(ref($callback) eq 'CODE');
+    assert($argsmin >= 0);
+    assert($argsmax >= 0);
+    assert($argsmin <= $argsmax);
 
     debug("Adding option");
 
+    if ($self->check_id($id)) {
+	error("ID \`" . $id . "' is already present");
+	return 0;
+    }
+    push(@{$self->{IDS}}, $id);
+
     if (defined($long)) {
 	assert(length($long) > 1);
+
+	my $tmp = $self->get_id_from_long($long);
+
+	if (defined($tmp)) {
+	    error("Long option \`"    . $long . "' " .
+		  "has already id \`" . $tmp  . "'" );
+	    return 0;
+	}
 	$self->{LONG}->{$id} = $long;
     }
 
     if (defined($short)) {
 	assert(length($short) == 1);
+
+	my $tmp = $self->get_id_from_short($short);
+
+	if (defined($tmp)) {
+	    error("Short option \`"   . $short . "' " .
+		  "has already id \`" . $tmp   . "'" );
+	    return 0;
+	}
 	$self->{SHORT}->{$id} = $short;
     }
 
-    $self->{CALLBACK}->{$id}  = $callback;
-    $self->{ARGSCOUNT}->{$id} = $argscount;
+    $self->{CALLBACK}->{$id} = $callback;
+    $self->{ARGSMIN}->{$id}  = $argsmin;
+    $self->{ARGSMAX}->{$id}  = $argsmax;
 
-    debug("  option id:              `" .
-	  $id                           .
-	  "\'");
-    debug("  option long:            `"    .
-	  defined($self->{LONG}->{$id})  ?
-	  $self->{LONG}->{$id} : "undef" .
-	  "\'");
-    debug("  option short:           `"     .
-	  defined($self->{SHORT}->{$id})) ?
-	  $self->{SHORT}->{$id} : "undef"  .
-	  "\'");
-    debug("  option callback:        `" .
-	  $self->{CALLBACK}->{$id}    .
-	  "\'");
-    debug("  option arguments count: `" .
-	  $self->{ARGSCOUNT}->{$id}   .
-	  "\'");
+    debug("  option id:              \`" .
+	  $id                            .
+	  "'");
+    debug("  option long:            \`"   .
+	  (defined($self->{LONG}->{$id})   ?
+	   $self->{LONG}->{$id} : "undef") .
+	  "'");
+    debug("  option short:           \`"    .
+	  (defined($self->{SHORT}->{$id})   ?
+	   $self->{SHORT}->{$id} : "undef") .
+	  "'");
+    debug("  option callback:        \`"      .
+	  (defined($self->{CALLBACK}->{$id})  ?
+	   $self->{CALLBACK}->{$id}: "undef") .
+	  "'");
+    debug("  option arguments min:   \`" .
+	  $self->{ARGSMIN}->{$id}        .
+	  "'");
+    debug("  option arguments max:   \`" .
+	  $self->{ARGSMAX}->{$id}        .
+	  "'");
 
     return 1;
 }
 
-sub get_long_from_id ($$)
+sub config($$)
+{
+    my $self      = shift;
+    my $array_ref = shift;
+
+    assert(defined($self));
+    assert(defined($array_ref));
+
+    $self->clean();
+
+    my $id;
+    $id = 0;
+    for my $entry (@{$array_ref}) {
+
+	if (!$self->add($id, @{$entry})) {
+	    error("Failed to add option");
+	    return 0;
+	}
+	$id++;
+    }
+
+    return 1;
+}
+
+sub get_id_from_long($$)
 {
     my $self = shift;
     my $opt  = shift;
@@ -109,7 +172,7 @@ sub get_long_from_id ($$)
     assert(defined($self));
     assert(defined($opt));
 
-    for my $id (keys $self->{LONG}) {
+    for my $id (keys %{$self->{LONG}}) {
 
 	if ($self->{LONG}->{$id} eq $opt) {
 	    debug("Got long option \`" . $opt . "' for id \`" . $id . "'");
@@ -120,7 +183,7 @@ sub get_long_from_id ($$)
     return undef;
 }
 
-sub get_short_from_id ($)
+sub get_id_from_short($$)
 {
     my $self = shift;
     my $opt  = shift;
@@ -128,147 +191,177 @@ sub get_short_from_id ($)
     assert(defined($self));
     assert(defined($opt));
 
-    for my $key (keys $self->{SHORT}) {
+    for my $id (keys %{$self->{SHORT}}) {
 
-	if ($self->{SHORT}->{$key} eq $opt) {
+	if ($self->{SHORT}->{$id} eq $opt) {
 	    debug("Got short option \`" . $opt . "' for id \`" . $id . "'");
-	    return $key;
+	    return $id;
 	}
     }
 
     return undef;
 }
 
-# XXX FIXME: We should use get_short_from_id() or get_long_from_id() in order
-#            to discriminate different type of options ...
-sub get_id($)
+sub check_id($$)
 {
     my $self = shift;
-    my $opt  = shift;
+    my $id   = shift;
 
     assert(defined($self));
-    assert(defined($opt));
+    assert(defined($id));
 
-    my $id;
+    for my $i (@{$self->{IDS}}) {
 
-    $id = get_long_from_id($opt);
-    if (defined($id)) {
-	return $id;
+	if ($id eq $self->{IDS}[$i]) {
+	    return 1;
+	}
     }
 
-    $id = get_short_from_id($opt);
-    if (defined($id)) {
-	return $id;
-    }
-
-    return undef;
+    return 0;
 }
 
 sub parse($$)
 {
-    my $self   = shift;
-    my $string = shift;
+    my $self        = shift;
+    my $options_ref = shift;
 
     assert(defined($self));
-    assert(defined($string));
+    assert(defined($options_ref));
 
-    $string =~ s/^\s+//;
-    $string =~ s/\s+$//;
+    debug("Options string \`" . "@{$options_ref}" . "'");
 
-    debug("Parsing options\' string `" . $string . "\'");
-
-    if (length($string) < 2) {
-	return $string;
+    if ($$options_ref[0] !~ /^\-/) {
+	# No options to parse
+	return 1;
     }
 
-    while ($string =~ s/([^\s]+)//) {
-	my $token = $1;
+    my $index = 0;
 
-	debug("Current token is `" . $token . "\'");
+    while ($index <= $#$options_ref) {
+	my $id;
+	my $option;
+	my @arguments;
 
-	if ($token eq "--") {
-	    # Options end
-	    return $string;
+	$id        = "";
+	$option    = $$options_ref[$index];
+	@arguments = ( );
+
+	debug("Options token: \`" . $option . "'");
+	debug("Parsing index: " . $index . "'");
+
+	if ($option eq "--") {
+	    # Meet options terminator, close up
+	    debug("Found options terminator");
+	    $index++;
+	    last;
 	}
 
-	my $tmp;
-	my $id;
+	if ($option =~ /^\-.*/) {
+	    # Found option syntax, check if it is short or long
 
-	($tmp) = $token =~ /^(.)/;
-
-	if ($tmp eq "-") {
-	    ($tmp) = $token =~ /^.(.)/;
-
-	    if ($tmp eq "-") {
-		($tmp) = $token =~ /^..(.*)/;
-		$id    = get_id($tmp);
+	    if ($option =~ /^\-\-.*/) {
+		(my $tmp) = $option =~ /^\-\-(.*)/;
+		$id       = $self->get_id_from_long($tmp);
 
 		if (!defined($id)) {
-		    error("Unknown long option `" . $token . "\'");
-		    return undef;
+		    error("Unknown option \`" . $option . "'");
+		    return 0;
 		}
+
+		debug("Found long option \`" . $tmp .
+		      "' with id \`"         . $id  .
+		      "'");
 
 	    } else {
-		if (length($token) > 2) {
-		    # XXX FIXME: Use bug()
-		    error("Options bundling isn\'t supported");
-		    return 1
+		if (length($option) > 2) {
+		    bug("Options bundling isn't supported");
 		}
 
-		($tmp) = $token =~ /^.(.)/;
-		$id    = get_id($tmp);
+		(my $tmp) = $option =~ /^.(.)/;
+		$id = $self->get_id_from_short($tmp);
 
 		if (!defined($id)) {
-		    error("Unknown short option `" . $token . "\'");
-		    return undef;
+		    error("Unknown option \`" . $option . "'");
+		    return 0;
 		}
+
+		debug("Found short option \`" . $tmp .
+		      "' with id \`"          . $id  .
+		      "'");
 	    }
 	} else {
-	    error("Unknown option `" . $token . "\'");
-	    return undef;
+ 	    error("Unknown option \`" . $option . "'");
+ 	    return 0;
 	}
 
-	debug("Getting options parameters");
+	if ($self->{ARGSMAX}->{$id} > 0) {
+	    # Parsing for options arguments
 
-	my @params;
+	    debug("Getting options arguments "   .
+		  "["                            .
+		  $self->{ARGSMIN}->{$id}        .
+		  ", "                           .
+		  $self->{ARGSMAX}->{$id}        .
+		  "]");
 
-	for (my $i = 0; $i < $self->{ARGSCOUNT}->{$id}; $i++) {
-	    $string =~ s/([^\s]+)//;
-
-	    if (!defined($1)) {
-		error("Missing parameter for option `" . $token . "\'");
-		return undef;
+	    if (($index + $self->{ARGSMIN}->{$id}) > $#$options_ref) {
+		error("Too few arguments for option \`" . $option . "'");
+		return 0;
 	    }
+	    $index++;
 
-	    my $param = $1;
+	    my $pre_index = $index;
 
-	    if ($param =~ /^\"/) {
-		while ($string =~ s/([^\"]+)//) {
-		    if (!defined($1)) {
-			error("Missing parameter for `" . $string . "\'");
-			return undef;
+	    for my $i ($index..$#$options_ref) {
+		my $argument = $$options_ref[$i];
+
+		if ($argument =~ /^\-..*/) {
+		    # We encountered an option while parsing arguments.
+		    # Check if we reach the minimum arguments number and
+		    # then release the token
+
+		    if (($i - $pre_index) < $self->{ARGSMIN}->{$id}) {
+			error("Too few arguments for option \`" .
+			      $option                           .
+			      "'");
+			return 0;
 		    }
-
-		    my $tmp = $1;
-
-		    if ($tmp =~ /\\$/) {
-			$string = s/^(.)//;
-			$tmp    = $tmp . $1;
-		    }
-
-		    $param = $param . $tmp;
+		    last;
 		}
 
+		if (($i - $pre_index) == $self->{ARGSMAX}->{$id}) {
+		    # Reach max arguments number
+		    last;
+		}
+
+		push(@arguments, $argument);
+
+		debug("Found argument `" . $argument . "'");
+
+		$index++;
 	    }
-	    $params[$i] = $param;
+
+	} else {
+	    $index++;
 	}
 
-	if ($self->{ARGSCOUNT}->{$id} > 0) {
-	    assert($#params == ($self->{ARGSCOUNT}->{$id} - 1));
+	debug("Executing callback");
+
+	if (!&{$self->{CALLBACK}->{$id}}(@arguments)) {
+	    error("Failed to execute callback for option \`" .
+		  $option                                    .
+		  "'");
+	    return 0;
 	}
     }
 
-    return $string;
+    if ($index > $#$options_ref) {
+	undef(@{$options_ref});
+    } else {
+	@{$options_ref} = "@{$options_ref}[$index..$#$options_ref]";
+    }
+
+    return 1;
 }
 
 1;
