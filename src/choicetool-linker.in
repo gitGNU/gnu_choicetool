@@ -58,6 +58,7 @@ use Choicetool::Autoconfig;
 use Choicetool::Base::Trace;
 use Choicetool::Base::Debug;
 use Choicetool::Base::Program;
+use Choicetool::Base::Options;
 use Choicetool::OS::File;
 use Choicetool::OS::String;
 use Choicetool::OS::Home;
@@ -103,55 +104,54 @@ trace_prefix_set($PROGRAM_NAME);
 
 my $input_file      = "";
 my $output_file     = "";
-my $running_mode    = "";
 my $force_mode      = 0;
-my @options_slack;
+my $dry_run      = 0;
+my $run          = 0;
 
 debug_set(0);
 verbose_set(0);
 warning_set("none");
 
-# Parse options
-my $i = 0;
-while ($i <= $#ARGV) {
-    if (($ARGV[$i] =~ /^\-i$/)      || ($ARGV[$i] =~ /^\-\-input$/)) {
-	$i++;
-	$input_file = $ARGV[$i];
-    } elsif (($ARGV[$i] =~ /^\-o$/) || ($ARGV[$i] =~ /^\-\-output$/)) {
-	$i++;
-	$output_file = $ARGV[$i];
-    } elsif (($ARGV[$i] =~ /^\-h$/) || ($ARGV[$i] =~ /^\-\-help$/)) {
-        help();
-        exit 0;
-    } elsif (($ARGV[$i] =~ /^\-W$/) || ($ARGV[$i] =~ /^\-\-warnings$/)) {
-        $i++;
-        warning_set($ARGV[$i]);
-    } elsif (($ARGV[$i] =~ /^\-d$/) || ($ARGV[$i] =~ /^\-\-debug$/)) {
-        debug_set(1);
-    } elsif (($ARGV[$i] =~ /^\-v$/) || ($ARGV[$i] =~ /^\-\-verbose$/)) {
-        verbose_set(1);
-    } elsif (($ARGV[$i] =~ /^\-V$/) || ($ARGV[$i] =~ /^\-\-version$/)) {
-        version();
-        exit 0;
-    } elsif ($ARGV[$i] =~ /^\-\-$/) {
-        $i++;
-        last;
-    } else {
-        error("Unknown option \`" . $ARGV[$i] . "'");
-        exit 1;
-    }
+my $options = Choicetool::Base::Options->new();
+assert(defined($options));
 
-    $i++;
+my @options_list = (
+    [ "i", "input",
+      sub { $input_file = $_[0];                 $run = 1; return 1; },
+      1,   1 ],
+    [ "o", "output",
+      sub { $output_file = $_[0];                $run = 1; return 1; },
+      1,   1 ],
+
+    [ "n", "dry-run",  sub { $dry_run = 1;       $run = 1; return 1; }, 0, 0 ],
+    [ "f", "force",    sub { $force_mode = 1;    $run = 1; return 1; }, 0, 0 ],
+    [ "W", "warnings", sub { warning_set($_[0]); $run = 1; return 1; }, 1, 1 ],
+    [ "d", "debug",    sub { debug_set(1);       $run = 1; return 1; }, 0, 0 ],
+    [ "v", "verbose",  sub { verbose_set(1);     $run = 1; return 1; }, 0, 0 ],
+    [ "h", "help",     sub { help();             $run = 0; return 1; }, 0, 0 ],
+    [ "V", "version",  sub { version();          $run = 0; return 1; }, 0, 0 ],
+    );
+
+if (!$options->config(\@options_list)) {
+    bug("Options configuration problem");
+}
+
+my @options_slack = @ARGV;
+if(!$options->parse(\@options_slack)) {
+    hint("Option parsing failed");
+    exit 1;
 }
 
 debug("Running \`" . $PACKAGE_NAME . "' version \`" . $PACKAGE_VERSION . "'");
 
-@options_slack = @ARGV[$i .. $#ARGV];
-debug("Options slack is \`@options_slack'");
+#
+# Parameters check
+#
 
-#
-# Check parameters
-#
+if (!$run) {
+    exit 0;
+}
+
 if ($input_file eq "") {
     $input_file = $DFLTIN;
 }
@@ -194,6 +194,10 @@ assert(defined($output_file));
 my $string;
 
 $string = "";
+
+if ($dry_run) {
+    exit 0;
+}
 
 if (!string_tofile($string, $output_file)) {
     exit 1;
