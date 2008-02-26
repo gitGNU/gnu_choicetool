@@ -26,6 +26,9 @@ use warnings;
 use strict;
 use diagnostics;
 
+use Choicetool::Base::Debug;
+use Choicetool::Base::Trace;
+
 sub new {
     my $class = shift;
 
