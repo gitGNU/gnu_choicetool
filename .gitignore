@@ -39,6 +39,8 @@ src/choicetool-parser
 src/choicetool-compiler
 src/choicetool-linker
 
+site/site.stamp
+
 libs/m4/lib.m4
 libs/scheme/lib.scm
 libs/sh/lib.sh
