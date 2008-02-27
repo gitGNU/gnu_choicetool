@@ -41,7 +41,7 @@ sub new {
     return bless($self, $class);
 }
 
-sub add($$)
+sub add ($$)
 {
     my $self = shift;
     my $key  = shift;
@@ -55,7 +55,7 @@ sub add($$)
     return 1;
 }
 
-sub remove($$)
+sub remove ($$)
 {
     my $self = shift;
     my $key  = shift;
@@ -68,7 +68,7 @@ sub remove($$)
     return 1;
 }
 
-sub find($$)
+sub find ($$)
 {
     my $self = shift;
     my $key  = shift;
@@ -83,7 +83,7 @@ sub find($$)
     return undef;
 }
 
-sub foreach($$)
+sub foreach ($$)
 {
     my $self         = shift;
     my $callback_ref = shift;
