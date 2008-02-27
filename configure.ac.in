@@ -120,6 +120,7 @@ AC_CONFIG_FILES([
 	libs/perl/Choicetool/Makefile
 	libs/perl/Choicetool/Base/Makefile
 	libs/perl/Choicetool/OS/Makefile
+	libs/perl/Choicetool/Data/Makefile
 
 	src/Makefile
 
