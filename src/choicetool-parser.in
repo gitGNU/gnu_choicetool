@@ -64,7 +64,7 @@ use Choicetool::OS::String;
 use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
 use Choicetool::Parse;
-use Choicetool::Tree;
+use Choicetool::Data::Tree;
 use Choicetool::Set;
 
 #
@@ -198,7 +198,7 @@ my $string;
 my $tree;
 my $set;
 
-$tree = Choicetool::Tree->new(0);
+$tree = Choicetool::Data::Tree->new(0);
 assert(defined($tree));
 
 $set  = Choicetool::Set->new();
