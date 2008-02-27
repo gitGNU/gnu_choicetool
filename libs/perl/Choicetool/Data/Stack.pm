@@ -60,28 +60,48 @@ sub pop($) {
     return $value;
 }
 
-#sub poke($) {
-#  my $self  = shift;
-#  my $value;
-#
-#  assert(defined($self));
-#
-#  # Replace the stack-top value with the passed one
-#  $self->pop();
-#  $self->push($value);
-#
-#  return $value;
-#}
-#
-#sub peek($$) {
-#  my $self  = shift;
-#  my $value = shift;
-#
-#  assert(defined($self));
-#
-#  # Get the stack-top value without changing it
-#  $value = $self->pop();
-#  $self->push($value);
-#}
+sub size($) {
+    my $self = shift;
+
+    assert(defined($self));
+
+    return ($#{@{$self->{VALUES}}} + 1);
+}
+
+sub is_empty($) {
+    my $self = shift;
+
+    assert(defined($self));
+
+    return (($self->size() == 0) ? 1 : 0);
+}
+
+sub poke($) {
+  my $self  = shift;
+  my $value;
+
+  assert(defined($self));
+  if ($self->is_empty()) {
+      bug("poke() called on empty stack");
+  }
+
+  $value = $self->pop();
+  $self->push($value);
+
+  return $value;
+}
+
+sub peek($$) {
+  my $self  = shift;
+  my $value = shift;
+
+  assert(defined($self));
+  if ($self->is_empty()) {
+      bug("peek() called on empty stack");
+  }
+
+  $value = $self->pop();
+  $self->push($value);
+}
 
 1;
