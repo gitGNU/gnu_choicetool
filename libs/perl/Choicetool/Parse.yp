@@ -30,7 +30,7 @@ use Choicetool::Autoconfig;
 use Choicetool::Base::Trace;
 use Choicetool::Base::Debug;
 use Choicetool::OS::File;
-use Choicetool::Tree;
+use Choicetool::Data::Tree;
 use Choicetool::Set;
 
 BEGIN {
