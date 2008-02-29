@@ -57,14 +57,14 @@ my $symbol;
 
 %%
 
-input: 
+input:
 {
     debug("Entering rule: input");
 }
        stmt_list
      ;
 
-stmt_list: 
+stmt_list:
 {
     debug("Entering rule: stmt_list");
 }
@@ -110,7 +110,6 @@ common_stmt:
            | if_stmt
            | comment_stmt
            | menuconfig_stmt
-           | source_stmt
            ;
 
 config_stmt:
@@ -120,7 +119,7 @@ config_stmt:
              config_entry_start config_option_list
            ;
 
-config_entry_start: 
+config_entry_start:
 {
     debug("Entering rule: config_entry_start");
 }
@@ -164,9 +163,9 @@ prompt_stmt_opt:
     debug("Entering rule: prompt_stmt_opt");
 }
                     | prompt if_expr
-                    ; 
+                    ;
 
-expr: 
+expr:
 {
     debug("Entering rule: expr");
 }
@@ -290,7 +289,7 @@ end:
    | 'T_ENDIF' 'T_EOL'
    ;
 
-menu_stmt: 
+menu_stmt:
 {
     debug("Entering rule: menu_stmt");
 }
@@ -361,7 +360,7 @@ choice_option_list:
 {
     debug("Entering rule: choice_option_list");
 }
- 
+
                   | choice_option_list choice_option
                   | choice_option_list depends
                   | choice_option_list help
@@ -421,43 +420,7 @@ menuconfig_entry_start:
                         'T_MENUCONFIG' 'T_WORD' 'T_EOL'
                       ;
 
-source_stmt:
-{
-    debug("Entering rule: source_stmt");
-}
-             'T_SOURCE' prompt 'T_EOL'
-{
-    my $filename   = $prompt;
-    my $string_ref = "";
-
-    assert(defined($filename));
-
-    if (!source_file($filename, \$string_ref)) {
-	exit 1;
-    }
-}
-
-           ;
-
 %%
-
-sub source_file($$)
-{
-    my $input_file = shift;
-    my $reference  = shift;
-
-    debug("Including file \`" . $input_file . "'");
-
-    #
-    # XXX FIXME: We need to stack the filehandle, we shouldn't call parse
-    #            recursively
-    #
-    #if (!&parse($input_file, $reference, undef)) {
-    #	exit 1;
-    #}
-
-    return 1;
-}
 
 sub parse_help($$)
 {
@@ -479,25 +442,25 @@ sub parse_help($$)
 	    my $curr_ws     = $1;
 	    my $curr_line   = $2;
 	    my $curr_tab_no = 0;
-	    
+
 	    my $tmp = $curr_ws;
 
 	    for (my $i = 0; $i < length($tmp); $i++) {
 		my $token = substr($tmp, 0, 1, "");
-		
+
 		if ($token =~ /\ /) {
 		    $curr_tab_no++;
 		} elsif ($token =~ /\t/) {
 		    $curr_tab_no += 8;
 		}
 	    }
-	    
+
 	    if (($root_tab_no == 0) &&
 		($root_ws eq ""))    {
 		$root_tab_no = $curr_tab_no;
 		$root_ws     = $curr_ws;
 	    }
-	    
+
 	    if ($curr_tab_no > $root_tab_no) {
 		$curr_ws     = s/^$root_ws//;
 		$$string_ref = $$string_ref . $curr_ws . $curr_line . "\n";
@@ -565,7 +528,7 @@ sub lexer_callback ($)
 
 	($char) = $parser->YYData->{INPUT} =~ /^(.)/;
 
-	if (defined($char)              && 
+	if (defined($char)              &&
 	    ($char =~ /[\&\|\!\=\(\)]/)) {
 
 	    if ($buffer ne "") {
@@ -691,7 +654,7 @@ sub lexer_callback ($)
 		debug("Found token: T_ENDCHOICE");
 		return ('T_ENDCHOICE', '');
 
-	    } elsif ($buffer eq "mainmenu") {	
+	    } elsif ($buffer eq "mainmenu") {
 		debug("Found token: T_MAINMENU");
 		return ('T_MAINMENU', '');
 
@@ -707,7 +670,7 @@ sub lexer_callback ($)
 		debug("Found token: T_TRISTATE");
 		return ('T_TRISTATE', '');
 
-	    } elsif ($buffer eq "endmenu") {	
+	    } elsif ($buffer eq "endmenu") {
 		debug("Found token: T_ENDMENU");
 		return ('T_ENDMENU', '');
 
@@ -727,7 +690,7 @@ sub lexer_callback ($)
 		debug("Found token: T_SELECT");
 		return ('T_SELECT', '');
 
-	    } elsif ($buffer eq "config") {	
+	    } elsif ($buffer eq "config") {
 		debug("Found token: T_CONFIG");
 		return ('T_CONFIG', '');
 
@@ -738,10 +701,6 @@ sub lexer_callback ($)
 	    } elsif ($buffer eq "option") {
 		debug("Found token: T_OPTION");
 		return ('T_OPTION', '');
-
-	    } elsif ($buffer eq "source") {	
-		debug("Found token: T_SOURCE");
-		return ('T_SOURCE', '');
 
 	    } elsif ($buffer eq "prompt") {
 		debug("Found token: T_PROMPT");
@@ -755,7 +714,7 @@ sub lexer_callback ($)
 		debug("Found token: T_RANGE");
 		return ('T_RANGE', '');
 
-	    } elsif ($buffer eq "menu") {	
+	    } elsif ($buffer eq "menu") {
 		debug("Found token: T_MENU");
 		return ('T_MENU', '');
 
@@ -789,7 +748,7 @@ sub lexer_callback ($)
 	    } elsif ($buffer =~ /^([a-zA-Z][a-zA-Z0-9_]*)$/) {
 		debug("Found token: T_WORD");
 		debug("  Passing string: \`" . $buffer . "'");
-		
+
 		return ('T_WORD', $buffer);
 	    } else {
 		error("Undefined lexer input at line " . $lineno);
@@ -859,17 +818,19 @@ sub parse ($$$)
     $parser = Choicetool::Parse->new();
     assert(defined($parser));
 
-    $parser->YYData->{INPUT} = $string;
+    $parser->YYData->{INPUT}   = $string;
+    $parser->YYData->{DATA}[0] = $tree_ref;
+    $parser->YYData->{DATA}[1] = $set_ref;
 
     my $result;
     $result = $parser->YYParse(yylex   => \&lexer_callback,
 			       yyerror => \&error_callback);
-    
+
     if ($parser->YYNberr() > 0) {
 	error("Cannot parse input file \`" . $input_filename . "'");
 	return 0;
     }
-    
+
     debug("Parsing completed successfully");
 
     return 1;
