@@ -152,6 +152,10 @@ sub preprocess_helper ($$)
 	    $include_file = File::Spec->rel2abs($1);
 
 	    debug("Including file \`" . $1 . "'");
+
+            $string = $string . "#file \" . $file . \"\n";
+            $string = $string . "#line \" . $line . \"\n";
+
 	    if (!&preprocess_helper($include_file, \$string)) {
 		error("Cannot include file \`" . $include_file . "'");
 		return 0;
