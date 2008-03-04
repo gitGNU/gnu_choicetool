@@ -247,17 +247,13 @@ for my $tool (keys(%tools)) {
     $string = $tools{$tool}->{FLAGS};
     assert(defined($string));
 
-    $string = string_replace_many($string,
-				  { "%input_file%"        =>
-				    $input_file,
-				    "%preprocessed_file%" =>
-				    $preprocessed_file,
-				    "%parsed_file%"       =>
-				    $parsed_file,
-				    "%compiled_file%"     =>
-				    $compiled_file,
-				    "%output_file%"       =>
-				    $output_file });
+    $string = string_replace_many($string, {
+	"%input_file%"        => $input_file,
+	"%preprocessed_file%" => $preprocessed_file,
+	"%parsed_file%"       => $parsed_file,
+	"%compiled_file%"     => $compiled_file,
+	"%output_file%"       => $output_file});
+
     assert(defined($string));
     $tools{$tool}->{FLAGS} = $string;
 }
@@ -265,6 +261,7 @@ for my $tool (keys(%tools)) {
 #
 # Setup flags (used later on)
 #
+
 {
     debug("Handling flags");
 
@@ -303,6 +300,7 @@ for my $tool (keys(%tools)) {
 ##
 ## Dump the environment, useful for debugging purposes
 ##
+#
 #{
 #    sub callback ($$) {
 #        my $key   = shift;
@@ -320,8 +318,9 @@ for my $tool (keys(%tools)) {
 #}
 
 #
-# Run the tool-chain
+# Start the real work by running the tool-chain
 #
+
 if (!run_tool("preprocess", $dry_run, @options_slack)) {
     exit 1;
 }
