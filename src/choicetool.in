@@ -85,28 +85,36 @@ my %tools = (
     "preprocess" => {
         HANDLER        => "choicetool-preprocessor",
         DESCRIPTION    => undef,
-        FLAGS          => "-i $input_file -o $preprocessed_file",
+        FLAGS          =>
+	    "-i %input_file% " .
+	    "-o %preprocessed_file%",
         PRE_REQUISITE  => [ ],
         POST_REQUISITE => [ ],
     },
     "parse" => {
         HANDLER        => "choicetool-parser",
         DESCRIPTION    => undef,
-        FLAGS          => "-i $preprocessed_file -o $parsed_file",
+        FLAGS          =>
+	    "-i %preprocessed_file% " .
+	    "-o %parsed_file%",
         PRE_REQUISITE  => [ ],
         POST_REQUISITE => [ ],
     },
     "compile" => {
         HANDLER        => "choicetool-compiler",
         DESCRIPTION    => undef,
-        FLAGS          => "-i $parsed_file -o $compiled_file",
+        FLAGS          =>
+	    "-i %parsed_file% " .
+	    "-o %compiled_file%",
         PRE_REQUISITE  => [ ],
         POST_REQUISITE => [ ],
     },
     "link" => {
         HANDLER        => "choicetool-linker",
         DESCRIPTION    => undef,
-        FLAGS          => "-i $compiled_file -o $output_file",
+        FLAGS          =>
+	    "-i %compiled_file% " .
+	    "-o %output_file%",
         PRE_REQUISITE  => [ ],
         POST_REQUISITE => [ ],
     },
@@ -228,6 +236,30 @@ debug("Running \`" . $PROGRAM_NAME . "' version \`" . $PACKAGE_VERSION . "'");
 
 if (!$run) {
     exit 0;
+}
+
+#
+# Fixup tools flags
+#
+for my $tool (keys(%tools)) {
+    my $string;
+
+    $string = $tools{$tool}->{FLAGS};
+    assert(defined($string));
+
+    $string = string_replace_many($string,
+				  { "%input_file%"        =>
+				    $input_file,
+				    "%preprocessed_file%" =>
+				    $preprocessed_file,
+				    "%parsed_file%"       =>
+				    $parsed_file,
+				    "%compiled_file%"     =>
+				    $compiled_file,
+				    "%output_file%"       =>
+				    $output_file });
+    assert(defined($string));
+    $tools{$tool}->{FLAGS} = $string;
 }
 
 #
