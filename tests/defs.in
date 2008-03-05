@@ -224,7 +224,7 @@ export CHOICETOOL_LIBRARY_PATH
 CHOICETOOL_DATA_PATH=@abs_top_srcdir@/data
 export CHOICETOOL_DATA_PATH
 
-CHOICETOOL_BINARY_PATH=@abs_top_srcdir@/src
+CHOICETOOL_BINARY_PATH=@abs_top_builddir@/src
 export CHOICETOOL_BINARY_PATH
 
 #CHOICETOOL=@abs_top_builddir@/src/sitetool
