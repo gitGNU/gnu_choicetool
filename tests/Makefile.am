@@ -67,38 +67,38 @@ FAIL_TESTS    =
 SUCCESS_TESTS =
 
 FAIL_TESTS +=					\
-	fail.test				\
-	language-10.test			\
-	language-11.test			\
-	language-12.test			\
-	language-13.test			\
-	language-14.test			\
-	language-15.test
+	test-fail				\
+	test-language-10			\
+	test-language-11			\
+	test-language-12			\
+	test-language-13			\
+	test-language-14			\
+	test-language-15
 
 SUCCESS_TESTS +=				\
-	success.test				\
-	arguments-1.test			\
-	arguments-2.test			\
-	dry-run.test				\
-	language-parse-1.test			\
-	language-comments-1.test		\
-	language-comments-2.test		\
-	language-comments-3.test		\
-	language-source-1.test			\
-	language-source-2.test			\
-	language-source-3.test			\
-	language-source-4.test			\
-	language-1.test				\
-	language-2.test				\
-	language-3.test				\
-	language-4.test				\
-	language-5.test				\
-	language-6.test				\
-	language-7.test				\
-	language-8.test				\
-	language-9.test				\
-	autotools-1.test			\
-	input-name-1.test
+	test-success				\
+	test-arguments-1			\
+	test-arguments-2			\
+	test-dry-run				\
+	test-language-parse-1			\
+	test-language-comments-1		\
+	test-language-comments-2		\
+	test-language-comments-3		\
+	test-language-source-1			\
+	test-language-source-2			\
+	test-language-source-3			\
+	test-language-source-4			\
+	test-language-1				\
+	test-language-2				\
+	test-language-3				\
+	test-language-4				\
+	test-language-5				\
+	test-language-6				\
+	test-language-7				\
+	test-language-8				\
+	test-language-9				\
+	test-autotools-1			\
+	test-input-name-1
 
 XFAIL_TESTS = $(FAIL_TESTS)
 TESTS       = $(FAIL_TESTS) $(SUCCESS_TESTS)
