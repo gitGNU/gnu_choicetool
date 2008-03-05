@@ -121,10 +121,15 @@ sub preprocess_helper ($$)
     }
 
     my $line;
-    my $string;
+    $line = 0;
 
-    $line   = 0;
+    my $string;
     $string = "";
+
+    # Place marker
+    $string = $string . "#file \"" . $file . "\"\n";
+    $string = $string . "#line "   . $line . "\n";
+
     while (<$filehandle>) {
 	$line++;
 
@@ -139,11 +144,7 @@ sub preprocess_helper ($$)
 	    exit 1;
 	}
 
-	if ($tmp =~ m/^[ \t]*$/) {
-	    # Skip empty lines
-	} elsif ($tmp =~ m/^[ \t]*\#.*$/) {
-	    # Skip comments
-	} elsif ($tmp =~ m/^[ \t]*source[ \t]*\"(.*)\"[ \t]*$/) {
+	if ($tmp =~ m/^[ \t]*source[ \t]*\"(.*)\"[ \t]*$/) {
 	    # Handle file inclusion
 
 	    assert(defined($1));
@@ -153,17 +154,23 @@ sub preprocess_helper ($$)
 
 	    debug("Including file \`" . $1 . "'");
 
+            # Place marker
             $string = $string . "#file \"" . $file . "\"\n";
             $string = $string . "#line "   . $line . "\n";
+
+            $line++;
 
 	    if (!&preprocess_helper($include_file, \$string)) {
 		error("Cannot include file \`" . $include_file . "'");
 		return 0;
 	    }
-	} elsif ($tmp =~ m/^.*\\[ \t]*$/) {
-	    # Handle multi-line as a single line
-	    $tmp =~ s/\\[ \t]*$//;
-	    $string = $string . $tmp;
+
+            $line++;
+
+            # Place marker
+            $string = $string . "#file \"" . $file . "\"\n";
+            $string = $string . "#line "   . $line . "\n";
+
 	} else {
 	    # Get the line as it is
 	    $string = $string . $tmp . "\n";
