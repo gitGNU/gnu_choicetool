@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -18,23 +18,12 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# Test to ensure that parsing of lkc configuration is working
+# Test to ensure that parsing is working
 # Report from Francesco Salvestrini
 
 . $testdir/defs || exit 1
 
 cat > ./choose.ct <<EOF
-menu "IMX Implementations"
-	depends on ARCH_IMX
-
-config ARCH_MX1ADS
-	bool "mx1ads"
-	depends on ARCH_IMX
-	select ISA
-	help
-	  Say Y here if you are using the Motorola MX1ADS board
-
-endmenu
 EOF
 
 $CHOICETOOL -i ./choose.ct || exit 1

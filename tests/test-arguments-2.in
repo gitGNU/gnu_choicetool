@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -18,23 +18,11 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# Test to ensure that the comments parsing is working
+# Test to ensure that the test environment has a good set-up
 # Report from Francesco Salvestrini
 
 . $testdir/defs || exit 1
 
-cat > ./choose.ct <<EOF
-# Single line comment
-
-#
-# Multi-line comment
-#
-
-## Another comment
-
-# Comment # Nested comment (?)
-EOF
-
-$CHOICETOOL -i ./choose.ct || exit 1
+$CHOICETOOL --version || exit 1
 
 exit 0

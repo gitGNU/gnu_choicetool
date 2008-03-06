@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -24,13 +24,15 @@
 . $testdir/defs || exit 1
 
 cat > ./choose.ct <<EOF
-if ARCH_AAEC2000
+if ARCH_[]CLPS711X?
 
-menu "Agilent \"AAEC-2000\" Implementations"
+menu "CLPS711X/EP721X Implementations"
 
-config MACH_AAED2000
-	bool "Agilent AAED-2000 Development Platform\"
-	select CPU_ARM920T
+config ARCH_AUTCPU12
+	bool "AUTCPU12"
+	help
+	  Say Y if you intend to run the kernel on the autronix autcpu12
+	  board. This board is based on a Cirrus Logic CS89712.
 
 endmenu
 

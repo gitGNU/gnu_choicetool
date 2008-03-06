@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -18,9 +18,41 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# Test to ensure that the test environment has a good set-up
+# Test to ensure that parsing of lkc configuration is working
 # Report from Francesco Salvestrini
 
 . $testdir/defs || exit 1
+
+cat > ./choose.ct <<EOF
+config ICST525
+	bool
+
+config ARM_GIC
+	bool
+
+config ICST307
+	bool
+
+config SA1111
+	bool
+	select DMABOUNCE
+
+config DMABOUNCE
+	bool
+
+config TIMER_ACORN
+	bool
+
+config SHARP_LOCOMO
+	bool
+
+config SHARP_PARAM
+	bool
+
+config SHARP_SCOOP
+	bool
+EOF
+
+$CHOICETOOL -i ./choose.ct || exit 1
 
 exit 0

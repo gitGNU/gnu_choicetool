@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -23,47 +23,20 @@
 
 . $testdir/defs || exit 1
 
-cat > features.ct <<EOF
-if ARCH_H720X || (ARCH_H720X && (ARCH_H720X + ARCH_H720X))
+cat > ./choose.ct <<EOF
+if ARCH_AAEC2000
 
-menu "h720x Implementations"
+menu "Agilent \"AAEC-2000\" Implementations"
 
-config ARCH_H7201
-	bool "gms30c7201"
-	depends on ARCH_H720X || (ARCH_H720X && (ARCH_H720X ++ ARCH_H720X))
-	select CPU_H7201
-	help
-	  Say Y here if you are using the Hynix GMS30C7201 Reference Board
-
-config ARCH_H7202
-	bool "hms30c7202"
-	select CPU_H7202
-	depends on ARCH_H720X
-	help
-	  Say Y here if you are using the Hynix HMS30C7202 Reference Board
+config MACH_AAED2000
+	bool "Agilent AAED-2000 Development Platform\"
+	select CPU_ARM920T
 
 endmenu
-
-config CPU_H7201
-	bool
-	help
-	  Select code specific to h7201 variants
-
-config CPU_H7202
-	bool
-	help
-	  Select code specific to h7202 variants
-config H7202_SERIAL23
-	depends on CPU_H7202
-	bool "Use serial ports 2+3"
-	help
-	  Say Y here if you wish to use serial ports 2+3. They share their
-	  pins with the keyboard matrix controller, so you have to decide.
-
 
 endif
 EOF
 
-$CHOICETOOL --frontend lkc --dry-run || exit 1
+$CHOICETOOL -i ./choose.ct || exit 1
 
 exit 0

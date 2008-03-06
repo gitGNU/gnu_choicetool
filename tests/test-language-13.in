@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -24,15 +24,25 @@
 . $testdir/defs || exit 1
 
 cat > ./choose.ct <<EOF
-if ARCH_AAEC2000
+if ARCH_CAMELOT
 
-menu "Agilent AAEC-2000 Implementations"
+menu "Epxa10db"
 
-config MACH_AAED2000
-	bool "Agilent AAED-2000 Development Platform"
-	select CPU_ARM920T
+comment "PLD hotswap support"
 
-endmenu
+config PLD
+	bool
+	default y
+
+config PLD_HOTSWAP
+	bool "Support for PLD device hotplugging (experimental)"
+	depends on EXPERIMENTAL
+	help
+	  This enables support for the dynamic loading and configuration of
+	  compatible drivers when the contents of the PLD are changed. This
+	  is still experimental and requires configuration tools which are
+	  not yet generally available. Say N here. You must enable the kernel
+	  module loader for this feature to work.
 
 endif
 EOF

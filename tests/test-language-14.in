@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -49,7 +49,7 @@ config ARCH_PERSONAL_SERVER
 	  Say Y here if you intend to run this kernel on the Compaq
 	  Personal Server.
 
-	  Saying N will reduce the size of the Footbridge kernel.
+Saying N will reduce the size of the Footbridge kernel.
 
 	  The Compaq Personal Server is not available for purchase.
 	  There are no product plans beyond the current research

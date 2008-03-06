@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -23,4 +23,6 @@
 
 . $testdir/defs || exit 1
 
-exit 1
+$CHOICETOOL --help || exit 1
+
+exit 0

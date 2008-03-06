@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -18,39 +18,43 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# Test to ensure that parsing of lkc configuration is working
+# Test to ensure that the comments parsing is working even for "strange"
+# types of comments
 # Report from Francesco Salvestrini
 
 . $testdir/defs || exit 1
 
 cat > ./choose.ct <<EOF
-config ICST525
-	bool
+	# Single line comment
+	
+	##
+	### Multi-line comment
+	####
+	
+	##### Another comment
+	
+	##### Comment # Nested comment (?)
 
-config ARM_GIC
-	bool
+   ## Single line comment
+	
+   ###
+   ## Multi-line comment
+   #
+	
+   ## Another comment
+	
+   # # # Comment # Nested comment (?)
 
-config ICST307
-	bool
+   	# # # ## Single line comment
+	
+   	######### ########## ############
+   #	# Multi-line comment
+   	#################################
+   		
+   	##### Another comment
+   		
+   	# Comment # Nested comment (?)
 
-config SA1111
-	bool
-	select DMABOUNCE
-
-config DMABOUNCE
-	bool
-
-config TIMER_ACORN
-	bool
-
-config SHARP_LOCOMO
-	bool
-
-config SHARP_PARAM
-	bool
-
-config SHARP_SCOOP
-	bool
 EOF
 
 $CHOICETOOL -i ./choose.ct || exit 1

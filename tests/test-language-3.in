@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -18,12 +18,25 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# Test to ensure that parsing is working
+# Test to ensure that parsing of lkc configuration is working
 # Report from Francesco Salvestrini
 
 . $testdir/defs || exit 1
 
 cat > ./choose.ct <<EOF
+if ARCH_CLPS711X
+
+menu "CLPS711X/EP721X Implementations"
+
+config ARCH_AUTCPU12
+	bool "AUTCPU12"
+	help
+	  Say Y if you intend to run the kernel on the autronix autcpu12
+	  board. This board is based on a Cirrus Logic CS89712.
+
+endmenu
+
+endif
 EOF
 
 $CHOICETOOL -i ./choose.ct || exit 1

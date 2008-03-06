@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -18,48 +18,45 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# Test to ensure that the inclusion of new files (via 'source' keyword) works
-# correctly
+# Test to ensure that the comments parsing is working even for "strange"
+# types of comments
 # Report from Francesco Salvestrini
 
 . $testdir/defs || exit 1
 
 cat > ./choose.ct <<EOF
-#a
-source "choose-1.ct"
-#b
+	# Single line comment
+	
+	#
+	# Multi-line comment
+	#
+	
+	## Another comment
+	
+	# Comment # Nested comment (?)
+
+   # Single line comment
+	
+   #
+   # Multi-line comment
+   #
+	
+   ## Another comment
+	
+   # Comment # Nested comment (?)
+
+   	# Single line comment
+	
+   	#
+   	# Multi-line comment
+   	#
+   		
+   	## Another comment
+   		
+   	# Comment # Nested comment (?)
+
 EOF
 
-cat > ./choose-1.ct <<EOF
-#1-a
-source "choose-2.ct"
-#1-b
-EOF
-
-cat > ./choose-2.ct <<EOF
-#2-a
-source "choose-3.ct"
-#2-b
-EOF
-
-cat > ./choose-3.ct <<EOF
-#3-a
-#3-b
-EOF
-
-cat > ./test.exp <<EOF
-#a
-#1-a
-#2-a
-#3-a
-#3-b
-#2-b
-#1-b
-#b
-EOF
-
-$CHOICETOOL -i ./choose.ct -o test.out || exit 1
-
-#diff test.out test.exp || exit 1
+$CHOICETOOL -i ./choose.ct || exit 1
 
 exit 0

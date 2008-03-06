@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -18,23 +18,25 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# Test to ensure that the inclusion of new files (via 'source' keyword) works
-# correctly
+# Test to ensure that parsing of lkc configuration is working
 # Report from Francesco Salvestrini
 
 . $testdir/defs || exit 1
 
 cat > ./choose.ct <<EOF
-source "choose-1.ct"
+if ARCH_AAEC2000
 
-EOF
+menu "Agilent AAEC-2000 Implementations"
 
-cat > ./choose-1.ct <<EOF
+config MACH_AAED2000
+	bool "Agilent AAED-2000 Development Platform"
+	select CPU_ARM920T
 
+endmenu
+
+endif
 EOF
 
 $CHOICETOOL -i ./choose.ct || exit 1
-
-#diff test.out test.exp || exit 1
 
 exit 0

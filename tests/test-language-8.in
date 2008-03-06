@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -18,24 +18,47 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# Test to ensure that choicetool can work with the autotools
+# Test to ensure that parsing of lkc configuration is working
 # Report from Francesco Salvestrini
 
 . $testdir/defs || exit 1
 
-cat > ./configure.ac <<EOF
-AC_INIT([$me],[0.1])
-CT_INIT(some-kind-of-parameter)
-#AC_CONFIG_FILES([choose])
-AC_OUTPUT
-EOF
-
 cat > ./choose.ct <<EOF
+if ARCH_INTEGRATOR
+
+menu "Integrator Options"
+
+config ARCH_INTEGRATOR_AP
+	bool "Support Integrator/AP and Integrator/PP2 platforms"
+	help
+	  Include support for the ARM(R) Integrator/AP and
+	  Integrator/PP2 platforms.
+
+config ARCH_INTEGRATOR_CP
+	bool "Support Integrator/CP platform"
+	select ARCH_CINTEGRATOR
+	help
+	  Include support for the ARM(R) Integrator CP platform.
+
+config ARCH_CINTEGRATOR
+	bool
+
+config INTEGRATOR_IMPD1
+	tristate "Include support for Integrator/IM-PD1"
+	depends on ARCH_INTEGRATOR_AP
+	help
+	  The IM-PD1 is an add-on logic module for the Integrator which
+	  allows ARM(R) Ltd PrimeCells to be developed and evaluated.
+	  The IM-PD1 can be found on the Integrator/PP2 platform.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called impd1.
+
+endmenu
+
+endif
 EOF
 
 $CHOICETOOL -i ./choose.ct || exit 1
-$ACLOCAL    || exit 1
-$AUTOCONF   || exit 1
-./configure || exit 1
 
 exit 0

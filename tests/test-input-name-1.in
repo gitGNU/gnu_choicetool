@@ -1,4 +1,4 @@
-#! /bin/sh
+#! @SHELL@
 
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
@@ -18,52 +18,42 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# Test to ensure that parsing of lkc configuration is working
+# Test to ensure that parsing of the input configuration is working even
+# with an input file name different from the default one
 # Report from Francesco Salvestrini
 
 . $testdir/defs || exit 1
 
-cat > ./choose.ct <<EOF
-if ARCH_H720X
-
-menu "h720x Implementations"
-
-config ARCH_H7201
-	bool "gms30c7201"
-	depends on ARCH_H720X
-	select CPU_H7201
-	help
-	  Say Y here if you are using the Hynix GMS30C7201 Reference Board
-
-config ARCH_H7202
-	bool "hms30c7202"
-	select CPU_H7202
-	depends on ARCH_H720X
-	help
-	  Say Y here if you are using the Hynix HMS30C7202 Reference Board
-
-endmenu
-
-config CPU_H7201
+cat > ./alfa.ct <<EOF
+config ICST525
 	bool
-	help
-	  Select code specific to h7201 variants
 
-config CPU_H7202
+config ARM_GIC
 	bool
-	help
-	  Select code specific to h7202 variants
-config H7202_SERIAL23
-	depends on CPU_H7202
-	bool "Use serial ports 2+3"
-	help
-	  Say Y here if you wish to use serial ports 2+3. They share their
-	  pins with the keyboard matrix controller, so you have to decide.
 
+config ICST307
+	bool
 
-endif
+config SA1111
+	bool
+	select DMABOUNCE
+
+config DMABOUNCE
+	bool
+
+config TIMER_ACORN
+	bool
+
+config SHARP_LOCOMO
+	bool
+
+config SHARP_PARAM
+	bool
+
+config SHARP_SCOOP
+	bool
 EOF
 
-$CHOICETOOL -i ./choose.ct || exit 1
+$CHOICETOOL -i ./alfa.ct   || exit 1
 
 exit 0
