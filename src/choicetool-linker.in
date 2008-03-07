@@ -188,12 +188,39 @@ assert(defined($output_file));
 #}
 
 #
-# Compile the input file
+# Melt the parsed data structure
 #
 
+my %data;
 my $string;
 
 $string = "";
+if (!file_tostring($input_file, \$string)) {
+    exit 1;
+}
+
+debug("Cross your fingers, we're starting evaluation");
+
+
+# XXX FIXME: We should use the former version of 'eval' ...
+#eval {
+#   no warnings 'all';
+#   $string;
+#};
+eval $string;
+if ($@) {
+    debug("Evaluation returned `" . $@ . "'");
+    error("Bad configuration frozen in \`" . $input_file . "' ($@)");
+    return 0;
+}
+
+#
+# Compile the input file
+#
+
+#
+# Write the output to file
+#
 
 if ($dry_run) {
     exit 0;
