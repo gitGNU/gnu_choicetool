@@ -74,6 +74,7 @@ SUCCESS_TESTS =
 
 FAIL_TESTS +=					\
 	test-fail				\
+	test-arguments-3			\
 	test-language-10			\
 	test-language-11			\
 	test-language-12			\
@@ -103,8 +104,10 @@ SUCCESS_TESTS +=				\
 	test-language-7				\
 	test-language-8				\
 	test-language-9				\
+	test-language-16			\
 	test-autotools-1			\
-	test-input-name-1
+	test-input-name-1			\
+	test-output-name-1
 
 XFAIL_TESTS = $(FAIL_TESTS)
 TESTS       = $(FAIL_TESTS) $(SUCCESS_TESTS)
@@ -315,6 +318,18 @@ test-language-15: $(srcdir)/test-language-15.in Makefile
 EXTRA_DIST += test-language-15.in
 CLEANFILES += test-language-15
 
+test-language-16: $(srcdir)/test-language-16.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-16.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-16.in
+CLEANFILES += test-language-16
+
 test-arguments-1: $(srcdir)/test-arguments-1.in Makefile
 	( rm -f $@ $@.tmp && \
 	  $(do_subst) < $(srcdir)/test-arguments-1.in > $@.tmp && \
@@ -338,6 +353,18 @@ test-arguments-2: $(srcdir)/test-arguments-2.in Makefile
 	}
 EXTRA_DIST += test-arguments-2.in
 CLEANFILES += test-arguments-2
+
+test-arguments-3: $(srcdir)/test-arguments-3.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-arguments-3.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-arguments-3.in
+CLEANFILES += test-arguments-3
 
 test-dry-run: $(srcdir)/test-dry-run.in Makefile
 	( rm -f $@ $@.tmp && \
@@ -387,6 +414,18 @@ test-input-name-1: $(srcdir)/test-input-name-1.in Makefile
 EXTRA_DIST += test-input-name-1.in
 CLEANFILES += test-input-name-1
 
+test-output-name-1: $(srcdir)/test-output-name-1.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-output-name-1.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-output-name-1.in
+CLEANFILES += test-output-name-1
+
 test-language-comments-1: $(srcdir)/test-language-comments-1.in Makefile
 	( rm -f $@ $@.tmp && \
 	  $(do_subst) < $(srcdir)/test-language-comments-1.in > $@.tmp && \
@@ -406,7 +445,7 @@ test-language-comments-2: $(srcdir)/test-language-comments-2.in Makefile
 	  chmod a-w $@.tmp && \
 	  mv -f $@.tmp $@ ) || { \
 		rm -f $@ $@.tmp ; \
-		exit 2 ; \
+		exit 3 ; \
 	}
 EXTRA_DIST += test-language-comments-2.in
 CLEANFILES += test-language-comments-2
