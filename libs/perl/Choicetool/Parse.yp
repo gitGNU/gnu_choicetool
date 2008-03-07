@@ -62,6 +62,12 @@ input:
     debug("Entering rule: input");
 }
        stmt_list
+{
+    if (!${$_[0]->YYData->{DATA}[0]}->is_root()) {
+	error("Ending node has to be the root node");
+	exit 0;
+    }
+}
      ;
 
 stmt_list:
@@ -284,7 +290,9 @@ end:
 {
     debug("Entering rule: end");
 }
-     'T_ENDMENU' 'T_EOL'
+     'T_ENDMENU' {
+    $_[0]->YYData->{DATA}[0] = ${$_[0]->YYData->{DATA}[0]}->parent();
+}    'T_EOL'
    | 'T_ENDCHOICE' 'T_EOL'
    | 'T_ENDIF' 'T_EOL'
    ;
@@ -307,7 +315,28 @@ menu:
 {
     debug("Entering rule: menu");
 }
-      'T_MENU' prompt 'T_EOL'
+      'T_MENU'
+{
+    debug("Adding menu to tree");
+
+    my $id     = \$_[0]->YYData->{DATA}[1];
+    my $child  = Choicetool::Data::Tree->new(++$$id);
+    my $parent = $_[0]->YYData->{DATA}[0];
+
+    assert(defined($child));
+
+    $child->parent($parent);
+    $$parent->child($$id, \$child);
+
+    $_[0]->YYData->{DATA}[0] = \$child;
+}     prompt {
+    assert(defined($prompt));
+
+    debug("Adding menu prompt \`" . $prompt . "' to tree");
+
+    ${$_[0]->YYData->{DATA}[0]}->data("PROMPT", $prompt);
+
+}     'T_EOL'
     ;
 
 depends_list:
@@ -820,7 +849,8 @@ sub parse ($$$)
 
     $parser->YYData->{INPUT}   = $string;
     $parser->YYData->{DATA}[0] = $tree_ref;
-    $parser->YYData->{DATA}[1] = $set_ref;
+    $parser->YYData->{DATA}[1] = $$tree_ref->id();
+    $parser->YYData->{DATA}[2] = $set_ref;
 
     my $result;
     $result = $parser->YYParse(yylex   => \&lexer_callback,
@@ -830,6 +860,18 @@ sub parse ($$$)
 	error("Cannot parse input file \`" . $input_filename . "'");
 	return 0;
     }
+
+    $$tree_ref->foreach(sub {
+	my $node = shift;
+	my $hash = $$node->{DATA};
+
+	debug("Menu in tree:");
+	for my $key (keys %{$$node->{DATA}}) {
+	    debug("  Menu with id \`" . $$node->{ID} . "'");
+	    debug("    KEY   -> " . $key);
+	    debug("    VALUE -> " . $$node->{DATA}->{$key});
+	}
+			});
 
     debug("Parsing completed successfully");
 
