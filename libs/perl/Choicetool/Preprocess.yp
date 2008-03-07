@@ -144,15 +144,20 @@ sub preprocess_helper ($$)
 	    exit 1;
 	}
 
-	if ($tmp =~ m/^[ \t]*source[ \t]*\"(.*)\"[ \t]*$/) {
+	if ($tmp =~ m/^[ \t]*source[ \t]*([^\s]+)[ \t]*$/) {
 	    # Handle file inclusion
 
 	    assert(defined($1));
 
+	    my $file;
 	    my $include_file;
-	    $include_file = File::Spec->rel2abs($1);
 
-	    debug("Including file \`" . $1 . "'");
+	    $file         = $1;
+	    $file         =~ s/^\"//;
+	    $file         =~ s/\"$//;
+	    $include_file = File::Spec->rel2abs($file);
+
+	    debug("Including file \`" . $file . "'");
 
             # Place marker
             $string = $string . "#file \"" . $file . "\"\n";
