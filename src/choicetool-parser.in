@@ -210,6 +210,34 @@ if (!Choicetool::Parse::parse($input_file, \$tree, \$set)) {
     exit 1;
 }
 
+assert(defined($tree));
+
+{
+    my $level;
+
+    debug("Menu tree:");
+    $level = 0;
+    $tree->foreach(
+	sub {
+	    my $node_ref = shift;
+
+	    assert(defined($node_ref));
+
+	    debug("  Menu");
+	    debug("    ID:        \`" . ${$node_ref}->id() . "'");
+	    
+	    my $parent_ref;
+
+	    $parent_ref = ${$node_ref}->parent();
+	    if (defined($parent_ref)) {
+		debug("    Parent ID: \`" . ${$parent_ref}->id() . "'");
+	    }
+
+	    debug("");
+	}
+	);
+}
+
 if ($dry_run) {
     exit 0;
 }

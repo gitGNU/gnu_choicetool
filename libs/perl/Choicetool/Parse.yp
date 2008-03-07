@@ -861,18 +861,6 @@ sub parse ($$$)
 	return 0;
     }
 
-    $$tree_ref->foreach(sub {
-	my $node = shift;
-	my $hash = $$node->{DATA};
-
-	debug("Menu in tree:");
-	for my $key (keys %{$$node->{DATA}}) {
-	    debug("  Menu with id \`" . $$node->{ID} . "'");
-	    debug("    KEY   -> " . $key);
-	    debug("    VALUE -> " . $$node->{DATA}->{$key});
-	}
-			});
-
     debug("Parsing completed successfully");
 
     return 1;
