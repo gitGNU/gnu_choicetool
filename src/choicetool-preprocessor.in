@@ -200,6 +200,10 @@ if (!Choicetool::Preprocess::preprocess($input_file, \$string)) {
     exit 1;
 }
 
+#
+# Write output file at last
+#
+
 if ($dry_run) {
     exit 0;
 }
