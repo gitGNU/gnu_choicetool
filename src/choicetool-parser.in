@@ -240,18 +240,22 @@ assert(defined($tree));
 	);
 }
 
-if ($dry_run) {
-    exit 0;
-}
-
 #
-# Freeze the parsed data structure
+# Freeze the parsed data structure to string
 #
 
 my %data;
 $data{TREE} = $tree;
 
 $string = Data::Dumper->Dump([ \%data ], [ qw(*data) ]);
+
+#
+# Write output file at last
+#
+
+if ($dry_run) {
+    exit 0;
+}
 
 if (!string_tofile($string, $output_file)) {
     exit 1;
