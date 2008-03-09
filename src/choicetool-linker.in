@@ -188,33 +188,6 @@ assert(defined($output_file));
 #}
 
 #
-# Melt the parsed data structure
-#
-
-my %data;
-my $string;
-
-$string = "";
-if (!file_tostring($input_file, \$string)) {
-    exit 1;
-}
-
-debug("Cross your fingers, we're starting evaluation");
-
-
-# XXX FIXME: We should use the former version of 'eval' ...
-#eval {
-#   no warnings 'all';
-#   $string;
-#};
-eval $string;
-if ($@) {
-    debug("Evaluation returned `" . $@ . "'");
-    error("Bad configuration frozen in \`" . $input_file . "' ($@)");
-    return 0;
-}
-
-#
 # Link the input file
 #
 
@@ -242,7 +215,7 @@ $output_string = $output_string .
 # Add the footer
 
 #
-# Write the output to file
+# Write output file at last
 #
 
 if ($dry_run) {
