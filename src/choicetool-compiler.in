@@ -220,12 +220,12 @@ if ($@) {
 # Compile the input file
 #
 
-my $string;
+my $output_string;
 
-$string = "";
+$output_string = "";
 
-$string = $string . "%HEADER%";
-$string = $string . "%FOOTER%";
+$output_string = $output_string . "%HEADER%\n";
+$output_string = $output_string . "%FOOTER%\n";
 
 #
 # Write output file at last
@@ -235,7 +235,7 @@ if ($dry_run) {
     exit 0;
 }
 
-if (!string_tofile($string, $output_file)) {
+if (!string_tofile($output_string, $output_file)) {
     exit 1;
 }
 
