@@ -34,7 +34,6 @@ DOWNLOAD = 					\
 
 MACROS =					\
 	ax_prog_perl_modules.m4			\
-	ax_missing_package.m4			\
 	$(DOWNLOAD)
 
 FETCH = $(top_builddir)/tools/scripts/fetch
