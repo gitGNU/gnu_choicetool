@@ -28,9 +28,18 @@ m4_DATA =					\
 	choicetool-guile.m4			\
 	choicetool-core.m4
 
+pkgvdata_DATA =					\
+	header.ctm				\
+	footer.ctm				\
+	menu.ctm
+
 EXTRA_DIST +=					\
 	choicetool-guile.m4.in			\
-	choicetool-core.m4.in
+	choicetool-core.m4.in			\
+	header.ctm.in				\
+	footer.ctm.in				\
+	menu.ctm.in
+
 CLEANFILES += $(m4_DATA)
 
 choicetool-core.m4: Makefile $(srcdir)/choicetool-core.m4.in
@@ -46,6 +55,36 @@ choicetool-core.m4: Makefile $(srcdir)/choicetool-core.m4.in
 choicetool-guile.m4: Makefile $(srcdir)/choicetool-guile.m4.in
 	( rm -f $@ $@.tmp && \
 	  $(do_subst) < $(srcdir)/choicetool-guile.m4.in > $@.tmp && \
+	  chmod -x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+header.ctm: Makefile $(srcdir)/header.ctm.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/header.ctm.in > $@.tmp && \
+	  chmod -x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+footer.ctm: Makefile $(srcdir)/footer.ctm.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/footer.ctm.in > $@.tmp && \
+	  chmod -x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+menu.ctm: Makefile $(srcdir)/menu.ctm.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/menu.ctm.in > $@.tmp && \
 	  chmod -x $@.tmp && \
 	  chmod a-w $@.tmp && \
 	  mv -f $@.tmp $@ ) || { \
