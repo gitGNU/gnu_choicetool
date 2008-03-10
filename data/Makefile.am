@@ -31,6 +31,7 @@ m4_DATA =					\
 EXTRA_DIST +=					\
 	choicetool-guile.m4.in			\
 	choicetool-core.m4.in
+CLEANFILES += $(m4_DATA)
 
 choicetool-core.m4: Makefile $(srcdir)/choicetool-core.m4.in
 	( rm -f $@ $@.tmp && \
