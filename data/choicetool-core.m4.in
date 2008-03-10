@@ -1,0 +1,59 @@
+#
+# Copyright (C) 2007, 2008 Francesco Salvestrini
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+
+AC_DEFUN([CT_SET_VARIABLE],[
+])
+
+AC_DEFUN([CT_GET_VARIABLE],[
+])
+
+AC_DEFUN([CT_USE_AT_YOUR_OWN_RISK_NOTICE],[
+  AC_MSG_NOTICE([])
+  AC_MSG_NOTICE([ATTENTION:])
+  AC_MSG_NOTICE([])
+  AC_MSG_NOTICE([  Your 'configure' script has been built with choicetool])
+  AC_MSG_NOTICE([  support. Choicetool is in its early development stages])
+  AC_MSG_NOTICE([  so you should use it with care.])
+  AC_MSG_NOTICE([  USE IT AT YOUR OWN RISK !!!.])
+  AC_MSG_NOTICE([])
+])
+
+AC_DEFUN([CT_INIT],[
+  AC_PREREQ(2.61)
+
+  DIALOG=""
+  AC_PATH_PROG([DIALOG],   [dialog],   [], [])
+  AS_IF([test "$DIALOG" = ""],[
+    AC_PATH_PROG([DIALOG], [whiptail], [], [])
+  ])
+  AS_IF([test "$DIALOG" = ""],[
+    AC_MSG_ERROR([Cannot find a proper user interface])
+  ])
+  CT_DIALOG=$DIALOG
+  AC_SUBST([CT_DIALOG])
+
+  CT_USE_AT_YOUR_OWN_RISK_NOTICE
+
+  if test "x$1" = "x"; then
+    ct_input_file=$1
+  else
+    ct_input_file="./choose.ct"
+  fi
+
+  AC_CONFIG_FILES([choose], [chmod +x choose])
+])
