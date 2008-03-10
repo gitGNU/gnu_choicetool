@@ -214,6 +214,8 @@ if (!Choicetool::Parse::parse($input_file, \$tree, \$set)) {
 
 assert(defined($tree));
 
+$tree->pack();
+
 {
     my $level;
 
