@@ -98,6 +98,29 @@ sub help ()
     print "Report bugs to <$PACKAGE_BUGREPORT>\n";
 }
 
+sub tree_walker ($$)
+{
+    my $tree_ref   = shift;
+    my $string_ref = shift;
+
+    assert(defined($tree_ref));
+    assert(defined($string_ref));
+
+    ${$string_ref} = ${$string_ref} . "%MENU()%\n";
+
+    my $tree;
+
+    $tree = ${$tree_ref};
+    assert(defined($tree));
+
+    for my $child_ref (@{$tree->children()}) {
+	# XXX FIXME: AAAAARGH !!! We should use assert() here ...
+	if (defined($child_ref)) {
+	    &tree_walker($child_ref, $string_ref);
+	}
+    }
+}
+
 #
 # Main
 #
@@ -224,8 +247,13 @@ my $output_string;
 
 $output_string = "";
 
-$output_string = $output_string . "%HEADER%\n";
-$output_string = $output_string . "%FOOTER%\n";
+$output_string = $output_string . "%HEADER()%\n";
+
+#if (defined($data{TREE})) {
+#    tree_walker($data{TREE}, \$output_string);
+#}
+
+$output_string = $output_string . "%FOOTER()%\n";
 
 #
 # Write output file at last
