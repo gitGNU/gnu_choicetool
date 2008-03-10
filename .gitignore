@@ -42,16 +42,14 @@ src/choicetool-linker
 
 site/site.stamp
 
-libs/m4/lib.m4
 libs/scheme/lib.scm
-libs/sh/lib.sh
 
 libs/perl/Choicetool/Autoconfig.pm
 libs/perl/Choicetool/Parse.pm
 libs/perl/Choicetool/Preprocess.pm
 
-data/choicetool.m4
-data/choicetool.m4.in
+data/choicetool-core.m4
+data/choicetool-guile.m4
 
 tests/defs
 tests/include
