@@ -50,6 +50,9 @@ libs/perl/Choicetool/Preprocess.pm
 
 data/choicetool-core.m4
 data/choicetool-guile.m4
+data/header.ctm
+data/footer.ctm
+data/menu.ctm
 
 tests/defs
 tests/include
