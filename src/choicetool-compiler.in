@@ -122,11 +122,10 @@ sub tree_walker ($$$)
 
     $level++;
     for my $child_ref (@children) {
-	# XXX FIXME: AAAAARGH !!! We should use assert() here ...
-	if (defined($child_ref)) {
-	    if (!&tree_walker($level, $child_ref, $string_ref)) {
-		return 0;
-	    }
+	assert(defined($child_ref));
+
+	if (!&tree_walker($level, $child_ref, $string_ref)) {
+	    return 0;
 	}
     }
 
@@ -250,6 +249,10 @@ if ($@) {
     error("Bad configuration frozen in \`" . $input_file . "' ($@)");
     return 0;
 }
+
+# Pack tree data
+$data{TREE}->pack();
+
 
 #
 # Compile the input file

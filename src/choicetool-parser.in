@@ -214,8 +214,6 @@ if (!Choicetool::Parse::parse($input_file, \$tree, \$set)) {
 
 assert(defined($tree));
 
-$tree->pack();
-
 {
     my $level;
 
@@ -241,6 +239,10 @@ $tree->pack();
 	}
 	);
 }
+
+#
+# NOTE: Tree packing will be performed later on
+#
 
 #
 # Freeze the parsed data structure to string
