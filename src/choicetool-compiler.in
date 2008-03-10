@@ -65,6 +65,7 @@ use Choicetool::OS::File;
 use Choicetool::OS::String;
 use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
+use Choicetool::Data::Tree;
 use Choicetool::Compile;
 
 #
@@ -98,27 +99,38 @@ sub help ()
     print "Report bugs to <$PACKAGE_BUGREPORT>\n";
 }
 
-sub tree_walker ($$)
+sub tree_walker ($$$)
 {
+    my $level      = shift;
     my $tree_ref   = shift;
     my $string_ref = shift;
 
     assert(defined($tree_ref));
     assert(defined($string_ref));
 
-    ${$string_ref} = ${$string_ref} . "%MENU()%\n";
+    ${$string_ref} = ${$string_ref} . "  " x $level . "%MENU()%\n";
 
     my $tree;
 
     $tree = ${$tree_ref};
     assert(defined($tree));
 
-    for my $child_ref (@{$tree->children()}) {
+    my @children;
+    @children = $tree->children();
+
+    debug("Children = @children");
+
+    $level++;
+    for my $child_ref (@children) {
 	# XXX FIXME: AAAAARGH !!! We should use assert() here ...
 	if (defined($child_ref)) {
-	    &tree_walker($child_ref, $string_ref);
+	    if (!&tree_walker($level, $child_ref, $string_ref)) {
+		return 0;
+	    }
 	}
     }
+
+    return 1;
 }
 
 #
@@ -249,9 +261,9 @@ $output_string = "";
 
 $output_string = $output_string . "%HEADER()%\n";
 
-#if (defined($data{TREE})) {
-#    tree_walker($data{TREE}, \$output_string);
-#}
+if (!tree_walker(0, \$data{TREE}, \$output_string)) {
+    exit 1;
+}
 
 $output_string = $output_string . "%FOOTER()%\n";
 
