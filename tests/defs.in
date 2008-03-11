@@ -221,7 +221,7 @@ esac
 CHOICETOOL_LIBRARY_PATH=@abs_top_builddir@/libs@PATH_SEPARATOR@@abs_top_srcdir@/libs
 export CHOICETOOL_LIBRARY_PATH
 
-CHOICETOOL_DATA_PATH=@abs_top_srcdir@/data
+CHOICETOOL_DATA_PATH=@abs_top_builddir@/data
 export CHOICETOOL_DATA_PATH
 
 CHOICETOOL_BINARY_PATH=@abs_top_builddir@/src
