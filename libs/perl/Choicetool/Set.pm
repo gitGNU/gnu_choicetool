@@ -1,5 +1,5 @@
 #
-# Stack.pm
+# Set.pm
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
 #
