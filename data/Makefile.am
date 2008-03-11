@@ -40,7 +40,7 @@ EXTRA_DIST +=					\
 	footer.ctm.in				\
 	menu.ctm.in
 
-CLEANFILES += $(m4_DATA)
+CLEANFILES += $(m4_DATA) $(pkgvdata_DATA)
 
 choicetool-core.m4: Makefile $(srcdir)/choicetool-core.m4.in
 	( rm -f $@ $@.tmp && \
