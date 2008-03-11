@@ -31,6 +31,7 @@ use Choicetool::Base::Trace;
 use Choicetool::Base::Debug;
 use Choicetool::OS::File;
 use Choicetool::Data::Tree;
+use Choicetool::UI::Menu;
 use Choicetool::Set;
 
 BEGIN {
@@ -334,7 +335,14 @@ menu:
 
     debug("Adding menu prompt \`" . $prompt . "' to tree");
 
-    ${$_[0]->YYData->{DATA}[0]}->data("PROMPT", $prompt);
+    my $menu;
+
+    $menu = new Choicetool::UI::Menu;
+    assert(defined($menu));
+
+    $menu->prompt($prompt);
+
+    ${$_[0]->YYData->{DATA}[0]}->data("INTERFACE", $menu);
 
 }     'T_EOL'
     ;
