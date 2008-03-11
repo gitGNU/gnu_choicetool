@@ -66,6 +66,7 @@ use Choicetool::OS::String;
 use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
 use Choicetool::Data::Tree;
+use Choicetool::UI::Menu;
 use Choicetool::Compile;
 
 #
@@ -126,8 +127,7 @@ sub tree_walker ($$$)
 	      "interface data is: \`" . $interface . "'");
 
 	${$string_ref} = ${$string_ref} . "  " x $level .
-	    "%MENU()%\n";
-#	    "%MENU(" . $interface->prompt() . ")%\n";
+	    "%MENU(" . $interface->prompt() . ")%\n";
 
     } else {
 	debug("Node " . $node_ref . " has no interface data")
