@@ -23,7 +23,9 @@ include $(top_srcdir)/Makefile.sub
 SUBDIRS =					\
 	Base					\
 	OS					\
-	Data
+	Data					\
+	UI					\
+	Rules
 
 perllibdir = $(pkgvlibsdir)/perl/Choicetool
 
@@ -32,9 +34,7 @@ dist_perllib_DATA =                             \
 	Parse.pm				\
 	Compile.pm				\
 	Link.pm					\
-	Set.pm					\
-	Menu.pm					\
-	Rule.pm
+	Set.pm
 
 nodist_perllib_DATA =                           \
 	Autoconfig.pm
