@@ -29,13 +29,13 @@ BEGIN
 {
     # Retrieve our perl libraries path
     my $perllibdir;
-    
+
     $perllibdir = defined($ENV{'CHOICETOOL_LIBRARY_PATH'}) ?
 	$ENV{'CHOICETOOL_LIBRARY_PATH'} : '@pkgvlibsdir@';
-    
+
     unshift(@INC, map(File::Spec->catfile($_, "perl"),
 		      (split '@PATH_SEPARATOR@', $perllibdir)));
-    
+
     # Override SHELL.  This is required on DJGPP so that system() uses
     # bash, not COMMAND.COM which doesn't quote arguments properly.
     # Other systems aren't expected to use $SHELL when Automake
@@ -102,32 +102,55 @@ sub help ()
 sub tree_walker ($$$)
 {
     my $level      = shift;
-    my $tree_ref   = shift;
+    my $node_ref   = shift;
     my $string_ref = shift;
 
-    assert(defined($tree_ref));
+    debug("Running tree-walker for node reference " . $node_ref);
+
+    assert(defined($node_ref));
     assert(defined($string_ref));
 
-    ${$string_ref} = ${$string_ref} . "  " x $level . "%MENU()%\n";
+    my $node;
 
-    my $tree;
+    $node = ${$node_ref};
+    assert(defined($node));
 
-    $tree = ${$tree_ref};
-    assert(defined($tree));
+
+    debug("Handling interface data");
+
+    my $interface;
+    $interface = $node->data("INTERFACE");
+    if (defined($interface)) {
+
+	debug("Node " . $node_ref . " " .
+	      "interface data is: \`" . $interface . "'");
+
+	${$string_ref} = ${$string_ref} . "  " x $level .
+	    "%MENU()%\n";
+#	    "%MENU(" . $interface->prompt() . ")%\n";
+
+    } else {
+	debug("Node " . $node_ref . " has no interface data")
+    }
+
+    debug("Handling node children");
 
     my @children;
-    @children = $tree->children();
+    @children = $node->children();
 
-    debug("Children = @children");
+    debug("Node " . $node_ref . " has " . ($#children + 1) . " children");
 
     $level++;
     for my $child_ref (@children) {
+	debug("Analyzing child reference " . $child_ref);
 	assert(defined($child_ref));
 
 	if (!&tree_walker($level, $child_ref, $string_ref)) {
 	    return 0;
 	}
     }
+
+    debug("Tree-walking for node reference " . $node_ref . " completed");
 
     return 1;
 }
@@ -211,7 +234,7 @@ assert(defined($output_file));
 #    sub callback ($$) {
 #        my $key   = shift;
 #        my $value = shift;
-#	
+#
 #        if (!defined($key)) {
 #            $key = "undef";
 #        }
@@ -251,8 +274,8 @@ if ($@) {
 }
 
 # Pack tree data
+debug("Packing input tree");
 $data{TREE}->pack();
-
 
 #
 # Compile the input file
