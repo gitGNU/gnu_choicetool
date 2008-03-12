@@ -19,6 +19,7 @@ do_subst = sed \
   -e 's,[@]SHELL[@],$(SHELL),g' \
   -e 's,[@]PERL[@],$(PERL),g' \
   -e 's,[@]GUILE[@],$(GUILE),g' \
+  -e 's,[@]M4[@],$(M4),g' \
   -e 's,[@]WGET[@],$(WGET),g' \
   -e 's,[@]configure_input[@],Generated from $@.in; do not edit by hand.,g' \
   -e 's,[@]bindir[@],$(bindir),g' \
