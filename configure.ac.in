@@ -48,6 +48,15 @@ AC_PATH_PROG([WGET],        [wget])
 #
 # Runtime related programs
 #
+AX_WITH_M4
+AS_IF([test -z "$M4"],[
+	AC_MSG_ERROR([Missing required M4 program])
+],[
+	AX_PROG_M4_VERSION([1.4.0],[],[
+		AC_MSG_ERROR([Missing required M4 version >= 1.4.0])
+	])
+])
+
 AX_WITH_PERL
 AS_IF([test -z "$PERL"],[
 	AC_MSG_ERROR([Missing required Perl interpreter])
@@ -116,6 +125,7 @@ AC_CONFIG_FILES([
 
 	libs/Makefile
 	libs/scheme/Makefile
+	libs/m4/Makefile
 	libs/perl/Makefile
 	libs/perl/Choicetool/Makefile
 	libs/perl/Choicetool/Base/Makefile
