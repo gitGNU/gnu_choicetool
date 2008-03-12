@@ -22,21 +22,25 @@ include $(top_srcdir)/Makefile.sub
 CLEANFILES =
 EXTRA_DIST =
 
-m4dir = $(datadir)/aclocal
+m4libdir = $(pkgvlibsdir)/m4
 
-m4_DATA =					\
-	choicetool-guile.m4			\
-	choicetool-core.m4
+nodist_m4lib_DATA =				\
+	choicetool.m4				\
+	header.m4				\
+	footer.m4				\
+	menu.m4
 
 EXTRA_DIST +=					\
-	choicetool-guile.m4.in			\
-	choicetool-core.m4.in
+	choicetool.m4.in			\
+	header.m4.in				\
+	footer.m4.in				\
+	menu.m4.in
 
-CLEANFILES += $(m4_DATA)
+CLEANFILES += $(nodist_m4lib_DATA)
 
-choicetool-core.m4: Makefile $(srcdir)/choicetool-core.m4.in
+choicetool.m4: Makefile $(srcdir)/choicetool.m4.in
 	( rm -f $@ $@.tmp && \
-	  $(do_subst) < $(srcdir)/choicetool-core.m4.in > $@.tmp && \
+	  $(do_subst) < $(srcdir)/choicetool.m4.in > $@.tmp && \
 	  chmod -x $@.tmp && \
 	  chmod a-w $@.tmp && \
 	  mv -f $@.tmp $@ ) || { \
@@ -44,9 +48,29 @@ choicetool-core.m4: Makefile $(srcdir)/choicetool-core.m4.in
 	        exit 1 ; \
 	}
 
-choicetool-guile.m4: Makefile $(srcdir)/choicetool-guile.m4.in
+header.m4: Makefile $(srcdir)/header.m4.in
 	( rm -f $@ $@.tmp && \
-	  $(do_subst) < $(srcdir)/choicetool-guile.m4.in > $@.tmp && \
+	  $(do_subst) < $(srcdir)/header.m4.in > $@.tmp && \
+	  chmod -x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+footer.m4: Makefile $(srcdir)/footer.m4.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/footer.m4.in > $@.tmp && \
+	  chmod -x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+menu.m4: Makefile $(srcdir)/menu.m4.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/menu.m4.in > $@.tmp && \
 	  chmod -x $@.tmp && \
 	  chmod a-w $@.tmp && \
 	  mv -f $@.tmp $@ ) || { \

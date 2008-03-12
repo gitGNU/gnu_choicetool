@@ -21,5 +21,6 @@
 include $(top_srcdir)/Makefile.sub
 
 SUBDIRS =					\
+	m4					\
 	scheme					\
 	perl
