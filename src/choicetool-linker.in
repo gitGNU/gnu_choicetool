@@ -61,9 +61,10 @@ use Choicetool::Base::Trace;
 use Choicetool::Base::Debug;
 use Choicetool::Base::Program;
 use Choicetool::Base::Options;
+use Choicetool::OS::Shell;
 use Choicetool::OS::File;
-use Choicetool::OS::String;
-use Choicetool::OS::Home;
+#use Choicetool::OS::String;
+#use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
 use Choicetool::Link;
 
@@ -96,31 +97,6 @@ sub help ()
     print "The environment variable CHOICETOOL_LIBRARY_PATH is honored.\n";
     print "\n";
     print "Report bugs to <$PACKAGE_BUGREPORT>\n";
-}
-
-sub resolve_symbol ($)
-{
-    my $symbol = shift;
-
-    assert(defined($symbol));
-
-    my $filename;
-    $filename = File::Spec->catfile($data_dir,
-				    string_lowercase($symbol) . ".ctm");
-
-    assert(defined($filename));
-
-    my $value;
-    $value = "";
-    if (!file_tostring($filename, \$value)) {
-	return undef;
-    }
-
-    assert(defined($value));
-
-    debug("Symbol \`" . $symbol . "' resolved with file \`" . $filename . "'");
-
-    return $value;
 }
 
 #
@@ -214,54 +190,44 @@ assert(defined($output_file));
 #    environment_foreach(\&callback)
 #}
 
-#
-# Read the input file
-#
-
-my $input_string;
-
-$input_string = "";
-
-if (!file_tostring($input_file, \$input_string)) {
-    exit 1;
-}
-
-#
-# Link it
-#
-
-my $output_string;
-
-$output_string = $input_string;
-
-while ($output_string =~ m/%(.*)\((.*)\)%/) {
-    my $symbol;
-    my $parameters;
-
-    $symbol     = $1;
-    $parameters = $2;
-
-    debug("Got symbol \`" . $symbol . "', parameters \`" . $parameters . "'");
-
-    my $value;
-
-    $value = resolve_symbol($symbol);
-    if (!defined($value)) {
-	exit 1;
-    }
-
-    $output_string =~ s/%$symbol\($parameters\)%/$value/;
-}
-
-#
-# Write output file at last
-#
-
 if ($dry_run) {
     exit 0;
 }
 
-if (!string_tofile($output_string, $output_file)) {
+#
+# Link input file and libraries in order to produce the output one
+#
+
+my $M4PATH;
+
+$M4PATH = "";
+{
+    my @directories;
+
+    @directories = map(File::Spec->catfile($_, "m4"),
+		       (split '@PATH_SEPARATOR@', $libs_dir));
+
+    for my $directory (@directories) {
+	debug("Loop");
+
+	debug("  directory is \`" . $directory . "'");
+	debug("  M4PATH    is \`" . $M4PATH    . "'");
+
+	if ($M4PATH eq "") {
+	    $M4PATH =  $directory;
+	} else {
+	    $M4PATH =  $directory . '@PATH_SEPARATOR@' . $M4PATH;
+	}
+    }
+}
+debug("M4PATH is \`" . $M4PATH . "'");
+
+my $command;
+$command =
+    "M4PATH=" . $M4PATH . " @M4@ -P - " .
+    "< " . $input_file . " > " . $output_file;
+
+if (!shell_execute($command)) {
     exit 1;
 }
 
