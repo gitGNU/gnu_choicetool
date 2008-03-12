@@ -127,7 +127,7 @@ sub tree_walker ($$$)
 	      "interface data is: \`" . $interface . "'");
 
 	${$string_ref} = ${$string_ref} . "  " x $level .
-	    "%MENU(" . $interface->prompt() . ")%\n";
+	    "_CT_MENU([" . $interface->prompt() . "])\n";
 
     } else {
 	debug("Node " . $node_ref . " has no interface data")
@@ -285,13 +285,15 @@ my $output_string;
 
 $output_string = "";
 
-$output_string = $output_string . "%HEADER()%\n";
+# First of all we need to include the m4 library
+$output_string = $output_string . "m4_include(\`choicetool.m4')\n";
 
+# Then we can start using our macros
+$output_string = $output_string . "_CT_HEADER([])\n";
 if (!tree_walker(0, \$data{TREE}, \$output_string)) {
     exit 1;
 }
-
-$output_string = $output_string . "%FOOTER()%\n";
+$output_string = $output_string . "_CT_FOOTER([])\n";
 
 #
 # Write output file at last
