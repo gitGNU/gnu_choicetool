@@ -28,13 +28,17 @@ nodist_m4lib_DATA =				\
 	choicetool.m4				\
 	header.m4				\
 	footer.m4				\
-	menu.m4
+	menu.m4					\
+	choice.m4				\
+	comment.m4
 
 EXTRA_DIST +=					\
 	choicetool.m4.in			\
 	header.m4.in				\
 	footer.m4.in				\
-	menu.m4.in
+	menu.m4.in				\
+	choice.m4.in				\
+	comment.m4.in
 
 CLEANFILES += $(nodist_m4lib_DATA)
 
@@ -71,6 +75,26 @@ footer.m4: Makefile $(srcdir)/footer.m4.in
 menu.m4: Makefile $(srcdir)/menu.m4.in
 	( rm -f $@ $@.tmp && \
 	  $(do_subst) < $(srcdir)/menu.m4.in > $@.tmp && \
+	  chmod -x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+choice.m4: Makefile $(srcdir)/choice.m4.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/choice.m4.in > $@.tmp && \
+	  chmod -x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+comment.m4: Makefile $(srcdir)/comment.m4.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/comment.m4.in > $@.tmp && \
 	  chmod -x $@.tmp && \
 	  chmod a-w $@.tmp && \
 	  mv -f $@.tmp $@ ) || { \
