@@ -6,3 +6,5 @@ m4_ifdef([__gnu__],[],[
 m4_include([header.m4])
 m4_include([footer.m4])
 m4_include([menu.m4])
+m4_include([choice.m4])
+m4_include([comment.m4])
