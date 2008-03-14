@@ -61,13 +61,20 @@ fi
 ])
 
 m4_define([_CT_FD_MSG],[6])
+if test "$silent" = yes; then
+  exec _CT_FD_MSG>/dev/null
+else
+  exec _CT_FD_MSG>&1
+fi
 
 m4_define([_CT_MSG_RESULT],[
 echo "$ct_t""$1" 1>&_CT_FD_MSG
+m4_dnl echo "$2"
 ])
 
 m4_define([_CT_MSG_CHECKING],[
 echo $ct_n "checking $1""... $ct_c" 1>&_CT_FD_MSG
+m4_dnl echo "checking $1..."
 ])
 
 m4_dnl _CT_CACHE_VAL(CACHE-ID, COMMANDS-TO-SET-IT)

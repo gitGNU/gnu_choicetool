@@ -31,5 +31,5 @@ m4_include([ui-menu.m4])
 m4_include([ui-choice.m4])
 m4_include([ui-comment.m4])
 
-#_CT_PATH_PROG([DIALOG],[dialog])
+_CT_PATH_PROG([DIALOG],[dialog])
 DIALOG="echo dialog"
