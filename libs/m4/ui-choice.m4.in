@@ -1,4 +1,4 @@
 m4_define([_CT_CHOICE],[
-# This code is for choice `$1'
-# End of menu `$1' choice
+# This code is for a choice
+# End of choice code
 ])

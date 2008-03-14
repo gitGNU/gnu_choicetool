@@ -1,5 +1,5 @@
 m4_define([_CT_MENU],[
-# This code is for menu `$1'
+# This code is for a menu
 dialog --menu "$1" 0 0 0 "this is" "a test"
-# End of menu `$1' menu
+# End of menu code
 ])

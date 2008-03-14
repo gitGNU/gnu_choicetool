@@ -1,5 +1,5 @@
 m4_define([_CT_COMMENT],[
-# This code is for comment `$1'
+# This code is for a comment
 dialog --msgbox "$1" 0 0
-# End of menu `$1' comment
+# End of comment code
 ])
