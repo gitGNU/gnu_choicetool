@@ -1,8 +1,24 @@
+dnl
 dnl  This file contains parts of Autoconf acgeneral.m4 file which have been
 dnl  adapted to choicetool
 dnl 
 dnl  Copyright (C) 1992, 93, 94, 95, 96, 1998 Free Software Foundation, Inc.
-    
+dnl
+dnl This program is free software; you can redistribute it and/or modify
+dnl it under the terms of the GNU General Public License as published by
+dnl the Free Software Foundation; either version 2 of the License, or
+dnl (at your option) any later version.
+dnl
+dnl This program is distributed in the hope that it will be useful,
+dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+dnl GNU General Public License for more details.
+dnl
+dnl You should have received a copy of the GNU General Public License along
+dnl with this program; if not, write to the Free Software Foundation, Inc.,
+dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+dnl
+
 dnl m4_define([_CT_PATH_PROG],[
 dnl dnl Extract the first word of "$2", so it can be a program name with args.
 dnl set dummy $2; ac_word=[$]2
