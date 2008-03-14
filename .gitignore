@@ -51,8 +51,6 @@ libs/perl/Choicetool/Preprocess.pm
 libs/m4/choicetool.m4
 libs/m4/header.m4
 libs/m4/footer.m4
-libs/m4/autoconf.m4
-libs/m4/utility.m4
 libs/m4/ui-menu.m4
 libs/m4/ui-choice.m4
 libs/m4/ui-comment.m4
