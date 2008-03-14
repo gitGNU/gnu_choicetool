@@ -28,6 +28,8 @@ nodist_m4lib_DATA =				\
 	choicetool.m4				\
 	header.m4				\
 	footer.m4				\
+	utility.m4				\
+	autoconf.m4				\
 	ui-menu.m4				\
 	ui-choice.m4				\
 	ui-comment.m4
@@ -36,6 +38,8 @@ EXTRA_DIST +=					\
 	choicetool.m4.in			\
 	header.m4.in				\
 	footer.m4.in				\
+	utility.m4.in				\
+	autoconf.m4.in				\
 	ui-menu.m4.in				\
 	ui-choice.m4.in				\
 	ui-comment.m4.in
@@ -65,6 +69,26 @@ header.m4: Makefile $(srcdir)/header.m4.in
 footer.m4: Makefile $(srcdir)/footer.m4.in
 	( rm -f $@ $@.tmp && \
 	  $(do_subst) < $(srcdir)/footer.m4.in > $@.tmp && \
+	  chmod -x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+utility.m4: Makefile $(srcdir)/utility.m4.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/utility.m4.in > $@.tmp && \
+	  chmod -x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+autoconf.m4: Makefile $(srcdir)/autoconf.m4.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/autoconf.m4.in > $@.tmp && \
 	  chmod -x $@.tmp && \
 	  chmod a-w $@.tmp && \
 	  mv -f $@.tmp $@ ) || { \
