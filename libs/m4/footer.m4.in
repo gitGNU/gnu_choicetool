@@ -1,2 +1,7 @@
 m4_define([_CT_FOOTER],[
+#
+# That's all folks ...
+#
+
+exit 0
 ])
