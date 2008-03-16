@@ -1,15 +1,18 @@
-
-	We would like to thanks the following peoples for their help:
-
 Joe Orton:
         For his configure.ac/VERSION trick (as seen on his sitecopy) that
         we have adopted.
 
-Autotools people:
-	Some (all) Makefile.am ideas, targets, hints, tips, tricks ... about
+autotools people:
+	Some (all) Makefile.am ideas, targets, hints, tips, tricks ... some
 	package configuration have been stolen from automake and autoconf
 	packages ... so lot of thanks goes to all the autotools people.
 
 glibc people:
 	Some configure.ac code (plugins related) has been stolen from glibc
 	configure.ac ... thanks
+
+Emanuele Bassi:
+         author of gitlog2ChangeLog script
+
+        Thank you all,
+                Francesco
