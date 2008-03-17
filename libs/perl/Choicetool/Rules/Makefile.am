@@ -24,6 +24,8 @@ perllibdir = $(pkgvlibsdir)/perl/Choicetool/Rules
 
 dist_perllib_DATA =				\
 	Expression.pm				\
+	BinaryOp.pm				\
+	UnaryOp.pm				\
 	And.pm					\
 	Or.pm					\
 	Equal.pm				\
