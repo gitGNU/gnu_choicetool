@@ -36,7 +36,22 @@ sub new ($$) {
 
     my $self = { };
 
+    $self->{OPERAND} = undef;
+
     return bless($self, $class);
+}
+
+sub operand ($$) {
+    my $self = shift;
+    my $oper = shift;
+    
+    assert(defined($self));
+
+    if (defined($oper)) {
+	$self->{OPERAND} = $oper;
+    }
+
+    return $self->{OPERAND};
 }
 
 1;
