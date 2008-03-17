@@ -29,4 +29,5 @@ dist_perllib_DATA =				\
 	And.pm					\
 	Or.pm					\
 	Equal.pm				\
-	Not.pm
+	Not.pm					\
+	Symbol.pm
