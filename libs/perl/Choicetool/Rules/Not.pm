@@ -31,4 +31,12 @@ use Choicetool::Base::Trace;
 
 use base qw(UnaryOp);
 
+sub dump ($) {
+    my $self = shift;
+
+    assert(defined($self));
+
+    print "! " . $self->operand();
+}
+
 1;

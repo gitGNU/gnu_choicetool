@@ -31,4 +31,12 @@ use Choicetool::Base::Trace;
 
 use base qw(BinaryOp);
 
+sub dump ($) {
+    my $self = shift;
+
+    assert(defined($self));
+
+    print $self->lhs() . " || " . $self->rhs();
+}
+
 1;
