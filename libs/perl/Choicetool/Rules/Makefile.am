@@ -23,4 +23,8 @@ include $(top_srcdir)/Makefile.sub
 perllibdir = $(pkgvlibsdir)/perl/Choicetool/Rules
 
 dist_perllib_DATA =				\
-	Rule.pm
+	Expression.pm				\
+	And.pm					\
+	Or.pm					\
+	Equal.pm				\
+	Not.pm
