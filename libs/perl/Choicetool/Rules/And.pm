@@ -42,7 +42,8 @@ sub new ($$) {
     return bless($self, $class);
 }
 
-sub left ($$) {
+# Left Hand Side
+sub lhs ($$) {
     my $self = shift;
     my $oper = shift;
     
@@ -55,7 +56,8 @@ sub left ($$) {
     return $self->{LEFT};
 }
 
-sub right ($$) {
+# Right Hand Side
+sub rhs ($$) {
     my $self = shift;
     my $oper = shift;
     
