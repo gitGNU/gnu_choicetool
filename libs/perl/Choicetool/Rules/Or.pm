@@ -36,7 +36,36 @@ sub new ($$) {
 
     my $self = { };
 
+    $self->{LEFT}  = undef;
+    $self->{RIGHT} = undef;
+
     return bless($self, $class);
+}
+
+sub left ($$) {
+    my $self = shift;
+    my $oper = shift;
+    
+    assert(defined($self));
+
+    if (defined($oper)) {
+	$self->{LEFT} = $oper;
+    }
+
+    return $self->{LEFT};
+}
+
+sub right ($$) {
+    my $self = shift;
+    my $oper = shift;
+    
+    assert(defined($self));
+
+    if (defined($oper)) {
+	$self->{RIGHT} = $oper;
+    }
+
+    return $self->{RIGHT};
 }
 
 1;
