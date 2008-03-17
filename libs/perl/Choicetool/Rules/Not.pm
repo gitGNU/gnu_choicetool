@@ -29,29 +29,6 @@ use diagnostics;
 use Choicetool::Base::Debug;
 use Choicetool::Base::Trace;
 
-sub new ($$) {
-    my $class = shift;
-
-    assert(defined($class));
-
-    my $self = { };
-
-    $self->{OPERAND} = undef;
-
-    return bless($self, $class);
-}
-
-sub operand ($$) {
-    my $self = shift;
-    my $oper = shift;
-    
-    assert(defined($self));
-
-    if (defined($oper)) {
-	$self->{OPERAND} = $oper;
-    }
-
-    return $self->{OPERAND};
-}
+use base qw(UnaryOp);
 
 1;

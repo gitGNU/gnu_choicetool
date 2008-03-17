@@ -29,45 +29,6 @@ use diagnostics;
 use Choicetool::Base::Debug;
 use Choicetool::Base::Trace;
 
-sub new ($$) {
-    my $class = shift;
-
-    assert(defined($class));
-
-    my $self = { };
-
-    $self->{LEFT}  = undef;
-    $self->{RIGHT} = undef;
-
-    return bless($self, $class);
-}
-
-# Left Hand Side
-sub lhs ($$) {
-    my $self = shift;
-    my $oper = shift;
-    
-    assert(defined($self));
-
-    if (defined($oper)) {
-	$self->{LEFT} = $oper;
-    }
-
-    return $self->{LEFT};
-}
-
-# Right Hand Side
-sub rhs ($$) {
-    my $self = shift;
-    my $oper = shift;
-    
-    assert(defined($self));
-
-    if (defined($oper)) {
-	$self->{RIGHT} = $oper;
-    }
-
-    return $self->{RIGHT};
-}
+use base qw(BinaryOp);
 
 1;
