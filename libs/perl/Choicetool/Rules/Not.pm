@@ -36,7 +36,7 @@ sub dump ($) {
 
     assert(defined($self));
 
-    print "! " . $self->operand();
+    print "! " . $self->operand()->dump();
 }
 
 1;

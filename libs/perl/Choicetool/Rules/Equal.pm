@@ -36,7 +36,7 @@ sub dump ($) {
 
     assert(defined($self));
 
-    print $self->lhs() . " == " . $self->rhs();
+    print $self->lhs()->dump() . " == " . $self->rhs()->dump();
 }
 
 1;
