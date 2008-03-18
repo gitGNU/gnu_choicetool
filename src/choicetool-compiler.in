@@ -127,7 +127,7 @@ sub tree_walker ($$$)
 	      "interface data is: \`" . $interface . "'");
 
 	${$string_ref} = ${$string_ref} . "  " x $level .
-	    "_CT_MENU_BEGIN([" . $interface->prompt() . "])\n";
+	    "_CT_MENU_BEGIN([" . $interface->title() . "])\n";
 
     } else {
 	debug("Node " . $node_ref . " has no interface data")
