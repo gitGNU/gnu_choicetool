@@ -37,6 +37,12 @@ sub new ($)
 
     my $self = { };
 
+    $self->{TYPE}    = undef;
+    $self->{TITLE}   = undef;
+    $self->{DEFAULT} = undef;
+    $self->{RANGE}   = undef;
+    $self->{HELP}    = undef;
+
     return bless($self, $class);
 }
 
@@ -53,17 +59,17 @@ sub type {
     return $self->{TYPE};
 }
 
-sub prompt {
+sub title {
     my $self  = shift;
     my $value = shift;
 
     assert(defined($self));
 
     if (defined($value)) {
-	$self->{PROMPT} = $value;
+	$self->{TITLE} = $value;
     }
 
-    return $self->{PROMPT};
+    return $self->{TITLE};
 }
 
 sub default {
