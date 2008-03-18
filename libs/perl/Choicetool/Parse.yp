@@ -64,10 +64,7 @@ input:
 }
        stmt_list
 {
-    if (!${$_[0]->YYData->{DATA}[0]}->is_root()) {
-	error("Ending node has to be the root node");
-	exit 0;
-    }
+    assert(${$_[0]->YYData->{DATA}[0]}->is_root());
 }
      ;
 
@@ -327,7 +324,11 @@ menu:
     assert(defined($child));
 
     $child->parent($parent);
-    $$parent->child($$id, \$child);
+    if (!$$parent->add_child($$id, \$child)) {
+	assert(defined($$parent->id()));
+	error("Cannot add child node to parent \`" . $$parent->id() . "'");
+
+    }
 
     $_[0]->YYData->{DATA}[0] = \$child;
 }     prompt {
@@ -340,7 +341,7 @@ menu:
     $menu = new Choicetool::UI::Menu;
     assert(defined($menu));
 
-    $menu->prompt($prompt);
+    $menu->title($prompt);
 
     ${$_[0]->YYData->{DATA}[0]}->data("INTERFACE", $menu);
 
