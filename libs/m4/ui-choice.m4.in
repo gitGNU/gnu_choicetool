@@ -16,7 +16,7 @@ m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
-m4_define([_CT_CHOICE],[
+m4_define([_CT_UI_CHOICE],[
 # This code is for a choice
 # End of choice code
 ])
