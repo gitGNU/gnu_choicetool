@@ -29,6 +29,3 @@ m4_include([ui-menu.m4])
 m4_include([ui-choice.m4])
 m4_include([ui-comment.m4])
 m4_include([ui-yesno.m4])
-
-#DIALOG="echo dialog"
-DIALOG="dialog"
