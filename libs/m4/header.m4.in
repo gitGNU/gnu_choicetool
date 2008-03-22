@@ -32,5 +32,5 @@ m4_define([_CT_HEADER],[
 # PARTICULAR PURPOSE.
 
 
-_CT_UI_COMMENT([This configuration interface is still under active development and is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
+_CT_UI_COMMENT([This configuration interface has been built using @PACKAGE_NAME@ @PACKAGE_VERSION@.\n\nPlease note that @PACKAGE_NAME@ is still under active development.\n\nThis interface is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
 ])
