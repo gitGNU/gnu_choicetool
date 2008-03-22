@@ -17,10 +17,10 @@ m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
 m4_define([_CT_MENU_BEGIN],[
-# This code is for a menu
+# Begin of menu "$1" code
 $DIALOG --menu "$1" 0 0 0 "this is" "a test"
 ])
 
 m4_define([_CT_MENU_END],[
-# End of menu code
+# End of menu "$1" code
 ])
