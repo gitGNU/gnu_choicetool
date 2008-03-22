@@ -192,7 +192,7 @@ trace_prefix_set($PROGRAM_NAME);
 my $running_mode = "";
 my $force_mode   = 0;
 my $dry_run      = 0;
-my $run          = 0;
+my $run          = 1;
 
 debug_set(0);
 verbose_set(0);
@@ -202,18 +202,13 @@ my $options = Choicetool::Base::Options->new();
 assert(defined($options));
 
 my @options_list = (
-    [ "i", "input",
-      sub { $input_file = $_[0];                 $run = 1; return 1; },
-      1,   1 ],
-    [ "o", "output",
-      sub { $output_file = $_[0];                $run = 1; return 1; },
-      1,   1 ],
-
-    [ "n", "dry-run",  sub { $dry_run = 1;       $run = 1; return 1; }, 0, 0 ],
-    [ "f", "force",    sub { $force_mode = 1;    $run = 1; return 1; }, 0, 0 ],
-    [ "W", "warnings", sub { warning_set($_[0]); $run = 1; return 1; }, 1, 1 ],
-    [ "d", "debug",    sub { debug_set(1);       $run = 1; return 1; }, 0, 0 ],
-    [ "v", "verbose",  sub { verbose_set(1);     $run = 1; return 1; }, 0, 0 ],
+    [ "i", "input",    sub { $input_file = $_[0];          return 1; }, 1, 1 ],
+    [ "o", "output",   sub { $output_file = $_[0];         return 1; }, 1, 1 ],
+    [ "n", "dry-run",  sub { $dry_run = 1;                 return 1; }, 0, 0 ],
+    [ "f", "force",    sub { $force_mode = 1;              return 1; }, 0, 0 ],
+    [ "W", "warnings", sub { warning_set($_[0]);           return 1; }, 1, 1 ],
+    [ "d", "debug",    sub { debug_set(1);                 return 1; }, 0, 0 ],
+    [ "v", "verbose",  sub { verbose_set(1);               return 1; }, 0, 0 ],
     [ "h", "help",     sub { help();             $run = 0; return 1; }, 0, 0 ],
     [ "V", "version",  sub { version();          $run = 0; return 1; }, 0, 0 ],
     );
