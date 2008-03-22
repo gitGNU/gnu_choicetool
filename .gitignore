@@ -94,6 +94,7 @@ tests/test-language-source-1
 tests/test-language-source-2
 tests/test-language-source-3
 tests/test-language-source-4
+tests/test-language-complete
 tests/test-success
 
 docs/info/choicetool.info
