@@ -119,21 +119,16 @@ sub tree_walker ($$$)
 
     debug("Handling interface data");
 
-    my $interface;
-    $interface = $node->data("INTERFACE");
-    if (defined($interface)) {
+    my $object;
+    $object = $node->data("INTERFACE");
+    if (defined($object)) {
 
-	debug("Node " . $node_ref . " " .
-	      "interface data is: \`" . $interface . "'");
+	debug("Node " . $node_ref . " data is: \`" . $object . "'");
 
-	${$string_ref} = ${$string_ref} . "  " x $level .
-	    "_CT_MENU_BEGIN([" . $interface->title() . "])\n";
-
-	${$string_ref} = ${$string_ref} . "  " x $level .
-	    "_CT_MENU_END([" . $interface->title() . "])\n";
+	${$string_ref} = ${$string_ref} . $object->stringize("  " x $level);
 
     } else {
-	debug("Node " . $node_ref . " has no interface data")
+	debug("Node " . $node_ref . " has no object data")
     }
 
     debug("Handling node children");

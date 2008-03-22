@@ -111,4 +111,20 @@ sub help {
     return $self->{HELP};
 }
 
+sub stringize ($) {
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+
+    my $string;
+
+    $string = "";
+    $string = $string . $prefix . "_CT_MENU_BEGIN([" . $self->title() . "])\n";
+    $string = $string . $prefix . "_CT_MENU_END(["   . $self->title() . "])\n";
+
+    return $string;
+}
+
 1;
