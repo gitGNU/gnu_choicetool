@@ -121,6 +121,7 @@ sub stringize ($) {
     my $string;
 
     $string = "";
+
     $string = $string . $prefix . "_CT_MENU_BEGIN([" . $self->title() . "])\n";
     $string = $string . $prefix . "_CT_MENU_END(["   . $self->title() . "])\n";
 

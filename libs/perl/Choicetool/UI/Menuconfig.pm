@@ -53,4 +53,16 @@ sub symbol {
     return $self->{SYMBOL};
 }
 
+sub stringize ($) {
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+
+    $string = "";
+
+    return $string;
+}
+
 1;

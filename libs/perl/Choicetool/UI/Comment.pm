@@ -40,4 +40,16 @@ sub new ($)
     return bless($self, $class);
 }
 
+sub stringize ($) {
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+
+    $string = "";
+
+    return $string;
+}
+
 1;
