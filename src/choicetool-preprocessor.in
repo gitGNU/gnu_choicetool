@@ -106,7 +106,7 @@ my $input_file   = "";
 my $output_file  = "";
 my $force_mode   = 0;
 my $dry_run      = 0;
-my $run          = 0;
+my $run          = 1;
 
 debug_set(0);
 verbose_set(0);
