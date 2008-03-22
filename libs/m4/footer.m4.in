@@ -17,6 +17,7 @@ m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
 m4_define([_CT_FOOTER],[
+_CT_YESNO([Do you want to save current configuration ?])
 #
 # That's all folks ...
 #

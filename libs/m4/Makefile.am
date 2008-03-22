@@ -30,7 +30,8 @@ nodist_m4lib_DATA =				\
 	footer.m4				\
 	ui-menu.m4				\
 	ui-choice.m4				\
-	ui-comment.m4
+	ui-comment.m4				\
+	ui-yesno.m4
 
 EXTRA_DIST +=					\
 	choicetool.m4.in			\
@@ -38,7 +39,8 @@ EXTRA_DIST +=					\
 	footer.m4.in				\
 	ui-menu.m4.in				\
 	ui-choice.m4.in				\
-	ui-comment.m4.in
+	ui-comment.m4.in			\
+	ui-yesno.m4.in
 
 CLEANFILES += $(nodist_m4lib_DATA)
 
@@ -95,6 +97,16 @@ ui-choice.m4: Makefile $(srcdir)/ui-choice.m4.in
 ui-comment.m4: Makefile $(srcdir)/ui-comment.m4.in
 	( rm -f $@ $@.tmp && \
 	  $(do_subst) < $(srcdir)/ui-comment.m4.in > $@.tmp && \
+	  chmod -x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+ui-yesno.m4: Makefile $(srcdir)/ui-yesno.m4.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/ui-yesno.m4.in > $@.tmp && \
 	  chmod -x $@.tmp && \
 	  chmod a-w $@.tmp && \
 	  mv -f $@.tmp $@ ) || { \

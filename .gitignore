@@ -54,6 +54,7 @@ libs/m4/footer.m4
 libs/m4/ui-menu.m4
 libs/m4/ui-choice.m4
 libs/m4/ui-comment.m4
+libs/m4/ui-yesno.m4
 
 data/choicetool-core.m4
 data/choicetool-guile.m4
