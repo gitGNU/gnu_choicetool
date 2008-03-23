@@ -124,7 +124,6 @@ sub m4ify ($) {
     assert(defined($prefix));
 
     my $string;
-
     $string = "";
 
     $string = $string .

@@ -52,6 +52,7 @@ sub m4ify ($) {
     assert(defined($self));
     assert(defined($prefix));
 
+    my $string;
     $string = "";
 
     return $string;
