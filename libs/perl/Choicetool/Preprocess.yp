@@ -139,10 +139,15 @@ sub preprocess_helper ($$)
 
 	debug("  Got line \`" . $tmp . "'");
 
-	if (!preprocessor_expander(\$tmp)) {
-	    error("Failed to expand environment variables");
-	    exit 1;
-	}
+	#
+	# NOTE:
+	#     We must do environment variable expansion only when processing a
+	#     directive !!!
+	#
+	#if (!preprocessor_expander(\$tmp)) {
+	#    error("Failed to expand environment variables");
+	#    exit 1;
+	#}
 
 	if ($tmp =~ m/^[ \t]*source[ \t]*([^\s]+)[ \t]*$/) {
 	    # Handle file inclusion
