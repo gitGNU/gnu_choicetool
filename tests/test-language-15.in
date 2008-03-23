@@ -23,7 +23,7 @@
 
 . $testdir/defs || exit 1
 
-cat > features.ct <<EOF
+cat > ./choose.ct <<EOF
 if ARCH_H720X || (ARCH_H720X && (ARCH_H720X + ARCH_H720X))
 
 menu "h720x Implementations"
@@ -64,6 +64,6 @@ config H7202_SERIAL23
 endif
 EOF
 
-$CHOICETOOL --frontend lkc --dry-run || exit 1
+$CHOICETOOL -i ./choose.ct || exit 1
 
 exit 0
