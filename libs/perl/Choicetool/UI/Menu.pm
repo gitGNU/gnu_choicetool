@@ -111,7 +111,7 @@ sub help {
     return $self->{HELP};
 }
 
-sub stringize ($) {
+sub m4ify ($) {
     my $self   = shift;
     my $prefix = shift;
 

@@ -125,7 +125,7 @@ sub tree_walker ($$$)
 
 	debug("Node " . $node_ref . " data is: \`" . $object . "'");
 
-	${$string_ref} = ${$string_ref} . $object->stringize("  " x $level);
+	${$string_ref} = ${$string_ref} . $object->m4ify("  " x $level);
 
     } else {
 	debug("Node " . $node_ref . " has no object data")

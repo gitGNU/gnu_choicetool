@@ -40,7 +40,7 @@ sub new ($)
     return bless($self, $class);
 }
 
-sub stringize ($) {
+sub m4ify ($) {
     my $self   = shift;
     my $prefix = shift;
 
