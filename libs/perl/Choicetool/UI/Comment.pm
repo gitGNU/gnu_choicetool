@@ -28,6 +28,11 @@ use diagnostics;
 
 use Choicetool::Base::Debug;
 use Choicetool::Base::Trace;
+use Choicetool::Data::Tree;
+
+# Comment inherits from Tree
+use vars qw(@ISA);
+@ISA = qw(Choicetool::Data::Tree);
 
 sub new ($)
 {
