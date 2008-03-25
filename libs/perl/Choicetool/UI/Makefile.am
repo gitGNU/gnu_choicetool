@@ -24,7 +24,6 @@ perllibdir = $(pkgvlibsdir)/perl/Choicetool/UI
 
 dist_perllib_DATA =				\
 	Menu.pm					\
-	Menuconfig.pm				\
 	Config.pm				\
 	Comment.pm				\
 	Choice.pm

@@ -32,7 +32,6 @@ use Choicetool::Base::Debug;
 use Choicetool::OS::File;
 use Choicetool::Data::Tree;
 use Choicetool::UI::Menu;
-use Choicetool::UI::Menuconfig;
 use Choicetool::UI::Choice;
 use Choicetool::UI::Comment;
 use Choicetool::UI::Config;
