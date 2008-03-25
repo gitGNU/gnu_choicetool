@@ -173,11 +173,13 @@ assert(defined($output_file));
 #
 
 if (!$force_mode) {
-    if (!file_isobsolete($input_file, $output_file)) {
-	warning("Output file " .
-		"\`" . $output_file . "' " .
-		"seems not to be obsolete respect to " .
-		"\`" . $input_file . "'. Use --force to rebuild");
+    if (!file_isnewer($input_file, $output_file)) {
+	warning("Output file "              .
+		"\`" . $output_file . "' "  .
+		"seems not to be obsolete " .
+		"(input file is "           .
+		"\`" . $input_file . "'). " .
+		"Use --force to rebuild");
 	exit 0;
     }
 }
