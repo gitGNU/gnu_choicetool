@@ -865,7 +865,7 @@ sub parse ($$$)
 
     # Parse !
     my $parser;
-    $parser = Choicetool::Parse->new();
+    $parser = Choicetool::Frontends::KConfig::Parse->new();
     assert(defined($parser));
 
     $parser->YYData->{INPUT}   = $string;

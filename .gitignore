@@ -45,8 +45,8 @@ site/site.stamp
 libs/scheme/lib.scm
 
 libs/perl/Choicetool/Autoconfig.pm
-libs/perl/Choicetool/Parse.pm
-libs/perl/Choicetool/Preprocess.pm
+libs/perl/Choicetool/Frontends/KConfig/Parse.pm
+libs/perl/Choicetool/Frontends/KConfig/Preprocess.pm
 
 libs/m4/choicetool.m4
 libs/m4/header.m4

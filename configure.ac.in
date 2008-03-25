@@ -133,6 +133,8 @@ AC_CONFIG_FILES([
 	libs/perl/Choicetool/Data/Makefile
 	libs/perl/Choicetool/UI/Makefile
 	libs/perl/Choicetool/Rules/Makefile
+	libs/perl/Choicetool/Frontends/Makefile
+	libs/perl/Choicetool/Frontends/KConfig/Makefile
 
 	src/Makefile
 

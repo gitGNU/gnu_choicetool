@@ -65,7 +65,7 @@ use Choicetool::OS::File;
 use Choicetool::OS::String;
 use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
-use Choicetool::Parse;
+use Choicetool::Frontends::KConfig::Parse;
 use Choicetool::Data::Tree;
 use Choicetool::Set;
 
@@ -218,7 +218,7 @@ $set  = Choicetool::Set->new();
 assert(defined($set));
 
 $string = "";
-if (!Choicetool::Parse::parse($input_file, \$tree, \$set)) {
+if (!Choicetool::Frontends::KConfig::Parse::parse($input_file, \$tree, \$set)) {
     error("Failed to parse file `" . $input_file . "\'");
     exit 1;
 }

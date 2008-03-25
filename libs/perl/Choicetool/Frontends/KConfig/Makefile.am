@@ -20,35 +20,31 @@
 
 include $(top_srcdir)/Makefile.sub
 
-SUBDIRS =					\
-	Base					\
-	OS					\
-	Data					\
-	UI					\
-	Rules					\
-	Frontends
-
-perllibdir = $(pkgvlibsdir)/perl/Choicetool
+perllibdir = $(pkgvlibsdir)/perl/Choicetool/Frontends/KConfig
 
 dist_perllib_DATA =                             \
-	Compile.pm				\
-	Link.pm					\
-	Set.pm
+	Preprocess.pm				\
+	Parse.pm
 
-nodist_perllib_DATA =                           \
-	Autoconfig.pm
+nodist_perllib_DATA =
 
 CLEANFILES     = $(nodist_perllib_DATA)
-DISTCLEANFILES =
+DISTCLEANFILES =				\
+	Parse.pm 				\
+	Preprocess.pm
 
-Autoconfig.pm: Makefile $(srcdir)/Autoconfig.pm.in
-	( rm -f $@ $@.tmp && \
-	  $(do_subst) < $(srcdir)/Autoconfig.pm.in > $@.tmp && \
-	  chmod a-w $@.tmp && \
-	  mv -f $@.tmp $@ ) || { \
-	        rm -f $@ $@.tmp ; \
+Parse.pm: Makefile $(srcdir)/Parse.yp
+	$(YAPP) -s -m Choicetool::Frontends::KConfig::Parse -o $@ $(srcdir)/Parse.yp || { \
+	        rm -f $@ ; \
+	        exit 1 ; \
+	}
+
+Preprocess.pm: Makefile $(srcdir)/Preprocess.yp
+	$(YAPP) -s -m Choicetool::Frontends::KConfig::Preprocess -o $@ $(srcdir)/Preprocess.yp || { \
+	        rm -f $@ ; \
 	        exit 1 ; \
 	}
 
 EXTRA_DIST =					\
-	Autoconfig.pm.in
+	Preprocess.yp				\
+	Parse.yp

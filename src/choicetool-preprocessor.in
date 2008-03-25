@@ -63,7 +63,7 @@ use Choicetool::OS::File;
 use Choicetool::OS::String;
 use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
-use Choicetool::Preprocess;
+use Choicetool::Frontends::KConfig::Preprocess;
 
 #
 # Globals
@@ -206,7 +206,8 @@ my $string;
 
 $string = "";
 
-if (!Choicetool::Preprocess::preprocess($input_file, \$string)) {
+if (!Choicetool::Frontends::KConfig::Preprocess::preprocess($input_file,
+							    \$string)) {
     error("Failed to preprocess file `" . $input_file . "\'");
     exit 1;
 }
