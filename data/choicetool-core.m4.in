@@ -49,11 +49,5 @@ AC_DEFUN([CT_INIT],[
 
   CT_USE_AT_YOUR_OWN_RISK_NOTICE
 
-  if test "x$1" = "x"; then
-    ct_input_file=$1
-  else
-    ct_input_file="./choose.ct"
-  fi
-
-  AC_CONFIG_FILES([choose], [chmod +x choose])
+  AC_CONFIG_FILES([choose:$1], [chmod +x choose])
 ])
