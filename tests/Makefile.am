@@ -107,9 +107,8 @@ SUCCESS_TESTS +=				\
 	test-language-16			\
 	test-autotools-1			\
 	test-input-name-1			\
-	test-output-name-1
-
-#	test-language-complete
+	test-output-name-1			\
+	test-language-complete
 
 XFAIL_TESTS = $(FAIL_TESTS)
 TESTS       = $(FAIL_TESTS) $(SUCCESS_TESTS)
