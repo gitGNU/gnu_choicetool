@@ -68,6 +68,11 @@ sub m4ify ($) {
     my $string;
     $string = "";
 
+    $string = $string .
+	$prefix . "_CT_UI_MENUCONFIG_BEGIN([" . $self->title() . "])\n";
+    $string = $string .
+	$prefix . "_CT_UI_MENUCONFIG_END(["   . $self->title() . "])\n";
+
     return $string;
 }
 
