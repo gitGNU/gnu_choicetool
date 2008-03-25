@@ -16,6 +16,19 @@ m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
+m4_define([_CT_VARIABLES],[
+#
+# Variables we rely on
+#
+
+# XXX FIXME: We should check the environment ...
+DIALOG="@CT_DIALOG@"
+
+#
+# End of variables
+# 
+])
+
 m4_define([_CT_HEADER],[
 #! /bin/sh
 
@@ -31,9 +44,7 @@ m4_define([_CT_HEADER],[
 # even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE.
 
-
-# XXX FIXME: We should check the environment ...
-DIALOG="@CT_DIALOG@"
+_CT_VARIABLES([])
 
 _CT_UI_COMMENT_BEGIN([This configuration interface has been built using @PACKAGE_NAME@ @PACKAGE_VERSION@.\n\nPlease note that @PACKAGE_NAME@ is still under active development.\n\nThis interface is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
 _CT_UI_COMMENT_END([])
