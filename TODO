@@ -7,6 +7,9 @@ NOTE:
 	completed ...
 
 TO-BE-DONE:
+* Rearrange the test-suite in order to avoid tests that require tools not
+  installed on the host (e.g.: autotools)
+
 * Add option bundling in libs/perl/Choicetool/Base/Options.pm module
 
 * Take account of handling multiple configuration syntaxes translating them
