@@ -166,6 +166,20 @@ if (!file_ispresent($input_file)) {
 assert(defined($input_file));
 assert(defined($output_file));
 
+#
+# Some preliminary check(s)
+#
+
+if (!$force_mode) {
+    if (!file_isobsolete($input_file, $output_file)) {
+	warning("Output file " .
+		"\`" . $output_file . "' " .
+		"seems not to be obsolete respect to " .
+		"\`" . $input_file . "'. Use --force to rebuild");
+	exit 0;
+    }
+}
+
 ##
 ## Dump the environment, useful for debugging purposes
 ##
