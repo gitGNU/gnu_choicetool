@@ -67,6 +67,7 @@ tests/test-arguments-1
 tests/test-arguments-2
 tests/test-arguments-3
 tests/test-autotools-1
+tests/test-autotools-2
 tests/test-dry-run
 tests/test-fail
 tests/test-input-name-1
