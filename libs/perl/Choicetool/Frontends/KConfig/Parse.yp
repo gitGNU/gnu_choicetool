@@ -73,7 +73,7 @@ stmt_list:
           | stmt_list common_stmt
           | stmt_list choice_stmt
           | stmt_list menu_stmt
-          | stmt_list 'T_MAINMENU' prompt newlines
+          | stmt_list 'T_MAINMENU' words newlines
           | stmt_list  end
 {
     debug("Processed rule: stmt_list");
@@ -90,8 +90,8 @@ newline:
        ;
 
 newlines:
-          newlines newline
-        | newline
+          newline
+        | newlines newline
 {
     debug("Processed rule: newlines");
 }
@@ -168,14 +168,24 @@ config_option_list:
                   ;
 
 config_option:
-               type_definition prompt_stmt_opt newline
+               type_default_definition expr if_expr newline
+             | type_definition prompt_stmt_opt newline
              | 'T_PROMPT' words if_expr newline
              | 'T_DEFAULT' expr if_expr newline
              | 'T_SELECT' word if_expr newline
+             | 'T_RANGE' word word if_expr newline
 {
     debug("Processed rule: config_option");
 }
             ;
+
+type_default_definition:
+                         'T_DEF_TRISTATE'
+                       | 'T_DEF_BOOL'
+{
+    debug("Processed rule: type_default_definition");
+}
+                       ;
 
 type_definition:
                  'T_BOOL'
@@ -471,8 +481,7 @@ sub parse_help($$)
 {
     my $stream_ref  = shift;
     my $string_ref  = shift;
-    my $root_tab_no = 0;
-    my $root_ws     = "";
+    my $ws_length;
 
     assert(defined($$stream_ref));
     assert(defined($$string_ref));
@@ -482,42 +491,41 @@ sub parse_help($$)
 
 	$lineno++;
 
-	if ($string =~ s/^([ \t]+)(.*)$//) {
+	if ($string =~ s/^([ \t]*)$//) {
+	    $$string_ref = $$string_ref . "\n";
 
-	    my $curr_ws     = $1;
-	    my $curr_line   = $2;
-	    my $curr_tab_no = 0;
+	} elsif ($string =~ s/^([ \t]+)(.+)$//) {
+	    my $ws             = $1;
+	    my $text           = $2;
+	    my $curr_ws_length = 0;
+	    my $tmp            = $ws;
 
-	    my $tmp = $curr_ws;
-
-	    for (my $i = 0; $i < length($tmp); $i++) {
+	    for (my $i = 0; $i < length($ws); $i++) {
 		my $token = substr($tmp, 0, 1, "");
 
 		if ($token =~ /\ /) {
-		    $curr_tab_no++;
+		    $curr_ws_length++;
 		} elsif ($token =~ /\t/) {
-		    $curr_tab_no += 8;
+		    $curr_ws_length = ($curr_ws_length & ~7) + 8;
 		}
 	    }
 
-	    if (($root_tab_no == 0) &&
-		($root_ws eq ""))    {
-		$root_tab_no = $curr_tab_no;
-		$root_ws     = $curr_ws;
+	    if (!defined($ws_length)) {
+		$ws_length = $curr_ws_length;
 	    }
 
-	    if ($curr_tab_no > $root_tab_no) {
-		$curr_ws     = s/^$root_ws//;
-		$$string_ref = $$string_ref . $curr_ws . $curr_line . "\n";
-	    } elsif ($curr_tab_no == $root_tab_no) {
-		$$string_ref = $$string_ref . $curr_line . "\n";
-	    } else {
-		$$stream_ref = $curr_ws . $curr_line . "\n" . $$stream_ref;
+	    if ($curr_ws_length < $ws_length) {
+		$$stream_ref = $1 . $2 . "\n" . $$stream_ref;
+
 		$lineno--;
 		last;
 	    }
-	} elsif ($string =~ s/^[ \t]*$//) {
-	    $$string_ref = $$string_ref . "\n";
+
+	    if ($curr_ws_length > $ws_length) {
+		$text = " " x ($curr_ws_length - $ws_length) . $text;
+	    }
+
+	    $$string_ref = $$string_ref . $text . "\n";
 
 	} elsif ($string =~ s/^([^ \t])(.*)$//) {
 
@@ -534,6 +542,9 @@ sub parse_help($$)
 	    bug("Unreachable!");
 	}
     }
+
+    $$string_ref =~ s/^\s+//;
+    $$string_ref =~ s/\s+$//;
 
     return 1;
 }
@@ -644,7 +655,11 @@ sub lexer_callback ($)
 	    next;
 	}
 
-	if ($char =~ /\"/) {
+	if (($char =~ /(\")/) ||
+	    ($char =~ /(\')/)) {
+	    my $quoted_char = $1;
+	    assert(defined($quoted_char));
+
 	    my $curr_char;
 	    my $last_char;
 
@@ -653,23 +668,27 @@ sub lexer_callback ($)
 	    while ($parser->YYData->{INPUT} ne "") {
 		$curr_char = substr($parser->YYData->{INPUT}, 0, 1, "");
 
-		if (length($buffer) >= 2) {
+		if ($curr_char =~ /\n/) {
+		    error("Multiline quoted strings are not supported");
+		    return 0;
+		}
+
+		if (length($buffer) > 0) {
 		    $buffer    =~ /(.)$/;
 		    $last_char = $1;
 		}
 
-		if (($curr_char =~ /\"/) &&
-		    ($last_char !~ /\\/)) {
+		if ($curr_char eq $quoted_char) {
 
-		    debug("Found token: T_WORD_QUOTE");
-		    debug("  Passing string: \`" . $buffer . "'");
+		    if (((defined($last_char)) && ($last_char !~ /\\/)) ||
+			(!defined($last_char))) {
 
-		    return ('T_WORD_QUOTE', $buffer);
-		}
+			debug("Found token: T_WORD_QUOTE");
+			debug("  Passing string: \`" . $buffer . "'");
 
-		if ($curr_char =~ /\n/) {
-		    error("Multiline quoted strings are not supported");
-		    return 0;
+			return ('T_WORD_QUOTE', $buffer);
+		    }
+
 		}
 
 		if (defined($buffer)) {
@@ -691,9 +710,18 @@ sub lexer_callback ($)
 		next;
 	    }
 
-	    if ($buffer eq "menuconfig") {
+	    if ($buffer eq "def_tristate") {
+		debug("Found token: T_DEF_TRISTATE");
+		return ('T_DEF_TRISTATE', '');
+
+	    } elsif ($buffer eq "menuconfig") {
 		debug("Found token: T_MENUCONFIG");
 		return ('T_MENUCONFIG', '');
+
+	    } elsif (($buffer eq "def_boolean") ||
+		     ($buffer eq "def_bool"))    {
+		debug("Found token: T_DEF_BOOL");
+		return ('T_DEF_BOOL', '');
 
 	    } elsif ($buffer eq "endchoice") {
 		debug("Found token: T_ENDCHOICE");
@@ -767,14 +795,8 @@ sub lexer_callback ($)
 		debug("Found token: T_MENU");
 		return ('T_MENU', '');
 
-	    } elsif (($buffer eq "help")             ||
-		     ($buffer eq "\-\-\-help\-\-\-")) {
-		debug("Found token: T_HELP");
-
-		$help_start = 1;
-		return ('T_HELP', '');
-
-	    } elsif ($buffer eq "bool") {
+	    } elsif (($buffer eq "boolean") ||
+		     ($buffer eq "bool"))    {
 		debug("Found token: T_BOOL");
 		return ('T_BOOL', '');
 
@@ -794,13 +816,38 @@ sub lexer_callback ($)
 		debug("Found token: T_ON");
 		return ('T_ON', '');
 
-	    } elsif ($buffer =~ /^([a-zA-Z][a-zA-Z0-9_]*)$/) {
+	    } elsif (($buffer eq "help")        ||
+		     ($buffer eq "---help---"))  {
+		debug("Found token: T_HELP");
+
+		$help_start = 1;
+		return ('T_HELP', '');
+
+	    } elsif ($buffer eq "---") {
+
+		if ($parser->YYData->{INPUT} =~ 
+		    s/^[ \t]*help[ \t]*\-\-\-//) {
+		    $help_start = 1;
+
+		    return ('T_HELP', '');
+		}
+
+		error("Undefined lexer input \`" . $buffer .
+		      "' at line \`"             . $lineno .
+		      "'");
+		exit 1;
+
+	    } elsif (($buffer =~ /^[\-][0-9]+$/)                  ||
+		     ($buffer =~ /^([a-zA-Z0-9][a-zA-Z0-9_-]*)$/)) {
 		debug("Found token: T_WORD");
 		debug("  Passing string: \`" . $buffer . "'");
 
 		return ('T_WORD', $buffer);
+
 	    } else {
-		error("Undefined lexer input at line " . $lineno);
+		error("Undefined lexer input \`" . $buffer .
+		      "' at line \`"             . $lineno .
+		      "'");
 		exit 1;
 	    }
 	}
