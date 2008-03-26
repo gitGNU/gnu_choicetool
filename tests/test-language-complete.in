@@ -123,10 +123,10 @@ config DEFCONFIG_LIST
 	string
 	depends on !UML
 	option defconfig_list
-	default "/lib/modules/$UNAME_RELEASE/.config"
+	default "/lib/modules/\$UNAME_RELEASE/.config"
 	default "/etc/kernel-config"
-	default "/boot/config-$UNAME_RELEASE"
-	default "arch/$ARCH/defconfig"
+	default "/boot/config-\$UNAME_RELEASE"
+	default "arch/\$ARCH/defconfig"
 
 menu "Code maturity level options"
 
@@ -212,7 +212,7 @@ config LOCALVERSION_AUTO
 	  (The actual string used here is the first eight characters produced
 	  by running the command:
 
-	    $ git rev-parse --verify HEAD
+	    \$ git rev-parse --verify HEAD
 
 	  which is done within the script "scripts/setlocalversion".)
 
@@ -537,9 +537,9 @@ menuconfig EMBEDDED
 	bool "Configure standard kernel features (for small systems)"
 	help
 	  This option allows certain base kernel options and settings
-          to be disabled or tweaked. This is for specialized
-          environments which can tolerate a "non-standard" kernel.
-          Only use this if you really know what you are doing.
+	  to be disabled or tweaked. This is for specialized
+	  environments which can tolerate a "non-standard" kernel.
+	  Only use this if you really know what you are doing.
 
 config UID16
 	bool "Enable 16-bit UID system calls" if EMBEDDED
@@ -1789,7 +1789,7 @@ config I8K
 
 	  This driver has been tested only on the Inspiron 8000 but it may
 	  also work with other Dell laptops. You can force loading on other
-	  models by passing the parameter `force=1' to the module. Use at
+	  models by passing the parameter \`force=1' to the module. Use at
 	  your own risk.
 
 	  For information on utilities to make use of this driver see the
@@ -3145,7 +3145,7 @@ config ACPI_HOTPLUG_MEMORY
 
 	  If one selects "m," this driver can be loaded using the following
 	  command: 
-		$>modprobe acpi_memhotplug 
+		\$>modprobe acpi_memhotplug 
 
 config ACPI_SBS
 	tristate "Smart Battery System (EXPERIMENTAL)"
@@ -5449,7 +5449,7 @@ config TCP_CONG_LP
 	---help---
 	TCP Low Priority (TCP-LP), a distributed algorithm whose goal is
 	to utilize only the excess network bandwidth as compared to the
-	``fair share`` of bandwidth as targeted by TCP.
+	\`\`fair share\`\` of bandwidth as targeted by TCP.
 	See http://www-ece.rice.edu/networks/TCP-LP/
 
 config TCP_CONG_VENO
@@ -6151,7 +6151,7 @@ config NF_CONNTRACK_ENABLED
 
 	  This is required to do Masquerading or other kinds of Network
 	  Address Translation (except for Fast NAT).  It can also be used to
-	  enhance packet filtering (see `Connection state match support'
+	  enhance packet filtering (see \`Connection state match support'
 	  below).
 
 	  To compile it as a module, choose M here.  If unsure, say N.
@@ -6168,16 +6168,16 @@ config NF_CT_ACCT
 	  keep per-flow packet and byte counters.
 
 	  Those counters can be used for flow-based accounting or the
-	  `connbytes' match.
+	  \`connbytes' match.
 
-	  If unsure, say `N'.
+	  If unsure, say \`N'.
 
 config NF_CONNTRACK_MARK
 	bool  'Connection mark tracking support'
 	depends on NF_CONNTRACK
 	help
 	  This option enables support for connection marks, used by the
-	  `CONNMARK' target and `connmark' match. Similar to the mark value
+	  \`CONNMARK' target and \`connmark' match. Similar to the mark value
 	  of packets, but this mark value is kept in the conntrack session
 	  instead of the individual packets.
 
@@ -6201,7 +6201,7 @@ config NF_CONNTRACK_EVENTS
 	  provide a notifier chain that can be used by other kernel code
 	  to get notified about changes in the connection tracking state.
 
-	  If unsure, say `N'.
+	  If unsure, say \`N'.
 
 config NF_CT_PROTO_GRE
 	tristate
@@ -6216,7 +6216,7 @@ config NF_CT_PROTO_SCTP
 	  tracking code will be able to do state tracking on SCTP connections.
 
 	  If you want to compile it as a module, say M here and read
-	  <file:Documentation/kbuild/modules.txt>.  If unsure, say `N'.
+	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
 config NF_CONNTRACK_AMANDA
 	tristate "Amanda backup protocol support"
@@ -6294,7 +6294,7 @@ config NF_CONNTRACK_NETBIOS_NS
 	  netmask and broadcast address. When properly configured, the output
 	  of "ip address show" should look similar to this:
 
-	  $ ip -4 address show eth0
+	  \$ ip -4 address show eth0
 	  4: eth0: <BROADCAST,MULTICAST,UP> mtu 1500 qdisc pfifo_fast qlen 1000
 	      inet 172.16.2.252/24 brd 172.16.2.255 scope global eth0
 
@@ -6375,7 +6375,7 @@ config NETFILTER_XT_TARGET_CLASSIFY
 	tristate '"CLASSIFY" target support'
 	depends on NETFILTER_XTABLES
 	help
-	  This option adds a `CLASSIFY' target, which enables the user to set
+	  This option adds a \`CLASSIFY' target, which enables the user to set
 	  the priority of a packet. Some qdiscs can use this value for
 	  classification, among these are:
 
@@ -6390,20 +6390,20 @@ config NETFILTER_XT_TARGET_CONNMARK
 	depends on NF_CONNTRACK
 	select NF_CONNTRACK_MARK
 	help
-	  This option adds a `CONNMARK' target, which allows one to manipulate
+	  This option adds a \`CONNMARK' target, which allows one to manipulate
 	  the connection mark value.  Similar to the MARK target, but
 	  affects the connection mark value rather than the packet mark value.
 	
 	  If you want to compile it as a module, say M here and read
 	  <file:Documentation/kbuild/modules.txt>.  The module will be called
-	  ipt_CONNMARK.ko.  If unsure, say `N'.
+	  ipt_CONNMARK.ko.  If unsure, say \`N'.
 
 config NETFILTER_XT_TARGET_DSCP
 	tristate '"DSCP" target support'
 	depends on NETFILTER_XTABLES
 	depends on IP_NF_MANGLE || IP6_NF_MANGLE
 	help
-	  This option adds a `DSCP' target, which allows you to manipulate
+	  This option adds a \`DSCP' target, which allows you to manipulate
 	  the IPv4/IPv6 header DSCP field (differentiated services codepoint).
 
 	  The DSCP field can have any value between 0x0 and 0x3f inclusive.
@@ -6414,10 +6414,10 @@ config NETFILTER_XT_TARGET_MARK
 	tristate '"MARK" target support'
 	depends on NETFILTER_XTABLES
 	help
-	  This option adds a `MARK' target, which allows you to create rules
-	  in the `mangle' table which alter the netfilter mark (nfmark) field
+	  This option adds a \`MARK' target, which allows you to create rules
+	  in the \`mangle' table which alter the netfilter mark (nfmark) field
 	  associated with the packet prior to routing. This can change
-	  the routing method (see `Use netfilter MARK value as routing
+	  the routing method (see \`Use netfilter MARK value as routing
 	  key') and can also be used by other subsystems to change their
 	  behavior.
 
@@ -6457,7 +6457,7 @@ config NETFILTER_XT_TARGET_NOTRACK
 	  no protocol helpers for the selected packets).
 	
 	  If you want to compile it as a module, say M here and read
-	  <file:Documentation/kbuild/modules.txt>.  If unsure, say `N'.
+	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
 config NETFILTER_XT_TARGET_SECMARK
 	tristate '"SECMARK" target support'
@@ -6483,7 +6483,7 @@ config NETFILTER_XT_TARGET_TCPMSS
 	tristate '"TCPMSS" target support'
 	depends on NETFILTER_XTABLES && (IPV6 || IPV6=n)
 	---help---
-	  This option adds a `TCPMSS' target, which allows you to alter the
+	  This option adds a \`TCPMSS' target, which allows you to alter the
 	  MSS value of TCP SYN packets, to control the maximum size for that
 	  connection (usually limiting it to your outgoing interface's MTU
 	  minus 40).
@@ -6509,11 +6509,11 @@ config NETFILTER_XT_MATCH_COMMENT
 	tristate  '"comment" match support'
 	depends on NETFILTER_XTABLES
 	help
-	  This option adds a `comment' dummy-match, which allows you to put
+	  This option adds a \`comment' dummy-match, which allows you to put
 	  comments in your iptables ruleset.
 
 	  If you want to compile it as a module, say M here and read
-	  <file:Documentation/kbuild/modules.txt>.  If unsure, say `N'.
+	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
 config NETFILTER_XT_MATCH_CONNBYTES
 	tristate  '"connbytes" per-connection counter match support'
@@ -6521,11 +6521,11 @@ config NETFILTER_XT_MATCH_CONNBYTES
 	depends on NF_CONNTRACK
 	select NF_CT_ACCT
 	help
-	  This option adds a `connbytes' match, which allows you to match the
+	  This option adds a \`connbytes' match, which allows you to match the
 	  number of bytes and/or packets for each direction within a connection.
 
 	  If you want to compile it as a module, say M here and read
-	  <file:Documentation/kbuild/modules.txt>.  If unsure, say `N'.
+	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
 config NETFILTER_XT_MATCH_CONNMARK
 	tristate  '"connmark" connection mark match support'
@@ -6533,12 +6533,12 @@ config NETFILTER_XT_MATCH_CONNMARK
 	depends on NF_CONNTRACK
 	select NF_CONNTRACK_MARK
 	help
-	  This option adds a `connmark' match, which allows you to match the
-	  connection mark value previously set for the session by `CONNMARK'. 
+	  This option adds a \`connmark' match, which allows you to match the
+	  connection mark value previously set for the session by \`CONNMARK'. 
 	
 	  If you want to compile it as a module, say M here and read
 	  <file:Documentation/kbuild/modules.txt>.  The module will be called
-	  ipt_connmark.ko.  If unsure, say `N'.
+	  ipt_connmark.ko.  If unsure, say \`N'.
 
 config NETFILTER_XT_MATCH_CONNTRACK
 	tristate '"conntrack" connection tracking match support'
@@ -6558,17 +6558,17 @@ config NETFILTER_XT_MATCH_DCCP
 	depends on NETFILTER_XTABLES
 	help
 	  With this option enabled, you will be able to use the iptables
-	  `dccp' match in order to match on DCCP source/destination ports
+	  \`dccp' match in order to match on DCCP source/destination ports
 	  and DCCP flags.
 
 	  If you want to compile it as a module, say M here and read
-	  <file:Documentation/kbuild/modules.txt>.  If unsure, say `N'.
+	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
 config NETFILTER_XT_MATCH_DSCP
 	tristate '"DSCP" match support'
 	depends on NETFILTER_XTABLES
 	help
-	  This option adds a `DSCP' match, which allows you to match against
+	  This option adds a \`DSCP' match, which allows you to match against
 	  the IPv4/IPv6 header DSCP field (differentiated services codepoint).
 
 	  The DSCP field can have any value between 0x0 and 0x3f inclusive.
@@ -6627,7 +6627,7 @@ config NETFILTER_XT_MATCH_MARK
 	depends on NETFILTER_XTABLES
 	help
 	  Netfilter mark matching allows you to match packets based on the
-	  `nfmark' value in the packet.  This can be set by the MARK target
+	  \`nfmark' value in the packet.  This can be set by the MARK target
 	  (see below).
 
 	  To compile it as a module, choose M here.  If unsure, say N.
@@ -6677,36 +6677,36 @@ config NETFILTER_XT_MATCH_QUOTA
 	tristate '"quota" match support'
 	depends on NETFILTER_XTABLES
 	help
-	  This option adds a `quota' match, which allows to match on a
+	  This option adds a \`quota' match, which allows to match on a
 	  byte counter.
 
 	  If you want to compile it as a module, say M here and read
-	  <file:Documentation/kbuild/modules.txt>.  If unsure, say `N'.
+	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
 config NETFILTER_XT_MATCH_REALM
 	tristate  '"realm" match support'
 	depends on NETFILTER_XTABLES
 	select NET_CLS_ROUTE
 	help
-	  This option adds a `realm' match, which allows you to use the realm
+	  This option adds a \`realm' match, which allows you to use the realm
 	  key from the routing subsystem inside iptables.
 	
 	  This match pretty much resembles the CONFIG_NET_CLS_ROUTE4 option 
 	  in tc world.
 	
 	  If you want to compile it as a module, say M here and read
-	  <file:Documentation/kbuild/modules.txt>.  If unsure, say `N'.
+	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
 config NETFILTER_XT_MATCH_SCTP
 	tristate  '"sctp" protocol match support (EXPERIMENTAL)'
 	depends on NETFILTER_XTABLES && EXPERIMENTAL
 	help
 	  With this option enabled, you will be able to use the 
-	  `sctp' match in order to match on SCTP source/destination ports
+	  \`sctp' match in order to match on SCTP source/destination ports
 	  and SCTP chunk types.
 
 	  If you want to compile it as a module, say M here and read
-	  <file:Documentation/kbuild/modules.txt>.  If unsure, say `N'.
+	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
 config NETFILTER_XT_MATCH_STATE
 	tristate '"state" match support'
@@ -6723,7 +6723,7 @@ config NETFILTER_XT_MATCH_STATISTIC
 	tristate '"statistic" match support'
 	depends on NETFILTER_XTABLES
 	help
-	  This option adds a `statistic' match, which allows you to match
+	  This option adds a \`statistic' match, which allows you to match
 	  on packets periodically or randomly with a given percentage.
 
 	  To compile it as a module, choose M here.  If unsure, say N.
@@ -6736,7 +6736,7 @@ config NETFILTER_XT_MATCH_STRING
 	select TEXTSEARCH_BM
 	select TEXTSEARCH_FSM
 	help
-	  This option adds a `string' match, which allows you to look for
+	  This option adds a \`string' match, which allows you to look for
 	  pattern matchings in packets.
 
 	  To compile it as a module, choose M here.  If unsure, say N.
@@ -6745,7 +6745,7 @@ config NETFILTER_XT_MATCH_TCPMSS
 	tristate '"tcpmss" match support'
 	depends on NETFILTER_XTABLES
 	help
-	  This option adds a `tcpmss' match, which allows you to examine the
+	  This option adds a \`tcpmss' match, which allows you to examine the
 	  MSS value of TCP SYN packets, which control the maximum packet size
 	  for that connection.
 
@@ -6755,14 +6755,14 @@ config NETFILTER_XT_MATCH_HASHLIMIT
 	tristate '"hashlimit" match support'
 	depends on NETFILTER_XTABLES && (IP6_NF_IPTABLES || IP6_NF_IPTABLES=n)
 	help
-	  This option adds a `hashlimit' match.
+	  This option adds a \`hashlimit' match.
 
-	  As opposed to `limit', this match dynamically creates a hash table
+	  As opposed to \`limit', this match dynamically creates a hash table
 	  of limit buckets, based on your selection of source/destination
 	  addresses and/or ports.
 
-	  It enables you to express policies like `10kpps for any given
-	  destination address' or `500pps from any given source address'
+	  It enables you to express policies like \`10kpps for any given
+	  destination address' or \`500pps from any given source address'
 	  with a single rule.
 
 endmenu
@@ -6823,7 +6823,7 @@ config IP_NF_IPTABLES
 	help
 	  iptables is a general, extensible packet identification framework.
 	  The packet filtering and full NAT (masquerading, port forwarding,
-	  etc) subsystems now use this: say `Y' or `M' here if you want to use
+	  etc) subsystems now use this: say \`Y' or \`M' here if you want to use
 	  either of those.
 
 	  To compile it as a module, choose M here.  If unsure, say N.
@@ -6863,7 +6863,7 @@ config IP_NF_MATCH_ECN
 	tristate "ECN match support"
 	depends on IP_NF_IPTABLES
 	help
-	  This option adds a `ECN' match, which allows you to match against
+	  This option adds a \`ECN' match, which allows you to match against
 	  the IPv4 and TCP header ECN fields.
 
 	  To compile it as a module, choose M here.  If unsure, say N.
@@ -6903,14 +6903,14 @@ config IP_NF_MATCH_ADDRTYPE
 	  eg. UNICAST, LOCAL, BROADCAST, ...
 	
 	  If you want to compile it as a module, say M here and read
-	  <file:Documentation/modules.txt>.  If unsure, say `N'.
+	  <file:Documentation/modules.txt>.  If unsure, say \`N'.
 
-# `filter', generic and specific targets
+# \`filter', generic and specific targets
 config IP_NF_FILTER
 	tristate "Packet filtering"
 	depends on IP_NF_IPTABLES
 	help
-	  Packet filtering defines a table `filter', which has a series of
+	  Packet filtering defines a table \`filter', which has a series of
 	  rules for simple packet filtering at local input, forwarding and
 	  local output.  See the man page for iptables(8).
 
@@ -6930,7 +6930,7 @@ config IP_NF_TARGET_LOG
 	tristate "LOG target support"
 	depends on IP_NF_IPTABLES
 	help
-	  This option adds a `LOG' target, which allows you to create rules in
+	  This option adds a \`LOG' target, which allows you to create rules in
 	  any iptables table which records the packet header to the syslog.
 
 	  To compile it as a module, choose M here.  If unsure, say N.
@@ -6944,7 +6944,7 @@ config IP_NF_TARGET_ULOG
 	  which has been obsoleted by the new "nfnetlink_log" code (see
 	  CONFIG_NETFILTER_NETLINK_LOG).
 
-	  This option adds a `ULOG' target, which allows you to create rules in
+	  This option adds a \`ULOG' target, which allows you to create rules in
 	  any iptables table. The packet is passed to a userspace logging
 	  daemon using netlink multicast sockets; unlike the LOG target
 	  which can only be viewed through syslog.
@@ -6961,7 +6961,7 @@ config NF_NAT
 	help
 	  The Full NAT option allows masquerading, port forwarding and other
 	  forms of full Network Address Port Translation.  It is controlled by
-	  the `nat' table in iptables: see the man page for iptables(8).
+	  the \`nat' table in iptables: see the man page for iptables(8).
 
 	  To compile it as a module, choose M here.  If unsure, say N.
 
@@ -7008,7 +7008,7 @@ config IP_NF_TARGET_SAME
 	tristate "SAME target support"
 	depends on NF_NAT
 	help
-	  This option adds a `SAME' target, which works like the standard SNAT
+	  This option adds a \`SAME' target, which works like the standard SNAT
 	  target, but attempts to give clients the same IP for all connections.
 
 	  To compile it as a module, choose M here.  If unsure, say N.
@@ -7028,8 +7028,8 @@ config NF_NAT_SNMP_BASIC
 
 	  To compile it as a module, choose M here.  If unsure, say N.
 
-# If they want FTP, set to $CONFIG_IP_NF_NAT (m or y),
-# or $CONFIG_IP_NF_FTP (m or y), whichever is weaker.
+# If they want FTP, set to \$CONFIG_IP_NF_NAT (m or y),
+# or \$CONFIG_IP_NF_FTP (m or y), whichever is weaker.
 # From kconfig-language.txt:
 #
 #           <expr> '&&' <expr>                   (6)
@@ -7080,7 +7080,7 @@ config IP_NF_MANGLE
 	tristate "Packet mangling"
 	depends on IP_NF_IPTABLES
 	help
-	  This option adds a `mangle' table to iptables: see the man page for
+	  This option adds a \`mangle' table to iptables: see the man page for
 	  iptables(8).  This table is used for various packet alterations
 	  which can effect how the packet is routed.
 
@@ -7090,8 +7090,8 @@ config IP_NF_TARGET_TOS
 	tristate "TOS target support"
 	depends on IP_NF_MANGLE
 	help
-	  This option adds a `TOS' target, which allows you to create rules in
-	  the `mangle' table which alter the Type Of Service field of an IP
+	  This option adds a \`TOS' target, which allows you to create rules in
+	  the \`mangle' table which alter the Type Of Service field of an IP
 	  packet prior to routing.
 
 	  To compile it as a module, choose M here.  If unsure, say N.
@@ -7100,7 +7100,7 @@ config IP_NF_TARGET_ECN
 	tristate "ECN target support"
 	depends on IP_NF_MANGLE
 	---help---
-	  This option adds a `ECN' target, which can be used in the iptables mangle
+	  This option adds a \`ECN' target, which can be used in the iptables mangle
 	  table.  
 
 	  You can use this target to remove the ECN bits from the IPv4 header of
@@ -7114,7 +7114,7 @@ config IP_NF_TARGET_TTL
 	tristate  'TTL target support'
 	depends on IP_NF_MANGLE
 	help
-	  This option adds a `TTL' target, which enables the user to modify
+	  This option adds a \`TTL' target, which enables the user to modify
 	  the TTL value of the IP header.
 
 	  While it is safe to decrement/lower the TTL, this target also enables
@@ -7141,12 +7141,12 @@ config IP_NF_RAW
 	tristate  'raw table support (required for NOTRACK/TRACE)'
 	depends on IP_NF_IPTABLES
 	help
-	  This option adds a `raw' table to iptables. This table is the very
+	  This option adds a \`raw' table to iptables. This table is the very
 	  first in the netfilter framework and hooks in at the PREROUTING
 	  and OUTPUT chains.
 	
 	  If you want to compile it as a module, say M here and read
-	  <file:Documentation/modules.txt>.  If unsure, say `N'.
+	  <file:Documentation/modules.txt>.  If unsure, say \`N'.
 
 # ARP tables
 config IP_NF_ARPTABLES
@@ -7163,7 +7163,7 @@ config IP_NF_ARPFILTER
 	tristate "ARP packet filtering"
 	depends on IP_NF_ARPTABLES
 	help
-	  ARP packet filtering defines a table `filter', which has a series of
+	  ARP packet filtering defines a table \`filter', which has a series of
 	  rules for simple ARP packet filtering at local input and
 	  local output.  On a bridge, you can also specify filtering rules
 	  for forwarded ARP packets. See the man page for arptables(8).
@@ -7325,7 +7325,7 @@ config IP6_NF_FILTER
 	tristate "Packet filtering"
 	depends on IP6_NF_IPTABLES
 	help
-	  Packet filtering defines a table `filter', which has a series of
+	  Packet filtering defines a table \`filter', which has a series of
 	  rules for simple packet filtering at local input, forwarding and
 	  local output.  See the man page for iptables(8).
 
@@ -7335,7 +7335,7 @@ config IP6_NF_TARGET_LOG
 	tristate "LOG target support"
 	depends on IP6_NF_FILTER
 	help
-	  This option adds a `LOG' target, which allows you to create rules in
+	  This option adds a \`LOG' target, which allows you to create rules in
 	  any iptables table which records the packet header to the syslog.
 
 	  To compile it as a module, choose M here.  If unsure, say N.
@@ -7354,7 +7354,7 @@ config IP6_NF_MANGLE
 	tristate "Packet mangling"
 	depends on IP6_NF_IPTABLES
 	help
-	  This option adds a `mangle' table to iptables: see the man page for
+	  This option adds a \`mangle' table to iptables: see the man page for
 	  iptables(8).  This table is used for various packet alterations
 	  which can effect how the packet is routed.
 
@@ -7364,7 +7364,7 @@ config IP6_NF_TARGET_HL
 	tristate  'HL (hoplimit) target support'
 	depends on IP6_NF_MANGLE
 	help
-	  This option adds a `HL' target, which enables the user to decrement
+	  This option adds a \`HL' target, which enables the user to decrement
 	  the hoplimit value of the IPv6 header or set it to a given (lower)
 	  value.
 	
@@ -7380,12 +7380,12 @@ config IP6_NF_RAW
 	tristate  'raw table support (required for TRACE)'
 	depends on IP6_NF_IPTABLES
 	help
-	  This option adds a `raw' table to ip6tables. This table is the very
+	  This option adds a \`raw' table to ip6tables. This table is the very
 	  first in the netfilter framework and hooks in at the PREROUTING
 	  and OUTPUT chains.
 	
 	  If you want to compile it as a module, say M here and read
-	  <file:Documentation/kbuild/modules.txt>.  If unsure, say `N'.
+	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
 endmenu
 
@@ -7510,7 +7510,7 @@ config BRIDGE_EBT_LIMIT
 	  equivalent of the iptables limit match.
 
 	  If you want to compile it as a module, say M here and read
-	  <file:Documentation/kbuild/modules.txt>.  If unsure, say `N'.
+	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
 config BRIDGE_EBT_MARK
 	tristate "ebt: mark filter support"
@@ -7810,7 +7810,7 @@ config IP_DCCP_DEBUG
 	  Only use this if you're hacking DCCP.
 
 	  When compiling DCCP as a module, this debugging output can be toggled
-	  by setting the parameter dccp_debug of the `dccp' module to 0 or 1.
+	  by setting the parameter dccp_debug of the \`dccp' module to 0 or 1.
 
 	  Just say N.
 
@@ -8582,7 +8582,7 @@ config WAN_ROUTER
 	  lines, are used to interconnect Local Area Networks (LANs) over vast
 	  distances with data transfer rates significantly higher than those
 	  achievable with commonly used asynchronous modem connections.
-	  Usually, a quite expensive external device called a `WAN router' is
+	  Usually, a quite expensive external device called a \`WAN router' is
 	  needed to connect to a WAN.
 
 	  As an alternative, WAN routing can be built into the Linux kernel.
@@ -10793,7 +10793,7 @@ endmenu
 #line 13
 #file "/usr/src/linux-2.6.22-gentoo-r9/drivers/mtd/Kconfig"
 #line 0
-# $Id: Kconfig,v 1.11 2005/11/07 11:14:19 gleixner Exp $
+# \$Id: Kconfig,v 1.11 2005/11/07 11:14:19 gleixner Exp \$
 
 menuconfig MTD
 	tristate "Memory Technology Device (MTD) support"
@@ -11328,7 +11328,7 @@ endmenu
 #file "/usr/src/linux-2.6.22-gentoo-r9/drivers/mtd/maps/Kconfig"
 #line 0
 # drivers/mtd/maps/Kconfig
-# $Id: Kconfig,v 1.61 2005/11/07 11:14:26 gleixner Exp $
+# \$Id: Kconfig,v 1.61 2005/11/07 11:14:26 gleixner Exp \$
 
 menu "Mapping drivers for chip access"
 	depends on MTD!=n
@@ -11959,7 +11959,7 @@ endmenu
 #file "/usr/src/linux-2.6.22-gentoo-r9/drivers/mtd/devices/Kconfig"
 #line 0
 # drivers/mtd/maps/Kconfig
-# $Id: Kconfig,v 1.18 2005/11/07 11:14:24 gleixner Exp $
+# \$Id: Kconfig,v 1.18 2005/11/07 11:14:24 gleixner Exp \$
 
 menu "Self-contained MTD device drivers"
 	depends on MTD!=n
@@ -12239,7 +12239,7 @@ endmenu
 #file "/usr/src/linux-2.6.22-gentoo-r9/drivers/mtd/nand/Kconfig"
 #line 0
 # drivers/mtd/nand/Kconfig
-# $Id: Kconfig,v 1.35 2005/11/07 11:14:30 gleixner Exp $
+# \$Id: Kconfig,v 1.35 2005/11/07 11:14:30 gleixner Exp \$
 
 menuconfig MTD_NAND
 	tristate "NAND Device Support"
@@ -12477,7 +12477,7 @@ config MTD_NAND_CAFE
 	select REED_SOLOMON
 	select REED_SOLOMON_DEC16
 	help
-	  Use NAND flash attached to the CAFÉ chip designed for the $100
+	  Use NAND flash attached to the CAFÉ chip designed for the \$100
 	  laptop.
 
 config MTD_NAND_CS553X
@@ -13702,7 +13702,7 @@ config BLK_DEV_SX8
 	  Saying Y or M here will enable support for the 
 	  Promise SATA SX8 controllers.
 
-	  Use devices /dev/sx8/$N and /dev/sx8/$Np$M.
+	  Use devices /dev/sx8/\$N and /dev/sx8/\$Np\$M.
 
 config BLK_DEV_UB
 	tristate "Low Performance USB Block driver"
@@ -14959,7 +14959,7 @@ config BLK_DEV_GAYLE
 	depends on AMIGA
 	help
 	  This is the IDE driver for the Amiga Gayle IDE interface. It supports
-	  both the `A1200 style' and `A4000 style' of the Gayle IDE interface,
+	  both the \`A1200 style' and \`A4000 style' of the Gayle IDE interface,
 	  This includes builtin IDE interfaces on some Amiga models (A600,
 	  A1200, A4000, and A4000T), and IDE interfaces on the Zorro expansion
 	  bus (M-Tech E-Matrix 530 expansion card).
@@ -14973,7 +14973,7 @@ config BLK_DEV_IDEDOUBLER
 	bool "Amiga IDE Doubler support (EXPERIMENTAL)"
 	depends on BLK_DEV_GAYLE && EXPERIMENTAL
 	---help---
-	  This driver provides support for the so-called `IDE doublers' (made
+	  This driver provides support for the so-called \`IDE doublers' (made
 	  by various manufacturers, e.g. Eyetech) that can be connected to the
 	  builtin IDE interface of some Amiga models. Using such an IDE
 	  doubler, you can connect up to four instead of two IDE devices on
@@ -15011,8 +15011,8 @@ config BLK_DEV_MAC_IDE
 	depends on MAC
 	help
 	  This is the IDE driver for the builtin IDE interface on some m68k
-	  Macintosh models. It supports both the `Quadra style' (used in
-	  Quadra/ Centris 630 and Performa 588 models) and `Powerbook style'
+	  Macintosh models. It supports both the \`Quadra style' (used in
+	  Quadra/ Centris 630 and Performa 588 models) and \`Powerbook style'
 	  (used in the Powerbook 150 and 190 models) IDE interface.
 
 	  Say Y if you have such an Macintosh model and want to use IDE
@@ -15676,7 +15676,7 @@ config SCSI_AACRAID
 #line 0
 #
 # AIC7XXX and AIC79XX 2.5.X Kernel configuration File.
-# $Id: //depot/linux-aic79xx-2.5.0/drivers/scsi/aic7xxx/Kconfig.aic7xxx#7 $
+# \$Id: //depot/linux-aic79xx-2.5.0/drivers/scsi/aic7xxx/Kconfig.aic7xxx#7 \$
 #
 config SCSI_AIC7XXX
 	tristate "Adaptec AIC7xxx Fast -> U160 support (New Driver)"
@@ -15814,7 +15814,7 @@ config SCSI_AIC7XXX_OLD
 #line 0
 #
 # AIC79XX 2.5.X Kernel configuration File.
-# $Id: //depot/linux-aic79xx-2.5.0/drivers/scsi/aic7xxx/Kconfig.aic79xx#4 $
+# \$Id: //depot/linux-aic79xx-2.5.0/drivers/scsi/aic7xxx/Kconfig.aic79xx#4 \$
 #
 config SCSI_AIC79XX
 	tristate "Adaptec AIC79xx U320 support"
@@ -21860,7 +21860,7 @@ config ACENIC
 	  GA620, SGI Gigabit or Farallon PN9000-SX PCI Gigabit Ethernet
 	  adapter. The driver allows for using the Jumbo Frame option (9000
 	  bytes/frame) however it requires that your switches can handle this
-	  as well. To enable Jumbo Frames, add `mtu 9000' to your ifconfig
+	  as well. To enable Jumbo Frames, add \`mtu 9000' to your ifconfig
 	  line.
 
 	  To compile this driver as a module, choose M here: the
@@ -23909,7 +23909,7 @@ menuconfig WAN
 	  distances with data transfer rates significantly higher than those
 	  achievable with commonly used asynchronous modem connections.
 
-	  Usually, a quite expensive external device called a `WAN router' is
+	  Usually, a quite expensive external device called a \`WAN router' is
 	  needed to connect to a WAN. As an alternative, a relatively
 	  inexpensive WAN interface card can allow your Linux box to directly
 	  connect to a WAN.
@@ -28701,7 +28701,7 @@ config SGI_MBCS
 #
 # Serial device configuration
 #
-# $Id: Kconfig,v 1.11 2004/03/11 18:08:04 lethal Exp $
+# \$Id: Kconfig,v 1.11 2004/03/11 18:08:04 lethal Exp \$
 #
 
 menu "Serial drivers"
@@ -30350,7 +30350,7 @@ config ADVANTECH_WDT
 	depends on X86
 	help
 	  If you are configuring a Linux kernel for the Advantech single-board
-	  computer, say `Y' here to support its built-in watchdog timer
+	  computer, say \`Y' here to support its built-in watchdog timer
 	  feature. More information can be found at
 	  <http://www.advantech.com.tw/products/>
 
@@ -31220,7 +31220,7 @@ config DTLK
 	help
 	  This driver is for the DoubleTalk PC, a speech synthesizer
 	  manufactured by RC Systems (<http://www.rcsys.com/>).  It is also
-	  called the `internal DoubleTalk'.
+	  called the \`internal DoubleTalk'.
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called dtlk.
@@ -37106,7 +37106,7 @@ config FB_PM2
 	select FB_CFB_IMAGEBLIT
 	help
 	  This is the frame buffer device driver for the Permedia2 AGP frame
-	  buffer card from ASK, aka `Graphic Blaster Exxtreme'.  There is a
+	  buffer card from ASK, aka \`Graphic Blaster Exxtreme'.  There is a
 	  product page at
 	  <http://www.ask.com.hk/product/Permedia%202/permedia2.htm>.
 
@@ -38837,14 +38837,14 @@ config FB_VIRTUAL
 	select FB_SYS_IMAGEBLIT
 	select FB_SYS_FOPS
 	---help---
-	  This is a `virtual' frame buffer device. It operates on a chunk of
+	  This is a \`virtual' frame buffer device. It operates on a chunk of
 	  unswappable kernel memory instead of on the memory of a graphics
 	  board. This means you cannot see any output sent to this frame
 	  buffer device, while it does consume precious memory. The main use
 	  of this frame buffer device is testing and debugging the frame
 	  buffer subsystem. Do NOT enable it for normal systems! To protect
 	  the innocent, it has to be enabled explicitly at boot time using the
-	  kernel option `video=vfb:'.
+	  kernel option \`video=vfb:'.
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called vfb. In order to load it, you must use
@@ -42522,7 +42522,7 @@ config USB_DEVICE_CLASS
 	  nodes (lsusb) when usbfs is not used, and the following udev rule
 	  doesn't exist:
 	    SUBSYSTEM=="usb", ACTION=="add", ENV{DEVTYPE}=="usb_device", \
-	    NAME="bus/usb/$env{BUSNUM}/$env{DEVNUM}", MODE="0644"
+	    NAME="bus/usb/\$env{BUSNUM}/\$env{DEVNUM}", MODE="0644"
 
 config USB_DYNAMIC_MINORS
 	bool "Dynamic USB minor allocation (EXPERIMENTAL)"
@@ -45167,7 +45167,7 @@ endmenu
 #	Copyright (c) 2003 Linux Networx
 #	Licensed and distributed under the GPL
 #
-# $Id: Kconfig,v 1.4.2.7 2005/07/08 22:05:38 dsp_llnl Exp $
+# \$Id: Kconfig,v 1.4.2.7 2005/07/08 22:05:38 dsp_llnl Exp \$
 #
 
 menu 'EDAC - error detection and reporting (RAS) (EXPERIMENTAL)'
@@ -46196,7 +46196,7 @@ config REISERFS_FS
 	  It is more easily extended to have features currently found in
 	  database and keyword search systems than block allocation based file
 	  systems are.  The next version will be so extended, and will support
-	  plugins consistent with our motto ``It takes more than a license to
+	  plugins consistent with our motto \`\`It takes more than a license to
 	  make source code open.''
 
 	  Read <http://www.namesys.com/> to learn more about reiserfs.
@@ -48130,7 +48130,7 @@ config NCPFS_NFS_NS
 	help
 	  Allows you to utilize NFS namespace on NetWare servers.  It brings
 	  you case sensitive filenames.  Say Y.  You can disable it at
-	  mount-time with the `-N nfs' parameter of ncpmount.
+	  mount-time with the \`-N nfs' parameter of ncpmount.
 
 config NCPFS_OS2_NS
 	bool "Use LONG (OS/2) namespace if available"
@@ -48316,7 +48316,7 @@ config ACORN_PARTITION_ADFS
 	  The Acorn Disc Filing System is the standard file system of the
 	  RiscOS operating system which runs on Acorn's ARM-based Risc PC
 	  systems and the Acorn Archimedes range of machines.  If you say
-	  `Y' here, Linux will support disk partitions created under ADFS.
+	  \`Y' here, Linux will support disk partitions created under ADFS.
 
 config ACORN_PARTITION_POWERTEC
 	bool "PowerTec partition support" if PARTITION_ADVANCED
@@ -49187,7 +49187,7 @@ config HEADERS_CHECK
 
 	  If you're making modifications to header files which are
 	  relevant for userspace, say 'Y', and check the headers
-	  exported to $(INSTALL_HDR_PATH) (usually 'usr/include' in
+	  exported to \$(INSTALL_HDR_PATH) (usually 'usr/include' in
 	  your build tree), to make sure they're suitable.
 
 config DEBUG_KERNEL
@@ -49913,7 +49913,7 @@ config SECURITY_SELINUX_POLICYDB_VERSION_MAX_VALUE
 	  If you are unsure how to answer this question, look for the
 	  policy format version supported by your policy toolchain, by
 	  running 'checkpolicy -V'. Or look at what policy you have
-	  installed under /etc/selinux/$SELINUXTYPE/policy, where
+	  installed under /etc/selinux/\$SELINUXTYPE/policy, where
 	  SELINUXTYPE is defined in your /etc/selinux/config.
 
 #file "security/selinux/Kconfig"
