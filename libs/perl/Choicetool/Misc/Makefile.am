@@ -20,36 +20,7 @@
 
 include $(top_srcdir)/Makefile.sub
 
-SUBDIRS =					\
-	Base					\
-	OS					\
-	Misc					\
-	Data					\
-	UI					\
-	Rules					\
-	Frontends
+perllibdir = $(pkgvlibsdir)/perl/Choicetool/Misc
 
-perllibdir = $(pkgvlibsdir)/perl/Choicetool
-
-dist_perllib_DATA =                             \
-	Compile.pm				\
-	Link.pm					\
-	Set.pm
-
-nodist_perllib_DATA =                           \
-	Autoconfig.pm
-
-CLEANFILES     = $(nodist_perllib_DATA)
-DISTCLEANFILES =
-
-Autoconfig.pm: Makefile $(srcdir)/Autoconfig.pm.in
-	( rm -f $@ $@.tmp && \
-	  $(do_subst) < $(srcdir)/Autoconfig.pm.in > $@.tmp && \
-	  chmod a-w $@.tmp && \
-	  mv -f $@.tmp $@ ) || { \
-	        rm -f $@ $@.tmp ; \
-	        exit 1 ; \
-	}
-
-EXTRA_DIST =					\
-	Autoconfig.pm.in
+dist_perllib_DATA =				\
+	Location.pm
