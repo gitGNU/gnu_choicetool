@@ -21,6 +21,8 @@
 # Test to ensure that choicetool can work with the autotools
 # Report from Francesco Salvestrini
 
+required="aclocal autoconf"
+
 . $testdir/defs || exit 1
 
 cat > ./configure.ac <<EOF
