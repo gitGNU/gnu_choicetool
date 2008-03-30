@@ -33,10 +33,10 @@ DOWNLOAD = 					\
 	ax_with_prog.m4
 
 MACROS =					\
+	$(DOWNLOAD)				\
 	ax_prog_perl_modules.m4			\
 	ax_with_m4.m4				\
-	ax_prog_m4_version.m4			\
-	$(DOWNLOAD)
+	ax_prog_m4_version.m4
 
 FETCH = $(top_builddir)/tools/scripts/fetch
 
