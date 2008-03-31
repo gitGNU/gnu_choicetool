@@ -76,6 +76,7 @@ FAIL_TESTS +=					\
 	test-fail				\
 	test-arguments-3			\
 	test-arguments-5			\
+	test-arguments-long-2			\
 	test-arguments-multiple-2		\
 	test-language-10			\
 	test-language-11			\
@@ -433,6 +434,18 @@ test-arguments-long-1: $(srcdir)/test-arguments-long-1.in Makefile
 	}
 EXTRA_DIST += test-arguments-long-1.in
 CLEANFILES += test-arguments-long-1
+
+test-arguments-long-2: $(srcdir)/test-arguments-long-2.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-arguments-long-2.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-arguments-long-2.in
+CLEANFILES += test-arguments-long-2
 
 test-arguments-multiple-1: $(srcdir)/test-arguments-multiple-1.in Makefile
 	( rm -f $@ $@.tmp && \

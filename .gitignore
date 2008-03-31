@@ -70,6 +70,7 @@ tests/test-arguments-4
 tests/test-arguments-5
 tests/test-arguments-6
 tests/test-arguments-long-1
+tests/test-arguments-long-2
 tests/test-arguments-multiple-1
 tests/test-arguments-multiple-2
 tests/test-autotools-1
