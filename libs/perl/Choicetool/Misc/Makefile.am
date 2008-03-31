@@ -23,4 +23,5 @@ include $(top_srcdir)/Makefile.sub
 perllibdir = $(pkgvlibsdir)/perl/Choicetool/Misc
 
 dist_perllib_DATA =				\
-	Location.pm
+	Location.pm				\
+	Text.pm
