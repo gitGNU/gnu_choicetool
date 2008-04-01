@@ -77,7 +77,6 @@ FAIL_TESTS +=					\
 	test-arguments-3			\
 	test-arguments-5			\
 	test-arguments-long-2			\
-	test-arguments-multiple-2		\
 	test-language-10			\
 	test-language-11			\
 	test-language-12			\
@@ -93,6 +92,11 @@ SUCCESS_TESTS +=				\
 	test-arguments-6			\
 	test-arguments-long-1			\
 	test-arguments-multiple-1		\
+	test-arguments-multiple-2		\
+	test-arguments-preprocessor		\
+	test-arguments-parser			\
+	test-arguments-compiler			\
+	test-arguments-linker			\
 	test-dry-run				\
 	test-language-parse-1			\
 	test-language-comments-1		\
@@ -470,6 +474,54 @@ test-arguments-multiple-2: $(srcdir)/test-arguments-multiple-2.in Makefile
 	}
 EXTRA_DIST += test-arguments-multiple-2.in
 CLEANFILES += test-arguments-multiple-2
+
+test-arguments-preprocessor: $(srcdir)/test-arguments-preprocessor.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-arguments-preprocessor.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-arguments-preprocessor.in
+CLEANFILES += test-arguments-preprocessor
+
+test-arguments-parser: $(srcdir)/test-arguments-parser.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-arguments-parser.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-arguments-parser.in
+CLEANFILES += test-arguments-parser
+
+test-arguments-compiler: $(srcdir)/test-arguments-compiler.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-arguments-compiler.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-arguments-compiler.in
+CLEANFILES += test-arguments-compiler
+
+test-arguments-linker: $(srcdir)/test-arguments-linker.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-arguments-linker.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-arguments-linker.in
+CLEANFILES += test-arguments-linker
 
 test-dry-run: $(srcdir)/test-dry-run.in Makefile
 	( rm -f $@ $@.tmp && \
