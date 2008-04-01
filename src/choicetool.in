@@ -72,16 +72,20 @@ my $OUTBASE = "choose";
 my $DFLTIN  = $OUTBASE . ".ct";
 my $DFLTOUT = $OUTBASE . ".in";
 
-my $input_file        = $DFLTIN; #File::Spec->catfile(File::Spec->curdir(), "choose.ct");
+my $input_file        = $DFLTIN;
+#my $input_file        = File::Spec->catfile(File::Spec->curdir(),"choose.ct");
+
 my $preprocessed_file = File::Spec->catfile(File::Spec->curdir(), "choose.pp");
 my $parsed_file       = File::Spec->catfile(File::Spec->curdir(), "choose.pa");
 my $compiled_file     = File::Spec->catfile(File::Spec->curdir(), "choose.co");
-my $output_file       = $DFLTOUT; #File::Spec->catfile(File::Spec->curdir(), "choose.in");
+
+my $output_file       = $DFLTOUT;
+#my $output_file       = File::Spec->catfile(File::Spec->curdir(),"choose.in");
 
 my %tools = (
     "preprocess" => {
         HANDLER        => "choicetool-preprocessor",
-        DESCRIPTION    => undef,
+        DESCRIPTION    => "preprocess",
         FLAGS          =>
 	    "-i %input_file% " .
 	    "-o %preprocessed_file%",
@@ -90,36 +94,39 @@ my %tools = (
     },
     "parse" => {
         HANDLER        => "choicetool-parser",
-        DESCRIPTION    => undef,
+        DESCRIPTION    => "parse",
         FLAGS          =>
 	    "-i %preprocessed_file% " .
 	    "-o %parsed_file%",
-        PRE_REQUISITE  => [ ],
+        PRE_REQUISITE  => [ "preprocess" ],
         POST_REQUISITE => [ ],
     },
     "compile" => {
         HANDLER        => "choicetool-compiler",
-        DESCRIPTION    => undef,
+        DESCRIPTION    => "compile",
         FLAGS          =>
 	    "-i %parsed_file% " .
 	    "-o %compiled_file%",
-        PRE_REQUISITE  => [ ],
+        PRE_REQUISITE  => [ "preprocess",
+			    "parse" ],
         POST_REQUISITE => [ ],
     },
     "link" => {
         HANDLER        => "choicetool-linker",
-        DESCRIPTION    => undef,
+        DESCRIPTION    => "link",
         FLAGS          =>
 	    "-i %compiled_file% " .
 	    "-o %output_file%",
-        PRE_REQUISITE  => [ ],
+        PRE_REQUISITE  => [ "preprocess",
+			    "parse",
+			    "compile" ],
         POST_REQUISITE => [ ],
     },
     );
 
 sub help ()
 {
-    print "Usage: $PROGRAM_NAME [OPTIONS]\n";
+    print "Usage: $PROGRAM_NAME [OPTIONS]... [-- [MODE-ARG]...]\n";
     print "\n";
     print "Generate an interactive configuration script from an input file if\n";
     print "given, or \`$DFLTIN' if present. Output is sent to the output file\n";
@@ -134,6 +141,25 @@ sub help ()
     print "  -h, --help                 print this help, then exit\n";
     print "  -V, --version              print version number, then exit\n";
     print "\n";
+    print "Warning categories include:\n";
+    print "  \`all'                      all the warnings\n";
+    print "  \`none'                     turn off all the warnings\n";
+    print "\n";
+
+    print "MODE must be one of the following:\n";
+    for my $tool (keys(%tools)) {
+	assert(defined($tools{$tool}{DESCRIPTION}));
+
+	printf("        %-11s          %-s\n",
+	       $tool,
+	       $tools{$tool}{DESCRIPTION});
+    }
+    print "\n";
+
+    print "MODE-ARGS vary depending on the MODE.  Try \`" . $PROGRAM_NAME. " --help MODE' for a\n";
+    print "more detailed description of MODE.\n";
+    print "\n";
+
     print "The environment variable CHOICETOOL_LIBRARY_PATH is honored.\n";
     print "\n";
     print "Report bugs to <$PACKAGE_BUGREPORT>\n";
@@ -178,6 +204,44 @@ sub run_tool ($$@)
     return 1;
 }
 
+sub help_mode ($)
+{
+    my $mode = shift;
+
+    if (defined($mode)) {
+	debug("Producing help for mode \`" . $mode . "'");
+	my $found;
+
+	# Yes, let us provide help for that mode
+	debug("Mode should be \`" . $mode . "'");
+	$found = 0;
+	for my $tool (keys(%tools)) {
+	    debug("Tool = \`" . $tool . "'");
+	    if ($tool =~ $mode) {
+		debug("Got tool \`" . $tool . "' for the requested mode");
+		$found = 1;
+		last;
+	    }
+	}
+
+	if (!$found) {
+	    error("Unknown MODE \`" . $mode . "'");
+	    return 0;
+	}
+
+	if (!run_tool($mode, 0, "-h")) {
+	    error("Cannot get help for MODE \`" . $mode . "'");
+	    return 0;
+	}
+    } else {
+	debug("Mode is not defined, producing generic help");
+	# No, let us provide the generic help
+	help();
+    }
+
+    return 1;
+}
+
 #
 # Main
 #
@@ -186,7 +250,7 @@ trace_prefix_set($PROGRAM_NAME);
 
 #my $input_file  = "";
 #my $output_file = "";
-my $running_mode = "";
+my $running_mode = "link";
 my $force_mode   = 0;
 my $dry_run      = 0;
 my $run          = 1;
@@ -199,6 +263,7 @@ my $options = Choicetool::Base::Options->new();
 assert(defined($options));
 
 my @options_list = (
+    [ "M", "mode",     sub { $running_mode = $_[0];        return 1; }, 1, 1 ],
     [ "i", "input",    sub { $input_file = $_[0];          return 1; }, 1, 1 ],
     [ "o", "output",   sub { $output_file = $_[0];         return 1; }, 1, 1 ],
     [ "n", "dry-run",  sub { $dry_run = 1;                 return 1; }, 0, 0 ],
@@ -206,8 +271,8 @@ my @options_list = (
     [ "W", "warnings", sub { warning_set($_[0]);           return 1; }, 1, 1 ],
     [ "d", "debug",    sub { debug_set(1);                 return 1; }, 0, 0 ],
     [ "v", "verbose",  sub { verbose_set(1);               return 1; }, 0, 0 ],
-    [ "h", "help",     sub { help();             $run = 0; return 1; }, 0, 0 ],
-    [ "V", "version",  sub { version();          $run = 0; return 1; }, 0, 0 ],
+    [ "h", "help",     sub { help();             $run = 0; return 0; }, 0, 0 ],
+    [ "V", "version",  sub { version();          $run = 0; return 0; }, 0, 0 ],
     );
 
 if (!$options->config(\@options_list)) {
@@ -249,6 +314,32 @@ for my $tool (keys(%tools)) {
     assert(defined($string));
     $tools{$tool}->{FLAGS} = $string;
 }
+
+#
+# Some checks
+#
+
+if (!defined($running_mode)) {
+    hint("Missing running mode");
+    exit 1;
+}
+
+debug("Mode should be \`" . $running_mode . "'");
+my $found = 0;
+for my $tool (keys(%tools)) {
+    debug("Tool = \`" . $tool . "'");
+    if ($running_mode =~ $tool) {
+	debug("Got tool \`" . $tool . "' for the requested mode");
+	$found = 1;
+	last;
+    }
+}
+if (!$found) {
+    error("Unknown option \`" . $running_mode . "'");
+    exit 1;
+}
+
+debug("Running mode is \`$running_mode'");
 
 #
 # Setup flags (used later on)
@@ -313,17 +404,30 @@ for my $tool (keys(%tools)) {
 # Start the real work by running the tool-chain
 #
 
-if (!run_tool("preprocess", $dry_run, @options_slack)) {
-    exit 1;
+my @tools_chain;
+
+# Pre-requisites first
+for my $tool (@{$tools{$running_mode}{PRE_REQUISITE}}) {
+    assert(defined($tool));
+    push(@tools_chain, $tool);
 }
-if (!run_tool("parse",      $dry_run, @options_slack)) {
-    exit 1;
+
+# The requested tool
+push(@tools_chain, $running_mode);
+
+# Post-requisites last
+for my $tool (@{$tools{$running_mode}{POST_REQUISITE}}) {
+    assert(defined($tool));
+    push(@tools_chain, $tool);
 }
-if (!run_tool("compile",    $dry_run, @options_slack)) {
-    exit 1;
-}
-if (!run_tool("link",       $dry_run, @options_slack)) {
-    exit 1;
+
+debug("Tools chain is \`@tools_chain'");
+assert($#tools_chain >= 0);
+
+for my $tool (@tools_chain) {
+    if (!run_tool($tool, $dry_run, @options_slack)) {
+	exit 1;
+    }
 }
 
 exit 0;
