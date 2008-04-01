@@ -140,6 +140,7 @@ AC_CONFIG_FILES([
 	src/Makefile
 
 	site/Makefile
+	site/in/Makefile
 
 	docs/Makefile
 	docs/info/Makefile

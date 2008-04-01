@@ -32,15 +32,11 @@ tools/autotools/texinfo.tex
 tools/autotools/m4/perl_autofrisk.m4
 tools/autotools/m4/guile_autofrisk.m4
 
-docs/man/choicetool.1
-
 src/choicetool
 src/choicetool-preprocessor
 src/choicetool-parser
 src/choicetool-compiler
 src/choicetool-linker
-
-site/site.stamp
 
 libs/scheme/lib.scm
 
@@ -110,4 +106,9 @@ tests/test-language-source-4
 tests/test-language-complete
 tests/test-success
 
+docs/man/choicetool.1
 docs/info/choicetool.info
+
+site/in/.sitetool
+site/in/site.stamp
+site/out/*
