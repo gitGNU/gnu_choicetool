@@ -73,6 +73,10 @@ tests/test-arguments-long-1
 tests/test-arguments-long-2
 tests/test-arguments-multiple-1
 tests/test-arguments-multiple-2
+tests/test-arguments-preprocessor
+tests/test-arguments-parser
+tests/test-arguments-compiler
+tests/test-arguments-linker
 tests/test-autotools-1
 tests/test-autotools-2
 tests/test-dry-run
