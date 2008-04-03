@@ -1,7 +1,16 @@
+# Input file for perl-autofrisk
+
 files-glob src/.*in
+
 files-glob libs/perl/Choicetool/.*pm
 files-glob libs/perl/Choicetool/Base/.*pm
+files-glob libs/perl/Choicetool/Data/.*pm
+files-glob libs/perl/Choicetool/Frontends/.*pm
+files-glob libs/perl/Choicetool/Frontends/KConfig/.*pm
+files-glob libs/perl/Choicetool/Misc/.*pm
 files-glob libs/perl/Choicetool/OS/.*pm
+files-glob libs/perl/Choicetool/Rules/.*pm
+files-glob libs/perl/Choicetool/UI/.*pm
 
 non-critical-internal Choicetool::.*
 
@@ -11,3 +20,4 @@ non-critical-external warnings[ \t]*.*
 non-critical-external vars[ \t]*.*
 non-critical-external [0-9]\..*
 non-critical-external POSIX[ \t]*.*
+non-critical-external base[ \t]*.*
