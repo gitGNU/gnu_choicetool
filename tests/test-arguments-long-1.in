@@ -23,7 +23,9 @@
 
 . $testdir/defs || exit 1
 
-$CHOICETOOL --warnings=all || exit 1
-$CHOICETOOL --warnings all && exit 1
+touch ./test.in || exit 1
+
+$CHOICETOOL --force --input=test.in --output test.out --warnings=all || exit 1
+$CHOICETOOL --force --input=test.in --output test.out --warnings all || exit 1
 
 exit 0
