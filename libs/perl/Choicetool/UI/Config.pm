@@ -69,9 +69,9 @@ sub m4ify ($) {
     $string = "";
 
     $string = $string .
-	$prefix . "_CT_UI_CONFIG_BEGIN([" . $self->title() . "])\n";
+	$prefix . "_CT_UI_CONFIG_BEGIN([" . $self->symbol() . "])\n";
     $string = $string .
-	$prefix . "_CT_UI_CONFIG_END(["   . $self->title() . "])\n";
+	$prefix . "_CT_UI_CONFIG_END(["   . $self->symbol() . "])\n";
 
     return $string;
 }
