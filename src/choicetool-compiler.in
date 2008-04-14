@@ -64,6 +64,7 @@ use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
 use Choicetool::Data::Tree;
 use Choicetool::UI::Menu;
+use Choicetool::UI::Config;
 use Choicetool::Compile;
 
 #
