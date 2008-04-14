@@ -146,6 +146,15 @@ config_stmt:
              config_entry_start config_option_list
 {
     debug("Processed rule: config_stmt");
+
+    my $config;
+
+    $config = new Choicetool::UI::Config;
+    assert(defined($config));
+
+    $config->symbol("TEST-TEST-TEST");
+
+    ${$_[0]->YYData->{DATA}[0]}->data("INTERFACE", $config);
 }
            ;
 
@@ -363,7 +372,6 @@ menu:
     $menu->title($word);
 
     ${$_[0]->YYData->{DATA}[0]}->data("INTERFACE", $menu);
-
 }
       newline
     ;
