@@ -351,7 +351,6 @@ sub parse ($$)
 
 	if ($callback_ret < 0) {
 	    debug("Callback returned with error");
-	    assert(defined($self->{STRERROR}));
 	    return 0;
 	} elsif ($callback_ret == 0) {
 	    debug("Callback for option \`" . $option . "' " .
