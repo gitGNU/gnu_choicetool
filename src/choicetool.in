@@ -263,34 +263,32 @@ my $options = Choicetool::Base::Options->new();
 assert(defined($options));
 
 my @options_list = (
-    [ "M", "mode",     sub { $running_mode = $_[0];        return 1; }, 1 ],
-    [ "i", "input",    sub { $input_file = $_[0];          return 1; }, 1 ],
-    [ "o", "output",   sub { $output_file = $_[0];         return 1; }, 1 ],
-    [ "n", "dry-run",  sub { $dry_run = 1;                 return 1; }, 0 ],
-    [ "f", "force",    sub { $force_mode = 1;              return 1; }, 0 ],
-    [ "W", "warnings", sub { warning_set($_[0]);           return 1; }, 1 ],
-    [ "d", "debug",    sub { debug_set(1);                 return 1; }, 0 ],
-    [ "v", "verbose",  sub { verbose_set(1);               return 1; }, 0 ],
+    [ "M", "mode",     sub { $running_mode = $_[0];      return 1; }, 1 ],
+    [ "i", "input",    sub { $input_file = $_[0];        return 1; }, 1 ],
+    [ "o", "output",   sub { $output_file = $_[0];       return 1; }, 1 ],
+    [ "n", "dry-run",  sub { $dry_run = 1;               return 1; }, 0 ],
+    [ "f", "force",    sub { $force_mode = 1;            return 1; }, 0 ],
+    [ "W", "warnings", sub { warning_set($_[0]);         return 1; }, 1 ],
+    [ "d", "debug",    sub { debug_set(1);               return 1; }, 0 ],
+    [ "v", "verbose",  sub { verbose_set(1);             return 1; }, 0 ],
     [ "h", "help",     sub {
-	        return 0 if (!help_mode($_[0])); $run = 0; return 1; }, 2 ],
-    [ "V", "version",  sub { version();          $run = 0; return 1; }, 0 ],
+	$run = 0; return (help_mode($_[0]) ? 1 : -1);              }, 2 ],
+    [ "V", "version",  sub { version();        $run = 0; return 0; }, 0 ],
     );
 
 if (!$options->config(\@options_list)) {
-    bug("Options configuration problem");
+    bug("Options configuration problem (" . $options->strerror() . ")");
 }
-
 if (!$options->parse(\@ARGV)) {
-    hint("Option parsing failed");
+    assert(defined($options->strerror()));
+    hint($options->strerror());
     exit 1;
 }
 
-my @options_slack = ( );
+my @options_slack;
 
-while ($options->{OPTIND} <= $#ARGV) {
-    push(@options_slack, $ARGV[$options->{OPTIND}]);
-    $options->{OPTIND}++;
-}
+assert($options->{OPTIND} >= 0);
+@options_slack = @ARGV[$options->{OPTIND} .. $#ARGV];
 
 debug("Running \`" . $PROGRAM_NAME . "' version \`" . $PACKAGE_VERSION . "'");
 
