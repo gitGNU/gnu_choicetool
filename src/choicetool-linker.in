@@ -131,7 +131,6 @@ if (!$options->config(\@options_list)) {
     bug("Options configuration problem (" . $options->strerror() . ")");
 }
 if (!$options->parse(\@ARGV)) {
-    assert(defined($options->strerror()));
     hint($options->strerror());
     exit 1;
 }

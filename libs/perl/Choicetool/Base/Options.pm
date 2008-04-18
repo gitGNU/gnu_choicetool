@@ -71,7 +71,7 @@ sub _error($$)
     my $string = shift;
 
     chomp($string);
-    $self->{STERROR} = $string;
+    $self->{STRERROR} = $string;
 }
 
 sub strerror($)
@@ -351,6 +351,7 @@ sub parse ($$)
 
 	if ($callback_ret < 0) {
 	    debug("Callback returned with error");
+	    assert(defined($self->{STRERROR}));
 	    return 0;
 	} elsif ($callback_ret == 0) {
 	    debug("Callback for option \`" . $option . "' " .
