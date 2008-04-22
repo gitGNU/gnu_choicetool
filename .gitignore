@@ -122,6 +122,10 @@ tests/test-options-multi-5
 tests/test-options-multi-6
 tests/test-options-multi-7
 tests/test-options-multi-8
+tests/test-options-tool-preprocessor
+tests/test-options-tool-parser
+tests/test-options-tool-compiler
+tests/test-options-tool-linker
 
 docs/man/choicetool.1
 docs/info/choicetool.info

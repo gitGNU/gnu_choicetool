@@ -137,7 +137,11 @@ SUCCESS_TESTS +=				\
 	test-options-multi-5			\
 	test-options-multi-6			\
 	test-options-multi-7			\
-	test-options-multi-8
+	test-options-multi-8			\
+	test-options-tool-preprocessor		\
+	test-options-tool-parser		\
+	test-options-tool-compiler		\
+	test-options-tool-linker
 
 XFAIL_TESTS = $(FAIL_TESTS)
 TESTS       = $(FAIL_TESTS) $(SUCCESS_TESTS)
@@ -899,6 +903,54 @@ test-options-multi-8: $(srcdir)/test-options-multi-8.in Makefile
 	}
 EXTRA_DIST += test-options-multi-8.in
 CLEANFILES += test-options-multi-8
+
+test-options-tool-preprocessor: $(srcdir)/test-options-tool-preprocessor.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-options-tool-preprocessor.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-options-tool-preprocessor.in
+CLEANFILES += test-options-tool-preprocessor
+
+test-options-tool-parser: $(srcdir)/test-options-tool-parser.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-options-tool-parser.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-options-tool-parser.in
+CLEANFILES += test-options-tool-parser
+
+test-options-tool-compiler: $(srcdir)/test-options-tool-compiler.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-options-tool-compiler.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-options-tool-compiler.in
+CLEANFILES += test-options-tool-compiler
+
+test-options-tool-linker: $(srcdir)/test-options-tool-linker.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-options-tool-linker.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-options-tool-linker.in
+CLEANFILES += test-options-tool-linker
 
 clean-local:
 	rm -rf testSubDir-*
