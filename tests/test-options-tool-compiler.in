@@ -21,12 +21,11 @@
 . @builddir@/defs
 
 MODE=compile
-CHOICETOOL="$CHOICETOOL --mode $MODE"
 
-$WRAPPER  choicetool-$MODE                   && exit 1
-$CHOICETOOL --dry-run -h                     || exit 1
-$CHOICETOOL --dry-run --verbose -h           || exit 1
-$CHOICETOOL --dry-run --debug   -h           || exit 1
-$CHOICETOOL --dry-run --debug   --verbose -h || exit 1
+$WRAPPER  choicetool-$MODE                         && exit 1
+$CHOICETOOL --dry-run -h                     $MODE || exit 1
+$CHOICETOOL --dry-run --verbose -h           $MODE || exit 1
+$CHOICETOOL --dry-run --debug   -h           $MODE || exit 1
+$CHOICETOOL --dry-run --debug   --verbose -h $MODE || exit 1
 
 exit 0
