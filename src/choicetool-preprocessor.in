@@ -29,13 +29,13 @@ BEGIN
 {
     # Retrieve our perl libraries path
     my $perllibdir;
-    
+
     $perllibdir = defined($ENV{'CHOICETOOL_LIBRARY_PATH'}) ?
 	$ENV{'CHOICETOOL_LIBRARY_PATH'} : '@pkgvlibsdir@';
-    
+
     unshift(@INC, map(File::Spec->catfile($_, "perl"),
 		      (split '@PATH_SEPARATOR@', $perllibdir)));
-    
+
     # Override SHELL.  On DJGPP SHELL may not be set to a shell
     # that can handle redirection and quote arguments correctly,
     # e.g.: COMMAND.COM.  For DJGPP always use the shell that configure
@@ -186,7 +186,7 @@ if (!$force_mode) {
 #    sub callback ($$) {
 #        my $key   = shift;
 #        my $value = shift;
-#	
+#
 #        if (!defined($key)) {
 #            $key = "undef";
 #        }
