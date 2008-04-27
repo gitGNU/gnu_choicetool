@@ -22,3 +22,9 @@ include $(top_srcdir)/Makefile.sub
 
 SUBDIRS =                                       \
         Choicetool
+
+##
+## Maintainer related targets
+##
+maintainer-check: Makefile
+	$(MAKE) maintainer-check -C Choicetool

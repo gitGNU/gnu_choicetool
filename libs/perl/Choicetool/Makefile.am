@@ -53,3 +53,9 @@ Autoconfig.pm: Makefile $(srcdir)/Autoconfig.pm.in
 
 EXTRA_DIST =					\
 	Autoconfig.pm.in
+
+##
+## Maintainer related targets
+##
+maintainer-check: Makefile
+	$(WHITESPACE_DETECT) $(dist_perllib_DATA) $(nodist_perllib_DATA)

@@ -132,3 +132,10 @@ site: all
 	(cd site && $(MAKE) $(AM_MAKEFLAGS) site)
 
 DISTCLEANFILES =
+
+##
+## Maintainer related targets
+##
+maintainer-check: Makefile
+	$(MAKE) maintainer-check -C src
+	$(MAKE) maintainer-check -C libs

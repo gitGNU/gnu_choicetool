@@ -110,3 +110,9 @@ choicetool-linker: Makefile $(srcdir)/choicetool-linker.in
 	        rm -f $@ $@.tmp ; \
 	        exit 1 ; \
 	}
+
+##
+## Maintainer related targets
+##
+maintainer-check: Makefile
+	$(WHITESPACE_DETECT) $(pkgvbin_SCRIPTS)
