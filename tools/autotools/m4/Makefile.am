@@ -38,8 +38,6 @@ MACROS =					\
 	ax_with_m4.m4				\
 	ax_prog_m4_version.m4
 
-FETCH = $(top_builddir)/tools/scripts/fetch
-
 update:
 	rm -r -f fetch-dir && \
 	mkdir fetch-dir && \
