@@ -46,3 +46,15 @@ maintainer-clean-local:
 		$(SITETOOL) --mode clean || exit 1 ; \
 		rm -f site.stamp ; \
 	fi
+
+##
+## Maintainer related targets
+##
+maintainer-check: Makefile maintainer-check-local maintainer-check-recursive
+
+maintainer-check-recursive: Makefile
+	@for i in $(SUBDIRS) ; do \
+		(cd $$i && $(MAKE) $(AM_MAKEFLAGS) maintainer-check) \
+	done
+
+maintainer-check-local: Makefile

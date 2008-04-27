@@ -22,3 +22,15 @@ include $(top_srcdir)/Makefile.sub
 
 info_TEXINFOS = choicetool.texi
 choicetool_TEXINFOS = fdl.texi
+
+##
+## Maintainer related targets
+##
+maintainer-check: Makefile maintainer-check-local maintainer-check-recursive
+
+maintainer-check-recursive: Makefile
+	@for i in $(SUBDIRS) ; do \
+		(cd $$i && $(MAKE) $(AM_MAKEFLAGS) maintainer-check) \
+	done
+
+maintainer-check-local: Makefile

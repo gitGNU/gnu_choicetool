@@ -34,3 +34,15 @@ choicetool.1: $(srcdir)/choicetool.x $(top_builddir)/src/choicetool.in
 	    --section=1	\
 	    --output=$@	\
 	    $(top_builddir)/src/choicetool
+
+##
+## Maintainer related targets
+##
+maintainer-check: Makefile maintainer-check-local maintainer-check-recursive
+
+maintainer-check-recursive: Makefile
+	@for i in $(SUBDIRS) ; do \
+		(cd $$i && $(MAKE) $(AM_MAKEFLAGS) maintainer-check) \
+	done
+
+maintainer-check-local: Makefile

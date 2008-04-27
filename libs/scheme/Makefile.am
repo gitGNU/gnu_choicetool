@@ -36,3 +36,16 @@ CLEANFILES += lib.scm
 
 EXTRA_DIST =					\
 	$(scm_libs_SRCS)
+
+##
+## Maintainer related targets
+##
+maintainer-check: Makefile maintainer-check-local maintainer-check-recursive
+
+maintainer-check-recursive: Makefile
+	@for i in $(SUBDIRS) ; do \
+		(cd $$i && $(MAKE) $(AM_MAKEFLAGS) maintainer-check) \
+	done
+
+maintainer-check-local: Makefile
+	$(WHITESPACE_DETECT) $(EXTRA_DIST)
