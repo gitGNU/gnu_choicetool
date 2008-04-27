@@ -24,3 +24,9 @@ SUBDIRS =					\
 	m4					\
 	scheme					\
 	perl
+
+##
+## Maintainer related targets
+##
+maintainer-check: Makefile
+	$(MAKE) maintainer-check -C perl
