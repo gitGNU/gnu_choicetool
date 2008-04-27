@@ -29,4 +29,4 @@ SUBDIRS =					\
 ## Maintainer related targets
 ##
 maintainer-check: Makefile
-	$(MAKE) maintainer-check -C perl
+	(cd perl && $(MAKE) $(AM_MAKEFLAGS) maintainer-check)

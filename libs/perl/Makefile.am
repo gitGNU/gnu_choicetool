@@ -27,4 +27,4 @@ SUBDIRS =                                       \
 ## Maintainer related targets
 ##
 maintainer-check: Makefile
-	$(MAKE) maintainer-check -C Choicetool
+	(cd Choicetool && $(MAKE) $(AM_MAKEFLAGS) maintainer-check)

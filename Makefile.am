@@ -137,5 +137,5 @@ DISTCLEANFILES =
 ## Maintainer related targets
 ##
 maintainer-check: Makefile
-	$(MAKE) maintainer-check -C src
-	$(MAKE) maintainer-check -C libs
+	(cd src  && $(MAKE) $(AM_MAKEFLAGS) maintainer-check)
+	(cd libs && $(MAKE) $(AM_MAKEFLAGS) maintainer-check)

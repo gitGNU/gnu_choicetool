@@ -115,4 +115,4 @@ choicetool-linker: Makefile $(srcdir)/choicetool-linker.in
 ## Maintainer related targets
 ##
 maintainer-check: Makefile
-	$(WHITESPACE_DETECT) $(pkgvbin_SCRIPTS)
+	$(WHITESPACE_DETECT) $(pl_scripts_SRCS)
