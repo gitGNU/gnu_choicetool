@@ -49,7 +49,7 @@ AC_DEFUN([CT_PROG_GUILE],[
     guile_minor_req=`expr $GUILE_REQ : '[0-9]*\.\([0-9]*\)\.[0-9]*'`
     guile_micro_req=`expr $GUILE_REQ : '[0-9]*\.[0-9]*\.\([0-9]*\)'`
     changequote([, ])
-    
+
     if test $guile_major_ver -ge $guile_major_req && test $guile_minor_ver -ge $guile_minor_req && test $guile_micro_ver -ge $guile_micro_req; then
       AC_MSG_RESULT(yes)
     else

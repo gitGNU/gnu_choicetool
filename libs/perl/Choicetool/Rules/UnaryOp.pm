@@ -44,7 +44,7 @@ sub new ($$) {
 sub operand ($$) {
     my $self = shift;
     my $oper = shift;
-    
+
     assert(defined($self));
 
     if (defined($oper)) {

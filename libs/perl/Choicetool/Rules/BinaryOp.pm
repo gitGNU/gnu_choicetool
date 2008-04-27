@@ -46,7 +46,7 @@ sub new ($$) {
 sub lhs ($$) {
     my $self = shift;
     my $oper = shift;
-    
+
     assert(defined($self));
 
     if (defined($oper)) {
@@ -60,7 +60,7 @@ sub lhs ($$) {
 sub rhs ($$) {
     my $self = shift;
     my $oper = shift;
-    
+
     assert(defined($self));
 
     if (defined($oper)) {

@@ -35,7 +35,7 @@ use Choicetool::Autoconfig;
 BEGIN {
     use Exporter ();
     our ($VERSION, @ISA, @EXPORT);
-    
+
     @ISA    = qw(Exporter);
     @EXPORT = qw(&filename_rel2abs
 		 &filename_canonicalize

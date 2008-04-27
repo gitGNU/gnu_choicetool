@@ -26,7 +26,7 @@ DIALOG="@CT_DIALOG@"
 
 #
 # End of variables
-# 
+#
 ])
 
 m4_define([_CT_HEADER],[
