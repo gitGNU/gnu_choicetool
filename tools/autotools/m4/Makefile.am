@@ -20,6 +20,9 @@
 
 include $(top_srcdir)/Makefile.sub
 
+##
+## Maintainer related targets
+##
 HOST="http://autoconf-archive.cryp.to"
 
 DOWNLOAD = 					\
@@ -38,7 +41,7 @@ MACROS =					\
 	ax_with_m4.m4				\
 	ax_prog_m4_version.m4
 
-update:
+update-local:
 	rm -r -f fetch-dir && \
 	mkdir fetch-dir && \
 	for i in $(DOWNLOAD) ; do \
@@ -53,15 +56,5 @@ update:
 		} \
 	done && \
 	rm -r -f fetch-dir
-
-##
-## Maintainer related targets
-##
-maintainer-check: Makefile maintainer-check-local maintainer-check-recursive
-
-maintainer-check-recursive: Makefile
-	@for i in $(SUBDIRS) ; do \
-		(cd $$i && $(MAKE) $(AM_MAKEFLAGS) maintainer-check) \
-	done
 
 maintainer-check-local: Makefile
