@@ -7,6 +7,9 @@ NOTE:
 	completed ...
 
 TO-BE-DONE:
+* Do a general clean-up of CHOICETOOL_BINARY_PATH, CHOICETOOL_DATA_PATH and
+  CHOICETOOL_LIBRARY_PATH environment variables
+
 * Handle multiple configuration syntaxes, translating them into a common
   configuration syntax; this deserves an option switch both on choicetool,
   choicetool-preprocess and choicetool-parse
