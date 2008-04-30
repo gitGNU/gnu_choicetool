@@ -263,7 +263,7 @@ my $options = Choicetool::Base::Options->new();
 assert(defined($options));
 
 my @options_list = (
-    [ "M", "mode",     sub { $running_mode = $_[0];   return 1; }, 1 ],
+    [ "M", "mode",     sub { $running_mode = $_[0];   return 0; }, 1 ],
     [ "i", "input",    sub { $input_file = $_[0];     return 1; }, 1 ],
     [ "o", "output",   sub { $output_file = $_[0];    return 1; }, 1 ],
     [ "n", "dry-run",  sub { $dry_run = 1;            return 1; }, 0 ],
