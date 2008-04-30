@@ -7,13 +7,13 @@ NOTE:
 	completed ...
 
 TO-BE-DONE:
-* Add sub-options handling in Options.pm module
-
-* Take account of handling multiple configuration syntaxes translating them
-  into a common configuration syntax; this deserves an option switch both on
-  choicetool, choicetool-preprocess and choicetool-parse
+* Handle multiple configuration syntaxes, translating them into a common
+  configuration syntax; this deserves an option switch both on choicetool,
+  choicetool-preprocess and choicetool-parse
 
 DONE:
+* Add sub-options handling in Options.pm module
+
 * Rearrange the test-suite in order to avoid tests that require tools not
   installed on the host (e.g.: autotools)
 
