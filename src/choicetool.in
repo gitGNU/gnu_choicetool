@@ -124,6 +124,12 @@ my %tools = (
     },
     );
 
+sub help_environment ()
+{
+    print "The environment variables CHOICETOOL_BINARY_PATH, CHOICETOOL_LIBRARY_PATH and\n";
+    print "CHOICETOOL_DATA_PATH are honored.\n";
+}
+
 sub help ()
 {
     print "Usage: $PROGRAM_NAME [OPTIONS]... [-- [MODE-ARG]...]\n";
@@ -160,7 +166,8 @@ sub help ()
     print "more detailed description of MODE.\n";
     print "\n";
 
-    print "The environment variable CHOICETOOL_LIBRARY_PATH is honored.\n";
+    help_environment();
+
     print "\n";
     print "Report bugs to <$PACKAGE_BUGREPORT>\n";
 }
