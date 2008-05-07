@@ -1,6 +1,6 @@
 Joe Orton:
-        For his configure.ac/VERSION trick (as seen on his sitecopy) that
-        we have adopted.
+	For his configure.ac/VERSION trick (as seen on his sitecopy) that
+	we have adopted.
 
 autotools people:
 	Some (all) Makefile.am ideas, targets, hints, tips, tricks ... some
@@ -12,7 +12,7 @@ glibc people:
 	configure.ac ... thanks
 
 Emanuele Bassi:
-         author of gitlog2ChangeLog script
+	author of gitlog2ChangeLog script
 
-        Thank you all,
-                Francesco
+	Thank you all,
+		Francesco
