@@ -98,6 +98,12 @@ ChangeLog: $(srcdir)/NEWS
 #	        exit 1 ;                        \
 #	}
 
+##
+## Maintainer related targets
+##
+site: all
+	(cd site && $(MAKE) $(AM_MAKEFLAGS) site)
+
 HOST = "http://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;hb=HEAD;f=doc"
 
 DOWNLOAD =					\
@@ -123,17 +129,6 @@ update-download:
 	done && \
 	rm -r -f fetch-dir
 
-update: update-download update-fixups
-	(cd tools && $(MAKE) $(AM_MAKEFLAGS) update)
-
-site: all
-	(cd site && $(MAKE) $(AM_MAKEFLAGS) site)
-
-DISTCLEANFILES =
-
-##
-## Maintainer related targets
-##
-update-local: Makefile
+update-local: Makefile update-download update-fixups
 
 maintainer-check-local: Makefile

@@ -23,7 +23,7 @@ include $(top_srcdir)/Makefile.sub
 ##
 ## Maintainer related targets
 ##
-HOST="http://autoconf-archive.cryp.to"
+HOST = "http://autoconf-archive.cryp.to"
 
 DOWNLOAD = 					\
 	ax_compare_version.m4			\
@@ -41,7 +41,7 @@ MACROS =					\
 	ax_with_m4.m4				\
 	ax_prog_m4_version.m4
 
-update-local:
+update-local: Makefile
 	rm -r -f fetch-dir && \
 	mkdir fetch-dir && \
 	for i in $(DOWNLOAD) ; do \
