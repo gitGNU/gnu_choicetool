@@ -14,6 +14,8 @@ TO-BE-DONE:
   configuration syntax; this deserves an option switch both on choicetool,
   choicetool-preprocess and choicetool-parse
 
+* Check all string-related assert
+
 DONE:
 * Add sub-options handling in Options.pm module
 
