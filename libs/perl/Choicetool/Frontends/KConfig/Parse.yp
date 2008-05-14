@@ -149,7 +149,7 @@ config_stmt:
 
     my $config;
 
-    $config = new Choicetool::UI::Config;
+    $config = Choicetool::UI::Config->new();
     assert(defined($config));
 
     $config->symbol("TEST-TEST-TEST");
@@ -366,7 +366,7 @@ menu:
 
     my $menu;
 
-    $menu = new Choicetool::UI::Menu;
+    $menu = Choicetool::UI::Menu->new();
     assert(defined($menu));
 
     $menu->title($word);
