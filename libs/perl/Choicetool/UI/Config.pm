@@ -28,19 +28,19 @@ use diagnostics;
 
 use Choicetool::Base::Debug;
 use Choicetool::Base::Trace;
-use Choicetool::Data::Tree;
+use Choicetool::UI::UI;
 
-# Config inherits from Tree
 use vars qw(@ISA);
-@ISA = qw(Choicetool::Data::Tree);
+@ISA = qw(Choicetool::UI::UI);
 
 sub new ($)
 {
     my $class = shift;
+    my $id    = shift;
 
     assert(defined($class));
 
-    my $self = { };
+    my $self = $class->SUPER::new($id);
 
     return bless($self, $class);
 }
@@ -58,22 +58,26 @@ sub symbol {
     return $self->{SYMBOL};
 }
 
-sub m4ify ($) {
+sub m4ify_header ($$) {
     my $self   = shift;
     my $prefix = shift;
 
     assert(defined($self));
     assert(defined($prefix));
+    assert(defined($self->symbol()));
 
-    my $string;
-    $string = "";
+    return $prefix . "_CT_UI_CONFIG_BEGIN([" . $self->symbol() . "])\n";
+}
 
-    $string = $string .
-	$prefix . "_CT_UI_CONFIG_BEGIN([" . $self->symbol() . "])\n";
-    $string = $string .
-	$prefix . "_CT_UI_CONFIG_END(["   . $self->symbol() . "])\n";
+sub m4ify_footer ($$) {
+    my $self   = shift;
+    my $prefix = shift;
 
-    return $string;
+    assert(defined($self));
+    assert(defined($prefix));
+    assert(defined($self->symbol()));
+
+    return $prefix . "_CT_UI_CONFIG_END([])\n";
 }
 
 1;
