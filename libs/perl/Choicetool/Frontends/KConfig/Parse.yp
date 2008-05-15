@@ -30,12 +30,13 @@ use Choicetool::Autoconfig;
 use Choicetool::Base::Trace;
 use Choicetool::Base::Debug;
 use Choicetool::OS::File;
-use Choicetool::Data::Tree;
+
+use Choicetool::Set;
+
 use Choicetool::UI::Menu;
 use Choicetool::UI::Config;
 use Choicetool::UI::Choice;
 use Choicetool::UI::Comment;
-use Choicetool::Set;
 
 BEGIN {
     use Exporter ();
@@ -48,11 +49,19 @@ BEGIN {
 my $parsed_string      = "";
 my $help_text_parse    = 0;
 my $help_start         = 0;
-
 my $lineno             = 1;
-my $max_keyword_length = 10;
 
 my $word;
+
+sub dtoken ($) {
+    my $string = shift;
+    
+    assert(defined($string));
+
+    if (0) {
+	debug("Found token: " . $string);
+    }
+}
 
 %}
 
@@ -61,9 +70,15 @@ my $word;
 %%
 
 input:
+{
+    # The input node must be a Tree root
+    assert(${$_[0]->YYData->{DATA}[0]}->is_root());
+}
        stmt_list
 {
-    assert(${$_[0]->YYData->{DATA}[0]}->is_root());
+
+#use Data::Dumper;
+#print Data::Dumper->Dump([ $_[0]->YYData->{DATA}[0] ], [ qw(*data) ]);
 
     debug("Processed rule: input");
 }
@@ -147,14 +162,27 @@ config_stmt:
 {
     debug("Processed rule: config_stmt");
 
-    my $config;
+    my $parent;
+    my $id;
+    my $node;
 
-    $config = Choicetool::UI::Config->new();
-    assert(defined($config));
+    $parent = $_[0]->YYData->{DATA}[0];
+    assert(defined($parent));
 
-    $config->symbol("TEST-TEST-TEST");
+    $id = $$parent->id();
 
-    ${$_[0]->YYData->{DATA}[0]}->data("INTERFACE", $config);
+    $node = Choicetool::UI::Config->new(++$id);
+    assert(defined($node));
+
+    $node->parent($parent);
+    if (!$$parent->add_child($id, \$node)) {
+	assert(defined($$parent->id()));
+	error("Cannot add child node `" . $id . "' " .
+	      "to parent \`" . $$parent->id() . "'");
+    }
+    $_[0]->YYData->{DATA}[0] = \$node;
+
+    $node->symbol("TEST-TEST-TEST");
 }
            ;
 
@@ -343,35 +371,41 @@ menu:
 {
     debug("Adding menu to tree");
 
-    my $id     = \$_[0]->YYData->{DATA}[1];
-    my $child  = Choicetool::Data::Tree->new(++$$id);
-    my $parent = $_[0]->YYData->{DATA}[0];
+    my $parent;
+    my $id;
+    my $node;
 
-    assert(defined($child));
+    $parent = $_[0]->YYData->{DATA}[0];
+    assert(defined($parent));
 
-    $child->parent($parent);
-    if (!$$parent->add_child($$id, \$child)) {
+    $id = $$parent->id();
+
+    $node = Choicetool::UI::Menu->new(++$id);
+    assert(defined($node));
+
+    $node->parent($parent);
+    if (!$$parent->add_child($id, \$node)) {
 	assert(defined($$parent->id()));
-	error("Cannot add child node to parent \`" . $$parent->id() . "'");
-
+	error("Cannot add child node `" . $id . "' " .
+	      "to parent \`" . $$parent->id() . "'");
     }
+    $_[0]->YYData->{DATA}[0] = \$node;
 
-    $_[0]->YYData->{DATA}[0] = \$child;
+    $node->title("<THIS IS A BUG>");
 }
       words
 {
+    my $node;
+
+    $node = $_[0]->YYData->{DATA}[0];
+    assert(defined($node));
+
+    # XXX FIXME: Remove this global variable
     assert(defined($word));
 
     debug("Adding menu prompt \`" . $word . "' to tree");
 
-    my $menu;
-
-    $menu = Choicetool::UI::Menu->new();
-    assert(defined($menu));
-
-    $menu->title($word);
-
-    ${$_[0]->YYData->{DATA}[0]}->data("INTERFACE", $menu);
+    $$node->title($word);
 }
       newline
     ;
@@ -580,8 +614,8 @@ sub lexer_callback ($)
 	$help_text_parse = 0;
 	$help_start      = 0;
 
-	debug("Found token: T_HELPTEXT");
-	debug("  Passing string: \`" . $help_text . "'");
+	dtoken("T_HELPTEXT");
+#	debug("  Passing string: \`" . $help_text . "'");
 
 	return ('T_HELPTEXT', $help_text);
     }
@@ -602,31 +636,31 @@ sub lexer_callback ($)
 	}
 
 	if ($parser->YYData->{INPUT} =~ s/^\&\&//) {
-	    debug("Found token: T_AND");
+	    dtoken("T_AND");
 	    return ('T_AND', '');
 
 	} elsif ($parser->YYData->{INPUT} =~ s/^\|\|//) {
-	    debug("Found token: T_OR");
+	    dtoken("T_OR");
 	    return ('T_OR', '');
 
 	} elsif ($parser->YYData->{INPUT} =~ s/^\!\=//) {
-	    debug("Found token: T_UNEQUAL");
+	    dtoken("T_UNEQUAL");
 	    return ('T_UNEQUAL', '');
 
 	} elsif ($parser->YYData->{INPUT} =~ s/^\!//) {
-	    debug("Found token: T_NOT");
+	    dtoken("T_NOT");
 	    return ('T_NOT', '');
 
 	} elsif ($parser->YYData->{INPUT} =~ s/^\=//) {
-	    debug("Found token: T_EQUAL");
+	    dtoken("T_EQUAL");
 	    return ('T_EQUAL', '');
 
 	} elsif ($parser->YYData->{INPUT} =~ s/^\)//) {
-	    debug("Found token: T_CLOSE_PAREN");
+	    dtoken("T_CLOSE_PAREN");
 	    return ('T_CLOSE_PAREN', '');
 
 	} elsif ($parser->YYData->{INPUT} =~ s/^\(//) {
-	    debug("Found token: T_OPEN_PAREN");
+	    dtoken("T_OPEN_PAREN");
 	    return ('T_OPEN_PAREN', '');
 
 	} else {
@@ -641,7 +675,7 @@ sub lexer_callback ($)
 		$parser->YYData->{INPUT} = $char . $parser->YYData->{INPUT};
 
 	    } else {
-		debug("Found token: T_EOL");
+		dtoken("T_EOL");
 
 		if ($help_start == 1) {
 		    $help_text_parse = 1;
@@ -691,8 +725,8 @@ sub lexer_callback ($)
 		    if (((defined($last_char)) && ($last_char !~ /\\/)) ||
 			(!defined($last_char))) {
 
-			debug("Found token: T_WORD_QUOTE");
-			debug("  Passing string: \`" . $buffer . "'");
+			dtoken("T_WORD_QUOTE");
+#			debug("  Passing string: \`" . $buffer . "'");
 
 			return ('T_WORD_QUOTE', $buffer);
 		    }
@@ -719,114 +753,114 @@ sub lexer_callback ($)
 	    }
 
 	    if ($buffer eq "def_tristate") {
-		debug("Found token: T_DEF_TRISTATE");
+		dtoken("T_DEF_TRISTATE");
 		return ('T_DEF_TRISTATE', '');
 
 	    } elsif ($buffer eq "menuconfig") {
-		debug("Found token: T_MENUCONFIG");
+		dtoken("T_MENUCONFIG");
 		return ('T_MENUCONFIG', '');
 
 	    } elsif (($buffer eq "def_boolean") ||
 		     ($buffer eq "def_bool"))    {
-		debug("Found token: T_DEF_BOOL");
+		dtoken("T_DEF_BOOL");
 		return ('T_DEF_BOOL', '');
 
 	    } elsif ($buffer eq "endchoice") {
-		debug("Found token: T_ENDCHOICE");
+		dtoken("T_ENDCHOICE");
 		return ('T_ENDCHOICE', '');
 
 	    } elsif ($buffer eq "mainmenu") {
-		debug("Found token: T_MAINMENU");
+		dtoken("T_MAINMENU");
 		return ('T_MAINMENU', '');
 
 	    } elsif ($buffer eq "requires") {
-		debug("Found token: T_REQUIRES");
+		dtoken("T_REQUIRES");
 		return ('T_REQUIRES', '');
 
 	    } elsif ($buffer eq "optional") {
-		debug("Found token: T_OPTIONAL");
+		dtoken("T_OPTIONAL");
 		return ('T_OPTIONAL', '');
 
 	    } elsif ($buffer eq "tristate") {
-		debug("Found token: T_TRISTATE");
+		dtoken("T_TRISTATE");
 		return ('T_TRISTATE', '');
 
 	    } elsif ($buffer eq "endmenu") {
-		debug("Found token: T_ENDMENU");
+		dtoken("T_ENDMENU");
 		return ('T_ENDMENU', '');
 
 	    } elsif ($buffer eq "comment") {
-		debug("Found token: T_COMMENT");
+		dtoken("T_COMMENT");
 		return ('T_COMMENT', '');
 
 	    } elsif ($buffer eq "depends") {
-		debug("Found token: T_DEPENDS");
+		dtoken("T_DEPENDS");
 		return ('T_DEPENDS', '');
 
 	    } elsif ($buffer eq "default") {
-		debug("Found token: T_DEFAULT");
+		dtoken("T_DEFAULT");
 		return ('T_DEFAULT', '');
 
 	    } elsif ($buffer eq "select") {
-		debug("Found token: T_SELECT");
+		dtoken("T_SELECT");
 		return ('T_SELECT', '');
 
 	    } elsif ($buffer eq "config") {
-		debug("Found token: T_CONFIG");
+		dtoken("T_CONFIG");
 		return ('T_CONFIG', '');
 
 	    } elsif ($buffer =~ "string") {
-		debug("Found token: T_STRING");
+		dtoken("T_STRING");
 		return ('T_STRING', '');
 
 	    } elsif ($buffer =~ "choice") {
-		debug("Found token: T_CHOICE");
+		dtoken("T_CHOICE");
 		return ('T_CHOICE', '');
 
 	    } elsif ($buffer eq "option") {
-		debug("Found token: T_OPTION");
+		dtoken("T_OPTION");
 		return ('T_OPTION', '');
 
 	    } elsif ($buffer eq "prompt") {
-		debug("Found token: T_PROMPT");
+		dtoken("T_PROMPT");
 		return ('T_PROMPT', '');
 
 	    } elsif ($buffer eq "endif") {
-		debug("Found token: T_ENDIF");
+		dtoken("T_ENDIF");
 		return ('T_ENDIF', '');
 
 	    } elsif ($buffer eq "range") {
-		debug("Found token: T_RANGE");
+		dtoken("T_RANGE");
 		return ('T_RANGE', '');
 
 	    } elsif ($buffer eq "menu") {
-		debug("Found token: T_MENU");
+		dtoken("T_MENU");
 		return ('T_MENU', '');
 
 	    } elsif (($buffer eq "boolean") ||
 		     ($buffer eq "bool"))    {
-		debug("Found token: T_BOOL");
+		dtoken("T_BOOL");
 		return ('T_BOOL', '');
 
 	    } elsif ($buffer eq "hex") {
-		debug("Found token: T_HEX");
+		dtoken("T_HEX");
 		return ('T_HEX', '');
 
 	    } elsif ($buffer eq "int") {
-		debug("Found token: T_INT");
+		dtoken("T_INT");
 		return ('T_INT', '');
 
 	    } elsif ($buffer eq "if") {
-		debug("Found token: T_IF");
+		dtoken("T_IF");
 		return ('T_IF', '');
 
 	    } elsif ($buffer eq "on") {
-		debug("Found token: T_ON");
+		dtoken("T_ON");
 		return ('T_ON', '');
 
 	    } elsif (($buffer eq "help")        ||
 		     ($buffer eq "---help---"))  {
-		debug("Found token: T_HELP");
+		dtoken("T_HELP");
 
 		$help_start = 1;
 		return ('T_HELP', '');
@@ -847,8 +881,8 @@ sub lexer_callback ($)
 
 	    } elsif (($buffer =~ /^[\-][0-9]+$/)                  ||
 		     ($buffer =~ /^([a-zA-Z0-9][a-zA-Z0-9_-]*)$/)) {
-		debug("Found token: T_WORD");
-		debug("  Passing string: \`" . $buffer . "'");
+		dtoken("T_WORD");
+#		debug("  Passing string: \`" . $buffer . "'");
 
 		return ('T_WORD', $buffer);
 
@@ -897,11 +931,11 @@ sub error_callback ($)
 sub parse ($$$)
 {
     my $input_filename = shift;
-    my $tree_ref       = shift;
+    my $ui_ref         = shift;
     my $set_ref        = shift;
 
     assert(defined($input_filename));
-    assert(defined($tree_ref));
+    assert(defined($ui_ref));
     assert(defined($set_ref));
 
     debug("Parsing file \`" . $input_filename . "'");
@@ -923,9 +957,8 @@ sub parse ($$$)
     assert(defined($parser));
 
     $parser->YYData->{INPUT}   = $string;
-    $parser->YYData->{DATA}[0] = $tree_ref;
-    $parser->YYData->{DATA}[1] = $$tree_ref->id();
-    $parser->YYData->{DATA}[2] = $set_ref;
+    $parser->YYData->{DATA}[0] = $ui_ref;
+    $parser->YYData->{DATA}[1] = $set_ref;
 
     my $result;
     $result = $parser->YYParse(yylex   => \&lexer_callback,
