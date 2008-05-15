@@ -23,6 +23,7 @@ include $(top_srcdir)/Makefile.sub
 perllibdir = $(pkgvlibsdir)/perl/Choicetool/UI
 
 dist_perllib_DATA =				\
+	UI.pm					\
 	Menu.pm					\
 	Config.pm				\
 	Comment.pm				\
