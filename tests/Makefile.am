@@ -111,9 +111,9 @@ SUCCESS_TESTS +=				\
 	test-language-6				\
 	test-language-7				\
 	test-language-8				\
-	test-language-9				\
+	test-language-9				\	
 	test-language-16			\
-	test-language-complete			\
+	test-language-17			\
 	test-input-name-1			\
 	test-output-name-1			\
 	test-autotools-1			\
@@ -142,6 +142,8 @@ SUCCESS_TESTS +=				\
 	test-options-tool-parser		\
 	test-options-tool-compiler		\
 	test-options-tool-linker
+
+#	test-language-complete
 
 XFAIL_TESTS = $(FAIL_TESTS)
 TESTS       = $(FAIL_TESTS) $(SUCCESS_TESTS)
@@ -363,6 +365,18 @@ test-language-16: $(srcdir)/test-language-16.in Makefile
 	}
 EXTRA_DIST += test-language-16.in
 CLEANFILES += test-language-16
+
+test-language-17: $(srcdir)/test-language-17.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-17.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-17.in
+CLEANFILES += test-language-17
 
 test-language-complete: $(srcdir)/test-language-complete.in Makefile
 	( rm -f $@ $@.tmp && \
