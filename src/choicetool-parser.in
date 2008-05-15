@@ -216,29 +216,32 @@ if (!$force_mode) {
 #
 
 my $string;
-my $tree;
+my $ui;
 my $set;
 
-$tree = Choicetool::Data::Tree->new(0);
-assert(defined($tree));
+$ui = Choicetool::UI::Menu->new(0);
+assert(defined($ui));
 
-$set  = Choicetool::Set->new();
+# XXX FIXME: This is an hack, please remove ASAP
+$ui->title("Main menu");
+
+$set = Choicetool::Set->new();
 assert(defined($set));
 
 $string = "";
-if (!Choicetool::Frontends::KConfig::Parse::parse($input_file, \$tree, \$set)) {
+if (!Choicetool::Frontends::KConfig::Parse::parse($input_file, \$ui, \$set)) {
     error("Failed to parse file `" . $input_file . "\'");
     exit 1;
 }
 
-assert(defined($tree));
+assert(defined($ui));
 
 {
     my $level;
 
     debug("Menu tree:");
     $level = 0;
-    $tree->foreach(
+    $ui->foreach(
 	sub {
 	    my $node_ref = shift;
 
@@ -268,9 +271,12 @@ assert(defined($tree));
 #
 
 my %data;
-$data{TREE} = $tree;
+$data{TREE} = $ui;
 
 $string = Data::Dumper->Dump([ \%data ], [ qw(*data) ]);
+
+#debug("Frozen data:");
+#debug("\`" . $string . "'");
 
 #
 # Write output file at last

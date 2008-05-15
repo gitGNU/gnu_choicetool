@@ -62,10 +62,17 @@ use Choicetool::OS::File;
 use Choicetool::OS::String;
 use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
-use Choicetool::Data::Tree;
+use Choicetool::Compile;
+
+#
+# NOTE:
+#     The following modules are needed because we will evaluate the parsed
+#     structure, the UI module needs to know all subclasses methods
+#
 use Choicetool::UI::Menu;
 use Choicetool::UI::Config;
-use Choicetool::Compile;
+use Choicetool::UI::Choice;
+use Choicetool::UI::Comment;
 
 #
 # Globals
@@ -104,59 +111,6 @@ sub help ()
 
     print "\n";
     print "Report bugs to <$PACKAGE_BUGREPORT>\n";
-}
-
-sub tree_walker ($$$)
-{
-    my $level      = shift;
-    my $node_ref   = shift;
-    my $string_ref = shift;
-
-    debug("Running tree-walker for node reference " . $node_ref);
-
-    assert(defined($node_ref));
-    assert(defined($string_ref));
-
-    my $node;
-
-    $node = ${$node_ref};
-    assert(defined($node));
-
-
-    debug("Handling interface data");
-
-    my $object;
-    $object = $node->data("INTERFACE");
-    if (defined($object)) {
-
-	debug("Node " . $node_ref . " data is: \`" . $object . "'");
-
-	${$string_ref} = ${$string_ref} . $object->m4ify("  " x $level);
-
-    } else {
-	debug("Node " . $node_ref . " has no object data")
-    }
-
-    debug("Handling node children");
-
-    my @children;
-    @children = $node->children();
-
-    debug("Node " . $node_ref . " has " . ($#children + 1) . " children");
-
-    $level++;
-    for my $child_ref (@children) {
-	debug("Analyzing child reference " . $child_ref);
-	assert(defined($child_ref));
-
-	if (!&tree_walker($level, $child_ref, $string_ref)) {
-	    return 0;
-	}
-    }
-
-    debug("Tree-walking for node reference " . $node_ref . " completed");
-
-    return 1;
 }
 
 #
@@ -308,9 +262,7 @@ $output_string = $output_string . "m4_include(\`choicetool.m4')\n";
 
 # Then we can start using our macros
 $output_string = $output_string . "_CT_HEADER([])\n";
-if (!tree_walker(0, \$data{TREE}, \$output_string)) {
-    exit 1;
-}
+$output_string = $output_string . $data{TREE}->m4ify("");
 $output_string = $output_string . "_CT_FOOTER([])\n";
 
 #
