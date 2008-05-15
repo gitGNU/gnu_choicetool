@@ -28,19 +28,19 @@ use diagnostics;
 
 use Choicetool::Base::Debug;
 use Choicetool::Base::Trace;
-use Choicetool::Data::Tree;
+use Choicetool::UI::UI;
 
-# Menu inherits from Tree
 use vars qw(@ISA);
-@ISA = qw(Choicetool::Data::Tree);
+@ISA = qw(Choicetool::UI::UI);
 
 sub new ($)
 {
     my $class = shift;
+    my $id    = shift;
 
     assert(defined($class));
 
-    my $self = { };
+    my $self = $class->SUPER::new($id);
 
     $self->{TYPE}    = undef;
     $self->{TITLE}   = undef;
@@ -116,22 +116,26 @@ sub help {
     return $self->{HELP};
 }
 
-sub m4ify ($) {
+sub m4ify_header ($$) {
     my $self   = shift;
     my $prefix = shift;
 
     assert(defined($self));
     assert(defined($prefix));
+    assert(defined($self->{TITLE}));
 
-    my $string;
-    $string = "";
+    return $prefix . "_CT_UI_MENU_BEGIN([" . $self->{TITLE} . "])\n";
+}
 
-    $string = $string .
-	$prefix . "_CT_UI_MENU_BEGIN([" . $self->title() . "])\n";
-    $string = $string .
-	$prefix . "_CT_UI_MENU_END(["   . $self->title() . "])\n";
+sub m4ify_footer ($$) {
+    my $self   = shift;
+    my $prefix = shift;
 
-    return $string;
+    assert(defined($self));
+    assert(defined($prefix));
+    assert(defined($self->{TITLE}));
+
+    return $prefix . "_CT_UI_MENU_END([])\n";
 }
 
 1;
