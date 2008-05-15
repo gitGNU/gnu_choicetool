@@ -7,6 +7,9 @@ NOTE:
 	completed ...
 
 TO-BE-DONE:
+* UI/m4ify: Rearrange the output production, pass a stream instead of
+  collecting strings in a stack-based approach
+
 * Parse.yp: Rearrange the parser in order to speed-up big files parsing
 
 * Do a general clean-up of CHOICETOOL_BINARY_PATH, CHOICETOOL_DATA_PATH and
