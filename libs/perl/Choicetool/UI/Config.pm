@@ -66,7 +66,10 @@ sub m4ify_header ($$) {
     assert(defined($prefix));
     assert(defined($self->symbol()));
 
-    return $prefix . "_CT_UI_CONFIG_BEGIN([" . $self->symbol() . "])\n";
+    return
+	$prefix . "_CT_UI_CONFIG_BEGIN([" . $self->symbol() . "])\n" .
+	$prefix . "_CT_UI_CONFIG_END([])\n";
+;
 }
 
 sub m4ify_footer ($$) {
@@ -77,7 +80,7 @@ sub m4ify_footer ($$) {
     assert(defined($prefix));
     assert(defined($self->symbol()));
 
-    return $prefix . "_CT_UI_CONFIG_END([])\n";
+    return "";
 }
 
 1;
