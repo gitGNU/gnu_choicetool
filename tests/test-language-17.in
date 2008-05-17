@@ -64,6 +64,32 @@ endmenu
 endmenu
 endmenu
 endmenu
+
+menu "Menu 6"
+config MENU_ITEM_6
+	bool "Enable item"
+	select MENU_ITEM_6
+	help
+	  None
+
+endmenu
+menu "Menu 7"
+config MENU_ITEM_7
+	bool "Enable item"
+	select MENU_ITEM_7
+	help
+	  None
+
+endmenu
+menu "Menu 8"
+config MENU_ITEM_8
+	bool "Enable item"
+	select MENU_ITEM_8
+	help
+	  None
+
+endmenu
+
 endmenu
 EOF
 
