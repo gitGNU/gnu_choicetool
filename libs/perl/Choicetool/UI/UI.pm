@@ -51,7 +51,7 @@ sub new ($$)
 #
 # Methods that MUST NOT be overridden by subclasses
 #
-sub m4ify ($$) {
+sub m4ify ($) {
     my $self   = shift;
     my $prefix = shift;
     my $string;
@@ -70,9 +70,14 @@ sub m4ify ($$) {
 	    my $child;
 	    $child = ${$child_ref};
 
-	    debug("Calling child m4ify with prefix \`" . $prefix . "'");
+	    my $child_prefix;
+	    $child_prefix = $self->m4ify_indent();
+	    assert(defined($child_prefix));
+
+	    debug("Calling child m4ify with prefix " .
+		  "\`" . $prefix . $child_prefix . "'");
 	    assert(defined($child->can('m4ify')));
-	    $string = $string . $child->m4ify($prefix . "  ");
+	    $string = $string . $child->m4ify($prefix . $child_prefix);
 
 	} elsif (!defined($child_ref)) {
 	    debug("No child");
@@ -86,6 +91,17 @@ sub m4ify ($$) {
     $string = $string . $self->m4ify_footer($prefix);
 
     return $string;
+}
+
+#
+# Methods that COULD be overridden by subclasses
+#
+sub m4ify_indent ($) {
+    my $self = shift;
+
+    assert(defined($self));
+
+    return "";
 }
 
 #
