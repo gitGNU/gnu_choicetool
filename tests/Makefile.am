@@ -118,6 +118,7 @@ SUCCESS_TESTS +=				\
 	test-output-name-1			\
 	test-autotools-1			\
 	test-autotools-2			\
+	test-autotools-3			\
 	test-options-short-1			\
 	test-options-short-2			\
 	test-options-long-1			\
@@ -425,6 +426,18 @@ test-autotools-2: $(srcdir)/test-autotools-2.in Makefile
 	}
 EXTRA_DIST += test-autotools-2.in
 CLEANFILES += test-autotools-2
+
+test-autotools-3: $(srcdir)/test-autotools-3.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-autotools-3.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-autotools-3.in
+CLEANFILES += test-autotools-3
 
 test-language-parse-1: $(srcdir)/test-language-parse-1.in Makefile
 	( rm -f $@ $@.tmp && \
