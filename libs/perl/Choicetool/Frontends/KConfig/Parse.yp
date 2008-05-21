@@ -34,9 +34,9 @@ use Choicetool::OS::File;
 use Choicetool::Set;
 
 use Choicetool::UI::Menu;
-use Choicetool::UI::Config;
-use Choicetool::UI::Choice;
+use Choicetool::UI::MenuEntry;
 use Choicetool::UI::Comment;
+use Choicetool::UI::YesNo;
 
 BEGIN {
     use Exporter ();
@@ -46,10 +46,13 @@ BEGIN {
     @EXPORT = qw(&parse);
 }
 
-my $parsed_string      = "";
-my $help_text_parse    = 0;
-my $help_start         = 0;
-my $lineno             = 1;
+my $parsed_string   = "";
+my $help_text_parse = 0;
+my $help_start      = 0;
+my $lineno          = 1;
+
+my $ui_id           = 0;
+my $rule_id         = 0;
 
 my $word;
 
@@ -158,31 +161,30 @@ common_stmt:
            ;
 
 config_stmt:
-             config_entry_start config_option_list
+             config_entry_start
 {
     debug("Processed rule: config_stmt");
 
     my $parent;
-    my $id;
-    my $node;
-
     $parent = $_[0]->YYData->{DATA}[0];
     assert(defined($parent));
 
-    $id = $$parent->id();
+    $ui_id++;
 
-    $node = Choicetool::UI::Config->new(++$id);
+    my $node;
+    $node = Choicetool::UI::MenuEntry->new($ui_id);
     assert(defined($node));
 
     $node->parent($parent);
-    if (!$$parent->add_child($id, \$node)) {
+    if (!$$parent->add_child($ui_id, \$node)) {
 	assert(defined($$parent->id()));
-	error("Cannot add child node `" . $id . "' " .
+	error("Cannot add child node `" . $ui_id . "' " .
 	      "to parent \`" . $$parent->id() . "'");
     }
-    $_[0]->YYData->{DATA}[0] = \$node;
 
     $node->symbol("TEST-TEST-TEST");
+} config_option_list {
+#    $_[0]->YYData->{DATA}[0] = \$node;
 }
            ;
 
@@ -372,21 +374,19 @@ menu:
     debug("Adding menu to tree");
 
     my $parent;
-    my $id;
-    my $node;
-
     $parent = $_[0]->YYData->{DATA}[0];
     assert(defined($parent));
 
-    $id = $$parent->id();
+    $ui_id++;
 
-    $node = Choicetool::UI::Menu->new(++$id);
+    my $node;
+    $node = Choicetool::UI::Menu->new($ui_id);
     assert(defined($node));
 
     $node->parent($parent);
-    if (!$$parent->add_child($id, \$node)) {
+    if (!$$parent->add_child($ui_id, \$node)) {
 	assert(defined($$parent->id()));
-	error("Cannot add child node `" . $id . "' " .
+	error("Cannot add child node `" . $ui_id . "' " .
 	      "to parent \`" . $$parent->id() . "'");
     }
     $_[0]->YYData->{DATA}[0] = \$node;
@@ -504,8 +504,9 @@ comment:
        ;
 
 menuconfig_stmt:
-                 menuconfig_entry_start config_option_list
+                 menuconfig_entry_start
 {
+} config_option_list {
     debug("Processed rule: menuconfig_stmt");
 }
                ;

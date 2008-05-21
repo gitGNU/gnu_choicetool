@@ -130,9 +130,14 @@ sub m4ify_header ($$) {
 
     assert(defined($self));
     assert(defined($prefix));
+    assert(defined($self->{ID}));
     assert(defined($self->{TITLE}));
 
-    return $prefix . "_CT_UI_MENU_BEGIN([" . $self->{TITLE} . "])\n";
+    return
+	$prefix . "_CT_UI_MENU_BEGIN([".
+	$self->{ID}    . "],[" .
+	$self->{TITLE} .
+	"])\n";
 }
 
 sub m4ify_footer ($$) {

@@ -1,5 +1,5 @@
 #
-# Config.pm
+# MenuEntry.pm
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
 #
@@ -18,7 +18,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-package Choicetool::UI::Config;
+package Choicetool::UI::MenuEntry;
 
 use 5.8.0;
 
@@ -42,6 +42,8 @@ sub new ($)
 
     my $self = $class->SUPER::new($id);
 
+    $self->{SYMBOL} = undef;
+
     return bless($self, $class);
 }
 
@@ -64,23 +66,24 @@ sub m4ify_header ($$) {
 
     assert(defined($self));
     assert(defined($prefix));
-    assert(defined($self->symbol()));
+    assert(defined($self->{ID}));
+    assert(defined($self->{SYMBOL}));
 
     return
-	$prefix . "_CT_UI_CONFIG_BEGIN([" . $self->symbol() . "])\n" .
-	$prefix . "_CT_UI_CONFIG_END([])\n";
-;
+	$prefix . "_CT_UI_MENU_ENTRY_BEGIN([" .
+	$self->{ID}     . "],[" .
+	$self->{SYMBOL} .
+	"])\n";
 }
 
-sub m4ify_footer ($$) {
+sub m4ify_footer ($) {
     my $self   = shift;
     my $prefix = shift;
 
     assert(defined($self));
     assert(defined($prefix));
-    assert(defined($self->symbol()));
 
-    return "";
+    return $prefix . "_CT_UI_MENU_ENTRY_END([])\n";
 }
 
 1;

@@ -1,5 +1,5 @@
 #
-# Choice.pm
+# YesNo.pm
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
 #
@@ -18,7 +18,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-package Choicetool::UI::Choice;
+package Choicetool::UI::YesNo;
 
 use 5.8.0;
 
@@ -53,7 +53,7 @@ sub m4ify_header ($$) {
     assert(defined($prefix));
     assert(defined($self->id()));
 
-    return $prefix . "_CT_UI_CHOICE_BEGIN([" . $self->id() . "])\n";
+    return $prefix . "_CT_UI_YESNO_BEGIN([" . $self->id() . "])\n";
 }
 
 sub m4ify_footer ($) {
@@ -63,7 +63,7 @@ sub m4ify_footer ($) {
     assert(defined($self));
     assert(defined($prefix));
 
-    return $prefix . "_CT_UI_CHOICE_END([])\n";
+    return $prefix . "_CT_UI_YESNO_END([])\n";
 }
 
 1;
