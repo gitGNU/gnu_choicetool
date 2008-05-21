@@ -49,7 +49,7 @@ libs/m4/choicetool.m4
 libs/m4/header.m4
 libs/m4/footer.m4
 libs/m4/ui-menu.m4
-libs/m4/ui-choice.m4
+libs/m4/ui-menu-entry.m4
 libs/m4/ui-comment.m4
 libs/m4/ui-yesno.m4
 
@@ -62,6 +62,7 @@ tests/wrapper
 tests/testSubDir-*
 tests/test-autotools-1
 tests/test-autotools-2
+tests/test-autotools-3
 tests/test-dry-run
 tests/test-fail
 tests/test-input-name-1
