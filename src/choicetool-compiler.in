@@ -70,9 +70,9 @@ use Choicetool::Compile;
 #     structure, the UI module needs to know all subclasses methods
 #
 use Choicetool::UI::Menu;
-use Choicetool::UI::Config;
-use Choicetool::UI::Choice;
+use Choicetool::UI::MenuEntry;
 use Choicetool::UI::Comment;
+use Choicetool::UI::YesNo;
 
 #
 # Globals
