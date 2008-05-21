@@ -16,10 +16,10 @@ m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
-m4_define([_CT_UI_CHOICE_BEGIN],[
-# This code is for a choice
+m4_define([_CT_UI_MENU_ENTRY_BEGIN],[m4_dnl
+# Entry id $1
+	"$1" "$2" \
 ])
 
-m4_define([_CT_UI_CHOICE_END],[
-# End of choice code
+m4_define([_CT_UI_MENU_ENTRY_END],[m4_dnl
 ])

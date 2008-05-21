@@ -16,12 +16,11 @@ m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
-m4_define([_CT_UI_MENU_BEGIN],[
-# Begin of menu "$1" code
+m4_define([_CT_UI_MENU_BEGIN],[m4_dnl
+# Entry id $1
 $DIALOG \
-	--menu "$1" 0 0 0 "this is" "a test"
+	--menu "$2" 0 0 0 \
 ])
 
-m4_define([_CT_UI_MENU_END],[
-# End of menu "$1" code
+m4_define([_CT_UI_MENU_END],[m4_dnl
 ])

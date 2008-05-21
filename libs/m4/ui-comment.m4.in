@@ -17,8 +17,8 @@ m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
 m4_define([_CT_UI_COMMENT_BEGIN],[
-# This code is for a comment
-$DIALOG --msgbox "$1" 0 0
+# Entry id $1
+$DIALOG --msgbox "$2" 0 0
 ])
 
 m4_define([_CT_UI_COMMENT_END],[

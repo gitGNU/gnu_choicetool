@@ -26,6 +26,6 @@ m4_ifdef([__gnu__],[],[
 m4_include([header.m4])
 m4_include([footer.m4])
 m4_include([ui-menu.m4])
-m4_include([ui-choice.m4])
+m4_include([ui-menu-entry.m4])
 m4_include([ui-comment.m4])
 m4_include([ui-yesno.m4])
