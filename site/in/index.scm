@@ -14,6 +14,12 @@
    "Choicetool should work with (and even without) the "
    (a (@ (href "http://en.wikipedia.org/wiki/Autotools")) autotools)
    ".")
+(h4 "Copying")
+(p
+ "Choicetool is licensed under the "
+ (a (@ (href "http://www.gnu.org/licenses/licenses.html"))
+    "GNU General Public License, version 2")
+ )
 
 (h3 "MAINTAINERS")
 (p
