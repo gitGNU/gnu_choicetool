@@ -64,6 +64,7 @@ use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
 use Choicetool::Frontends::KConfig::Parse;
 use Choicetool::Data::Tree;
+use Choicetool::UI::UI;
 use Choicetool::Set;
 
 #
@@ -215,19 +216,16 @@ if (!$force_mode) {
 # Parse the input file
 #
 
-my $string;
 my $ui;
 my $set;
 
-$ui = Choicetool::UI::Menu->new(0);
+$ui = Choicetool::UI::UI->new(0);
 assert(defined($ui));
-
-# XXX FIXME: This is an hack, please remove ASAP
-$ui->title("Main menu");
 
 $set = Choicetool::Set->new();
 assert(defined($set));
 
+my $string;
 $string = "";
 if (!Choicetool::Frontends::KConfig::Parse::parse($input_file, \$ui, \$set)) {
     error("Failed to parse file `" . $input_file . "\'");
