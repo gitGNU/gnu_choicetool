@@ -17,19 +17,19 @@ m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
 m4_define([_CT_UI_CHECKBOX_BEGIN],[])
-m4_define([_CT_UI_CHECKBOX_BEGIN],[])
+m4_define([_CT_UI_CHECKBOX_END],[])
 m4_define([_CT_UI_LABEL_BEGIN],[])
-m4_define([_CT_UI_LABEL_BEGIN],[])
+m4_define([_CT_UI_LABEL_END],[])
 m4_define([_CT_UI_LISTBOX_BEGIN],[])
-m4_define([_CT_UI_LISTBOX_BEGIN],[])
+m4_define([_CT_UI_LISTBOX_END],[])
 m4_define([_CT_UI_MENU_BEGIN],[])
-m4_define([_CT_UI_MENU_BEGIN],[])
+m4_define([_CT_UI_MENU_END],[])
 m4_define([_CT_UI_TEXTBOX_BEGIN],[])
-m4_define([_CT_UI_TEXTBOX_BEGIN],[])
+m4_define([_CT_UI_TEXTBOX_END],[])
 m4_define([_CT_UI_TOOLTIP_BEGIN],[])
-m4_define([_CT_UI_TOOLTIP_BEGIN],[])
+m4_define([_CT_UI_TOOLTIP_END],[])
 m4_define([_CT_UI_WINDOW_BEGIN],[])
-m4_define([_CT_UI_WINDOW_BEGIN],[])
+m4_define([_CT_UI_WINDOW_END],[])
 
 #m4_define([_CT_UI_TEXTBOX_BEGIN],[
 ## Entry id $1
