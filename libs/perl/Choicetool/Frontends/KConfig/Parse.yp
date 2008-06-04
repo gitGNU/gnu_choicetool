@@ -33,10 +33,14 @@ use Choicetool::OS::File;
 
 use Choicetool::Set;
 
+use Choicetool::UI::Checkbox;
+use Choicetool::UI::Label;
+use Choicetool::UI::Listbox;
 use Choicetool::UI::Menu;
-use Choicetool::UI::MenuEntry;
-use Choicetool::UI::Comment;
-use Choicetool::UI::YesNo;
+use Choicetool::UI::Textbox;
+use Choicetool::UI::Tooltip;
+use Choicetool::UI::UI;
+use Choicetool::UI::Window;
 
 BEGIN {
     use Exporter ();
@@ -172,7 +176,7 @@ config_stmt:
     $ui_id++;
 
     my $node;
-    $node = Choicetool::UI::MenuEntry->new($ui_id);
+    $node = Choicetool::UI::Checkbox->new($ui_id);
     assert(defined($node));
 
     $node->parent($parent);
