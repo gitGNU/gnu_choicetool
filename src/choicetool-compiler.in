@@ -69,10 +69,14 @@ use Choicetool::Compile;
 #     The following modules are needed because we will evaluate the parsed
 #     structure, the UI module needs to know all subclasses methods
 #
+use Choicetool::UI::Checkbox;
+use Choicetool::UI::Label;
+use Choicetool::UI::Listbox;
 use Choicetool::UI::Menu;
-use Choicetool::UI::MenuEntry;
-use Choicetool::UI::Comment;
-use Choicetool::UI::YesNo;
+use Choicetool::UI::Textbox;
+use Choicetool::UI::Tooltip;
+use Choicetool::UI::UI;
+use Choicetool::UI::Window;
 
 #
 # Globals
