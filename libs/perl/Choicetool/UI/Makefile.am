@@ -24,10 +24,13 @@ perllibdir = $(pkgvlibsdir)/perl/Choicetool/UI
 
 dist_perllib_DATA =				\
 	UI.pm					\
+	Window.pm				\
 	Menu.pm					\
-	MenuEntry.pm				\
-	Comment.pm				\
-	YesNo.pm
+	Checkbox.pm				\
+	Label.pm				\
+	Listbox.pm				\
+	Textbox.pm				\
+	Tooltip.pm
 
 ##
 ## Maintainer related targets

@@ -46,4 +46,26 @@ sub new ($)
     return bless($self, $class);
 }
 
+sub m4ify_header ($$) {
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+    assert(defined($self->id()));
+
+    return $prefix . "_CT_UI_TEXTBOX_BEGIN([" . $self->id() . "])\n";
+}
+
+sub m4ify_footer ($$) {
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+    assert(defined($self->id()));
+
+    return $prefix . "_CT_UI_TEXTBOX_END([])\n";
+}
+
 1;

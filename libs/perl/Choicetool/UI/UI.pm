@@ -114,7 +114,8 @@ sub m4ify_header ($$) {
     assert(defined($self));
     assert(defined($prefix));
 
-    bug("No m4ify_header() method provided by subclass");
+    #bug("No m4ify_header() method provided by subclass");
+    return "";
 }
 
 sub m4ify_footer ($$) {
@@ -124,7 +125,8 @@ sub m4ify_footer ($$) {
     assert(defined($self));
     assert(defined($prefix));
 
-    bug("No m4ify_footer() method provided by subclass");
+    #bug("No m4ify_footer() method provided by subclass");
+    return "";
 }
 
 1;
