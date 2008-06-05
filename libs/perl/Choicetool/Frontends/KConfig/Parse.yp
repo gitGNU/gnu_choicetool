@@ -31,7 +31,7 @@ use Choicetool::Base::Trace;
 use Choicetool::Base::Debug;
 use Choicetool::OS::File;
 
-use Choicetool::Set;
+use Choicetool::Data::Set;
 
 use Choicetool::UI::Checkbox;
 use Choicetool::UI::Label;
