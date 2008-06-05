@@ -70,4 +70,26 @@ sub rhs ($$) {
     return $self->{RIGHT};
 }
 
+sub m4ify_header ($$) {
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+    assert(defined($self->id()));
+
+    return $prefix . "\n";
+}
+
+sub m4ify_footer ($$) {
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+    assert(defined($self->id()));
+
+    return $prefix . "\n";
+}
+
 1;

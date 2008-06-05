@@ -39,4 +39,85 @@ sub new ($$) {
     return bless($self, $class);
 }
 
+#
+# Methods that MUST NOT be overridden by subclasses
+#
+sub m4ify ($) {
+    my $self   = shift;
+    my $prefix = shift;
+    my $string;
+
+    assert(defined($self));
+    assert(defined($prefix));
+
+    $string = "";
+
+    debug("Calling m4ify_header with prefix \`" . $prefix . "'");
+    assert(defined($self->can('m4ify_header')));
+    $string = $string . $self->m4ify_header($prefix);
+
+    for my $child_ref (@{$self->{CHILDREN}}) {
+	if (ref($child_ref)) {
+	    my $child;
+	    $child = ${$child_ref};
+
+	    my $child_prefix;
+	    $child_prefix = $self->m4ify_indent();
+	    assert(defined($child_prefix));
+
+	    debug("Calling child m4ify with prefix " .
+		  "\`" . $prefix . $child_prefix . "'");
+	    assert(defined($child->can('m4ify')));
+	    $string = $string . $child->m4ify($prefix . $child_prefix);
+
+	} elsif (!defined($child_ref)) {
+	    debug("No child");
+	} else {
+	    bug("Unreacheable code");
+	}
+    }
+
+    debug("Calling m4ify_footer with prefix \`" . $prefix . "'");
+    assert(defined($self->can('m4ify_footer')));
+    $string = $string . $self->m4ify_footer($prefix);
+
+    return $string;
+}
+
+#
+# Methods that COULD be overridden by subclasses
+#
+sub m4ify_indent ($) {
+    my $self = shift;
+
+    assert(defined($self));
+
+    return "";
+}
+
+#
+# Methods that MUST be overridden by subclasses
+#
+sub m4ify_header ($$) {
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+
+    #bug("No m4ify_header() method provided by subclass");
+    return "";
+}
+
+sub m4ify_footer ($$) {
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+
+    #bug("No m4ify_footer() method provided by subclass");
+    return "";
+}
+
 1;
