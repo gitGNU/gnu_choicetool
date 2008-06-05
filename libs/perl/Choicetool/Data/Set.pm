@@ -18,7 +18,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-package Choicetool::Set;
+package Choicetool::Data::Set;
 
 use 5.8.0;
 

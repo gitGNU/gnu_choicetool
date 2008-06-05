@@ -24,7 +24,8 @@ perllibdir = $(pkgvlibsdir)/perl/Choicetool/Data
 
 dist_perllib_DATA =				\
 	Tree.pm					\
-	Stack.pm
+	Stack.pm				\
+	Set.pm
 
 ##
 ## Maintainer related targets
