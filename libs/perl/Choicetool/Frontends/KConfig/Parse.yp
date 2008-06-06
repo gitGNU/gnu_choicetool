@@ -60,6 +60,8 @@ my $rule_id         = 0;
 
 my $word;
 
+my $mainmenu;
+
 sub dtoken ($) {
     my $string = shift;
     
@@ -96,6 +98,16 @@ stmt_list:
           | stmt_list choice_stmt
           | stmt_list menu_stmt
           | stmt_list 'T_MAINMENU' words newlines
+{
+    debug("Processing rule: stmt_list (T_MAINMENU)");
+
+    assert(defined($word));
+    assert(!defined($mainmenu));
+
+    debug("Saving mainmenu value: \`" . $word . "'");
+
+    $mainmenu = $word;
+}
           | stmt_list  end
 {
     debug("Processed rule: stmt_list");
