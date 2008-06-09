@@ -27,25 +27,22 @@
 cat > ./choose.ct <<EOF
 mainmenu "Main Menu 1"
 
-menu "Menu 1"
-config MENU_ITEM_1
+choice
+prompt "Choice 1"
+
+config CHOICE_ITEM_1
 	bool "Enable item"
-	select MENU_ITEM_1
+	select CHOICE_ITEM_1
 	help
 	  None
 
-endmenu
-
-mainmenu "Main Menu 2"
-
-menu "Menu 2"
-config MENU_ITEM_2
+config CHOICE_ITEM_2
 	bool "Enable item"
-	select MENU_ITEM_2
+	select CHOICE_ITEM_2
 	help
 	  None
 
-endmenu
+endchoice
 EOF
 
 $CHOICETOOL -i ./choose.ct || exit 1

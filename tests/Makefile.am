@@ -116,6 +116,7 @@ SUCCESS_TESTS +=				\
 	test-language-16			\
 	test-language-17			\
 	test-language-18			\
+	test-language-20			\
 	test-input-name-1			\
 	test-output-name-1			\
 	test-autotools-1			\
@@ -404,6 +405,18 @@ test-language-19: $(srcdir)/test-language-19.in Makefile
 	}
 EXTRA_DIST += test-language-19.in
 CLEANFILES += test-language-19
+
+test-language-20: $(srcdir)/test-language-20.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-20.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-20.in
+CLEANFILES += test-language-20
 
 test-language-complete: $(srcdir)/test-language-complete.in Makefile
 	( rm -f $@ $@.tmp && \

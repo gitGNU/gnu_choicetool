@@ -361,6 +361,9 @@ end:
 }
      newline
    | 'T_ENDCHOICE' newline
+{
+    $_[0]->YYData->{DATA}[0] = ${$_[0]->YYData->{DATA}[0]}->parent();
+}
    | 'T_ENDIF' newline
 {
     debug("Processed rule: end");
@@ -465,7 +468,29 @@ choice_entry:
             ;
 
 choice:
-        'T_CHOICE' newline
+        'T_CHOICE'
+{
+    debug("Adding choice to tree");
+
+    my $parent;
+    $parent = $_[0]->YYData->{DATA}[0];
+    assert(defined($parent));
+
+    $ui_id++;
+
+    my $node;
+    $node = Choicetool::UI::Listbox->new($ui_id);
+    assert(defined($node));
+
+    $node->parent($parent);
+    if (!$$parent->add_child($ui_id, \$node)) {
+	assert(defined($$parent->id()));
+	error("Cannot add child node `" . $ui_id . "' " .
+	      "to parent \`" . $$parent->id() . "'");
+    }
+    $_[0]->YYData->{DATA}[0] = \$node;
+
+}       newline
 {
     debug("Processed rule: choice");
 }
