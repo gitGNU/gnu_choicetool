@@ -225,7 +225,31 @@ config_option_list:
 config_option:
                type_default_definition expr if_expr newline
              | type_definition prompt_stmt_opt newline
-             | 'T_PROMPT' words if_expr newline
+             | 'T_PROMPT' words
+{
+    debug("Adding label to tree");
+
+    my $parent;
+    $parent = $_[0]->YYData->{DATA}[0];
+    assert(defined($parent));
+
+    $ui_id++;
+
+    my $node;
+    $node = Choicetool::UI::Label->new($ui_id);
+    assert(defined($node));
+
+    $node->parent($parent);
+    if (!$$parent->add_child($ui_id, \$node)) {
+	assert(defined($$parent->id()));
+	error("Cannot add child node `" . $ui_id . "' " .
+	      "to parent \`" . $$parent->id() . "'");
+    }
+
+    $_[0]->YYData->{DATA}[0] = \$node;
+    $_[0]->YYData->{DATA}[0] = ${$_[0]->YYData->{DATA}[0]}->parent();
+}
+               if_expr newline
              | 'T_DEFAULT' expr if_expr newline
              | 'T_SELECT' word if_expr newline
              | 'T_RANGE' word word if_expr newline
@@ -507,7 +531,31 @@ choice_option_list:
                   ;
 
 choice_option:
-               'T_PROMPT' words if_expr newline
+               'T_PROMPT' words
+{
+    debug("Adding label to tree");
+
+    my $parent;
+    $parent = $_[0]->YYData->{DATA}[0];
+    assert(defined($parent));
+
+    $ui_id++;
+
+    my $node;
+    $node = Choicetool::UI::Label->new($ui_id);
+    assert(defined($node));
+
+    $node->parent($parent);
+    if (!$$parent->add_child($ui_id, \$node)) {
+	assert(defined($$parent->id()));
+	error("Cannot add child node `" . $ui_id . "' " .
+	      "to parent \`" . $$parent->id() . "'");
+    }
+
+    $_[0]->YYData->{DATA}[0] = \$node;
+    $_[0]->YYData->{DATA}[0] = ${$_[0]->YYData->{DATA}[0]}->parent();
+}
+               if_expr newline
              | type_definition prompt_stmt_opt newline
              | 'T_OPTIONAL' newline
              | 'T_DEFAULT' word if_expr newline
