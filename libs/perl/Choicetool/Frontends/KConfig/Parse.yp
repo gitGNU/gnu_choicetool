@@ -64,7 +64,7 @@ my $mainmenu;
 
 sub dtoken ($) {
     my $string = shift;
-    
+
     assert(defined($string));
 
     if (0) {
@@ -94,10 +94,10 @@ input:
      ;
 
 stmt_list:
-          | stmt_list common_stmt
-          | stmt_list choice_stmt
-          | stmt_list menu_stmt
-          | stmt_list 'T_MAINMENU' words newlines
+         | stmt_list common_stmt
+         | stmt_list choice_stmt
+         | stmt_list menu_stmt
+         | stmt_list 'T_MAINMENU' words newlines
 {
     debug("Processing rule: stmt_list (T_MAINMENU)");
 
@@ -108,11 +108,11 @@ stmt_list:
 
     $mainmenu = $word;
 }
-          | stmt_list  end
+         | stmt_list  end
 {
     debug("Processed rule: stmt_list");
 }
-          ;
+         ;
 
 newline:
          'T_EOL'
@@ -140,7 +140,7 @@ words:
      ;
 
 word:
-        'T_WORD'
+      'T_WORD'
 {
     assert(defined($_[1]));
 
@@ -177,10 +177,15 @@ common_stmt:
            ;
 
 config_stmt:
-             config_entry_start
+             config_entry_start config_option_list
 {
-    debug("Processed rule: config_stmt");
+#    $_[0]->YYData->{DATA}[0] = \$node;
+}
+           ;
 
+config_entry_start:
+                    'T_CONFIG' word
+{
     my $parent;
     $parent = $_[0]->YYData->{DATA}[0];
     assert(defined($parent));
@@ -198,14 +203,10 @@ config_stmt:
 	      "to parent \`" . $$parent->id() . "'");
     }
 
-    $node->symbol("TEST-TEST-TEST");
-} config_option_list {
-#    $_[0]->YYData->{DATA}[0] = \$node;
+    assert(defined($word));
+    $node->symbol($word);
 }
-           ;
-
-config_entry_start:
-                    'T_CONFIG' word newline
+                    newline
 {
     debug("Processed rule: config_entry_start");
 }
@@ -256,10 +257,10 @@ config_option:
 {
     debug("Processed rule: config_option");
 }
-            ;
+             ;
 
 type_default_definition:
-                         'T_DEF_TRISTATE'
+                          'T_DEF_TRISTATE'
                        | 'T_DEF_BOOL'
 {
     debug("Processed rule: type_default_definition");
@@ -278,11 +279,11 @@ type_definition:
                ;
 
 prompt_stmt_opt:
-                    | words if_expr
+               | words if_expr
 {
     debug("Processed rule: prompt_stmt_opt");
 }
-                    ;
+               ;
 
 expr:
       words
@@ -409,10 +410,7 @@ menu_entry:
           ;
 
 menu:
-{
-    debug("Entering rule: menu");
-}
-      'T_MENU'
+      'T_MENU' words
 {
     debug("Adding menu to tree");
 
@@ -434,23 +432,13 @@ menu:
     }
     $_[0]->YYData->{DATA}[0] = \$node;
 
-    $node->title("<THIS IS A BUG>");
-}
-      words
-{
-    my $node;
-
-    $node = $_[0]->YYData->{DATA}[0];
-    assert(defined($node));
-
-    # XXX FIXME: Remove this global variable
     assert(defined($word));
-
-    debug("Adding menu prompt \`" . $word . "' to tree");
-
-    $$node->title($word);
+    $node->title($word);
 }
       newline
+{
+    debug("Processed rule: depends_list");
+}
     ;
 
 depends_list:
@@ -586,7 +574,31 @@ comment_stmt:
             ;
 
 comment:
-         'T_COMMENT' words newline
+         'T_COMMENT' words
+{
+    debug("Adding label to tree");
+
+    my $parent;
+    $parent = $_[0]->YYData->{DATA}[0];
+    assert(defined($parent));
+
+    $ui_id++;
+
+    my $node;
+    $node = Choicetool::UI::Label->new($ui_id);
+    assert(defined($node));
+
+    $node->parent($parent);
+    if (!$$parent->add_child($ui_id, \$node)) {
+        assert(defined($$parent->id()));
+        error("Cannot add child node `" . $ui_id . "' " .
+              "to parent \`" . $$parent->id() . "'");
+    }
+
+    $_[0]->YYData->{DATA}[0] = \$node;
+    $_[0]->YYData->{DATA}[0] = ${$_[0]->YYData->{DATA}[0]}->parent();
+}
+         newline
 {
     debug("Processed rule: comment");
 }
@@ -957,7 +969,7 @@ sub lexer_callback ($)
 
 	    } elsif ($buffer eq "---") {
 
-		if ($parser->YYData->{INPUT} =~ 
+		if ($parser->YYData->{INPUT} =~
 		    s/^[ \t]*help[ \t]*\-\-\-//) {
 		    $help_start = 1;
 
