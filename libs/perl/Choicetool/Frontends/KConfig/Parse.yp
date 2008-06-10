@@ -339,6 +339,30 @@ help:
        help_start 'T_HELPTEXT'
 {
     debug("Processed rule: help");
+
+    assert(defined($_[1]));
+
+    debug("Adding tooltip to tree");
+
+    my $parent;
+    $parent = $_[0]->YYData->{DATA}[0];
+    assert(defined($parent));
+
+    $ui_id++;
+
+    my $node;
+    $node = Choicetool::UI::Tooltip->new($ui_id);
+    assert(defined($node));
+
+    $node->parent($parent);
+    if (!$$parent->add_child($ui_id, \$node)) {
+	assert(defined($$parent->id()));
+	error("Cannot add child node `" . $ui_id . "' " .
+	      "to parent \`" . $$parent->id() . "'");
+    }
+
+    $_[0]->YYData->{DATA}[0] = \$node;
+    $_[0]->YYData->{DATA}[0] = ${$_[0]->YYData->{DATA}[0]}->parent();
 }
     ;
 
