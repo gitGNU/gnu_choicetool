@@ -20,7 +20,7 @@
 
 include $(top_srcdir)/Makefile.sub
 
-CLEANFILES = 
+CLEANFILES =
 EXTRA_DIST =
 
 ##
@@ -112,13 +112,14 @@ SUCCESS_TESTS +=				\
 	test-language-6				\
 	test-language-7				\
 	test-language-8				\
-	test-language-9				\	
+	test-language-9				\
 	test-language-16			\
 	test-language-17			\
 	test-language-18			\
 	test-language-20			\
 	test-language-21			\
 	test-language-22			\
+	test-language-23			\
 	test-input-name-1			\
 	test-output-name-1			\
 	test-autotools-1			\
@@ -443,6 +444,18 @@ test-language-22: $(srcdir)/test-language-22.in Makefile
 	}
 EXTRA_DIST += test-language-22.in
 CLEANFILES += test-language-22
+
+test-language-23: $(srcdir)/test-language-23.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-23.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-23.in
+CLEANFILES += test-language-23
 
 test-language-complete: $(srcdir)/test-language-complete.in Makefile
 	( rm -f $@ $@.tmp && \

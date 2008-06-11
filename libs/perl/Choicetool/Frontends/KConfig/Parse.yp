@@ -59,8 +59,8 @@ my $ui_id           = 0;
 my $rule_id         = 0;
 
 my $word;
-
 my $mainmenu;
+my $type_definition;
 
 sub dtoken ($) {
     my $string = shift;
@@ -179,34 +179,18 @@ common_stmt:
 config_stmt:
              config_entry_start config_option_list
 {
-#    $_[0]->YYData->{DATA}[0] = \$node;
+    if (!defined($type_definition)) {
+	error("Missing type definition");
+	return 0;
+    }
+    undef($type_definition);
+
+    debug("Processed rule: config_stmt");
 }
            ;
 
 config_entry_start:
-                    'T_CONFIG' word
-{
-    my $parent;
-    $parent = $_[0]->YYData->{DATA}[0];
-    assert(defined($parent));
-
-    $ui_id++;
-
-    my $node;
-    $node = Choicetool::UI::Checkbox->new($ui_id);
-    assert(defined($node));
-
-    $node->parent($parent);
-    if (!$$parent->add_child($ui_id, \$node)) {
-	assert(defined($$parent->id()));
-	error("Cannot add child node `" . $ui_id . "' " .
-	      "to parent \`" . $$parent->id() . "'");
-    }
-
-    assert(defined($word));
-    $node->symbol($word);
-}
-                    newline
+                    'T_CONFIG' word newline
 {
     debug("Processed rule: config_entry_start");
 }
@@ -224,8 +208,68 @@ config_option_list:
                   ;
 
 config_option:
-               type_default_definition expr if_expr newline
-             | type_definition prompt_stmt_opt newline
+               type_default_definition
+{
+    my $parent;
+    $parent = $_[0]->YYData->{DATA}[0];
+    assert(defined($parent));
+
+    $ui_id++;
+
+    my $node;
+
+    if ($type_definition eq "bool") {
+	$node = Choicetool::UI::Checkbox->new($ui_id);
+    } elsif (defined($type_definition)) {
+	$node = Choicetool::UI::Textbox->new($ui_id);
+    } else {
+	error("Type is not defined");
+	return 0;
+    }
+
+    assert(defined($node));
+
+    $node->parent($parent);
+    if (!$$parent->add_child($ui_id, \$node)) {
+	assert(defined($$parent->id()));
+	error("Cannot add child node `" . $ui_id . "' " .
+	      "to parent \`" . $$parent->id() . "'");
+    }
+
+    assert(defined($word));
+}
+               expr if_expr newline
+             | type_definition
+{
+    my $parent;
+    $parent = $_[0]->YYData->{DATA}[0];
+    assert(defined($parent));
+
+    $ui_id++;
+
+    my $node;
+
+    if ($type_definition eq "bool") {
+	$node = Choicetool::UI::Checkbox->new($ui_id);
+    } elsif (defined($type_definition)) {
+	$node = Choicetool::UI::Textbox->new($ui_id);
+    } else {
+	error("Type is not defined");
+	return 0;
+    }
+
+    assert(defined($node));
+
+    $node->parent($parent);
+    if (!$$parent->add_child($ui_id, \$node)) {
+	assert(defined($$parent->id()));
+	error("Cannot add child node `" . $ui_id . "' " .
+	      "to parent \`" . $$parent->id() . "'");
+    }
+
+    assert(defined($word));
+}
+               prompt_stmt_opt newline
              | 'T_PROMPT' words
 {
     debug("Adding label to tree");
@@ -260,20 +304,46 @@ config_option:
              ;
 
 type_default_definition:
-                          'T_DEF_TRISTATE'
+                         'T_DEF_TRISTATE'
+{
+    $type_definition = "tristate";
+    debug("Processed type: tristate");
+}
                        | 'T_DEF_BOOL'
 {
+    $type_definition = "bool";
+
+    debug("Processed type: bool");
     debug("Processed rule: type_default_definition");
 }
                        ;
 
 type_definition:
                  'T_BOOL'
+{
+    $type_definition = "bool";
+    debug("Processed type: bool");
+}
                | 'T_TRISTATE'
+{
+    $type_definition = "tristate";
+    debug("Processed type: tristate");
+}
                | 'T_STRING'
+{
+    $type_definition = "string";
+    debug("Processed type: string");
+}
                | 'T_HEX'
+{
+    $type_definition = "hex";
+    debug("Processed type: hex");
+}
                | 'T_INT'
 {
+    $type_definition = "int";
+    debug("Processed type: int");
+
     debug("Processed rule: type_definition");
 }
                ;
