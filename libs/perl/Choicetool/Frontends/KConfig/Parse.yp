@@ -181,11 +181,11 @@ config_stmt:
 {
     if (!defined($type_definition)) {
 	error("Missing type definition");
-	return 0;
+	$_[0]->YYAbort;
+    } else {
+	undef($type_definition);
+	debug("Processed rule: config_stmt");
     }
-    undef($type_definition);
-
-    debug("Processed rule: config_stmt");
 }
            ;
 
@@ -1160,7 +1160,7 @@ sub parse ($$$)
     $result = $parser->YYParse(yylex   => \&lexer_callback,
 			       yyerror => \&error_callback);
 
-    if ($parser->YYNberr() > 0) {
+    if (($parser->YYNberr() > 0) || (!defined($result))) {
 	error("Cannot parse input file \`" . $input_filename . "'");
 	return 0;
     }

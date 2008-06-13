@@ -40,7 +40,8 @@ config CHOICE_ITEM_1
 	  None
 
 config CHOICE_ITEM_2
-	prompt "Enable item"
+	bool "Enable item"
+	prompt "Prompt 1"
 	select CHOICE_ITEM_2
 	help
 	  None

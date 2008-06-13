@@ -81,6 +81,7 @@ FAIL_TESTS +=					\
 	test-language-14			\
 	test-language-15			\
 	test-language-19			\
+	test-language-24			\
 	test-options-short-3			\
 	test-options-short-4			\
 	test-options-long-3			\
@@ -456,6 +457,18 @@ test-language-23: $(srcdir)/test-language-23.in Makefile
 	}
 EXTRA_DIST += test-language-23.in
 CLEANFILES += test-language-23
+
+test-language-24: $(srcdir)/test-language-24.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-24.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-24.in
+CLEANFILES += test-language-24
 
 test-language-complete: $(srcdir)/test-language-complete.in Makefile
 	( rm -f $@ $@.tmp && \
