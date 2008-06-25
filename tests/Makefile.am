@@ -121,6 +121,7 @@ SUCCESS_TESTS +=				\
 	test-language-21			\
 	test-language-22			\
 	test-language-23			\
+	test-language-expression-1		\
 	test-input-name-1			\
 	test-output-name-1			\
 	test-autotools-1			\
@@ -1069,6 +1070,18 @@ test-options-tool-linker: $(srcdir)/test-options-tool-linker.in Makefile
 	}
 EXTRA_DIST += test-options-tool-linker.in
 CLEANFILES += test-options-tool-linker
+
+test-language-expression-1: $(srcdir)/test-language-expression-1.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-expression-1.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-expression-1.in
+CLEANFILES += test-language-expression-1
 
 clean-local:
 	rm -rf testSubDir-*

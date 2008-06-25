@@ -7,6 +7,9 @@ NOTE:
 	completed ...
 
 TO-BE-DONE:
+* libs/perl/Choicetool/Frontends/KConfig/Parse.yp: remove global variables
+  ASAP
+
 * UI/m4ify: Rearrange the output production, pass a stream instead of
   collecting strings in a stack-based approach
 

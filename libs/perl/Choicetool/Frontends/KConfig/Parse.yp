@@ -50,6 +50,11 @@ BEGIN {
     @EXPORT = qw(&parse);
 }
 
+#
+# XXX FIX ME:
+#   remove global variables ASAP
+#
+
 my $parsed_string   = "";
 my $help_text_parse = 0;
 my $help_start      = 0;
@@ -73,6 +78,12 @@ sub dtoken ($) {
 }
 
 %}
+
+%left  'T_AND'
+%left  'T_OR'
+%left  'T_UNEQUAL'
+%left  'T_EQUAL'
+%right 'T_NOT'
 
 %start input
 
