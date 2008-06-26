@@ -29,7 +29,8 @@ use diagnostics;
 use Choicetool::Base::Debug;
 use Choicetool::Base::Trace;
 
-sub new ($$) {
+sub new ($$)
+{
     my $class = shift;
 
     assert(defined($class));
@@ -42,7 +43,8 @@ sub new ($$) {
 #
 # Methods that MUST NOT be overridden by subclasses
 #
-sub m4ify ($) {
+sub m4ify ($)
+{
     my $self   = shift;
     my $prefix = shift;
     my $string;
@@ -87,7 +89,8 @@ sub m4ify ($) {
 #
 # Methods that COULD be overridden by subclasses
 #
-sub m4ify_indent ($) {
+sub m4ify_indent ($)
+{
     my $self = shift;
 
     assert(defined($self));
@@ -98,7 +101,8 @@ sub m4ify_indent ($) {
 #
 # Methods that MUST be overridden by subclasses
 #
-sub m4ify_header ($$) {
+sub m4ify_header ($$)
+{
     my $self   = shift;
     my $prefix = shift;
 
@@ -109,7 +113,8 @@ sub m4ify_header ($$) {
     return "";
 }
 
-sub m4ify_footer ($$) {
+sub m4ify_footer ($$)
+{
     my $self   = shift;
     my $prefix = shift;
 

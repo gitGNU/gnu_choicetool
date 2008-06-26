@@ -41,6 +41,7 @@ use Choicetool::UI::Textbox;
 use Choicetool::UI::Tooltip;
 use Choicetool::UI::UI;
 use Choicetool::UI::Window;
+use Choicetool::Binder;
 
 BEGIN {
     use Exporter ();
@@ -67,7 +68,8 @@ my $word;
 my $mainmenu;
 my $type_definition;
 
-sub dtoken ($) {
+sub dtoken ($)
+{
     my $string = shift;
 
     assert(defined($string));
@@ -726,7 +728,7 @@ menuconfig_entry_start:
 
 %%
 
-sub parse_help($$)
+sub parse_help ($$)
 {
     my $stream_ref  = shift;
     my $string_ref  = shift;

@@ -116,15 +116,17 @@ sub help {
     return $self->{HELP};
 }
 
-sub m4ify_indent ($) {
+sub m4ify_indent ($)
+{
     my $self = shift;
 
     assert(defined($self));
 
     return "  ";
-		  }
+}
 
-sub m4ify_header ($$) {
+sub m4ify_header ($$)
+{
     my $self   = shift;
     my $prefix = shift;
 
@@ -140,7 +142,8 @@ sub m4ify_header ($$) {
 	"])\n";
 }
 
-sub m4ify_footer ($$) {
+sub m4ify_footer ($$)
+{
     my $self   = shift;
     my $prefix = shift;
 

@@ -29,7 +29,8 @@ use diagnostics;
 use Choicetool::Base::Debug;
 use Choicetool::Base::Trace;
 
-sub new ($$) {
+sub new ($$)
+{
     my $class = shift;
 
     assert(defined($class));
@@ -41,7 +42,8 @@ sub new ($$) {
     return bless($self, $class);
 }
 
-sub operand ($$) {
+sub operand ($$)
+{
     my $self = shift;
     my $oper = shift;
 
@@ -54,7 +56,8 @@ sub operand ($$) {
     return $self->{OPERAND};
 }
 
-sub m4ify_header ($$) {
+sub m4ify_header ($$)
+{
     my $self   = shift;
     my $prefix = shift;
 
@@ -65,7 +68,8 @@ sub m4ify_header ($$) {
     return $prefix . "\n";
 }
 
-sub m4ify_footer ($$) {
+sub m4ify_footer ($$)
+{
     my $self   = shift;
     my $prefix = shift;
 

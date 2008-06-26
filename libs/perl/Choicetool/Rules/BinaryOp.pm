@@ -29,7 +29,8 @@ use diagnostics;
 use Choicetool::Base::Debug;
 use Choicetool::Base::Trace;
 
-sub new ($$) {
+sub new ($$)
+{
     my $class = shift;
 
     assert(defined($class));
@@ -43,7 +44,8 @@ sub new ($$) {
 }
 
 # Left Hand Side
-sub lhs ($$) {
+sub lhs ($$)
+{
     my $self = shift;
     my $oper = shift;
 
@@ -57,7 +59,8 @@ sub lhs ($$) {
 }
 
 # Right Hand Side
-sub rhs ($$) {
+sub rhs ($$)
+{
     my $self = shift;
     my $oper = shift;
 
@@ -70,7 +73,8 @@ sub rhs ($$) {
     return $self->{RIGHT};
 }
 
-sub m4ify_header ($$) {
+sub m4ify_header ($$)
+{
     my $self   = shift;
     my $prefix = shift;
 
@@ -81,7 +85,8 @@ sub m4ify_header ($$) {
     return $prefix . "\n";
 }
 
-sub m4ify_footer ($$) {
+sub m4ify_footer ($$)
+{
     my $self   = shift;
     my $prefix = shift;
 

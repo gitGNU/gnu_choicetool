@@ -52,7 +52,7 @@ syntax:
 
 %%
 
-sub preprocessor_expander($)
+sub preprocessor_expander ($)
 {
     my $ref = shift;
 

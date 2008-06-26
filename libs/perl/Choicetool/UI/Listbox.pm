@@ -46,7 +46,8 @@ sub new ($)
     return bless($self, $class);
 }
 
-sub m4ify_header ($$) {
+sub m4ify_header ($$)
+{
     my $self   = shift;
     my $prefix = shift;
 
@@ -57,7 +58,8 @@ sub m4ify_header ($$) {
     return $prefix . "_CT_UI_LISTBOX_BEGIN([" . $self->id() . "])\n";
 }
 
-sub m4ify_footer ($$) {
+sub m4ify_footer ($$)
+{
     my $self   = shift;
     my $prefix = shift;
 

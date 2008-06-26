@@ -31,7 +31,8 @@ use Choicetool::Base::Trace;
 
 use base qw(BinaryOp);
 
-sub dump ($) {
+sub dump ($)
+{
     my $self = shift;
 
     assert(defined($self));
@@ -39,7 +40,8 @@ sub dump ($) {
     print $self->lhs()->dump() . " && " . $self->rhs()->dump();
 }
 
-sub m4ify_header ($$) {
+sub m4ify_header ($$)
+{
     my $self   = shift;
     my $prefix = shift;
 
@@ -50,7 +52,8 @@ sub m4ify_header ($$) {
     return $prefix . "\n";
 }
 
-sub m4ify_footer ($$) {
+sub m4ify_footer ($$)
+{
     my $self   = shift;
     my $prefix = shift;
 
