@@ -34,7 +34,8 @@ perllibdir = $(pkgvlibsdir)/perl/Choicetool
 
 dist_perllib_DATA =                             \
 	Compile.pm				\
-	Link.pm
+	Link.pm					\
+	Binder.pm
 
 nodist_perllib_DATA =                           \
 	Autoconfig.pm
