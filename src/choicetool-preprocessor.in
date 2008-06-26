@@ -191,7 +191,8 @@ if (!$force_mode) {
 ## Dump the environment, useful for debugging purposes
 ##
 #{
-#    sub callback ($$) {
+#    sub callback ($$)
+#    {
 #        my $key   = shift;
 #        my $value = shift;
 #
