@@ -64,7 +64,7 @@ use Choicetool::OS::Home;
 use Choicetool::OS::Environment;
 use Choicetool::Frontends::KConfig::Parse;
 use Choicetool::Data::Tree;
-use Choicetool::UI::UI;
+use Choicetool::Widgets::Widget;
 use Choicetool::Data::Set;
 
 #
@@ -220,7 +220,7 @@ if (!$force_mode) {
 my $ui;
 my $set;
 
-$ui = Choicetool::UI::UI->new(0);
+$ui = Choicetool::Widgets::Widget->new(0);
 assert(defined($ui));
 
 $set = Choicetool::Data::Set->new();
