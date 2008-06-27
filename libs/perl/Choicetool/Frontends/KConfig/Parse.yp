@@ -33,14 +33,14 @@ use Choicetool::OS::File;
 
 use Choicetool::Data::Set;
 
-use Choicetool::UI::Checkbox;
-use Choicetool::UI::Label;
-use Choicetool::UI::Listbox;
-use Choicetool::UI::Menu;
-use Choicetool::UI::Textbox;
-use Choicetool::UI::Tooltip;
-use Choicetool::UI::UI;
-use Choicetool::UI::Window;
+use Choicetool::Widgets::Widget;
+use Choicetool::Widgets::Checkbox;
+use Choicetool::Widgets::Label;
+use Choicetool::Widgets::Listbox;
+use Choicetool::Widgets::Menu;
+use Choicetool::Widgets::Textbox;
+use Choicetool::Widgets::Tooltip;
+use Choicetool::Widgets::Window;
 use Choicetool::Binder;
 
 BEGIN {
@@ -232,9 +232,9 @@ config_option:
     my $node;
 
     if ($type_definition eq "bool") {
-	$node = Choicetool::UI::Checkbox->new($ui_id);
+	$node = Choicetool::Widgets::Checkbox->new($ui_id);
     } elsif (defined($type_definition)) {
-	$node = Choicetool::UI::Textbox->new($ui_id);
+	$node = Choicetool::Widgets::Textbox->new($ui_id);
     } else {
 	error("Type is not defined");
 	return 0;
@@ -263,9 +263,9 @@ config_option:
     my $node;
 
     if ($type_definition eq "bool") {
-	$node = Choicetool::UI::Checkbox->new($ui_id);
+	$node = Choicetool::Widgets::Checkbox->new($ui_id);
     } elsif (defined($type_definition)) {
-	$node = Choicetool::UI::Textbox->new($ui_id);
+	$node = Choicetool::Widgets::Textbox->new($ui_id);
     } else {
 	error("Type is not defined");
 	return 0;
@@ -294,7 +294,7 @@ config_option:
     $ui_id++;
 
     my $node;
-    $node = Choicetool::UI::Label->new($ui_id);
+    $node = Choicetool::Widgets::Label->new($ui_id);
     assert(defined($node));
 
     $node->parent($parent);
@@ -434,7 +434,7 @@ help:
     $ui_id++;
 
     my $node;
-    $node = Choicetool::UI::Tooltip->new($ui_id);
+    $node = Choicetool::Widgets::Tooltip->new($ui_id);
     assert(defined($node));
 
     $node->parent($parent);
@@ -528,7 +528,7 @@ menu:
     $ui_id++;
 
     my $node;
-    $node = Choicetool::UI::Menu->new($ui_id);
+    $node = Choicetool::Widgets::Menu->new($ui_id);
     assert(defined($node));
 
     $node->parent($parent);
@@ -598,7 +598,7 @@ choice:
     $ui_id++;
 
     my $node;
-    $node = Choicetool::UI::Listbox->new($ui_id);
+    $node = Choicetool::Widgets::Listbox->new($ui_id);
     assert(defined($node));
 
     $node->parent($parent);
@@ -637,7 +637,7 @@ choice_option:
     $ui_id++;
 
     my $node;
-    $node = Choicetool::UI::Label->new($ui_id);
+    $node = Choicetool::Widgets::Label->new($ui_id);
     assert(defined($node));
 
     $node->parent($parent);
@@ -692,7 +692,7 @@ comment:
     $ui_id++;
 
     my $node;
-    $node = Choicetool::UI::Label->new($ui_id);
+    $node = Choicetool::Widgets::Label->new($ui_id);
     assert(defined($node));
 
     $node->parent($parent);
