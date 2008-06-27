@@ -29,6 +29,9 @@ use diagnostics;
 use Choicetool::Base::Debug;
 use Choicetool::Base::Trace;
 
+use vars qw(@ISA);
+@ISA = qw(Choicetool::Rules::Rule);
+
 sub new ($$)
 {
     my $class = shift;
