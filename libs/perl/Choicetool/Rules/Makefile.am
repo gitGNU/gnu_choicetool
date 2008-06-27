@@ -23,7 +23,7 @@ include $(top_srcdir)/Makefile.sub
 perllibdir = $(pkgvlibsdir)/perl/Choicetool/Rules
 
 dist_perllib_DATA =				\
-	Expression.pm				\
+	Rule.pm					\
 	BinaryOp.pm				\
 	UnaryOp.pm				\
 	And.pm					\
