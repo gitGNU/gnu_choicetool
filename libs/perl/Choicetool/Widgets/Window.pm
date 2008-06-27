@@ -19,7 +19,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-package Choicetool::UI::Window;
+package Choicetool::Widgets::Window;
 
 use 5.8.0;
 
@@ -29,10 +29,10 @@ use diagnostics;
 
 use Choicetool::Base::Debug;
 use Choicetool::Base::Trace;
-use Choicetool::UI::UI;
+use Choicetool::Widgets::Widget;
 
 use vars qw(@ISA);
-@ISA = qw(Choicetool::UI::UI);
+@ISA = qw(Choicetool::Widgets::Widget);
 
 sub new ($)
 {
@@ -55,7 +55,7 @@ sub m4ify_header ($$)
     assert(defined($prefix));
     assert(defined($self->id()));
 
-    return $prefix . "_CT_UI_WINDOW_BEGIN([" . $self->id() . "])\n";
+    return $prefix . "_CT_WIDGETS_WINDOW_BEGIN([" . $self->id() . "])\n";
 }
 
 sub m4ify_footer ($$)
@@ -67,7 +67,7 @@ sub m4ify_footer ($$)
     assert(defined($prefix));
     assert(defined($self->id()));
 
-    return $prefix . "_CT_UI_WINDOW_END([])\n";
+    return $prefix . "_CT_WIDGETS_WINDOW_END([])\n";
 }
 
 1;

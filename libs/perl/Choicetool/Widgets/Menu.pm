@@ -1,8 +1,7 @@
 #
-# Checkbox.pm
+# Menu.pm
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
-#                          Alessandro Massignan
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +18,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-package Choicetool::UI::Checkbox;
+package Choicetool::Widgets::Menu;
 
 use 5.8.0;
 
@@ -29,10 +28,10 @@ use diagnostics;
 
 use Choicetool::Base::Debug;
 use Choicetool::Base::Trace;
-use Choicetool::UI::UI;
+use Choicetool::Widgets::Widget;
 
 use vars qw(@ISA);
-@ISA = qw(Choicetool::UI::UI);
+@ISA = qw(Choicetool::Widgets::Widget);
 
 sub new ($)
 {
@@ -43,20 +42,87 @@ sub new ($)
 
     my $self = $class->SUPER::new($id);
 
+    $self->{TYPE}    = undef;
+    $self->{TITLE}   = undef;
+    $self->{DEFAULT} = undef;
+    $self->{RANGE}   = undef;
+    $self->{HELP}    = undef;
+
     return bless($self, $class);
 }
 
-sub symbol {
+sub type {
     my $self  = shift;
     my $value = shift;
 
     assert(defined($self));
 
     if (defined($value)) {
-       $self->{SYMBOL} = $value;
+	$self->{TYPE} = $value;
     }
 
-    return $self->{SYMBOL};
+    return $self->{TYPE};
+}
+
+sub title {
+    my $self  = shift;
+    my $value = shift;
+
+    assert(defined($self));
+
+    if (defined($value)) {
+	$self->{TITLE} = $value;
+    }
+
+    return $self->{TITLE};
+}
+
+sub default {
+    my $self  = shift;
+    my $value = shift;
+
+    assert(defined($self));
+
+    if (defined($value)) {
+	$self->{DEFAULT} = $value;
+    }
+
+    return $self->{DEFAULT};
+}
+
+sub range {
+    my $self  = shift;
+    my $value = shift;
+
+    assert(defined($self));
+
+    if (defined($value)) {
+	$self->{RANGE} = $value;
+    }
+
+    return $self->{RANGE};
+}
+
+sub help {
+    my $self  = shift;
+    my $value = shift;
+
+    assert(defined($self));
+
+    if (defined($value)) {
+	$self->{HELP} = $value;
+    }
+
+    return $self->{HELP};
+}
+
+sub m4ify_indent ($)
+{
+    my $self = shift;
+
+    assert(defined($self));
+
+    return "  ";
 }
 
 sub m4ify_header ($$)
@@ -66,9 +132,14 @@ sub m4ify_header ($$)
 
     assert(defined($self));
     assert(defined($prefix));
-    assert(defined($self->id()));
+    assert(defined($self->{ID}));
+    assert(defined($self->{TITLE}));
 
-    return $prefix . "_CT_UI_CHECKBOX_BEGIN([" . $self->id() . "])\n";
+    return
+	$prefix . "_CT_WIDGETS_MENU_BEGIN([".
+	$self->{ID}    . "],[" .
+	$self->{TITLE} .
+	"])\n";
 }
 
 sub m4ify_footer ($$)
@@ -78,9 +149,9 @@ sub m4ify_footer ($$)
 
     assert(defined($self));
     assert(defined($prefix));
-    assert(defined($self->id()));
+    assert(defined($self->{TITLE}));
 
-    return $prefix . "_CT_UI_CHECKBOX_END([])\n";
+    return $prefix . "_CT_WIDGETS_MENU_END([])\n";
 }
 
 1;

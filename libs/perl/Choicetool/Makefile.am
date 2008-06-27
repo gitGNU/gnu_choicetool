@@ -26,7 +26,7 @@ SUBDIRS =					\
 	RC					\
 	Misc					\
 	Data					\
-	UI					\
+	Widgets					\
 	Rules					\
 	Frontends
 

@@ -1,5 +1,5 @@
 #
-# Menu.pm
+# Widget.pm
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
 #
@@ -18,7 +18,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-package Choicetool::UI::UI;
+package Choicetool::Widgets::Widget;
 
 use 5.8.0;
 
@@ -31,7 +31,7 @@ use Choicetool::Base::Trace;
 use Choicetool::Data::Tree;
 
 #
-# UI is the base class for all UI elements
+# Widget is the base class for all Widgets
 #
 use vars qw(@ISA);
 @ISA = qw(Choicetool::Data::Tree);

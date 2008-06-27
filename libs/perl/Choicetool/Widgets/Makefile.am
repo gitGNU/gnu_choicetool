@@ -20,10 +20,10 @@
 
 include $(top_srcdir)/Makefile.sub
 
-perllibdir = $(pkgvlibsdir)/perl/Choicetool/UI
+perllibdir = $(pkgvlibsdir)/perl/Choicetool/Widgets
 
 dist_perllib_DATA =				\
-	UI.pm					\
+	Widget.pm				\
 	Window.pm				\
 	Menu.pm					\
 	Checkbox.pm				\
