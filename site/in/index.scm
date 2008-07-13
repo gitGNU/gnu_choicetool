@@ -36,6 +36,15 @@
 (p "Sorry, no public release available at the moment.")
 
 (h3 "MAILING LISTS")
+;(p
+; "Choicetool has several moderated mailing lists, each with an archive.
+; For general Choicetool discussions, use <choicetool-user AT nongnu.org>.
+; Email bug reports to <choicetool-bug AT nongnu.org>. For more information on
+; submitting bugs, please see the section Report a Bug below.
+; If you have a patch for a bug in Choicetool that hasn't yet been fixed in the
+; latest repository sources, please send the patch (made for the git sources,
+; not the release sources) to <choicetool-patch AT nongnu.org>."
+; )
 (p
  "Choicetool has several moderated mailing lists, each with an archive.
  For general Choicetool discussions, use <choicetool-user AT nongnu.org>.
