@@ -46,7 +46,7 @@ sub clear ($)
 
     assert(defined($self));
 
-    @{$self->{VALUES}} = ();
+    $self->{VALUES} = ();
 }
 
 sub push ($$)
