@@ -50,6 +50,23 @@ sub clear ($)
     $self->{VALUES} = ();
 }
 
+sub dump ($)
+{
+    my $self = shift;
+
+    assert(defined($self));
+
+    if ($self->is_empty()) {
+	debug("Stack is empty");
+    } else {
+	debug("Dumping stack:");
+
+	for my $i (@{$self->{VALUES}}) {
+	    debug("  " . $i);
+	}
+    }
+}
+
 sub push ($$)
 {
     my $self  = shift;
