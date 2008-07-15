@@ -32,6 +32,7 @@ use Choicetool::Base::Debug;
 use Choicetool::OS::File;
 
 use Choicetool::Data::Set;
+use Choicetool::Data::Stack;
 
 use Choicetool::Widgets::Widget;
 use Choicetool::Widgets::Checkbox;
@@ -251,7 +252,12 @@ config_option:
 
     assert(defined($word));
 }
-               expr if_expr newline
+               expr
+{
+    $_[0]->YYData->{DATA}[2]->dump();
+    $_[0]->YYData->{DATA}[2]->clear();
+}
+               if_expr newline
              | type_definition
 {
     my $parent;
@@ -308,7 +314,12 @@ config_option:
     $_[0]->YYData->{DATA}[0] = ${$_[0]->YYData->{DATA}[0]}->parent();
 }
                if_expr newline
-             | 'T_DEFAULT' expr if_expr newline
+             | 'T_DEFAULT' expr
+{
+    $_[0]->YYData->{DATA}[2]->dump();
+    $_[0]->YYData->{DATA}[2]->clear();
+}
+               if_expr newline
              | 'T_SELECT' word if_expr newline
              | 'T_RANGE' word word if_expr newline
 {
@@ -370,12 +381,53 @@ prompt_stmt_opt:
 
 expr:
       words
-    | words 'T_EQUAL' words
-    | words 'T_UNEQUAL' words
-    | 'T_OPEN_PAREN' expr 'T_CLOSE_PAREN'
-    | 'T_NOT' expr
-    | expr 'T_OR' expr
-    | expr 'T_AND' expr
+{
+    $_[0]->YYData->{DATA}[2]->push($word);
+}
+    | words
+{
+    $_[0]->YYData->{DATA}[2]->push($word);
+}
+      'T_EQUAL'
+{
+    $_[0]->YYData->{DATA}[2]->push("==");
+}
+      words
+    | words
+{
+    $_[0]->YYData->{DATA}[2]->push($word);
+}
+      'T_UNEQUAL'
+{
+    $_[0]->YYData->{DATA}[2]->push("!=");
+}
+      words
+{
+    $_[0]->YYData->{DATA}[2]->push($word);
+}
+    | 'T_OPEN_PAREN'
+{
+    $_[0]->YYData->{DATA}[2]->push("(");
+}
+      expr 'T_CLOSE_PAREN'
+{
+    $_[0]->YYData->{DATA}[2]->push(")");
+}
+    | 'T_NOT'
+{
+    $_[0]->YYData->{DATA}[2]->push("!");
+}
+      expr
+    | expr 'T_OR'
+{
+    $_[0]->YYData->{DATA}[2]->push("||");
+}
+      expr
+    | expr 'T_AND'
+{
+    $_[0]->YYData->{DATA}[2]->push("&&");
+}
+      expr
 {
     debug("Processed rule: expr");
 }
@@ -384,6 +436,9 @@ expr:
 if_expr:
        | 'T_IF' expr
 {
+    $_[0]->YYData->{DATA}[2]->dump();
+    $_[0]->YYData->{DATA}[2]->clear();
+
     debug("Processed rule: if_expr");
 }
        ;
@@ -410,9 +465,25 @@ symbol_option_arg:
                  ;
 
 depends:
-         'T_DEPENDS' 'T_ON' expr newline
-       | 'T_DEPENDS' expr newline
-       | 'T_REQUIRES' expr newline
+         'T_DEPENDS' 'T_ON' expr
+{
+    $_[0]->YYData->{DATA}[2]->dump();
+    $_[0]->YYData->{DATA}[2]->clear();
+
+}
+          newline
+       | 'T_DEPENDS' expr
+{
+    $_[0]->YYData->{DATA}[2]->dump();
+    $_[0]->YYData->{DATA}[2]->clear();
+}
+          newline
+       | 'T_REQUIRES' expr
+{
+    $_[0]->YYData->{DATA}[2]->dump();
+    $_[0]->YYData->{DATA}[2]->clear();
+}
+          newline
 {
     debug("Processed rule: depends");
 }
@@ -464,7 +535,12 @@ if_stmt:
        ;
 
 if_entry:
-          'T_IF' expr newlines
+          'T_IF' expr
+{
+    $_[0]->YYData->{DATA}[2]->dump();
+    $_[0]->YYData->{DATA}[2]->clear();
+}
+          newlines
 {
     debug("Processed rule: if_entry");
 }
@@ -1168,6 +1244,9 @@ sub parse ($$$)
     $parser->YYData->{INPUT}   = $string;
     $parser->YYData->{DATA}[0] = $ui_ref;
     $parser->YYData->{DATA}[1] = $set_ref;
+
+    $parser->YYData->{DATA}[2] = Choicetool::Data::Stack->new();
+    assert(defined($parser->YYData->{DATA}[2]));
 
     my $result;
     $result = $parser->YYParse(yylex   => \&lexer_callback,
