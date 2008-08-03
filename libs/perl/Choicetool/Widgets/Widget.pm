@@ -42,6 +42,7 @@ sub new ($$)
     my $id    = shift;
 
     assert(defined($class));
+    assert(defined($id));
 
     my $self = $class->SUPER::new($id);
 
