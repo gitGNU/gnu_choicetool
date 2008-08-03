@@ -44,9 +44,7 @@ sub new ($$)
     assert(defined($class));
     assert(defined($id));
 
-    my $self = { };
-
-    $self->{ID} = $id;
+    my $self = $class->SUPER::new($id);
 
     return bless($self, $class);
 }
