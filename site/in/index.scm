@@ -35,7 +35,7 @@
 (p "Choicetool has a single moderated mailing list, with an archive. "
    "In order to post a message to the mailing list you must be subscribed. "
    "Please consult the "
-   (a (@ (href "http://lists.nongnu.org/mailman/listinfo/choicetool-generic") )
+   (a (@ (href "http://lists.nongnu.org/mailman/listinfo/choicetool-generic"))
       "Choicetool mailing list page")
    " for more information on subscribing to the mailing list.")
 
@@ -52,26 +52,25 @@
 
 (h3 "DEVELOPMENT")
 (h4 "Browsing sources")
-(p
- "You can browse the "
- (a (@ (href "http://git.savannah.nongnu.org/gitweb/?p=choicetool.git"))
-    "Git repository")
- " of this project with your web browser. This gives you a good
- picture of the current status of the source files. You may also view
- the complete histories of any file in the repository as well as
- differences among two versions."
- )
+(p "You can browse the "
+   (a (@ (href "http://git.savannah.nongnu.org/gitweb/?p=choicetool.git"))
+      "Git repository")
+   " of this project with your web browser. This gives you a good "
+   "picture of the current status of the source files. You may also view "
+   "the complete histories of any file in the repository as well as "
+   "differences among two versions.")
+
 (h4 "Getting a copy of the Git Repository")
 (p "Anonymous checkout:")
 (br)
-(p (a (@ (href "http://savannah.gnu.org/maintenance/UsingGit")) git)
+(tt (a (@ (href "http://savannah.gnu.org/maintenance/UsingGit")) git)
    " clone git://git.savannah.nongnu.org/choicetool.git")
 
 (h4 "Contribute")
 (p "If you have time and programming skills, you can help us by developing "
    "missing features, regression tests or bug-fixing the present codebase. "
    "Subscribe to the "
-   (a (@ (href "http://lists.nongnu.org/mailman/listinfo/choicetool-generic") )
+   (a (@ (href "http://lists.nongnu.org/mailman/listinfo/choicetool-generic"))
       "mailing list")
    ", drop us a mail and start coding. Send your code to the "
    "mailing list under the form of patches for the current revision system.")
