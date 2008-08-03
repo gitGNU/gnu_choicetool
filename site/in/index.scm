@@ -64,7 +64,7 @@
 (p "Anonymous checkout:")
 (br)
 (tt (a (@ (href "http://savannah.gnu.org/maintenance/UsingGit")) git)
-   " clone git://git.savannah.nongnu.org/choicetool.git")
+    " clone git://git.savannah.nongnu.org/choicetool.git")
 
 (h4 "Contribute")
 (p "If you have time and programming skills, you can help us by developing "
