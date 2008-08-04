@@ -31,6 +31,12 @@ AC_CONFIG_MACRO_DIR([tools/autotools/m4])
 AC_CONFIG_SRCDIR([src/choicetool.in])
 
 #
+# For automake options (AM_INIT_AUTOMAKE options) see Makefile.am
+# file, AUTOMAKE_OPTIONS variable
+#
+AM_INIT_AUTOMAKE([1.10 gnu -Wall])
+
+#
 # Build related programs
 #
 AC_PROG_INSTALL
@@ -86,12 +92,6 @@ AS_IF([test -z "$GUILE"],[
 	GUILE_AUTOFRISK_CHECKS
 	GUILE_AUTOFRISK_SUMMARY
 ])
-
-#
-# For automake options (AM_INIT_AUTOMAKE options) see Makefile.am 
-# file, AUTOMAKE_OPTIONS variable
-#
-AM_INIT_AUTOMAKE([1.10 gnu -Wall])
 
 #
 # The API version is the base version.  We must guarantee
