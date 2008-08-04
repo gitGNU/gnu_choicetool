@@ -63,8 +63,8 @@ CHANGELOGS =					\
 EXTRA_DIST =							\
 	BUGS TODO README NEWS COPYING AUTHORS INSTALL THANKS	\
 	$(CHANGELOGS)						\
-	configure.ac.in						\
 	bootstrap						\
+	configure.ac.in						\
 	guile.af						\
 	perl.af
 
