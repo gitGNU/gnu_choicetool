@@ -77,7 +77,7 @@ test -n "$VERBOSE"    && FLAGS="$FLAGS --verbose"
 test -n "$DEBUG"      && FLAGS="$FLAGS --debug"
 test -z "$CHOICETOOL" && CHOICETOOL="wrapper choicetool $FLAGS"
 test -z "$AUTOCONF"   && AUTOCONF="autoconf"
-test -z "$ACLOCAL"    && ACLOCAL="aclocal -I @abs_top_builddir@/data"
+test -z "$ACLOCAL"    && ACLOCAL="aclocal -I @abs_top_builddir@/libs/aclocal"
 
 PATH=`pwd`:$PATH
 echo $PATH
@@ -120,9 +120,6 @@ esac
 # Define and export useful test variables
 CHOICETOOL_LIBRARY_PATH=@abs_top_builddir@/libs@PATH_SEPARATOR@@abs_top_srcdir@/libs
 export CHOICETOOL_LIBRARY_PATH
-
-CHOICETOOL_DATA_PATH=@abs_top_builddir@/data
-export CHOICETOOL_DATA_PATH
 
 CHOICETOOL_BINARY_PATH=@abs_top_builddir@/src
 export CHOICETOOL_BINARY_PATH
