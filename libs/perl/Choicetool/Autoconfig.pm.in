@@ -37,7 +37,6 @@ use vars qw (@ISA @EXPORT);
 
 	      $bin_dir
 	      $libs_dir
-	      $data_dir
 	      );
 
 use vars qw (
@@ -47,7 +46,6 @@ use vars qw (
 
 	     $bin_dir
 	     $libs_dir
-	     $data_dir
 	     );
 
 $PACKAGE_NAME      = '@PACKAGE_NAME@';
@@ -56,6 +54,5 @@ $PACKAGE_VERSION   = '@PACKAGE_VERSION@';
 
 $bin_dir           = $ENV{CHOICETOOL_BINARY_PATH}  || "@pkgvbindir@";
 $libs_dir          = $ENV{CHOICETOOL_LIBRARY_PATH} || "@pkgvlibsdir@";
-$data_dir          = $ENV{CHOICETOOL_DATA_PATH}    || "@pkgvdatadir@";
 
 1;
