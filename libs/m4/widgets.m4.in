@@ -16,6 +16,13 @@ m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
+m4_define([_CT_WIDGETS_TEXTBOX_BEGIN],[
+# Start of entry $1
+$DIALOG --msgbox "$2" 0 0
+])
+m4_define([_CT_WIDGETS_TEXTBOX_END],[])
+# End of entry $1
+
 m4_define([_CT_WIDGETS_CHECKBOX_BEGIN],[])
 m4_define([_CT_WIDGETS_CHECKBOX_END],[])
 m4_define([_CT_WIDGETS_LABEL_BEGIN],[])
@@ -24,43 +31,15 @@ m4_define([_CT_WIDGETS_LISTBOX_BEGIN],[])
 m4_define([_CT_WIDGETS_LISTBOX_END],[])
 m4_define([_CT_WIDGETS_MENU_BEGIN],[])
 m4_define([_CT_WIDGETS_MENU_END],[])
-m4_define([_CT_WIDGETS_TEXTBOX_BEGIN],[])
-m4_define([_CT_WIDGETS_TEXTBOX_END],[])
 m4_define([_CT_WIDGETS_TOOLTIP_BEGIN],[])
 m4_define([_CT_WIDGETS_TOOLTIP_END],[])
 m4_define([_CT_WIDGETS_WINDOW_BEGIN],[])
 m4_define([_CT_WIDGETS_WINDOW_END],[])
 
-#m4_define([_CT_WIDGETS_TEXTBOX_BEGIN],[
-## Entry id $1
-#$DIALOG --msgbox "$2" 0 0
-#])
-#
-#m4_define([_CT_WIDGETS_TEXTBOX_END],[
-## End of comment code
-#])
-#
-#m4_define([_CT_WIDGETS_MENU_BEGIN],[m4_dnl
-## Entry id $1
-#$DIALOG \
-#	--menu "$2" 0 0 0 \
-#])
-#
-#m4_define([_CT_WIDGETS_MENU_END],[m4_dnl
-#])
-#
-#m4_define([_CT_WIDGETS_MENU_ENTRY_BEGIN],[m4_dnl
-## Entry id $1
-#	"$1" "$2" \
-#])
-#
-#m4_define([_CT_WIDGETS_MENU_ENTRY_END],[m4_dnl
-#])
-#
-#m4_define([_CT_WIDGETS_YESNO_BEGIN],[m4_dnl
-## Entry id $1
-#$DIALOG --yesno "$2" 0 0
-#])
-#
-#m4_define([_CT_WIDGETS_YESNO_END],[m4_dnl
-#])
+m4_define([_CT_WIDGETS_YESNO_BEGIN],[
+# Start of entry $1
+$DIALOG --yesno "$2" 0 0
+])
+m4_define([_CT_WIDGETS_YESNO_END],[
+# End of entry $1
+])

@@ -21,7 +21,7 @@ m4_define([_CT_VARIABLES],[
 # Variables we rely on
 #
 
-# XXX FIXME: We should check the environment ...
+# NOTE: The CT_DIALOG gets substituted by the autoconf macro
 DIALOG="@CT_DIALOG@"
 
 #
@@ -44,8 +44,10 @@ m4_define([_CT_HEADER],[
 # even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE.
 
+# Report bugs in this generated script to <@PACKAGE_BUGREPORT@>
+
 _CT_VARIABLES([])
 
-_CT_UI_TEXTBOX_BEGIN([0],[This configuration interface has been built using @PACKAGE_NAME@ @PACKAGE_VERSION@.\n\nPlease note that @PACKAGE_NAME@ is still under active development.\n\nThis interface is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
-_CT_UI_TEXTBOX_END([])
+_CT_WIDGETS_TEXTBOX_BEGIN([0],[This configuration interface has been built using @PACKAGE_NAME@ @PACKAGE_VERSION@.\n\nPlease note that @PACKAGE_NAME@ is still under active development.\n\nThis interface is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
+_CT_WIDGETS_TEXTBOX_END([])
 ])
