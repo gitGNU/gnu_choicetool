@@ -21,6 +21,7 @@
 include $(top_srcdir)/Makefile.sub
 
 SUBDIRS =					\
+	aclocal					\
 	m4					\
 	scheme					\
 	perl
