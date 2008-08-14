@@ -110,13 +110,10 @@ AC_SUBST(API_VERSION)
 # Versioned directories, defined here for convenience
 AC_SUBST(pkgvdir,     ["\${datadir}/${PACKAGE}-${API_VERSION}"])
 AC_SUBST(pkgvbindir,  ["\${datadir}/${PACKAGE}-${API_VERSION}/bin"])
-AC_SUBST(pkgvdatadir, ["\${datadir}/${PACKAGE}-${API_VERSION}/data"])
 AC_SUBST(pkgvlibsdir, ["\${datadir}/${PACKAGE}-${API_VERSION}/libs"])
 
 AC_CONFIG_FILES([
 	Makefile
-
-	data/Makefile
 
 	tools/Makefile
 	tools/scripts/Makefile
@@ -125,6 +122,7 @@ AC_CONFIG_FILES([
 
 	libs/Makefile
 	libs/scheme/Makefile
+	libs/aclocal/Makefile
 	libs/m4/Makefile
 	libs/perl/Makefile
 	libs/perl/Choicetool/Makefile
