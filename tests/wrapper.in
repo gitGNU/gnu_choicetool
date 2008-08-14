@@ -35,20 +35,4 @@ shift
 
 parameters=$@
 
-#
-# NOTE:
-#     aclocallibdir is exported for aclocal in defs.in only ...
-#
-##aclocallibdir=@abs_top_builddir@/data
-##export aclocallibdir
-##
-##CHOICETOOL_BIN_PATH=@abs_top_builddir@/src
-##export CHOICETOOL_BIN_PATH
-##CHOICETOOL_DATA_PATH=@abs_top_srcdir@/data
-##export CHOICETOOL_DATA_PATH
-##CHOICETOOL_DATA_PATH=@abs_top_builddir@/data
-##export CHOICETOOL_DATA_PATH
-##CHOICETOOL_LIBRARY_PATH=@abs_top_builddir@/libs@PATH_SEPARATOR@@abs_top_srcdir@/libs
-##export CHOICETOOL_LIBRARY_PATH
-
 exec @abs_top_builddir@/src/$program $parameters
