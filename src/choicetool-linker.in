@@ -222,6 +222,8 @@ my $M4PATH;
 
 $M4PATH = "";
 {
+    debug("Building M4PATH variable\n");
+
     my @directories;
 
     @directories = map(File::Spec->catfile($_, "m4"),
@@ -239,6 +241,8 @@ $M4PATH = "";
 	    $M4PATH =  $directory . '@PATH_SEPARATOR@' . $M4PATH;
 	}
     }
+
+    debug("M4PATH variable built successfully\n");
 }
 debug("M4PATH is \`" . $M4PATH . "'");
 
@@ -246,7 +250,7 @@ my $command;
 $command =
     "M4PATH=" . $M4PATH . " @M4@ " .
     "-P "                          .
-    (debug_get() ? "-d " : "")     .
+    (debug_get() ? "--debug=te " : "")     .
     " - "                          .
     "< " . $input_file . " "       .
     "> " . $output_file;
