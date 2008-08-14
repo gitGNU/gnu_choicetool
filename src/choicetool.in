@@ -126,8 +126,8 @@ my %tools = (
 
 sub help_environment ()
 {
-    print "The environment variables CHOICETOOL_BINARY_PATH, CHOICETOOL_LIBRARY_PATH and\n";
-    print "CHOICETOOL_DATA_PATH are honored.\n";
+    print "The environment variables CHOICETOOL_BINARY_PATH, CHOICETOOL_LIBRARY_PATH are\n";
+    print "honored.\n";
 }
 
 sub help ()

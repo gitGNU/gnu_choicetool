@@ -79,8 +79,8 @@ my $DFLTOUT = $OUTBASE . ".pa";
 
 sub help_environment ()
 {
-    print "The environment variables CHOICETOOL_BINARY_PATH, CHOICETOOL_LIBRARY_PATH,\n";
-    print "CHOICETOOL_DATA_PATH and CHOICETOOL_RC_FILES are honored.\n";
+    print "The environment variables CHOICETOOL_BINARY_PATH, CHOICETOOL_LIBRARY_PATH are\n";
+    print "honored.\n";
 }
 
 sub help ()
