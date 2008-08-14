@@ -249,7 +249,7 @@ my $command;
 $command =
     "M4PATH=" . $M4PATH . " @M4@ " .
     "-P "                          .
-    (debug_get() ? "--debug=te " : "")     .
+    (debug_get() ? "-s --debug=te " : "")     .
     " - "                          .
     "< " . $input_file . " "       .
     "> " . $output_file;
