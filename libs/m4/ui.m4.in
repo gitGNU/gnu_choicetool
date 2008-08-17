@@ -1,0 +1,20 @@
+m4_dnl
+m4_dnl Copyright (C) 2007, 2008 Francesco Salvestrini
+m4_dnl
+m4_dnl This program is free software; you can redistribute it and/or modify
+m4_dnl it under the terms of the GNU General Public License as published by
+m4_dnl the Free Software Foundation; either version 2 of the License, or
+m4_dnl (at your option) any later version.
+m4_dnl
+m4_dnl This program is distributed in the hope that it will be useful,
+m4_dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
+m4_dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+m4_dnl GNU General Public License for more details.
+m4_dnl
+m4_dnl You should have received a copy of the GNU General Public License along
+m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
+m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+m4_dnl
+
+m4_define([_CT_UI_WINDOW],[])
+m4_define([_CT_UI_MENU],[])
