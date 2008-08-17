@@ -68,6 +68,11 @@ sub m4ify ($)
     $string = $string . $self->m4ify_header($prefix);
 
     for my $child_ref (@{$self->{CHILDREN}}) {
+
+	debug("Calling m4ify_body with prefix \`" . $prefix . "'");
+	assert(defined($self->can('m4ify_body')));
+	$string = $string . $self->m4ify_body($prefix);
+
 	if (ref($child_ref)) {
 	    my $child;
 	    $child = ${$child_ref};
@@ -119,6 +124,18 @@ sub m4ify_header ($$)
     assert(defined($prefix));
 
     #bug("No m4ify_header() method provided by subclass");
+    return "";
+}
+
+sub m4ify_body ($$)
+{
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+
+    #bug("No m4ify_body() method provided by subclass");
     return "";
 }
 

@@ -55,7 +55,19 @@ sub m4ify_header ($$)
     assert(defined($prefix));
     assert(defined($self->id()));
 
-    return $prefix . "_CT_WIDGETS_LABEL_BEGIN([" . $self->id() . "])\n";
+    return $prefix . "_CT_WIDGETS_LABEL_HEADER([" . $self->id() . "])\n";
+}
+
+sub m4ify_body ($$)
+{
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+    assert(defined($self->id()));
+
+    return $prefix . "_CT_WIDGETS_LABEL_BODY([" . $self->id() . "])\n";
 }
 
 sub m4ify_footer ($$)
@@ -67,7 +79,7 @@ sub m4ify_footer ($$)
     assert(defined($prefix));
     assert(defined($self->id()));
 
-    return $prefix . "_CT_WIDGETS_LABEL_END([])\n";
+    return $prefix . "_CT_WIDGETS_LABEL_FOOTER([" . $self->id() . "])\n";
 }
 
 1;

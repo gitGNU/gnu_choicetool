@@ -136,10 +136,23 @@ sub m4ify_header ($$)
     assert(defined($self->{TITLE}));
 
     return
-	$prefix . "_CT_WIDGETS_MENU_BEGIN([".
-	$self->{ID}    . "],[" .
+	$prefix . "_CT_WIDGETS_MENU_HEADER([".
+	$self->id()    . "],[" .
 	$self->{TITLE} .
 	"])\n";
+}
+
+sub m4ify_body ($$)
+{
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+    assert(defined($self->{ID}));
+    assert(defined($self->{TITLE}));
+
+    return $prefix . "_CT_WIDGETS_MENU_BODY([" . $self->id() . "])\n";
 }
 
 sub m4ify_footer ($$)
@@ -151,7 +164,7 @@ sub m4ify_footer ($$)
     assert(defined($prefix));
     assert(defined($self->{TITLE}));
 
-    return $prefix . "_CT_WIDGETS_MENU_END([])\n";
+    return $prefix . "_CT_WIDGETS_MENU_FOOTER([" . $self->id() . "])\n";
 }
 
 1;
