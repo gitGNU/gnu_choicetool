@@ -99,7 +99,14 @@ m4_define([_CT_WIDGETS_YESNO_HEADER],[
 ])
 m4_define([_CT_WIDGETS_YESNO_BODY],[
 # Body of yesno widget $1
-$DIALOG $TITLE --yesno "$2" 0 0
+widget_$1=`$DIALOG $TITLE --yesno "$2" 0 0`
+if (( $widget_$1 == 0 )) ; then
+   :
+   $3
+else
+   :
+   $4
+fi
 ])
 m4_define([_CT_WIDGETS_YESNO_FOOTER],[
 # Footer of yesno widget $1

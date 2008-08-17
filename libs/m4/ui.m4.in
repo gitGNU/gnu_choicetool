@@ -16,5 +16,22 @@ m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
-m4_define([_CT_UI_WINDOW],[])
-m4_define([_CT_UI_MENU],[])
+m4_define([_CT_UI_WINDOW_HEADER],[
+# Header of window ui $1
+])
+m4_define([_CT_UI_WINDOW_BODY],[
+# Body of window ui $1
+])
+m4_define([_CT_UI_WINDOW_FOOTER],[
+# Footer of window ui $1
+])
+
+m4_define([_CT_UI_MENU_HEADER],[
+# Header of menu ui $1
+])
+m4_define([_CT_UI_MENU_BODY],[
+# Body of menu ui $1
+])
+m4_define([_CT_UI_MENU_FOOTER],[
+# Footer of menu ui $1
+])
