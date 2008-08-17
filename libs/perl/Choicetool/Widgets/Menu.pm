@@ -136,8 +136,7 @@ sub m4ify_header ($$)
     assert(defined($self->{TITLE}));
 
     return
-	$prefix . "_CT_WIDGETS_MENU_HEADER([".
-	$self->id()    . "],[" .
+	$prefix . "_CT_WIDGETS_MENU_HEADER([". $self->id() . "],[" .
 	$self->{TITLE} .
 	"])\n";
 }

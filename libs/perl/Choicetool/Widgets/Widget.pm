@@ -67,12 +67,11 @@ sub m4ify ($)
     assert(defined($self->can('m4ify_header')));
     $string = $string . $self->m4ify_header($prefix);
 
+    debug("Calling m4ify_body with prefix \`" . $prefix . "'");
+    assert(defined($self->can('m4ify_body')));
+    $string = $string . $self->m4ify_body($prefix);
+
     for my $child_ref (@{$self->{CHILDREN}}) {
-
-	debug("Calling m4ify_body with prefix \`" . $prefix . "'");
-	assert(defined($self->can('m4ify_body')));
-	$string = $string . $self->m4ify_body($prefix);
-
 	if (ref($child_ref)) {
 	    my $child;
 	    $child = ${$child_ref};
