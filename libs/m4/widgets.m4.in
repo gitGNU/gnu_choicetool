@@ -16,30 +16,91 @@ m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
-m4_define([_CT_WIDGETS_TEXTBOX_BEGIN],[
-# Start of entry $1
-$DIALOG --msgbox "$2" 0 0
-])
-m4_define([_CT_WIDGETS_TEXTBOX_END],[])
-# End of entry $1
+m4_define([_CT_WIDGETS_WINDOW_HEADER],[
+# Header of window widget $1
 
-m4_define([_CT_WIDGETS_CHECKBOX_BEGIN],[])
-m4_define([_CT_WIDGETS_CHECKBOX_END],[])
-m4_define([_CT_WIDGETS_LABEL_BEGIN],[])
-m4_define([_CT_WIDGETS_LABEL_END],[])
-m4_define([_CT_WIDGETS_LISTBOX_BEGIN],[])
-m4_define([_CT_WIDGETS_LISTBOX_END],[])
-m4_define([_CT_WIDGETS_MENU_BEGIN],[])
-m4_define([_CT_WIDGETS_MENU_END],[])
-m4_define([_CT_WIDGETS_TOOLTIP_BEGIN],[])
-m4_define([_CT_WIDGETS_TOOLTIP_END],[])
-m4_define([_CT_WIDGETS_WINDOW_BEGIN],[])
-m4_define([_CT_WIDGETS_WINDOW_END],[])
+#XXXXXXXXXXXXXXXXX FIXME!!!!!!!!!!!!!!!!!!!!!!!!!!
+#XXXXXXXXXXXXXXXXX FIXME!!!!!!!!!!!!!!!!!!!!!!!!!!
+#XXXXXXXXXXXXXXXXX FIXME!!!!!!!!!!!!!!!!!!!!!!!!!!
+#XXXXXXXXXXXXXXXXX FIXME!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-m4_define([_CT_WIDGETS_YESNO_BEGIN],[
-# Start of entry $1
-$DIALOG --yesno "$2" 0 0
+TITLE="--backtitle '$2'"
 ])
-m4_define([_CT_WIDGETS_YESNO_END],[
-# End of entry $1
+m4_define([_CT_WIDGETS_WINDOW_BODY],[
+# Body of window widget $1
+])
+m4_define([_CT_WIDGETS_WINDOW_FOOTER],[
+# Footer of window widget $1
+])
+
+m4_define([_CT_WIDGETS_TEXTBOX_HEADER],[
+# Header of textbox widget $1
+])
+m4_define([_CT_WIDGETS_TEXTBOX_BODY],[
+# Body of textbox widget $1
+$DIALOG $TITLE --msgbox "$2" 0 0
+])
+m4_define([_CT_WIDGETS_TEXTBOX_FOOTER],[
+# Footer of textbox widget $1
+])
+
+m4_define([_CT_WIDGETS_CHECKBOX_HEADER],[
+# Header of checkbox widget $1
+])
+m4_define([_CT_WIDGETS_CHECKBOX_BODY],[
+# Body of checkbox widget $1
+])
+m4_define([_CT_WIDGETS_CHECKBOX_FOOTER],[
+# Footer of checkbox widget $1
+])
+
+m4_define([_CT_WIDGETS_LABEL_HEADER],[
+# Header of label widget $1
+])
+m4_define([_CT_WIDGETS_LABEL_BODY],[
+# Body of label widget $1
+])
+m4_define([_CT_WIDGETS_LABEL_FOOTER],[
+# Footer of label widget $1
+])
+
+m4_define([_CT_WIDGETS_LISTBOX_HEADER],[
+# Header of listbox widget $1
+])
+m4_define([_CT_WIDGETS_LISTBOX_BODY],[
+# Body of listbox widget $1
+])
+m4_define([_CT_WIDGETS_LISTBOX_FOOTER],[
+# Footer of listbox widget $1
+])
+
+m4_define([_CT_WIDGETS_MENU_HEADER],[
+# Header of menu widget $1
+])
+m4_define([_CT_WIDGETS_MENU_BODY],[
+# Body of menu widget $1
+])
+m4_define([_CT_WIDGETS_MENU_FOOTER],[
+# Footer of menu widget $1
+])
+
+m4_define([_CT_WIDGETS_TOOLTIP_HEADER],[
+# Header of tooltip widget $1
+])
+m4_define([_CT_WIDGETS_TOOLTIP_BODY],[
+# Body of tooltip widget $1
+])
+m4_define([_CT_WIDGETS_TOOLTIP_FOOTER],[
+# Footer of tooltip widget $1
+])
+
+m4_define([_CT_WIDGETS_YESNO_HEADER],[
+# Header of yesno widget $1
+])
+m4_define([_CT_WIDGETS_YESNO_BODY],[
+# Body of yesno widget $1
+$DIALOG $TITLE --yesno "$2" 0 0
+])
+m4_define([_CT_WIDGETS_YESNO_FOOTER],[
+# Footer of yesno widget $1
 ])

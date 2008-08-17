@@ -21,7 +21,7 @@ m4_define([_CT_VARIABLES],[
 # Variables we rely on
 #
 
-# NOTE: The CT_DIALOG gets substituted by the autoconf macro
+# NOTE: This variable gets substituted by the autoconf related macros
 DIALOG="@CT_DIALOG@"
 
 #
@@ -48,6 +48,11 @@ m4_define([_CT_HEADER],[
 
 _CT_VARIABLES([])
 
-_CT_WIDGETS_TEXTBOX_BEGIN([0],[This configuration interface has been built using @PACKAGE_NAME@ @PACKAGE_VERSION@.\n\nPlease note that @PACKAGE_NAME@ is still under active development.\n\nThis interface is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
-_CT_WIDGETS_TEXTBOX_END([])
+_CT_WIDGETS_WINDOW_HEADER([0],[This is a test])
+_CT_WIDGETS_WINDOW_BODY([0],[This is a test])
+_CT_WIDGETS_WINDOW_FOOTER([0])
+
+_CT_WIDGETS_TEXTBOX_HEADER([0])
+_CT_WIDGETS_TEXTBOX_BODY([0],[This configuration interface has been built using @PACKAGE_NAME@ @PACKAGE_VERSION@.\n\nPlease note that @PACKAGE_NAME@ is still under active development.\n\nThis interface is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
+_CT_WIDGETS_TEXTBOX_FOOTER([0])
 ])

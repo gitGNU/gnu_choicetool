@@ -17,12 +17,11 @@ m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
 m4_changequote(`[',`]')
-
 m4_ifdef([__gnu__],[],[
   m4_errprint(@PACKAGE_NAME@ requires GNU m4)
   m4_m4exit(2)
 ])
-
 m4_include([header.m4])
 m4_include([footer.m4])
+m4_include([ui.m4])
 m4_include([widgets.m4])
