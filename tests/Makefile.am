@@ -86,6 +86,7 @@ FAIL_TESTS +=					\
 	test-language-21			\
 	test-language-22			\
 	test-language-24			\
+	test-language-106			\
 	test-options-short-3			\
 	test-options-short-4			\
 	test-options-long-3			\
@@ -123,6 +124,9 @@ SUCCESS_TESTS +=				\
 	test-language-23			\
 	test-language-101			\
 	test-language-102			\
+	test-language-103			\
+	test-language-104			\
+	test-language-105			\
 	test-language-expression-1		\
 	test-input-name-1			\
 	test-output-name-1			\
@@ -208,6 +212,54 @@ test-language-102: $(srcdir)/test-language-102.in Makefile
 	}
 EXTRA_DIST += test-language-102.in
 CLEANFILES += test-language-102
+
+test-language-103: $(srcdir)/test-language-103.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-103.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-103.in
+CLEANFILES += test-language-103
+
+test-language-104: $(srcdir)/test-language-104.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-104.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-104.in
+CLEANFILES += test-language-104
+
+test-language-105: $(srcdir)/test-language-105.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-105.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-105.in
+CLEANFILES += test-language-105
+
+test-language-106: $(srcdir)/test-language-106.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-106.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-106.in
+CLEANFILES += test-language-106
 
 test-language-1: $(srcdir)/test-language-1.in Makefile
 	( rm -f $@ $@.tmp && \

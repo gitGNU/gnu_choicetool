@@ -106,6 +106,20 @@ input:
 {
     drule("input");
 }
+      | stmt_list
+{
+    drule("input");
+
+    # The input node must be a Tree root
+    assert(${$_[0]->YYData->{DATA}[0]}->is_root());
+}
+     | newlines stmt_list
+{
+    drule("input");
+
+    # The input node must be a Tree root
+    assert(${$_[0]->YYData->{DATA}[0]}->is_root());
+}
      ;
 
 newlines: newline
@@ -121,6 +135,57 @@ newline: 'T_EOL'
     drule("newline");
 }
        ;
+
+stmt_list: stmt
+{
+    drule("stmt_list");
+}
+         | stmt stmt_list
+         ;
+
+stmt: mainmenu_stmt
+{
+    drule("stmt");
+}
+    ;
+
+mainmenu_stmt: 'T_MAINMENU' words newlines
+{
+    drule("mainmenu_stmt");
+}
+             ;
+
+words: word
+{
+    drule("words");
+}
+     | word_quote
+{
+    drule("words");
+}
+     ;
+
+word: 'T_WORD'
+{
+    assert(defined($_[1]));
+
+    debug("Storing word: \`" . $_[1] . "'");
+    $word = $_[1];
+
+    drule("word");
+}
+    ;
+
+word_quote: 'T_WORD_QUOTE'
+{
+    assert(defined($_[1]));
+
+    debug("Storing quoted word: \`" . $_[1] . "'");
+    $word = $_[1];
+
+    drule("word_quote");
+}
+          ;
 
 %%
 
