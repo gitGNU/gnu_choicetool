@@ -121,6 +121,8 @@ SUCCESS_TESTS +=				\
 	test-language-16			\
 	test-language-17			\
 	test-language-23			\
+	test-language-101			\
+	test-language-102			\
 	test-language-expression-1		\
 	test-input-name-1			\
 	test-output-name-1			\
@@ -182,6 +184,30 @@ test-fail: $(srcdir)/test-fail.in Makefile
 	}
 EXTRA_DIST += test-fail.in
 CLEANFILES += test-fail
+
+test-language-101: $(srcdir)/test-language-101.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-101.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-101.in
+CLEANFILES += test-language-101
+
+test-language-102: $(srcdir)/test-language-102.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-102.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-102.in
+CLEANFILES += test-language-102
 
 test-language-1: $(srcdir)/test-language-1.in Makefile
 	( rm -f $@ $@.tmp && \

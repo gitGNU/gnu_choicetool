@@ -93,6 +93,8 @@ tests/test-language-21
 tests/test-language-22
 tests/test-language-23
 tests/test-language-24
+tests/test-language-101
+tests/test-language-102
 tests/test-language-comments-1
 tests/test-language-comments-2
 tests/test-language-comments-3
