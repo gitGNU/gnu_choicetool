@@ -23,6 +23,7 @@ m4_define([_CT_VARIABLES],[
 
 # NOTE: This variable gets substituted by the autoconf related macros
 DIALOG="@CT_DIALOG@"
+_CT_ME="choice"
 
 #
 # End of variables
@@ -48,7 +49,7 @@ m4_define([_CT_HEADER],[
 
 _CT_VARIABLES([])
 
-_CT_WIDGETS_WINDOW_HEADER([0],[This-is-a-test])
+_CT_WIDGETS_WINDOW_HEADER([0],[ThisIsATest])
 _CT_WIDGETS_WINDOW_BODY([0])
 _CT_WIDGETS_WINDOW_FOOTER([0])
 

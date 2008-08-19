@@ -16,14 +16,12 @@ m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
-m4_changequote(`[',`]')
-m4_ifdef([__gnu__],[],[
-  m4_errprint(@PACKAGE_NAME@ requires GNU m4)
-  m4_m4exit(2)
+m4_define([_CT_IF],[
+if $1 ; then
+  :
+  $2
+else
+  :
+  $3
+fi
 ])
-m4_include([trace.m4])
-m4_include([miscellaneous.m4])
-m4_include([header.m4])
-m4_include([footer.m4])
-m4_include([ui.m4])
-m4_include([widgets.m4])

@@ -17,9 +17,9 @@ m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
 m4_define([_CT_MSG_NOTICE],[
-echo "choice: $1"
+echo "$_CT_ME: $1"
 ])
 
 m4_define([_CT_MSG_ERROR],[
-echo "choice: $1"
+echo "$_CT_ME: $1"
 ])
