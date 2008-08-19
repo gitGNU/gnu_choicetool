@@ -87,6 +87,12 @@ FAIL_TESTS +=					\
 	test-language-22			\
 	test-language-24			\
 	test-language-106			\
+	test-language-112			\
+	test-language-113			\
+	test-language-114			\
+	test-language-115			\
+	test-language-116			\
+	test-language-117			\
 	test-options-short-3			\
 	test-options-short-4			\
 	test-options-long-3			\
@@ -127,6 +133,11 @@ SUCCESS_TESTS +=				\
 	test-language-103			\
 	test-language-104			\
 	test-language-105			\
+	test-language-107			\
+	test-language-108			\
+	test-language-109			\
+	test-language-110			\
+	test-language-111			\
 	test-language-expression-1		\
 	test-input-name-1			\
 	test-output-name-1			\
@@ -260,6 +271,138 @@ test-language-106: $(srcdir)/test-language-106.in Makefile
 	}
 EXTRA_DIST += test-language-106.in
 CLEANFILES += test-language-106
+
+test-language-107: $(srcdir)/test-language-107.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-107.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-107.in
+CLEANFILES += test-language-107
+
+test-language-108: $(srcdir)/test-language-108.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-108.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-108.in
+CLEANFILES += test-language-108
+
+test-language-109: $(srcdir)/test-language-109.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-109.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-109.in
+CLEANFILES += test-language-109
+
+test-language-110: $(srcdir)/test-language-110.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-110.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-110.in
+CLEANFILES += test-language-110
+
+test-language-111: $(srcdir)/test-language-111.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-111.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-111.in
+CLEANFILES += test-language-111
+
+test-language-112: $(srcdir)/test-language-112.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-112.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-112.in
+CLEANFILES += test-language-112
+
+test-language-113: $(srcdir)/test-language-113.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-113.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-113.in
+CLEANFILES += test-language-113
+
+test-language-114: $(srcdir)/test-language-114.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-114.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-114.in
+CLEANFILES += test-language-114
+
+test-language-115: $(srcdir)/test-language-115.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-115.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-115.in
+CLEANFILES += test-language-115
+
+test-language-116: $(srcdir)/test-language-116.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-116.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-116.in
+CLEANFILES += test-language-116
+
+test-language-117: $(srcdir)/test-language-117.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-language-117.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-language-117.in
+CLEANFILES += test-language-117
 
 test-language-1: $(srcdir)/test-language-1.in Makefile
 	( rm -f $@ $@.tmp && \

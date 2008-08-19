@@ -147,6 +147,10 @@ stmt: mainmenu_stmt
 {
     drule("stmt");
 }
+    | menu_stmt
+{
+    drule("stmt");
+}
     ;
 
 mainmenu_stmt: 'T_MAINMENU' words newlines
@@ -186,6 +190,96 @@ word_quote: 'T_WORD_QUOTE'
     drule("word_quote");
 }
           ;
+
+menu_stmt: menu_entry 'T_ENDMENU' newlines
+{
+    drule("menu_stmt");
+}
+         | menu_entry menu_block_list 'T_ENDMENU' newlines
+{
+    drule("menu_stmt");
+}
+         ;
+
+menu_entry: menu
+{
+    drule("menu_entry");
+}
+          | menu depends_list
+{
+    drule("menu_entry");
+}
+          ;
+
+menu: 'T_MENU' words newlines
+{
+    drule("menu");
+}
+    ;
+
+menu_block_list: menu_block
+{
+    drule("menu_block_list");
+}
+               | menu_block menu_block_list
+               ;
+
+menu_block: menu_stmt
+{
+    drule("menu_block");
+}
+          ;
+
+depends_list: depends
+{
+    drule("depends_list");
+}
+            | depends depends_list
+            ;
+
+depends: 'T_DEPENDS' 'T_ON' expr newlines
+{
+    drule("depends");
+}
+       | 'T_DEPENDS' expr newlines
+{
+    drule("depends");
+}
+       | 'T_REQUIRES' expr newlines
+{
+    drule("depends");
+}
+       ;
+
+expr: words
+{
+    drule("expr");
+}
+    | words 'T_EQUAL' words
+{
+    drule("expr");
+}
+    | words 'T_UNEQUAL' words
+{
+    drule("expr");
+}
+    | 'T_OPEN_PAREN' expr 'T_CLOSE_PAREN'
+{
+    drule("expr");
+}
+    | 'T_NOT' expr
+{
+    drule("expr");
+}
+    | expr 'T_OR' expr
+{
+    drule("expr");
+}
+    | expr 'T_AND' expr
+{
+    drule("expr");
+}
+    ;
 
 %%
 
