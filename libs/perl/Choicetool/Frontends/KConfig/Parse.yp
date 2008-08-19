@@ -151,6 +151,10 @@ stmt: mainmenu_stmt
 {
     drule("stmt");
 }
+    | choice_stmt
+{
+    drule("menu_block");
+}
     ;
 
 mainmenu_stmt: 'T_MAINMENU' words newlines
@@ -228,6 +232,10 @@ menu_block: menu_stmt
 {
     drule("menu_block");
 }
+          | choice_stmt
+{
+    drule("menu_block");
+}
           ;
 
 depends_list: depends
@@ -278,6 +286,105 @@ expr: words
     | expr 'T_AND' expr
 {
     drule("expr");
+}
+    ;
+
+choice_stmt: choice_entry 'T_ENDCHOICE' newlines
+{
+    drule("choice_stmt");
+}
+           ;
+
+choice_entry: 'T_CHOICE' newlines
+{
+    drule("choice_entry");
+}
+            | 'T_CHOICE' newlines choice_options_block_list
+{
+    drule("choice_entry");
+}
+            ;
+
+choice_options_block_list: choice_options_block
+{
+    drule("choice_options_block_list");
+}
+                         | choice_options_block choice_options_block_list
+                         ;
+
+choice_options_block: choice_option
+{
+    drule("choice_options_block");
+}
+                    | depends
+{
+    drule("choice_options_block");
+}
+                    | help
+{
+    drule("choice_options_block");
+}
+                    ;
+
+choice_option: 'T_PROMPT' words newlines
+{
+    drule("choice_option");
+}
+             | 'T_PROMPT' words 'T_IF' expr newlines
+{
+    drule("choice_option");
+}
+             | type_definition words 'T_IF' expr newlines
+{
+    drule("config_option");
+}
+             | type_definition words newlines
+{
+    drule("choice_option");
+}
+             | type_definition newlines
+{
+    drule("choice_option");
+}
+             | 'T_OPTIONAL' newlines
+{
+    drule("choice_option");
+}
+             | 'T_DEFAULT' word newlines
+{
+    drule("choice_option");
+}
+             | 'T_DEFAULT' word 'T_IF' expr newlines
+{
+    drule("choice_option");
+}
+             ;
+
+type_definition: 'T_BOOL'
+{
+    drule("type_definition");
+}
+               | 'T_TRISTATE'
+{
+    drule("type_definition");
+}
+               | 'T_STRING'
+{
+    drule("type_definition");
+}
+               | 'T_HEX'
+{
+    drule("type_definition");
+}
+               | 'T_INT'
+{
+    drule("type_definition");
+}
+               ;
+
+help: 'T_HELP' newlines 'T_HELPTEXT' newlines
+{
+    drule("help");
 }
     ;
 
@@ -351,6 +458,10 @@ sub parse_help ($$)
 
     $$string_ref =~ s/^\s+//;
     $$string_ref =~ s/\s+$//;
+
+    # XXX FIX ME:
+    # A weak solution... Review this sub as soon as possible.
+    $$stream_ref = "\n" . $$stream_ref;
 
     return 1;
 }
