@@ -265,9 +265,9 @@ $output_string = "";
 $output_string = $output_string . "m4_include(\`choicetool.m4')\n";
 
 # Then we can start using our macros
-$output_string = $output_string . "_CT_HEADER([])\n";
+$output_string = $output_string . "CT_HEADER([])\n";
 $output_string = $output_string . $data{TREE}->m4ify("");
-$output_string = $output_string . "_CT_FOOTER([])\n";
+$output_string = $output_string . "CT_FOOTER([])\n";
 
 #
 # Write output file at last
