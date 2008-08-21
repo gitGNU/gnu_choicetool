@@ -155,6 +155,10 @@ stmt: mainmenu_stmt
 {
     drule("menu_block");
 }
+    | common_stmt
+{
+    drule("menu_block");
+}
     ;
 
 mainmenu_stmt: 'T_MAINMENU' words newlines
@@ -236,6 +240,10 @@ menu_block: menu_stmt
 {
     drule("menu_block");
 }
+          | common_stmt
+{
+    drule("menu_block");
+}
           ;
 
 depends_list: depends
@@ -290,6 +298,10 @@ expr: words
     ;
 
 choice_stmt: choice_entry 'T_ENDCHOICE' newlines
+{
+    drule("choice_stmt");
+}
+           | choice_entry choice_block_list 'T_ENDCHOICE' newlines
 {
     drule("choice_stmt");
 }
@@ -387,6 +399,232 @@ help: 'T_HELP' newlines 'T_HELPTEXT' newlines
     drule("help");
 }
     ;
+
+choice_block_list: common_stmt
+{
+    drule("choice_block_list");
+}
+                 | common_stmt choice_block_list
+                 ;
+
+common_stmt: config_stmt
+{
+    drule("common_stmt");
+}
+           | if_stmt
+{
+    drule("common_stmt");
+}
+           | comment_stmt
+{
+    drule("common_stmt");
+}
+           | menuconfig_stmt
+{
+    drule("common_stmt");
+}
+           ;
+
+config_stmt: config_entry
+{
+    drule("config_stmt");
+}
+           | config_entry config_options_block_list
+{
+    drule("config_stmt");
+}
+           ;
+
+config_entry: 'T_CONFIG' word newlines
+{
+    drule("config_entry");
+}
+            ;
+
+config_options_block_list: config_options_block
+{
+    drule("config_options_block_list");
+}
+                         | config_options_block config_options_block_list
+                         ;
+
+config_options_block: config_option
+{
+    drule("config_options_block");
+}
+                    | symbol_option
+{
+    drule("config_options_block");
+}
+                    | depends
+{
+    drule("config_options_block");
+}
+                    | help
+{
+    drule("config_options_block");
+}
+                    ;
+
+config_option: type_default_definition expr newlines
+{
+    drule("config_option");
+}
+             | type_default_definition expr 'T_IF' expr newlines
+{
+    drule("config_option");
+}
+             | type_definition words 'T_IF' expr newlines
+{
+    drule("config_option");
+}
+             | type_definition words newlines
+{
+    drule("config_option");
+}
+             | type_definition newlines
+{
+    drule("config_option");
+}
+             | 'T_PROMPT' words newlines
+{
+    drule("config_option");
+}
+             | 'T_PROMPT' words 'T_IF' expr newlines
+{
+    drule("config_option");
+}
+             | 'T_DEFAULT' expr newlines
+{
+    drule("config_option");
+}
+             | 'T_DEFAULT' expr 'T_IF' expr newlines
+{
+    drule("config_option");
+}
+             | 'T_SELECT' word newlines
+{
+    drule("config_option");
+}
+             | 'T_SELECT' word 'T_IF' expr newlines
+{
+    drule("config_option");
+}
+             | 'T_RANGE' word word newlines
+{
+    drule("config_option");
+}
+             | 'T_RANGE' word word 'T_IF' expr newlines
+{
+    drule("config_option");
+}
+             ;
+
+type_default_definition: 'T_DEF_TRISTATE'
+{
+    drule("type_default_definition");
+}
+                       | 'T_DEF_BOOL'
+{
+    drule("type_default_definition");
+}
+                       ;
+
+symbol_option: 'T_OPTION' newlines
+{
+    drule("symbol_option");
+}
+             | 'T_OPTION' symbol_options_block_list newlines
+{
+    drule("symbol_option");
+}
+             ;
+
+symbol_options_block_list: symbol_options_block
+{
+    drule("symbol_options_block_list");
+}
+                         | symbol_options_block symbol_options_block_list
+                         ;
+
+symbol_options_block: word
+{
+    drule("symbol_options_block");
+}
+                    | word 'T_EQUAL' words
+{
+    drule("symbol_options_block");
+}
+                    ;
+
+if_stmt: if_entry 'T_ENDIF' newlines
+{
+    drule("if_stmt");
+}
+       | if_entry if_block_list 'T_ENDIF' newlines
+{
+    drule("if_stmt");
+}
+       ;
+
+if_entry: 'T_IF' expr newlines
+{
+    drule("if_entry");
+}
+        ;
+
+if_block_list: if_block
+{
+    debug("if_block_list");
+}
+             | if_block if_block_list
+             ;
+
+if_block: common_stmt
+{
+    debug("if_block");
+}
+        | menu_stmt
+{
+    debug("if_block");
+}
+        | choice_stmt
+{
+    debug("if_block");
+}
+        ;
+
+comment_stmt: comment_entry
+{
+    drule("comment_stmt");
+}
+            | comment_entry depends_list
+{
+    drule("comment_stmt");
+}
+            ;
+
+comment_entry: 'T_COMMENT' words newlines
+{
+    drule("comment_entry");
+}
+             ;
+
+menuconfig_stmt: menuconfig_entry
+{
+    drule("menuconfig_stmt");
+}
+               | menuconfig_entry config_options_block_list
+{
+    drule("menuconfig_stmt");
+}
+               ;
+
+menuconfig_entry: 'T_MENUCONFIG' word newlines
+{
+    drule("menuconfig_stmt");
+}
+                ;
 
 %%
 
