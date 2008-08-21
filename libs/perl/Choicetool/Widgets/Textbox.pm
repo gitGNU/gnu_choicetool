@@ -75,7 +75,7 @@ sub m4ify_header ($$)
 
     return
 	$prefix .
-	"CT_WIDGETS_TEXTBOX_HEADER([" .
+	"CT_WIDGETS_TEXTBOX([" .
 	$self->id() .
 	"],[" .
 	$self->title() .
