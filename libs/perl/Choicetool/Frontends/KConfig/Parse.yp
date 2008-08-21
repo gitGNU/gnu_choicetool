@@ -236,9 +236,13 @@ config_option:
     my $node;
 
     if ($type_definition eq "bool") {
-	$node = Choicetool::Widgets::Checkbox->new($ui_id);
+	$node = Choicetool::Widgets::Checkbox->new($ui_id,
+						   "WE-NEED-A-TITLE",
+						   "WE-NEED-A-SYMBOL");
     } elsif (defined($type_definition)) {
-	$node = Choicetool::Widgets::Textbox->new($ui_id);
+	$node = Choicetool::Widgets::Textbox->new($ui_id,
+						  "WE-NEED-A-TITLE",
+						  "WE-NEED-A-SYMBOL");
     } else {
 	error("Type is not defined");
 	return 0;
@@ -272,9 +276,13 @@ config_option:
     my $node;
 
     if ($type_definition eq "bool") {
-	$node = Choicetool::Widgets::Checkbox->new($ui_id);
+	$node = Choicetool::Widgets::Checkbox->new($ui_id,
+						   "WE-NEED-A-TITLE",
+						   "WE-NEED-A-SYMBOL");
     } elsif (defined($type_definition)) {
-	$node = Choicetool::Widgets::Textbox->new($ui_id);
+	$node = Choicetool::Widgets::Textbox->new($ui_id,
+						  "WE-NEED-A-TITLE",
+						  "WE-NEED-A-SYMBOL");
     } else {
 	error("Type is not defined");
 	return 0;
