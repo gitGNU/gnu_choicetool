@@ -59,7 +59,7 @@ sub m4ify_header ($$)
     assert(defined($prefix));
     assert(defined($self->id()));
 
-    return $prefix . "CT_WIDGETS_TOOLTIP_HEADER([" . $self->id() . "])\n";
+    return $prefix . "CT_WIDGETS_TOOLTIP([" . $self->id() . "])\n";
 }
 
 sub m4ify_body ($$)
@@ -71,7 +71,7 @@ sub m4ify_body ($$)
     assert(defined($prefix));
     assert(defined($self->id()));
 
-    return $prefix . "CT_WIDGETS_TOOLTIP_BODY([" . $self->id() . "])\n";
+    return "";
 }
 
 sub m4ify_footer ($$)
@@ -83,7 +83,7 @@ sub m4ify_footer ($$)
     assert(defined($prefix));
     assert(defined($self->id()));
 
-    return $prefix . "CT_WIDGETS_TOOLTIP_FOOTER([" . $self->id() . "])\n";
+    return "";
 }
 
 1;
