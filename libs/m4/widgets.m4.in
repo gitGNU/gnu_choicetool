@@ -1,21 +1,20 @@
-#
-# Copyright (C) 2007, 2008 Francesco Salvestrini
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-#
-
+m4_dnl
+m4_dnl Copyright (C) 2007, 2008 Francesco Salvestrini
+m4_dnl
+m4_dnl This program is free software; you can redistribute it and/or modify
+m4_dnl it under the terms of the GNU General Public License as published by
+m4_dnl the Free Software Foundation; either version 2 of the License, or
+m4_dnl (at your option) any later version.
+m4_dnl
+m4_dnl This program is distributed in the hope that it will be useful,
+m4_dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
+m4_dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+m4_dnl GNU General Public License for more details.
+m4_dnl
+m4_dnl You should have received a copy of the GNU General Public License along
+m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
+m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+m4_dnl
 m4_define([CT_WIDGETS_CHECKBOX_HEADER],[
 # Header of checkbox widget $1
 ])
@@ -25,7 +24,6 @@ m4_define([CT_WIDGETS_CHECKBOX_BODY],[
 m4_define([CT_WIDGETS_CHECKBOX_FOOTER],[
 # Footer of checkbox widget $1
 ])
-
 m4_define([CT_WIDGETS_LABEL_HEADER],[
 # Header of label widget $1
 ])
@@ -35,7 +33,6 @@ m4_define([CT_WIDGETS_LABEL_BODY],[
 m4_define([CT_WIDGETS_LABEL_FOOTER],[
 # Footer of label widget $1
 ])
-
 m4_define([CT_WIDGETS_LISTBOX_HEADER],[
 # Header of listbox widget $1
 ])
@@ -45,7 +42,6 @@ m4_define([CT_WIDGETS_LISTBOX_BODY],[
 m4_define([CT_WIDGETS_LISTBOX_FOOTER],[
 # Footer of listbox widget $1
 ])
-
 m4_define([CT_WIDGETS_TOOLTIP_HEADER],[
 # Header of tooltip widget $1
 ])
@@ -55,13 +51,12 @@ m4_define([CT_WIDGETS_TOOLTIP_BODY],[
 m4_define([CT_WIDGETS_TOOLTIP_FOOTER],[
 # Footer of tooltip widget $1
 ])
-
-#
-# CT_WIDGETS_WINDOW
-#
-# $1 -> id
-# $2 -> message
-#
+m4_dnl
+m4_dnl CT_WIDGETS_WINDOW
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl $2 -> message
+m4_dnl
 m4_define([CT_WIDGETS_WINDOW],[
 # Widget window id $1
 
@@ -72,37 +67,34 @@ m4_define([CT_WIDGETS_WINDOW],[
 
 TITLE="--backtitle '$2'"
 ])
-
-#
-# CT_WIDGETS_TEXTBOX
-#
-# $1 -> id
-# $2 -> message
-#
+m4_dnl
+m4_dnl CT_WIDGETS_TEXTBOX
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl $2 -> message
+m4_dnl
 m4_define([CT_WIDGETS_TEXTBOX],[
 # Widget textbox id $1
 $DIALOG $TITLE --msgbox "$2" 0 0
 ])
-
-#
-# CT_WIDGETS_MENU
-#
-# $1 -> id
-# $2 -> title
-# $3 -> body
-#
+m4_dnl
+m4_dnl CT_WIDGETS_MENU
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl $2 -> title
+m4_dnl $3 -> body
+m4_dnl
 m4_define([CT_WIDGETS_MENU],[
 # Widget menu id $1
 ])
-
-#
-# CT_WIDGETS_YESNO
-#
-# $1 -> id
-# $2 -> message
-# $3 -> yes case
-# $4 -> no case
-#
+m4_dnl
+m4_dnl CT_WIDGETS_YESNO
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl $2 -> message
+m4_dnl $3 -> yes case
+m4_dnl $4 -> no case
+m4_dnl
 m4_define([CT_WIDGETS_YESNO],[
 # Widget yesno id $1
 $DIALOG $TITLE --yesno "$2" 0 0
