@@ -93,8 +93,15 @@ sub m4ify_header ($$)
     assert(defined($self));
     assert(defined($prefix));
     assert(defined($self->id()));
+    assert(defined($self->title()));
 
-    return $prefix . "CT_WIDGETS_CHECKBOX_HEADER([" . $self->id() . "])\n";
+    return
+	$prefix .
+	"CT_WIDGETS_CHECKBOX([" .
+	$self->id() .
+	"],[" .
+	$self->title() .
+	"])\n";
 }
 
 sub m4ify_body ($$)
@@ -104,9 +111,8 @@ sub m4ify_body ($$)
 
     assert(defined($self));
     assert(defined($prefix));
-    assert(defined($self->id()));
 
-    return $prefix . "CT_WIDGETS_CHECKBOX_BODY([" . $self->id() . "])\n";
+    return "";
 }
 
 sub m4ify_footer ($$)
@@ -116,9 +122,8 @@ sub m4ify_footer ($$)
 
     assert(defined($self));
     assert(defined($prefix));
-    assert(defined($self->id()));
 
-    return $prefix . "CT_WIDGETS_CHECKBOX_FOOTER([" . $self->id() . "])\n";
+    return "";
 }
 
 1;
