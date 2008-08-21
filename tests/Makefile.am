@@ -80,12 +80,6 @@ FAIL_TESTS +=					\
 	test-language-13			\
 	test-language-14			\
 	test-language-15			\
-	test-language-18			\
-	test-language-19			\
-	test-language-20			\
-	test-language-21			\
-	test-language-22			\
-	test-language-24			\
 	test-language-106			\
 	test-language-112			\
 	test-language-113			\
@@ -142,7 +136,13 @@ SUCCESS_TESTS +=				\
 	test-language-9				\
 	test-language-16			\
 	test-language-17			\
+	test-language-18			\
+	test-language-19			\
+	test-language-20			\
+	test-language-21			\
+	test-language-22			\
 	test-language-23			\
+	test-language-24			\
 	test-language-101			\
 	test-language-102			\
 	test-language-103			\
