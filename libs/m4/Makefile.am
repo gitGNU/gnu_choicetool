@@ -27,6 +27,7 @@ m4libdir = $(pkgvlibsdir)/m4
 nodist_m4lib_DATA =				\
 	choicetool.m4				\
 	trace.m4				\
+	extensions.m4				\
 	miscellaneous.m4			\
 	header.m4				\
 	footer.m4				\
@@ -36,6 +37,7 @@ nodist_m4lib_DATA =				\
 EXTRA_DIST +=					\
 	choicetool.m4.in			\
 	trace.m4.in				\
+	extensions.m4.in			\
 	miscellanoues.m4.in			\
 	header.m4.in				\
 	footer.m4.in				\
@@ -57,6 +59,16 @@ choicetool.m4: Makefile $(srcdir)/choicetool.m4.in
 trace.m4: Makefile $(srcdir)/trace.m4.in
 	( rm -f $@ $@.tmp && \
 	  $(do_subst) < $(srcdir)/trace.m4.in > $@.tmp && \
+	  chmod -x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+	        rm -f $@ $@.tmp ; \
+	        exit 1 ; \
+	}
+
+extensions.m4: Makefile $(srcdir)/extensions.m4.in
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/extensions.m4.in > $@.tmp && \
 	  chmod -x $@.tmp && \
 	  chmod a-w $@.tmp && \
 	  mv -f $@.tmp $@ ) || { \

@@ -16,15 +16,18 @@ m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
-m4_changequote(`[',`]')
-m4_ifdef([__gnu__],[],[
-  m4_errprint(@PACKAGE_NAME@ requires GNU m4)
-  m4_m4exit(2)
+m4_define([m4_location],[__file__:__line__])
+
+m4_dnl
+m4_dnl m4_fatal(MSG, [EXIT-STATUS])
+m4_dnl
+m4_define([m4_fatal],[
+  m4_errprint(m4_location[: error: $1])
+  m4_exit(m4_ifelse([$2],, 1, [$2]))
 ])
-m4_include([extensions.m4])
-m4_include([trace.m4])
-m4_include([miscellaneous.m4])
-m4_include([header.m4])
-m4_include([footer.m4])
-m4_include([ui.m4])
-m4_include([widgets.m4])
+
+m4_define([m4_assert],[
+  m4_ifelse(m4_eval([$1]),0,[
+    m4_fatal([assertion failed: $1], [$2])
+  ])
+])
