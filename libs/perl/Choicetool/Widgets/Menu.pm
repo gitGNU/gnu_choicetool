@@ -125,6 +125,10 @@ sub m4ify_indent ($)
     return "  ";
 }
 
+#
+# M4 related methods
+#
+
 sub m4ify_header ($$)
 {
     my $self   = shift;
@@ -132,13 +136,15 @@ sub m4ify_header ($$)
 
     assert(defined($self));
     assert(defined($prefix));
-    assert(defined($self->{ID}));
-    assert(defined($self->{TITLE}));
+    assert(defined($self->id()));
+    assert(defined($self->title()));
 
     return
-	$prefix . "CT_WIDGETS_MENU_HEADER([". $self->id() . "],[" .
-	$self->{TITLE} .
-	"])\n";
+	$prefix .
+	"CT_WIDGETS_MENU([". $self->id() .
+	"],[" .
+	$self->title() .
+	"],[\n";
 }
 
 sub m4ify_body ($$)
@@ -148,10 +154,8 @@ sub m4ify_body ($$)
 
     assert(defined($self));
     assert(defined($prefix));
-    assert(defined($self->{ID}));
-    assert(defined($self->{TITLE}));
 
-    return $prefix . "CT_WIDGETS_MENU_BODY([" . $self->id() . "])\n";
+    return "";
 }
 
 sub m4ify_footer ($$)
@@ -161,9 +165,8 @@ sub m4ify_footer ($$)
 
     assert(defined($self));
     assert(defined($prefix));
-    assert(defined($self->{TITLE}));
 
-    return $prefix . "CT_WIDGETS_MENU_FOOTER([" . $self->id() . "])\n";
+    return $prefix . "])\n";
 }
 
 1;

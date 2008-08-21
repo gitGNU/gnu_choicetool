@@ -46,6 +46,23 @@ sub new ($)
     return bless($self, $class);
 }
 
+sub title {
+    my $self  = shift;
+    my $value = shift;
+
+    assert(defined($self));
+
+    if (defined($value)) {
+	$self->{TITLE} = $value;
+    }
+
+    return $self->{TITLE};
+}
+
+#
+# M4 related methods
+#
+
 sub m4ify_header ($$)
 {
     my $self   = shift;
@@ -54,8 +71,15 @@ sub m4ify_header ($$)
     assert(defined($self));
     assert(defined($prefix));
     assert(defined($self->id()));
+    assert(defined($self->title()));
 
-    return $prefix . "CT_WIDGETS_TEXTBOX_HEADER([" . $self->id() . "])\n";
+    return
+	$prefix .
+	"CT_WIDGETS_TEXTBOX_HEADER([" .
+	$self->id() .
+	"],[" .
+	$self->title() .
+	"])\n";
 }
 
 sub m4ify_body ($$)
@@ -65,9 +89,8 @@ sub m4ify_body ($$)
 
     assert(defined($self));
     assert(defined($prefix));
-    assert(defined($self->id()));
 
-    return $prefix . "CT_WIDGETS_TEXTBOX_BODY([" . $self->id() . "])\n";
+    return "";
 }
 
 sub m4ify_footer ($$)
@@ -77,9 +100,8 @@ sub m4ify_footer ($$)
 
     assert(defined($self));
     assert(defined($prefix));
-    assert(defined($self->id()));
 
-    return $prefix . "CT_WIDGETS_TEXTBOX_FOOTER([" . $self->id() . "])\n";
+    return "";
 }
 
 1;

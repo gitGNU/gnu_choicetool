@@ -59,6 +59,10 @@ sub symbol {
     return $self->{SYMBOL};
 }
 
+#
+# M4 related methods
+#
+
 sub m4ify_header ($$)
 {
     my $self   = shift;

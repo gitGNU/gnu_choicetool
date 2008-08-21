@@ -46,6 +46,10 @@ sub new ($)
     return bless($self, $class);
 }
 
+#
+# M4 related methods
+#
+
 sub m4ify_header ($$)
 {
     my $self   = shift;

@@ -17,13 +17,11 @@ m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
 m4_define([CT_FOOTER],[
-CT_WIDGETS_YESNO_HEADER([0])
-CT_WIDGETS_YESNO_BODY([0],[Do you want to save current configuration ?],[
-  CT_MSG_NOTICE([Configuration saved to default file])
+CT_WIDGETS_YESNO([0],[Do you want to save current configuration ?],[
+  CT_MSG_NOTICE([Configuration saved to \`$CT_FILE'])
 ],[
   CT_MSG_NOTICE([Configuration not saved])
 ])
-CT_WIDGETS_YESNO_FOOTER([0])
 
 #
 # That's all folks ...
