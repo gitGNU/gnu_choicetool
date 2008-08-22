@@ -3,9 +3,10 @@ Joe Orton:
 	we have adopted.
 
 autotools people:
-	Some (all) Makefile.am ideas, targets, hints, tips, tricks ... some
-	package configuration have been stolen from automake and autoconf
-	packages ... so lot of thanks goes to all the autotools people.
+	Some (almost all) Makefile.am ideas, targets, hints, tips, tricks ...
+        some package configuration and m4sh/m4sugar macros have been stolen
+        from automake and autoconf packages ... so lot of thanks go to all the
+        autotools people.
 
 glibc people:
 	Some configure.ac code (plugins related) has been stolen from glibc
