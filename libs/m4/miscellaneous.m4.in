@@ -16,14 +16,26 @@ m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
+m4_define([_CT_IF],[
+  m4_ifval([$2$3],[
+    elif $1 ; then
+      m4_default([$2], [:])
+      m4_ifval([$3], [$0(m4_shiftn(2, $@))])
+  ],[
+    m4_ifval([$1],[
+    else
+      $1
+    ])
+  ])
+])
+
 m4_define([CT_IF],[
-if $1 ; then
-  :
-  $2
-else
-  :
-  $3
-fi
+  m4_ifval([$2$3],[
+    if $1; then
+      m4_default([$2], [:])
+      m4_ifval([$3], [_$0(m4_shiftn(2, $@))])
+    fi
+  ])
 ])
 
 m4_define([_CT_CASE],[
