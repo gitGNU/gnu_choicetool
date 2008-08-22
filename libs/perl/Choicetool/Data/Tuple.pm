@@ -18,7 +18,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-package Choicetool::Tuple;
+package Choicetool::Data::Tuple;
 
 use 5.8.0;
 
