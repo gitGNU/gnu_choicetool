@@ -29,7 +29,7 @@ nodist_m4lib_DATA =				\
 	trace.m4				\
 	debug.m4				\
 	extensions.m4				\
-	miscellaneous.m4			\
+	shell.m4				\
 	header.m4				\
 	footer.m4				\
 	ui.m4					\
@@ -40,7 +40,7 @@ EXTRA_DIST +=					\
 	trace.m4.in				\
 	debug.m4.in				\
 	extensions.m4.in			\
-	miscellanoues.m4.in			\
+	shell.m4.in				\
 	header.m4.in				\
 	footer.m4.in				\
 	ui.m4.in				\
@@ -88,9 +88,9 @@ extensions.m4: Makefile $(srcdir)/extensions.m4.in
 	        exit 1 ; \
 	}
 
-miscellaneous.m4: Makefile $(srcdir)/miscellaneous.m4.in
+shell.m4: Makefile $(srcdir)/shell.m4.in
 	( rm -f $@ $@.tmp && \
-	  $(do_subst) < $(srcdir)/miscellaneous.m4.in > $@.tmp && \
+	  $(do_subst) < $(srcdir)/shell.m4.in > $@.tmp && \
 	  chmod -x $@.tmp && \
 	  chmod a-w $@.tmp && \
 	  mv -f $@.tmp $@ ) || { \

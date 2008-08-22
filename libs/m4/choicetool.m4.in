@@ -23,7 +23,7 @@ m4_ifdef([__gnu__],[],[
 m4_include([debug.m4])
 m4_include([extensions.m4])
 m4_include([trace.m4])
-m4_include([miscellaneous.m4])
+m4_include([shell.m4])
 m4_include([header.m4])
 m4_include([footer.m4])
 m4_include([ui.m4])
