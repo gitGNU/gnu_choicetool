@@ -17,13 +17,13 @@ m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
 m4_define([CT_UI_WINDOW],[
-# ui window id $1
+# UI window id $1
 ])
 
 m4_define([CT_UI_MENU],[
-# ui menu id $1
+# UI menu id $1
 ])
 
 m4_define([CT_UI_MENU_ITEM],[
-# ui menu id $1
+# UI menu id $1
 ])
