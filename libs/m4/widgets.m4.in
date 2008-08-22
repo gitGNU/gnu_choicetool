@@ -15,42 +15,23 @@ m4_dnl You should have received a copy of the GNU General Public License along
 m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
-m4_define([CT_WIDGETS_CHECKBOX_HEADER],[
-# Header of checkbox widget $1
+
+m4_define([CT_WIDGETS_CHECKBOX],[
+# Widget checkbox id $1
 ])
-m4_define([CT_WIDGETS_CHECKBOX_BODY],[
-# Body of checkbox widget $1
+
+m4_define([CT_WIDGETS_LABEL],[
+# Widget label id $1
 ])
-m4_define([CT_WIDGETS_CHECKBOX_FOOTER],[
-# Footer of checkbox widget $1
+
+m4_define([CT_WIDGETS_LISTBOX],[
+# Widget listbox id $1
 ])
-m4_define([CT_WIDGETS_LABEL_HEADER],[
-# Header of label widget $1
+
+m4_define([CT_WIDGETS_TOOLTIP],[
+# Widget tooltip id $1
 ])
-m4_define([CT_WIDGETS_LABEL_BODY],[
-# Body of label widget $1
-])
-m4_define([CT_WIDGETS_LABEL_FOOTER],[
-# Footer of label widget $1
-])
-m4_define([CT_WIDGETS_LISTBOX_HEADER],[
-# Header of listbox widget $1
-])
-m4_define([CT_WIDGETS_LISTBOX_BODY],[
-# Body of listbox widget $1
-])
-m4_define([CT_WIDGETS_LISTBOX_FOOTER],[
-# Footer of listbox widget $1
-])
-m4_define([CT_WIDGETS_TOOLTIP_HEADER],[
-# Header of tooltip widget $1
-])
-m4_define([CT_WIDGETS_TOOLTIP_BODY],[
-# Body of tooltip widget $1
-])
-m4_define([CT_WIDGETS_TOOLTIP_FOOTER],[
-# Footer of tooltip widget $1
-])
+
 m4_dnl
 m4_dnl CT_WIDGETS_WINDOW
 m4_dnl
