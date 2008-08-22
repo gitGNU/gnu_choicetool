@@ -18,6 +18,9 @@ m4_dnl
 m4_define([CT_MSG_NOTICE],[
 echo "$CT_ME: $1"
 ])
+m4_define([CT_MSG_WARNING],[
+echo "$CT_ME: $1"
+])
 m4_define([CT_MSG_ERROR],[
 echo "$CT_ME: $1"
 ])
