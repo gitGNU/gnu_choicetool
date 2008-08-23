@@ -16,20 +16,20 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-AC_DEFUN([CT_SET_VARIABLE],[
-])
-
-AC_DEFUN([CT_GET_VARIABLE],[
-])
-
 AC_DEFUN([CT_USE_AT_YOUR_OWN_RISK_NOTICE],[
   AC_MSG_NOTICE([])
-  AC_MSG_NOTICE([ATTENTION:])
+  AC_MSG_NOTICE([  Your '$1' script has been built with @PACKAGE_NAME@ @PACKAGE_VERSION@.])
   AC_MSG_NOTICE([])
-  AC_MSG_NOTICE([  Your 'configure' script has been built with choicetool])
-  AC_MSG_NOTICE([  support. Choicetool is in its early development stages])
-  AC_MSG_NOTICE([  so you should use it with care.])
-  AC_MSG_NOTICE([  USE IT AT YOUR OWN RISK !!!.])
+  AC_MSG_NOTICE([  @PACKAGE_NAME@ is distributed in the hope that it will be useful,])
+  AC_MSG_NOTICE([  but WITHOUT ANY WARRANTY; without even the implied warranty of])
+  AC_MSG_NOTICE([  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the])
+  AC_MSG_NOTICE([  GNU General Public License for more details.])
+  AC_MSG_NOTICE([])
+  AC_MSG_NOTICE([  The `$1' script is free software, there is unlimited])
+  AC_MSG_NOTICE([  permission to copy, distribute and modify it])
+  AC_MSG_NOTICE([])
+  AC_MSG_NOTICE([  Please note that @PACKAGE_NAME@ and its produced scripts are in])
+  AC_MSG_NOTICE([  early development stage. USE THEM AT YOUR OWN RISK.])
   AC_MSG_NOTICE([])
 ])
 
@@ -39,6 +39,7 @@ AC_DEFUN([CT_INIT],[
   DIALOG=""
   AC_PATH_PROG([DIALOG],   [dialog],   [], [])
   AS_IF([test "$DIALOG" = ""],[
+    AC_MSG_WARN([Cannot find dialog, falling back to whiptail])
     AC_PATH_PROG([DIALOG], [whiptail], [], [])
   ])
   AS_IF([test "$DIALOG" = ""],[
@@ -47,7 +48,7 @@ AC_DEFUN([CT_INIT],[
   CT_DIALOG=$DIALOG
   AC_SUBST([CT_DIALOG])
 
-  CT_USE_AT_YOUR_OWN_RISK_NOTICE
+  CT_USE_AT_YOUR_OWN_RISK_NOTICE([$1])
 
   AC_CONFIG_FILES([choose:$1], [chmod +x choose])
 ])
