@@ -36,16 +36,15 @@ AC_DEFUN([CT_USE_AT_YOUR_OWN_RISK_NOTICE],[
 AC_DEFUN([CT_INIT],[
   AC_PREREQ(2.61)
 
-  DIALOG=""
-  AC_PATH_PROG([DIALOG],   [dialog],   [], [])
-  AS_IF([test "$DIALOG" = ""],[
+  CT_DIALOG=""
+  AC_PATH_PROG([CT_DIALOG],   [dialog],   [], [])
+  AS_IF([test "$CT_DIALOG" = ""],[
     AC_MSG_WARN([Cannot find dialog, falling back to whiptail])
-    AC_PATH_PROG([DIALOG], [whiptail], [], [])
+    AC_PATH_PROG([CT_DIALOG], [whiptail], [], [])
   ])
-  AS_IF([test "$DIALOG" = ""],[
+  AS_IF([test "$CT_DIALOG" = ""],[
     AC_MSG_ERROR([Cannot find a proper user interface])
   ])
-  CT_DIALOG=$DIALOG
   AC_SUBST([CT_DIALOG])
 
   CT_USE_AT_YOUR_OWN_RISK_NOTICE([$1])
