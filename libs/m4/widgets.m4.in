@@ -25,6 +25,16 @@ m4_define([CT_WIDGETS_LISTBOX],[
 ])
 
 m4_dnl
+m4_dnl CT_WIDGETS_TOOLTIP
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl $2 -> title
+m4_dnl
+m4_define([CT_WIDGETS_TOOLTIP],[
+# Widget tooltip id $1
+])
+
+m4_dnl
 m4_dnl CT_WIDGETS_CHECKBOX
 m4_dnl
 m4_dnl $1 -> id
@@ -33,16 +43,6 @@ m4_dnl $3 -> symbol
 m4_dnl
 m4_define([CT_WIDGETS_CHECKBOX],[
 # Widget checkbox id $1
-])
-
-m4_dnl
-m4_dnl CT_WIDGETS_TOOLTIP
-m4_dnl
-m4_dnl $1 -> id
-m4_dnl $2 -> title
-m4_dnl
-m4_define([CT_WIDGETS_TOOLTIP],[
-# Widget tooltip id $1
 ])
 
 m4_dnl
