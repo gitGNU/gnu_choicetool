@@ -42,6 +42,7 @@ use Choicetool::Widgets::Menu;
 use Choicetool::Widgets::Textbox;
 use Choicetool::Widgets::Tooltip;
 use Choicetool::Widgets::Window;
+
 use Choicetool::Binder;
 
 BEGIN {
@@ -516,7 +517,8 @@ help:
     $ui_id++;
 
     my $node;
-    $node = Choicetool::Widgets::Tooltip->new($ui_id);
+    $node = Choicetool::Widgets::Tooltip->new($ui_id,
+					      "WE-NEED-A-DESCRIPTION");
     assert(defined($node));
 
     $node->parent($parent);
@@ -627,6 +629,10 @@ menu:
     $_[0]->YYData->{DATA}[0] = \$node;
 
     assert(defined($word));
+    #
+    # XXX FIXME:
+    #    Better place all in the widget using the constructor, whenever possible
+    #
     $node->title($word);
 }
       newline

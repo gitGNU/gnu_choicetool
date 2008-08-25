@@ -16,10 +16,6 @@ m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 
-m4_define([CT_WIDGETS_CHECKBOX],[
-# Widget checkbox id $1
-])
-
 m4_define([CT_WIDGETS_LABEL],[
 # Widget label id $1
 ])
@@ -28,6 +24,23 @@ m4_define([CT_WIDGETS_LISTBOX],[
 # Widget listbox id $1
 ])
 
+m4_dnl
+m4_dnl CT_WIDGETS_CHECKBOX
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl $2 -> title
+m4_dnl $3 -> symbol
+m4_dnl
+m4_define([CT_WIDGETS_CHECKBOX],[
+# Widget checkbox id $1
+])
+
+m4_dnl
+m4_dnl CT_WIDGETS_TOOLTIP
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl $2 -> title
+m4_dnl
 m4_define([CT_WIDGETS_TOOLTIP],[
 # Widget tooltip id $1
 ])

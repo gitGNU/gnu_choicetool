@@ -94,6 +94,7 @@ sub m4ify_header ($$)
     assert(defined($prefix));
     assert(defined($self->id()));
     assert(defined($self->title()));
+    assert(defined($self->symbol()));
 
     return
 	$prefix .
@@ -101,6 +102,8 @@ sub m4ify_header ($$)
 	$self->id() .
 	"],[" .
 	$self->title() .
+	"],[" .
+	$self->symbol() .
 	"])\n";
 }
 

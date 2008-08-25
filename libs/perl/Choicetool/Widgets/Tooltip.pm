@@ -34,16 +34,36 @@ use Choicetool::Widgets::Widget;
 use vars qw(@ISA);
 @ISA = qw(Choicetool::Widgets::Widget);
 
-sub new ($)
+sub new ($$)
 {
     my $class = shift;
     my $id    = shift;
+    my $title = shift;
 
     assert(defined($class));
 
     my $self = $class->SUPER::new($id);
 
+    if (defined($title)) {
+	$self->{TITLE} = $title;
+    } else {
+	$self->{TITLE} = undef;
+    }
+
     return bless($self, $class);
+}
+
+sub title {
+    my $self  = shift;
+    my $value = shift;
+
+    assert(defined($self));
+
+    if (defined($value)) {
+	$self->{TITLE} = $value;
+    }
+
+    return $self->{TITLE};
 }
 
 #
@@ -58,8 +78,15 @@ sub m4ify_header ($$)
     assert(defined($self));
     assert(defined($prefix));
     assert(defined($self->id()));
+    assert(defined($self->title()));
 
-    return $prefix . "CT_WIDGETS_TOOLTIP([" . $self->id() . "])\n";
+    return
+	$prefix .
+	"CT_WIDGETS_TOOLTIP([" .
+	$self->id() .
+	"],[" .
+	$self->title() .
+	"])\n";
 }
 
 sub m4ify_body ($$)
