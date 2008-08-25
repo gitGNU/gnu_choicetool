@@ -704,22 +704,80 @@ sub parse_help ($$)
     return 1;
 }
 
+sub parse_quoted_text ($$$)
+{
+    my $stream_ref      = shift;
+    my $quoted_text_ref = shift;
+    my $quoting_char    = shift;
+
+    assert(defined($stream_ref));
+    assert(defined($quoted_text_ref));
+    assert(defined($quoting_char));
+
+    if (($$stream_ref eq "")                ||
+	((length($$stream_ref) == 1)        && 
+	 ($$stream_ref ne "$quoting_char"))) {
+	error("Multiline quoted string is not supported");
+	return 0;
+    }
+
+    $$stream_ref      =~ s/^([^\n]+)//;
+    $$quoted_text_ref = "";
+
+    my $string = $1;
+
+    while ($string ne "") {
+	$string =~ s/^([^$quoting_char]+)//;
+
+	if ((!defined($1)) && ($string eq "$quoting_char")) {
+	    return 1;
+	}
+	my $tmp = $1;
+	$string =~ s/^($quoting_char)//;
+
+	if (!defined($1)) {
+	    error("Multiline quoted string is not supported");
+	    return 0;
+	}
+
+	$tmp       =~ /(.)$/;
+	my $p_char = $1;
+
+	if ($p_char eq "\\") {
+
+	    if ($string eq "") {
+		error("Multiline quoted string is not supported");
+		return 0;
+	    }
+	    $$quoted_text_ref = $quoted_text_ref .
+		                $tmp             .
+				$quoting_char;
+	    next;
+	}
+
+	$$quoted_text_ref = $$quoted_text_ref . $tmp;
+	$string           =~ s/^[ \t]*//;
+	$$stream_ref      = $string . $$stream_ref;
+
+	last;
+    }
+
+    return 1;
+}
+
 sub lexer_callback ($)
 {
     my $parser     = shift;
+    my $stream_ref = "";
     my $help_text  = "";
     my $buffer     = "";
 
     assert(defined($parser));
-
-    if ((!defined($parser->YYData->{INPUT})) ||
-	($parser->YYData->{INPUT} eq "")) {
-	return ('', undef);
-    }
+    $stream_ref = \$parser->YYData->{INPUT};
 
     if ($help_text_parse == 1) {
 
-	if (!parse_help(\$parser->YYData->{INPUT}, \$help_text)) {
+	if (!parse_help($stream_ref, \$help_text)) {
 	    error("Failed to parse help text");
 	    exit 1;
 	}
@@ -728,293 +786,190 @@ sub lexer_callback ($)
 	$help_start      = 0;
 
 	dtoken("T_HELPTEXT");
-#	debug("  Passing string: \`" . $help_text . "'");
 
 	return ('T_HELPTEXT', $help_text);
     }
 
-    while ($parser->YYData->{INPUT} ne "") {
-
-	my $char;
-
-	($char) = $parser->YYData->{INPUT} =~ /^(.)/;
-
-	if (defined($char)              &&
-	    ($char =~ /[\&\|\!\=\(\)]/)) {
-
-	    if ($buffer ne "") {
-		$parser->YYData->{INPUT} = " " . $parser->YYData->{INPUT};
-		next;
-	    }
-	}
-
-	if ($parser->YYData->{INPUT} =~ s/^\&\&//) {
-	    dtoken("T_AND");
-	    return ('T_AND', '');
-
-	} elsif ($parser->YYData->{INPUT} =~ s/^\|\|//) {
-	    dtoken("T_OR");
-	    return ('T_OR', '');
-
-	} elsif ($parser->YYData->{INPUT} =~ s/^\!\=//) {
-	    dtoken("T_UNEQUAL");
-	    return ('T_UNEQUAL', '');
-
-	} elsif ($parser->YYData->{INPUT} =~ s/^\!//) {
-	    dtoken("T_NOT");
-	    return ('T_NOT', '');
-
-	} elsif ($parser->YYData->{INPUT} =~ s/^\=//) {
-	    dtoken("T_EQUAL");
-	    return ('T_EQUAL', '');
-
-	} elsif ($parser->YYData->{INPUT} =~ s/^\)//) {
-	    dtoken("T_CLOSE_PAREN");
-	    return ('T_CLOSE_PAREN', '');
-
-	} elsif ($parser->YYData->{INPUT} =~ s/^\(//) {
-	    dtoken("T_OPEN_PAREN");
-	    return ('T_OPEN_PAREN', '');
-
-	} else {
-
-	}
-
-	$char = substr($parser->YYData->{INPUT}, 0, 1, "");
-
-	if ($char eq "\n") {
-
-	    if ($buffer ne "") {
-		$parser->YYData->{INPUT} = $char . $parser->YYData->{INPUT};
-
-	    } else {
-		dtoken("T_EOL");
-
-		if ($help_start == 1) {
-		    $help_text_parse = 1;
-		} else {
-		    # Remove useless white spaces
-		    $parser->YYData->{INPUT} =~ s/^[ \t]*//;
-		}
-
-		$lineno++;
-
-		return ('T_EOL', '');
-	    }
-	}
-
-	if ($char eq "#") {
-	    # Handling comments
-
-	    $parser->YYData->{INPUT} =~ s/^[^\n]*//;
-	    next;
-	}
-
-	if (($char =~ /(\")/) ||
-	    ($char =~ /(\')/)) {
-	    my $quoted_char = $1;
-	    assert(defined($quoted_char));
-
-	    my $curr_char;
-	    my $last_char;
-
-	    $buffer = "";
-
-	    while ($parser->YYData->{INPUT} ne "") {
-		$curr_char = substr($parser->YYData->{INPUT}, 0, 1, "");
-
-		if ($curr_char =~ /\n/) {
-		    error("Multiline quoted strings are not supported");
-		    return 0;
-		}
-
-		if (length($buffer) > 0) {
-		    $buffer    =~ /(.)$/;
-		    $last_char = $1;
-		}
-
-		if ($curr_char eq $quoted_char) {
-
-		    if (((defined($last_char)) && ($last_char !~ /\\/)) ||
-			(!defined($last_char))) {
-
-			dtoken("T_WORD_QUOTE");
-#			debug("  Passing string: \`" . $buffer . "'");
-
-			return ('T_WORD_QUOTE', $buffer);
-		    }
-
-		}
-
-		if (defined($buffer)) {
-		    $buffer = $buffer . $curr_char;
-		} else {
-		    $buffer = $curr_char;
-		}
-	    }
-	}
-
-	if ($char =~ /[ \t\n]+/) {
-
-	    if ($help_text_parse == 0) {
-		# Remove useless white spaces
-		$parser->YYData->{INPUT} =~ s/^[ \t]*//;
-	    }
-
-	    if ($buffer eq "") {
-		next;
-	    }
-
-	    if ($buffer eq "def_tristate") {
-		dtoken("T_DEF_TRISTATE");
-		return ('T_DEF_TRISTATE', '');
-
-	    } elsif ($buffer eq "menuconfig") {
-		dtoken("T_MENUCONFIG");
-		return ('T_MENUCONFIG', '');
-
-	    } elsif (($buffer eq "def_boolean") ||
-		     ($buffer eq "def_bool"))    {
-		dtoken("T_DEF_BOOL");
-		return ('T_DEF_BOOL', '');
-
-	    } elsif ($buffer eq "endchoice") {
-		dtoken("T_ENDCHOICE");
-		return ('T_ENDCHOICE', '');
-
-	    } elsif ($buffer eq "mainmenu") {
-		dtoken("T_MAINMENU");
-		return ('T_MAINMENU', '');
-
-	    } elsif ($buffer eq "requires") {
-		dtoken("T_REQUIRES");
-		return ('T_REQUIRES', '');
-
-	    } elsif ($buffer eq "optional") {
-		dtoken("T_OPTIONAL");
-		return ('T_OPTIONAL', '');
-
-	    } elsif ($buffer eq "tristate") {
-		dtoken("T_TRISTATE");
-		return ('T_TRISTATE', '');
-
-	    } elsif ($buffer eq "endmenu") {
-		dtoken("T_ENDMENU");
-		return ('T_ENDMENU', '');
-
-	    } elsif ($buffer eq "comment") {
-		dtoken("T_COMMENT");
-		return ('T_COMMENT', '');
-
-	    } elsif ($buffer eq "depends") {
-		dtoken("T_DEPENDS");
-		return ('T_DEPENDS', '');
-
-	    } elsif ($buffer eq "default") {
-		dtoken("T_DEFAULT");
-		return ('T_DEFAULT', '');
-
-	    } elsif ($buffer eq "select") {
-		dtoken("T_SELECT");
-		return ('T_SELECT', '');
-
-	    } elsif ($buffer eq "config") {
-		dtoken("T_CONFIG");
-		return ('T_CONFIG', '');
-
-	    } elsif ($buffer =~ "string") {
-		dtoken("T_STRING");
-		return ('T_STRING', '');
-
-	    } elsif ($buffer =~ "choice") {
-		dtoken("T_CHOICE");
-		return ('T_CHOICE', '');
-
-	    } elsif ($buffer eq "option") {
-		dtoken("T_OPTION");
-		return ('T_OPTION', '');
-
-	    } elsif ($buffer eq "prompt") {
-		dtoken("T_PROMPT");
-		return ('T_PROMPT', '');
-
-	    } elsif ($buffer eq "endif") {
-		dtoken("T_ENDIF");
-		return ('T_ENDIF', '');
-
-	    } elsif ($buffer eq "range") {
-		dtoken("T_RANGE");
-		return ('T_RANGE', '');
-
-	    } elsif ($buffer eq "menu") {
-		dtoken("T_MENU");
-		return ('T_MENU', '');
-
-	    } elsif (($buffer eq "boolean") ||
-		     ($buffer eq "bool"))    {
-		dtoken("T_BOOL");
-		return ('T_BOOL', '');
-
-	    } elsif ($buffer eq "hex") {
-		dtoken("T_HEX");
-		return ('T_HEX', '');
-
-	    } elsif ($buffer eq "int") {
-		dtoken("T_INT");
-		return ('T_INT', '');
-
-	    } elsif ($buffer eq "if") {
-		dtoken("T_IF");
-		return ('T_IF', '');
-
-	    } elsif ($buffer eq "on") {
-		dtoken("T_ON");
-		return ('T_ON', '');
-
-	    } elsif (($buffer eq "help")        ||
-		     ($buffer eq "---help---"))  {
-		dtoken("T_HELP");
-
-		$help_start = 1;
-		return ('T_HELP', '');
-
-	    } elsif ($buffer eq "---") {
-
-		if ($parser->YYData->{INPUT} =~
-		    s/^[ \t]*help[ \t]*\-\-\-//) {
-		    $help_start = 1;
-
-		    return ('T_HELP', '');
-		}
-
-		error("Undefined lexer input \`" . $buffer .
-		      "' at line \`"             . $lineno .
-		      "'");
-		exit 1;
-
-	    } elsif (($buffer =~ /^[\-][0-9]+$/)                  ||
-		     ($buffer =~ /^([a-zA-Z0-9][a-zA-Z0-9_-]*)$/)) {
-		dtoken("T_WORD");
-#		debug("  Passing string: \`" . $buffer . "'");
-
-		return ('T_WORD', $buffer);
-
-	    } else {
-		error("Undefined lexer input \`" . $buffer .
-		      "' at line \`"             . $lineno .
-		      "'");
-		exit 1;
-	    }
-	}
-
-	if (defined($buffer)) {
-	    $buffer = $buffer . $char;
-	} else {
-	    $buffer = $char;
-	}
+    while ($$stream_ref =~ s/^\#[^\n]*//) {
+	# Cleaning comments
     }
 
-    bug("Unreacheable lexer code");
+    # Removing useless whitespaces
+    if ($help_start != 1) {
+	$$stream_ref =~ s/^[ \t]*//;
+    }
+
+    while ($$stream_ref =~ s/^([^ \t]+)([ \t]*)//) {
+	my $string;
+	my $spaces;
+
+	assert(defined($1));
+	$string = $1;
+
+	if (defined($2)) {
+	    $spaces = $2;
+	}
+
+	# Handling newlines
+	if ($string =~ s/^([^\n]+)//) {
+	    my $new_string = $1;
+
+	    if ($string ne "") {
+		$$stream_ref = $string                             .
+		               ((defined($spaces)) ? $spaces : "") .
+			       $$stream_ref;
+	    }
+	    $string = $new_string;
+	}
+
+	my $return_token;
+	my $return_text;
+
+	#
+	# Pay attention to the following if/substitution order,
+	# it weighs upon right token recognition. For example
+	# Don't put "bool" before "boolean" or the last will
+	# never be recognized.
+	#
+
+	if ($string =~ s/^\n//) {
+	    $return_token = "T_EOL";
+
+	    if ($help_start == 1) {
+		$help_text_parse = 1;
+	    }
+	} elsif ($string =~ s/^([\"\'])//) {
+	    my $text;
+
+	    $$stream_ref = (defined($string) ? $string : "") .
+		           (defined($spaces) ? $spaces : "") .
+			   $$stream_ref;
+	    $string      = "";
+
+	    if (!parse_quoted_text($stream_ref, \$text, $1)) {
+		exit 1;
+	    }
+	    $return_token = "T_WORD_QUOTE";
+	    $return_text  = $text;
+	} elsif ($string =~ s/^\)//) {
+	    $return_token = "T_CLOSE_PAREN";
+	} elsif ($string =~ s/^\(//) {
+	    $return_token = "T_OPEN_PAREN";
+	} elsif ($string =~ s/^\!\=//) {
+	    $return_token = "T_UNEQUAL";
+	} elsif ($string =~ s/^\&\&//) {
+	    $return_token = "T_AND";
+	} elsif ($string =~ s/^\|\|//) {
+	    $return_token = "T_OR";
+	} elsif ($string =~ s/^\!//) {
+	    $return_token = "T_NOT";
+	} elsif ($string =~ s/^\=//) {
+	    $return_token = "T_EQUAL";
+	} elsif ($string =~ s/^def_tristate$//) {
+	    $return_token = "T_DEF_TRISTATE";
+	} elsif ($string =~ s/^menuconfig$//) {
+	    $return_token = "T_MENUCONFIG";
+	} elsif (($string =~ s/^def_boolean$//) ||
+		 ($string =~ s/^def_bool$//))    {
+	    $return_token = "T_DEF_BOOL";
+	} elsif ($string =~ s/^endchoice$//) {
+	    $return_token = "T_ENDCHOICE";
+	} elsif ($string =~ s/^mainmenu$//) {
+	    $return_token = "T_MAINMENU";
+	} elsif ($string =~ s/^requires$//) {
+	    $return_token = "T_REQUIRES";
+	} elsif ($string =~ s/^optional$//) {
+	    $return_token = "T_OPTIONAL";
+	} elsif ($string =~ s/^tristate$//) {
+	    $return_token = "T_TRISTATE";
+	} elsif ($string =~ s/^endmenu$//) {
+	    $return_token = "T_ENDMENU";
+	} elsif ($string =~ s/^comment$//) {
+	    $return_token = "T_COMMENT";
+	} elsif ($string =~ s/^depends$//) {
+	    $return_token = "T_DEPENDS";
+	} elsif ($string =~ s/^default$//) {
+	    $return_token = "T_DEFAULT";
+	} elsif ($string =~ s/^select$//) {
+	    $return_token = "T_SELECT";
+	} elsif ($string =~ s/^config$//) {
+	    $return_token = "T_CONFIG";
+	} elsif ($string =~ s/^string$//) {
+	    $return_token = "T_STRING";
+	} elsif ($string =~ s/^choice$//) {
+	    $return_token = "T_CHOICE";
+	} elsif ($string =~ s/^option$//) {
+	    $return_token = "T_OPTION";
+	} elsif ($string =~ s/^prompt$//) {
+	    $return_token = "T_PROMPT";
+	} elsif ($string =~ s/^endif$//) {
+	    $return_token = "T_ENDIF";
+	} elsif ($string =~ s/^range$//) {
+	    $return_token = "T_RANGE";
+	} elsif ($string =~ s/^menu$//) {
+	    $return_token = "T_MENU";
+	} elsif (($string =~ s/^boolean$//) ||
+		 ($string =~ s/^bool$//))    {
+	    $return_token = "T_BOOL";
+	} elsif ($string =~ s/^hex$//) {
+	    $return_token = "T_HEX";
+	} elsif ($string =~ s/^int$//) {
+	    $return_token = "T_INT";
+	} elsif ($string =~ s/^if$//) {
+	    $return_token = "T_IF";
+	} elsif ($string =~ s/^on$//) {
+	    $return_token = "T_ON";
+	} elsif (($string =~ s/^help$//)        ||
+		 ($string =~ s/^---help---$//))  {
+	    $help_start  = 1;
+	    $return_token = "T_HELP";
+	} elsif ($string =~ s/^---$//) {
+	    $$stream_ref = (defined($string) ? $string : "") . 
+		           (defined($spaces) ? $spaces : "") .
+			   $$stream_ref;
+
+	    if ($$stream_ref =~ s/^[ \t]*help[ \t]*\-\-\-//) {
+		$help_start   = 1;
+		$return_token = "T_HELP";
+	    } else {
+		error("Undefined lexer input \`" . $string .
+		      "' at line \`"             . $lineno .
+		      "'");
+		exit 1;
+	    }
+	} elsif ($string =~ s/^([\-]?[A-Za-z0-9_]+)//) {
+	    $return_token = "T_WORD";
+
+	    assert(defined($1));
+	    $return_text  = $1;
+	} else {
+	    undef($return_token);
+	    undef($return_text);
+	}
+
+	if (!defined($return_token)) {
+	    error("Undefined lexer input \`" . $string .
+		  "' at line \`"             . $lineno .
+		  "'");
+	    exit 1;
+	}
+
+	if ($string ne "") {
+	    $$stream_ref = $string                           . 
+	                   (defined($spaces) ? $spaces : "") .
+			   $$stream_ref;
+	}
+
+	if (defined($spaces) && ($help_text_parse == 1)) {
+	    $$stream_ref = $spaces . $$stream_ref;
+	}
+
+	dtoken($return_token);
+
+	return ($return_token,
+		(defined($return_text)) ? $return_text : "");
+    }
+    return ('', undef);
 }
 
 sub syntax_error ($$)
@@ -1078,7 +1033,8 @@ sub parse ($$$)
 
     my $result;
     $result = $parser->YYParse(yylex   => \&lexer_callback,
-			       yyerror => \&error_callback);
+			       yyerror => \&error_callback,
+	                       yydebug => 0x00);
 
     if (($parser->YYNberr() > 0) || (!defined($result))) {
 	error("Cannot parse input file \`" . $input_filename . "'");
