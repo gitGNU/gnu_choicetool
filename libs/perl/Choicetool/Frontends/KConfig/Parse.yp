@@ -628,7 +628,7 @@ menuconfig_entry: 'T_MENUCONFIG' word newlines
 
 %%
 
-sub parse_help ($$)
+sub parse_help_text ($$)
 {
     my $stream_ref  = shift;
     my $string_ref  = shift;
@@ -637,10 +637,12 @@ sub parse_help ($$)
     assert(defined($$stream_ref));
     assert(defined($$string_ref));
 
-    while ($$stream_ref =~ s/^([^\n]*)\n//) {
+    while ($$stream_ref =~ s/^([^\n]*)(\n?)//) {
 	my $string = $1;
 
-	$lineno++;
+	if (defined($2)) {
+	    $lineno++;
+	}
 
 	if ($string =~ s/^([ \t]*)$//) {
 	    $$string_ref = $$string_ref . "\n";
@@ -652,12 +654,14 @@ sub parse_help ($$)
 	    my $tmp            = $ws;
 
 	    for (my $i = 0; $i < length($ws); $i++) {
-		my $token = substr($tmp, 0, 1, "");
+		$tmp =~ s/^(.)//;
 
-		if ($token =~ /\ /) {
+		if ($1 =~ /\ /) {
 		    $curr_ws_length++;
-		} elsif ($token =~ /\t/) {
+		} elsif ($1 =~ /\t/) {
 		    $curr_ws_length = ($curr_ws_length & ~7) + 8;
+		} else {
+		    bug("Unreachable!");
 		}
 	    }
 
@@ -666,7 +670,7 @@ sub parse_help ($$)
 	    }
 
 	    if ($curr_ws_length < $ws_length) {
-		$$stream_ref = $1 . $2 . "\n" . $$stream_ref;
+		$$stream_ref = $ws . $text . "\n" . $$stream_ref;
 
 		$lineno--;
 		last;
@@ -681,8 +685,7 @@ sub parse_help ($$)
 	} elsif ($string =~ s/^([^ \t])(.*)$//) {
 
 	    if (defined($2)) {
-		$$stream_ref = $2 . "\n" . $$stream_ref;
-		$$stream_ref = $1 . $$stream_ref;
+		$$stream_ref = $1 . $2 . "\n" . $$stream_ref;
 	    } else {
 		$$stream_ref = $1 . "\n". $$stream_ref;
 	    }
@@ -694,7 +697,6 @@ sub parse_help ($$)
 	}
     }
 
-    $$string_ref =~ s/^\s+//;
     $$string_ref =~ s/\s+$//;
 
     # XXX FIX ME:
@@ -777,7 +779,7 @@ sub lexer_callback ($)
 
     if ($help_text_parse == 1) {
 
-	if (!parse_help($stream_ref, \$help_text)) {
+	if (!parse_help_text($stream_ref, \$help_text)) {
 	    error("Failed to parse help text");
 	    exit 1;
 	}
