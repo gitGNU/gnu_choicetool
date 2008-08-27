@@ -40,7 +40,6 @@ use Choicetool::Widgets::Label;
 use Choicetool::Widgets::Listbox;
 use Choicetool::Widgets::Menu;
 use Choicetool::Widgets::Textbox;
-use Choicetool::Widgets::Tooltip;
 use Choicetool::Widgets::Window;
 
 use Choicetool::Binder;
