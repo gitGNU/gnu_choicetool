@@ -34,7 +34,7 @@ use Choicetool::Widgets::Widget;
 use vars qw(@ISA);
 @ISA = qw(Choicetool::Widgets::Widget);
 
-sub new ($)
+sub new ($$)
 {
     my $class = shift;
     my $id    = shift;

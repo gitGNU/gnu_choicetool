@@ -34,23 +34,14 @@ use Choicetool::Widgets::Widget;
 use vars qw(@ISA);
 @ISA = qw(Choicetool::Widgets::Widget);
 
-sub new ($$$)
+sub new ($$)
 {
-    my $class  = shift;
-    my $id     = shift;
-    my $title  = shift;
-    my $symbol = shift;
+    my $class = shift;
+    my $id    = shift;
 
     assert(defined($class));
 
     my $self = $class->SUPER::new($id);
-
-    if (defined($title)) {
-	$self->{TITLE} = $title;
-    }
-    if (defined($symbol)) {
-	$self->{SYMBOL} = $symbol;
-    }
 
     return bless($self, $class);
 }

@@ -29,8 +29,7 @@ dist_perllib_DATA =				\
 	Checkbox.pm				\
 	Label.pm				\
 	Listbox.pm				\
-	Textbox.pm				\
-	Tooltip.pm
+	Textbox.pm
 
 ##
 ## Maintainer related targets

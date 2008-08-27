@@ -33,7 +33,7 @@ use Choicetool::Widgets::Widget;
 use vars qw(@ISA);
 @ISA = qw(Choicetool::Widgets::Widget);
 
-sub new ($)
+sub new ($$)
 {
     my $class = shift;
     my $id    = shift;
@@ -41,12 +41,6 @@ sub new ($)
     assert(defined($class));
 
     my $self = $class->SUPER::new($id);
-
-    $self->{TYPE}    = undef;
-    $self->{TITLE}   = undef;
-    $self->{DEFAULT} = undef;
-    $self->{RANGE}   = undef;
-    $self->{HELP}    = undef;
 
     return bless($self, $class);
 }
