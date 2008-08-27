@@ -53,7 +53,6 @@ libs/m4/shell.m4
 libs/m4/header.m4
 libs/m4/footer.m4
 libs/m4/widgets.m4
-libs/m4/ui.m4
 
 libs/aclocal/choicetool-core.m4
 libs/aclocal/choicetool-guile.m4
