@@ -76,6 +76,17 @@ sub symbol {
 # M4 related methods
 #
 
+sub m4ify_body ($$)
+{
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+
+    return "";
+}
+
 sub m4ify_header ($$)
 {
     my $self   = shift;
@@ -93,17 +104,6 @@ sub m4ify_header ($$)
 	"],[" .
 	$self->title() .
 	"])\n";
-}
-
-sub m4ify_body ($$)
-{
-    my $self   = shift;
-    my $prefix = shift;
-
-    assert(defined($self));
-    assert(defined($prefix));
-
-    return "";
 }
 
 sub m4ify_footer ($$)

@@ -265,7 +265,9 @@ $output_string = $output_string . "m4_include(\`choicetool.m4')\n";
 
 # Then we can start using our macros
 $output_string = $output_string . "CT_HEADER([])\n";
-$output_string = $output_string . $data{TREE}->m4ify("");
+$output_string = $output_string . $data{TREE}->m4ify_linear("");
+$output_string = $output_string . "\n";
+$output_string = $output_string . $data{TREE}->m4ify_hierarchical("");
 $output_string = $output_string . "CT_FOOTER([])\n";
 
 #

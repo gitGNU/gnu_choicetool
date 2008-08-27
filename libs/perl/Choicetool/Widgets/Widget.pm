@@ -52,7 +52,21 @@ sub new ($$)
 #
 # Methods that MUST NOT be overridden by subclasses
 #
-sub m4ify ($)
+sub m4ify_linear ($$)
+{
+    my $self   = shift;
+    my $prefix = shift;
+    my $string;
+
+    assert(defined($self));
+    assert(defined($prefix));
+
+    $string = "";
+
+    return $string;
+}
+
+sub m4ify_hierarchical ($$)
 {
     my $self   = shift;
     my $prefix = shift;
@@ -66,10 +80,6 @@ sub m4ify ($)
     debug("Calling m4ify_header with prefix \`" . $prefix . "'");
     assert(defined($self->can('m4ify_header')));
     $string = $string . $self->m4ify_header($prefix);
-
-    debug("Calling m4ify_body with prefix \`" . $prefix . "'");
-    assert(defined($self->can('m4ify_body')));
-    $string = $string . $self->m4ify_body($prefix);
 
     for my $child_ref (@{$self->{CHILDREN}}) {
 	if (ref($child_ref)) {
@@ -114,18 +124,6 @@ sub m4ify_indent ($)
 #
 # Methods that MUST be overridden by subclasses
 #
-sub m4ify_header ($$)
-{
-    my $self   = shift;
-    my $prefix = shift;
-
-    assert(defined($self));
-    assert(defined($prefix));
-
-    #bug("No m4ify_header() method provided by subclass");
-    return "";
-}
-
 sub m4ify_body ($$)
 {
     my $self   = shift;
@@ -135,6 +133,18 @@ sub m4ify_body ($$)
     assert(defined($prefix));
 
     #bug("No m4ify_body() method provided by subclass");
+    return "";
+}
+
+sub m4ify_header ($$)
+{
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+
+    #bug("No m4ify_header() method provided by subclass");
     return "";
 }
 

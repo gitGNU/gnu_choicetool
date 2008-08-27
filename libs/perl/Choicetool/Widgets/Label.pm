@@ -50,6 +50,17 @@ sub new ($$)
 # M4 related methods
 #
 
+sub m4ify_body ($$)
+{
+    my $self   = shift;
+    my $prefix = shift;
+
+    assert(defined($self));
+    assert(defined($prefix));
+
+    return "";
+}
+
 sub m4ify_header ($$)
 {
     my $self   = shift;
@@ -62,18 +73,6 @@ sub m4ify_header ($$)
     return $prefix . "CT_WIDGETS_LABEL([" . $self->id() . "])\n";
 }
 
-sub m4ify_body ($$)
-{
-    my $self   = shift;
-    my $prefix = shift;
-
-    assert(defined($self));
-    assert(defined($prefix));
-    assert(defined($self->id()));
-
-    return "";
-}
-
 sub m4ify_footer ($$)
 {
     my $self   = shift;
@@ -81,7 +80,6 @@ sub m4ify_footer ($$)
 
     assert(defined($self));
     assert(defined($prefix));
-    assert(defined($self->id()));
 
     return "";
 }
