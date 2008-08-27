@@ -63,6 +63,32 @@ sub m4ify_linear ($$)
 
     $string = "";
 
+    debug("Calling m4ify_body with prefix \`" . $prefix . "'");
+    assert(defined($self->can('m4ify_body')));
+    $string = $string . $self->m4ify_body($prefix);
+
+    for my $child_ref (@{$self->{CHILDREN}}) {
+	if (ref($child_ref)) {
+	    my $child;
+	    $child = ${$child_ref};
+
+	    my $child_prefix;
+	    $child_prefix = $self->m4ify_indent();
+	    assert(defined($child_prefix));
+
+	    debug("Calling child m4ify_linear with prefix " .
+		  "\`" . $prefix . $child_prefix . "'");
+	    assert(defined($child->can('m4ify_linear')));
+	    $string = $string .
+		$child->m4ify_linear($prefix . $child_prefix);
+
+	} elsif (!defined($child_ref)) {
+	    debug("No child");
+	} else {
+	    bug("Unreacheable code");
+	}
+    }
+
     return $string;
 }
 
@@ -92,8 +118,9 @@ sub m4ify_hierarchical ($$)
 
 	    debug("Calling child m4ify with prefix " .
 		  "\`" . $prefix . $child_prefix . "'");
-	    assert(defined($child->can('m4ify')));
-	    $string = $string . $child->m4ify($prefix . $child_prefix);
+	    assert(defined($child->can('m4ify_hierarchical')));
+	    $string = $string .
+		$child->m4ify_hierarchical($prefix . $child_prefix);
 
 	} elsif (!defined($child_ref)) {
 	    debug("No child");
