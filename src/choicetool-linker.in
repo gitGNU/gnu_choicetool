@@ -128,8 +128,8 @@ my @options_list = (
     [ "n", "dry-run",  sub { $dry_run = 1;                 return 1; }, 0 ],
     [ "f", "force",    sub { $force_mode = 1;              return 1; }, 0 ],
     [ "W", "warnings", sub { warning_set($_[0]);           return 1; }, 1 ],
-    [ "d", "debug",    sub { debug_set(1);                 return 1; }, 0 ],
-    [ "v", "verbose",  sub { verbose_set(1);               return 1; }, 0 ],
+    [ "d", "debug",    sub { debug_inc();                  return 1; }, 0 ],
+    [ "v", "verbose",  sub { verbose_inc();                return 1; }, 0 ],
     [ "h", "help",     sub { help();             $run = 0; return 0; }, 0 ],
     [ "V", "version",  sub { version();          $run = 0; return 0; }, 0 ],
     );
@@ -247,11 +247,11 @@ debug("M4PATH is \`" . $M4PATH . "'");
 
 my $command;
 $command =
-    "M4PATH=" . $M4PATH . " @M4@ " .
-    "-P "                          .
-    (debug_get() ? "-s --debug=te " : "")     .
-    " - "                          .
-    "< " . $input_file . " "       .
+    "M4PATH=" . $M4PATH . " @M4@ "              .
+    "-P "                                       .
+    ((debug_get() > 1) ? "-s --debug=te " : "") .
+    " - "                                       .
+    "< " . $input_file . " "                    .
     "> " . $output_file;
 
 if (!shell_execute($command)) {
