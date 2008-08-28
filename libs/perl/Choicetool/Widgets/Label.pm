@@ -50,7 +50,7 @@ sub new ($$)
 # M4 related methods
 #
 
-sub m4ify_body ($$)
+sub m4ify_linear_body ($$)
 {
     my $self   = shift;
     my $prefix = shift;
@@ -66,7 +66,7 @@ sub m4ify_body ($$)
 	"])\n";
 }
 
-sub m4ify_header ($$)
+sub m4ify_hierarchical_header ($$)
 {
     my $self   = shift;
     my $prefix = shift;
@@ -82,7 +82,7 @@ sub m4ify_header ($$)
 	"])\n";
 }
 
-sub m4ify_footer ($$)
+sub m4ify_hierarchical_footer ($$)
 {
     my $self   = shift;
     my $prefix = shift;
