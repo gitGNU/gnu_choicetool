@@ -58,17 +58,17 @@ sub type {
     return $self->{TYPE};
 }
 
-sub title {
+sub label {
     my $self  = shift;
     my $value = shift;
 
     assert(defined($self));
 
     if (defined($value)) {
-	$self->{TITLE} = $value;
+	$self->{LABEL} = $value;
     }
 
-    return $self->{TITLE};
+    return $self->{LABEL};
 }
 
 sub default {
