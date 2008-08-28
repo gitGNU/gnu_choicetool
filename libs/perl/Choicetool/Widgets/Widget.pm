@@ -73,7 +73,7 @@ sub m4ify_linear ($$)
 	    $child = ${$child_ref};
 
 	    my $child_prefix;
-	    $child_prefix = $self->m4ify_indent();
+	    $child_prefix = ""; #$self->m4ify_indent();
 	    assert(defined($child_prefix));
 
 	    debug("Calling child m4ify_linear with prefix " .
