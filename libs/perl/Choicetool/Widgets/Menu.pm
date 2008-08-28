@@ -110,7 +110,7 @@ sub help {
     return $self->{HELP};
 }
 
-sub m4ify_indent ($)
+sub m4ify_hierarchical_indent ($)
 {
     my $self = shift;
 

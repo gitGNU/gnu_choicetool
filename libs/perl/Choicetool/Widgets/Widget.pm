@@ -73,7 +73,7 @@ sub m4ify_linear ($$)
 	    $child = ${$child_ref};
 
 	    my $child_prefix;
-	    $child_prefix = ""; #$self->m4ify_indent();
+	    $child_prefix = $self->m4ify_linear_indent();
 	    assert(defined($child_prefix));
 
 	    debug("Calling child m4ify_linear with prefix " .
@@ -113,7 +113,7 @@ sub m4ify_hierarchical ($$)
 	    $child = ${$child_ref};
 
 	    my $child_prefix;
-	    $child_prefix = $self->m4ify_indent();
+	    $child_prefix = $self->m4ify_hierarchical_indent();
 	    assert(defined($child_prefix));
 
 	    debug("Calling child m4ify with prefix " .
@@ -139,7 +139,16 @@ sub m4ify_hierarchical ($$)
 #
 # Methods that COULD be overridden by subclasses
 #
-sub m4ify_indent ($)
+sub m4ify_linear_indent ($)
+{
+    my $self = shift;
+
+    assert(defined($self));
+
+    return "";
+}
+
+sub m4ify_hierarchical_indent ($)
 {
     my $self = shift;
 
