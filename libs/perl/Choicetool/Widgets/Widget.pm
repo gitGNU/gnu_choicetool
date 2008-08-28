@@ -52,7 +52,7 @@ sub new ($$)
 #
 # Methods that MUST NOT be overridden by subclasses
 #
-sub m4ify_linear ($$)
+sub m4ify_linear_walk ($$)
 {
     my $self   = shift;
     my $prefix = shift;
@@ -64,8 +64,8 @@ sub m4ify_linear ($$)
     $string = "";
 
     debug("Calling m4ify_body with prefix \`" . $prefix . "'");
-    assert(defined($self->can('m4ify_body')));
-    $string = $string . $self->m4ify_body($prefix);
+    assert(defined($self->can('m4ify_linear_body')));
+    $string = $string . $self->m4ify_linear_body($prefix);
 
     for my $child_ref (@{$self->{CHILDREN}}) {
 	if (ref($child_ref)) {
@@ -76,11 +76,11 @@ sub m4ify_linear ($$)
 	    $child_prefix = $self->m4ify_linear_indent();
 	    assert(defined($child_prefix));
 
-	    debug("Calling child m4ify_linear with prefix " .
+	    debug("Calling child m4ify_linear_walk with prefix " .
 		  "\`" . $prefix . $child_prefix . "'");
-	    assert(defined($child->can('m4ify_linear')));
+	    assert(defined($child->can('m4ify_linear_walk')));
 	    $string = $string .
-		$child->m4ify_linear($prefix . $child_prefix);
+		$child->m4ify_linear_walk($prefix . $child_prefix);
 
 	} elsif (!defined($child_ref)) {
 	    debug("No child");
@@ -92,7 +92,7 @@ sub m4ify_linear ($$)
     return $string;
 }
 
-sub m4ify_hierarchical ($$)
+sub m4ify_hierarchical_walk ($$)
 {
     my $self   = shift;
     my $prefix = shift;
@@ -104,8 +104,8 @@ sub m4ify_hierarchical ($$)
     $string = "";
 
     debug("Calling m4ify_header with prefix \`" . $prefix . "'");
-    assert(defined($self->can('m4ify_header')));
-    $string = $string . $self->m4ify_header($prefix);
+    assert(defined($self->can('m4ify_hierarchical_header')));
+    $string = $string . $self->m4ify_hierarchical_header($prefix);
 
     for my $child_ref (@{$self->{CHILDREN}}) {
 	if (ref($child_ref)) {
@@ -118,9 +118,9 @@ sub m4ify_hierarchical ($$)
 
 	    debug("Calling child m4ify with prefix " .
 		  "\`" . $prefix . $child_prefix . "'");
-	    assert(defined($child->can('m4ify_hierarchical')));
+	    assert(defined($child->can('m4ify_hierarchical_walk')));
 	    $string = $string .
-		$child->m4ify_hierarchical($prefix . $child_prefix);
+		$child->m4ify_hierarchical_walk($prefix . $child_prefix);
 
 	} elsif (!defined($child_ref)) {
 	    debug("No child");
@@ -130,8 +130,8 @@ sub m4ify_hierarchical ($$)
     }
 
     debug("Calling m4ify_footer with prefix \`" . $prefix . "'");
-    assert(defined($self->can('m4ify_footer')));
-    $string = $string . $self->m4ify_footer($prefix);
+    assert(defined($self->can('m4ify_hierarchical_footer')));
+    $string = $string . $self->m4ify_hierarchical_footer($prefix);
 
     return $string;
 }
@@ -160,7 +160,7 @@ sub m4ify_hierarchical_indent ($)
 #
 # Methods that MUST be overridden by subclasses
 #
-sub m4ify_body ($$)
+sub m4ify_linear_body ($$)
 {
     my $self   = shift;
     my $prefix = shift;
@@ -168,11 +168,11 @@ sub m4ify_body ($$)
     assert(defined($self));
     assert(defined($prefix));
 
-    #bug("No m4ify_body() method provided by subclass");
+    #bug("No m4ify_linear_body() method provided by subclass");
     return "";
 }
 
-sub m4ify_header ($$)
+sub m4ify_hierarchical_header ($$)
 {
     my $self   = shift;
     my $prefix = shift;
@@ -180,11 +180,11 @@ sub m4ify_header ($$)
     assert(defined($self));
     assert(defined($prefix));
 
-    #bug("No m4ify_header() method provided by subclass");
+    #bug("No m4ify_hierarchical_header() method provided by subclass");
     return "";
 }
 
-sub m4ify_footer ($$)
+sub m4ify_hierarchical_footer ($$)
 {
     my $self   = shift;
     my $prefix = shift;
@@ -192,7 +192,7 @@ sub m4ify_footer ($$)
     assert(defined($self));
     assert(defined($prefix));
 
-    #bug("No m4ify_footer() method provided by subclass");
+    #bug("No m4ify_hierarchical_footer() method provided by subclass");
     return "";
 }
 
