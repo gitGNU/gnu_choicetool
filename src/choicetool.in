@@ -369,14 +369,14 @@ debug("Running mode is \`$running_mode'");
 
     my $flags = "";
 
-    if (verbose_get() != 0) {
-        $flags = "-v $flags";
+    for (my $count = verbose_get(); $count > 0; $count--) {
+	$flags = "-v $flags";
     }
-    if (debug_get() != 0) {
-        $flags = "-d $flags";
+    for (my $count = debug_get(); $count > 0; $count--) {
+	$flags = "-d $flags";
     }
     if ($force_mode != 0) {
-        $flags = "$flags -f";
+	$flags = "$flags -f";
     }
     $flags = "-W " . warning_get() . " " . $flags;
 
