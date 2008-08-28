@@ -16,8 +16,7 @@ m4_dnl with this program; if not, write to the Free Software Foundation, Inc.,
 m4_dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 m4_dnl
 m4_define([CT_FOOTER],[
-CT_UI_YESNO_DATA([0])
-CT_UI_YESNO_WIDGET([0],[Do you want to save current configuration ?],[
+CT_UI_YESNO([0],[Do you want to save current configuration ?],[
   CT_MSG_NOTICE([Configuration saved to \`$CT_FILE'])
 ],[
   CT_MSG_NOTICE([Configuration not saved])
