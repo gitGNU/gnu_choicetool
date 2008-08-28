@@ -57,17 +57,15 @@ BEGIN {
 #   remove global variables ASAP
 #
 
-my $parsed_string   = "";
-my $help_text_parse = 0;
-my $help_start      = 0;
-my $lineno          = 1;
-
-my $ui_id           = 0;
-my $rule_id         = 0;
-
 my $word;
 my $mainmenu;
 my $type_definition;
+
+my $parse_help_text = 0;
+my $help_start      = 0;
+my $lineno          = 1;
+my $widget_id       = 0;
+my $rule_id         = 0;
 
 sub dtoken ($)
 {
@@ -710,7 +708,7 @@ sub parse_quoted_text ($$$)
     assert(defined($quoting_char));
 
     if (($$stream_ref eq "")                ||
-	((length($$stream_ref) == 1)        && 
+	((length($$stream_ref) == 1)        &&
 	 ($$stream_ref ne "$quoting_char"))) {
 	error("Multiline quoted string is not supported");
 	return 0;
@@ -770,14 +768,14 @@ sub lexer_callback ($)
     assert(defined($parser));
     $stream_ref = \$parser->YYData->{INPUT};
 
-    if ($help_text_parse == 1) {
+    if ($parse_help_text == 1) {
 
 	if (!parse_help_text($stream_ref, \$help_text)) {
 	    error("Failed to parse help text");
 	    exit 1;
 	}
 
-	$help_text_parse = 0;
+	$parse_help_text = 0;
 	$help_start      = 0;
 
 	dtoken("T_HELPTEXT");
@@ -831,7 +829,7 @@ sub lexer_callback ($)
 	    $return_token = "T_EOL";
 
 	    if ($help_start == 1) {
-		$help_text_parse = 1;
+		$parse_help_text = 1;
 	    }
 	} elsif ($string =~ s/^([\"\'])//) {
 	    my $text;
@@ -919,7 +917,7 @@ sub lexer_callback ($)
 	    $help_start  = 1;
 	    $return_token = "T_HELP";
 	} elsif ($string =~ s/^---$//) {
-	    $$stream_ref = (defined($string) ? $string : "") . 
+	    $$stream_ref = (defined($string) ? $string : "") .
 		           (defined($spaces) ? $spaces : "") .
 			   $$stream_ref;
 
@@ -950,12 +948,12 @@ sub lexer_callback ($)
 	}
 
 	if ($string ne "") {
-	    $$stream_ref = $string                           . 
+	    $$stream_ref = $string                           .
 	                   (defined($spaces) ? $spaces : "") .
 			   $$stream_ref;
 	}
 
-	if (defined($spaces) && ($help_text_parse == 1)) {
+	if (defined($spaces) && ($parse_help_text == 1)) {
 	    $$stream_ref = $spaces . $$stream_ref;
 	}
 
