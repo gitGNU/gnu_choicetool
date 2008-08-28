@@ -142,13 +142,13 @@ sub m4ify_header ($$)
     assert(defined($self));
     assert(defined($prefix));
     assert(defined($self->id()));
-    assert(defined($self->title()));
+    assert(defined($self->label()));
 
     return
 	$prefix .
 	"CT_WIDGETS_MENU([". $self->id() .
 	"],[" .
-	$self->title() .
+	$self->label() .
 	"],[\n";
 }
 
