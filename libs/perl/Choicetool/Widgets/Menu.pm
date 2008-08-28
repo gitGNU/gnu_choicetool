@@ -130,8 +130,13 @@ sub m4ify_body ($$)
 
     assert(defined($self));
     assert(defined($prefix));
+    assert(defined($self->id()));
 
-    return "";
+    return
+	$prefix .
+	"CT_DATA_MENU([" .
+	$self->id() .
+	"])\n";
 }
 
 sub m4ify_header ($$)
@@ -146,7 +151,7 @@ sub m4ify_header ($$)
 
     return
 	$prefix .
-	"CT_WIDGETS_MENU([". $self->id() .
+	"CT_WIDGET_MENU([". $self->id() .
 	"],[" .
 	$self->label() .
 	"],[\n";

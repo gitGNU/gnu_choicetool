@@ -69,8 +69,16 @@ sub m4ify_body ($$)
 
     assert(defined($self));
     assert(defined($prefix));
+    assert(defined($self->id()));
+    assert(defined($self->title()));
 
-    return "";
+    return
+	$prefix .
+	"CT_WIDGET_WINDOW([" .
+	$self->id() .
+	"],[" .
+	$self->title() .
+	"])\n";
 }
 
 sub m4ify_header ($$)
@@ -81,14 +89,11 @@ sub m4ify_header ($$)
     assert(defined($self));
     assert(defined($prefix));
     assert(defined($self->id()));
-    assert(defined($self->title()));
 
     return
 	$prefix .
-	"CT_WIDGETS_WINDOW([" .
+	"CT_WIDGET_DATA([" .
 	$self->id() .
-	"],[" .
-	$self->title() .
 	"])\n";
 }
 

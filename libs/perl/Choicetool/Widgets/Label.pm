@@ -57,8 +57,13 @@ sub m4ify_body ($$)
 
     assert(defined($self));
     assert(defined($prefix));
+    assert(defined($self->id()));
 
-    return "";
+    return
+	$prefix .
+	"CT_DATA_LABEL([" .
+	$self->id() .
+	"])\n";
 }
 
 sub m4ify_header ($$)
@@ -70,7 +75,11 @@ sub m4ify_header ($$)
     assert(defined($prefix));
     assert(defined($self->id()));
 
-    return $prefix . "CT_WIDGETS_LABEL([" . $self->id() . "])\n";
+    return
+	$prefix .
+	"CT_WIDGET_LABEL([" .
+	$self->id() .
+	"])\n";
 }
 
 sub m4ify_footer ($$)

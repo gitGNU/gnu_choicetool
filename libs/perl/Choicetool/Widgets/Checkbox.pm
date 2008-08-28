@@ -83,8 +83,13 @@ sub m4ify_body ($$)
 
     assert(defined($self));
     assert(defined($prefix));
+    assert(defined($self->id()));
 
-    return "";
+    return
+	$prefix .
+	"CT_DATA_CHECKBOX([" .
+	$self->id() .
+	"])\n";
 }
 
 sub m4ify_header ($$)
@@ -100,7 +105,7 @@ sub m4ify_header ($$)
 
     return
 	$prefix .
-	"CT_WIDGETS_CHECKBOX([" .
+	"CT_WIDGET_CHECKBOX([" .
 	$self->id() .
 	"],[" .
 	$self->title() .

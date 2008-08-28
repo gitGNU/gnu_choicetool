@@ -83,8 +83,13 @@ sub m4ify_body ($$)
 
     assert(defined($self));
     assert(defined($prefix));
+    assert(defined($self->id()));
 
-    return "";
+    return
+	$prefix .
+	"CT_WIDGET_DATA([" .
+	$self->id() .
+	"])\n";
 }
 
 sub m4ify_header ($$)
@@ -99,7 +104,7 @@ sub m4ify_header ($$)
 
     return
 	$prefix .
-	"CT_WIDGETS_TEXTBOX([" .
+	"CT_WIDGET_TEXTBOX([" .
 	$self->id() .
 	"],[" .
 	$self->title() .
