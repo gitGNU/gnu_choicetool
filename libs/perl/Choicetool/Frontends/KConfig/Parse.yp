@@ -60,6 +60,7 @@ BEGIN {
 my $word;
 my $mainmenu;
 my $type_definition;
+my $parser_data;
 
 my $parse_help_text = 0;
 my $help_start      = 0;
@@ -992,11 +993,11 @@ sub error_callback ($)
 sub parse ($$$)
 {
     my $input_filename = shift;
-    my $ui_ref         = shift;
+    my $widget_ref     = shift;
     my $set_ref        = shift;
 
     assert(defined($input_filename));
-    assert(defined($ui_ref));
+    assert(defined($widget_ref));
     assert(defined($set_ref));
 
     debug("Parsing file \`" . $input_filename . "'");
@@ -1018,11 +1019,12 @@ sub parse ($$$)
     assert(defined($parser));
 
     $parser->YYData->{INPUT}   = $string;
-    $parser->YYData->{DATA}[0] = $ui_ref;
-    $parser->YYData->{DATA}[1] = $set_ref;
+    $parser_data               = \$parser->YYData->{DATA}[0];
 
-    $parser->YYData->{DATA}[2] = Choicetool::Data::Stack->new();
-    assert(defined($parser->YYData->{DATA}[2]));
+    ${$parser_data}->{WIDGET} = $widget_ref;
+
+    ${$parser_data}->{STACK}  = Choicetool::Data::Stack->new();
+    assert(defined(${$parser_data}->{STACK}));
 
     my $result;
     $result = $parser->YYParse(yylex   => \&lexer_callback,
@@ -1034,8 +1036,9 @@ sub parse ($$$)
 	return 0;
     }
 
-    # The input node must be a Tree root
-    assert(${$parser->YYData->{DATA}[0]}->is_root());
+    # Final checks
+    assert(${$$parser_data->{WIDGET}}->is_root());
+    assert(${$$parser_data->{STACK}}->is_empty());
 
     debug("Parsing completed successfully");
 
