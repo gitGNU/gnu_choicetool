@@ -32,7 +32,7 @@ nodist_m4lib_DATA =				\
 	shell.m4				\
 	header.m4				\
 	footer.m4				\
-	widgets.m4
+	ui.m4
 
 EXTRA_DIST +=					\
 	choicetool.m4.in			\
@@ -42,7 +42,7 @@ EXTRA_DIST +=					\
 	shell.m4.in				\
 	header.m4.in				\
 	footer.m4.in				\
-	widgets.m4.in
+	ui.m4.in
 
 CLEANFILES += $(nodist_m4lib_DATA)
 
@@ -116,9 +116,9 @@ footer.m4: Makefile $(srcdir)/footer.m4.in
 	        exit 1 ; \
 	}
 
-widgets.m4: Makefile $(srcdir)/widgets.m4.in
+ui.m4: Makefile $(srcdir)/ui.m4.in
 	( rm -f $@ $@.tmp && \
-	  $(do_subst) < $(srcdir)/widgets.m4.in > $@.tmp && \
+	  $(do_subst) < $(srcdir)/ui.m4.in > $@.tmp && \
 	  chmod -x $@.tmp && \
 	  chmod a-w $@.tmp && \
 	  mv -f $@.tmp $@ ) || { \
