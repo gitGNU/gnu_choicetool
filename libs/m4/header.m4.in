@@ -48,7 +48,7 @@ m4_define([CT_HEADER],[
 
 _CT_VARIABLES([])
 
-CT_WIDGETS_WINDOW([0],[ThisIsATest])
+CT_WIDGET_WINDOW([0],[ThisIsATest])
 
-CT_WIDGETS_TEXTBOX([0],[This configuration interface has been built using @PACKAGE_NAME@ @PACKAGE_VERSION@.\n\nPlease note that @PACKAGE_NAME@ is still under active development.\n\nThis interface is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
+CT_WIDGET_TEXTBOX([0],[This configuration interface has been built using @PACKAGE_NAME@ @PACKAGE_VERSION@.\n\nPlease note that @PACKAGE_NAME@ is still under active development.\n\nThis interface is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
 ])
