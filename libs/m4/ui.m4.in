@@ -23,52 +23,52 @@ m4_define([_WIDGET_REMARK],[
 # Widget for UI $1 id $2
 ])
 
-m4_define([CT_DATA_LABEL],[
+m4_define([CT_UI_LABEL_DATA],[
 _DATA_REMARK([label],[$1])
 ])
 
-m4_define([CT_WIDGET_LABEL],[
+m4_define([CT_UI_LABEL_WIDGET],[
 _WIDGET_REMARK([label],[$1])
 ])
 
 
-m4_define([CT_DATA_LISTBOX],[
+m4_define([CT_UI_LISTBOX_DATA],[
 _DATA_REMARK([listbox],[$1])
 ])
 
-m4_define([CT_WIDGET_LISTBOX],[
+m4_define([CT_UI_LISTBOX_WIDGET],[
 _WIDGET_REMARK([listbox],[$1])
 ])
 
 
 m4_dnl
-m4_dnl CT_DATA_CHECKBOX
+m4_dnl CT_UI_CHECKBOX_DATA
 m4_dnl
 m4_dnl $1 -> id
 m4_dnl
-m4_define([CT_DATA_CHECKBOX],[
+m4_define([CT_UI_CHECKBOX_DATA],[
 _DATA_REMARK([checkbox],[$1])
 ])
 
 m4_dnl
-m4_dnl CT_WIDGET_CHECKBOX
+m4_dnl CT_UI_CHECKBOX_WIDGET
 m4_dnl
 m4_dnl $1 -> id
 m4_dnl $2 -> title
 m4_dnl $3 -> symbol
 m4_dnl
-m4_define([CT_WIDGET_CHECKBOX],[
+m4_define([CT_UI_CHECKBOX_WIDGET],[
 _WIDGET_REMARK([checkbox],[$1])
 ])
 
 
 m4_dnl
-m4_dnl CT_DATA_WINDOW
+m4_dnl CT_UI_WINDOW_DATA
 m4_dnl
 m4_dnl $1 -> id
 m4_dnl $2 -> message
 m4_dnl
-m4_define([CT_DATA_WINDOW],[
+m4_define([CT_UI_WINDOW_DATA],[
 _DATA_REMARK([window],[$1])
 #XXXXXXXXXXXXXXXXX FIXME!!!!!!!!!!!!!!!!!!!!!!!!!!
 #XXXXXXXXXXXXXXXXX FIXME!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -79,75 +79,75 @@ TITLE="--backtitle '$2'"
 ])
 
 m4_dnl
-m4_dnl CT_WIDGET_WINDOW
+m4_dnl CT_UI_WINDOW_WIDGET
 m4_dnl
 m4_dnl $1 -> id
 m4_dnl
-m4_define([CT_WIDGET_WINDOW],[
+m4_define([CT_UI_WINDOW_WIDGET],[
 _WIDGET_REMARK([window],[$1])
 ])
 
 
 m4_dnl
-m4_dnl CT_DATA_TEXTBOX
+m4_dnl CT_UI_TEXTBOX_DATA
 m4_dnl
 m4_dnl $1 -> id
 m4_dnl
-m4_define([CT_DATA_TEXTBOX],[
+m4_define([CT_UI_TEXTBOX_DATA],[
 _DATA_REMARK([textbox],[$1])
 ])
 
 m4_dnl
-m4_dnl CT_WIDGET_TEXTBOX
+m4_dnl CT_UI_TEXTBOX_WIDGET
 m4_dnl
 m4_dnl $1 -> id
 m4_dnl $2 -> message
 m4_dnl
-m4_define([CT_WIDGET_TEXTBOX],[
+m4_define([CT_UI_TEXTBOX_WIDGET],[
 _WIDGET_REMARK([textbox],[$1])
 $DIALOG $TITLE --msgbox "$2" 0 0
 ])
 
 
 m4_dnl
-m4_dnl CT_DATA_MENU
+m4_dnl CT_UI_MENU_DATA
 m4_dnl
 m4_dnl $1 -> id
 m4_dnl
-m4_define([CT_DATA_MENU],[
+m4_define([CT_UI_MENU_DATA],[
 _DATA_REMARK([menu],[$1])
 ])
 
 m4_dnl
-m4_dnl CT_WIDGET_MENU
+m4_dnl CT_UI_MENU_WIDGET
 m4_dnl
 m4_dnl $1 -> id
 m4_dnl $2 -> title
 m4_dnl $3 -> body
 m4_dnl
-m4_define([CT_WIDGET_MENU],[
+m4_define([CT_UI_MENU_WIDGET],[
 _WIDGET_REMARK([menu],[$1])
 ])
 
 
 m4_dnl
-m4_dnl CT_DATA_YESNO
+m4_dnl CT_UI_YESNO_DATA
 m4_dnl
 m4_dnl $1 -> id
 m4_dnl
-m4_define([CT_DATA_YESNO],[
+m4_define([CT_UI_YESNO_DATA],[
 _DATA_REMARK([yesno],[$1])
 ])
 
 m4_dnl
-m4_dnl CT_WIDGET_YESNO
+m4_dnl CT_UI_YESNO_WIDGET
 m4_dnl
 m4_dnl $1 -> id
 m4_dnl $2 -> message
 m4_dnl $3 -> yes case
 m4_dnl $4 -> no case
 m4_dnl
-m4_define([CT_WIDGET_YESNO],[
+m4_define([CT_UI_YESNO_WIDGET],[
 _WIDGET_REMARK([yesno],[$1])
 $DIALOG $TITLE --yesno "$2" 0 0
 widget_$1=$?
