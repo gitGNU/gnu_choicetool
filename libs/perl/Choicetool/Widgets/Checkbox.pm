@@ -87,7 +87,7 @@ sub m4ify_linear_body ($$)
 
     return
 	$prefix .
-	"CT_DATA_CHECKBOX([" .
+	"CT_UI_CHECKBOX_DATA([" .
 	$self->id() .
 	"])\n";
 }
@@ -105,7 +105,7 @@ sub m4ify_hierarchical_header ($$)
 
     return
 	$prefix .
-	"CT_WIDGET_CHECKBOX([" .
+	"CT_UI_CHECKBOX_WIDGET([" .
 	$self->id() .
 	"],[" .
 	$self->title() .

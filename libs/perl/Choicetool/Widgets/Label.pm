@@ -61,7 +61,7 @@ sub m4ify_linear_body ($$)
 
     return
 	$prefix .
-	"CT_DATA_LABEL([" .
+	"CT_UI_LABEL_DATA([" .
 	$self->id() .
 	"])\n";
 }
@@ -77,7 +77,7 @@ sub m4ify_hierarchical_header ($$)
 
     return
 	$prefix .
-	"CT_WIDGET_LABEL([" .
+	"CT_UI_LABEL_WIDGET([" .
 	$self->id() .
 	"])\n";
 }

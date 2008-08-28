@@ -134,7 +134,7 @@ sub m4ify_linear_body ($$)
 
     return
 	$prefix .
-	"CT_DATA_MENU([" .
+	"CT_UI_MENU_DATA([" .
 	$self->id() .
 	"])\n";
 }
@@ -151,7 +151,7 @@ sub m4ify_hierarchical_header ($$)
 
     return
 	$prefix .
-	"CT_WIDGET_MENU([". $self->id() .
+	"CT_UI_MENU_WIDGET([". $self->id() .
 	"],[" .
 	$self->label() .
 	"],[\n";

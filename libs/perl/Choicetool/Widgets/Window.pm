@@ -74,7 +74,7 @@ sub m4ify_linear_body ($$)
 
     return
 	$prefix .
-	"CT_WIDGET_WINDOW([" .
+	"CT_UI_WINDOW_DATA([" .
 	$self->id() .
 	"],[" .
 	$self->title() .
@@ -92,7 +92,7 @@ sub m4ify_hierarchical_header ($$)
 
     return
 	$prefix .
-	"CT_WIDGET_DATA([" .
+	"CT_UI_WINDOW_WIDGET([" .
 	$self->id() .
 	"])\n";
 }

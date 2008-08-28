@@ -61,7 +61,7 @@ sub m4ify_linear_body ($$)
 
     return
 	$prefix .
-	"CT_DATA_LISTBOX([" .
+	"CT_UI_LISTBOX_DATA([" .
 	$self->id() .
 	"])\n";
 }
@@ -75,7 +75,11 @@ sub m4ify_hierarchical_header ($$)
     assert(defined($prefix));
     assert(defined($self->id()));
 
-    return $prefix . "CT_WIDGET_LISTBOX([" . $self->id() . "])\n";
+    return
+	$prefix .
+	"CT_UI_LISTBOX_WIDGET([" .
+	$self->id() .
+	"])\n";
 }
 
 sub m4ify_hierarchical_footer ($$)
