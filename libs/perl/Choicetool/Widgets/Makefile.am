@@ -27,7 +27,7 @@ dist_perllib_DATA =				\
 	Window.pm				\
 	Menu.pm					\
 	Checkbox.pm				\
-	Textbox.pm
+	Messagebox.pm
 
 ##
 ## Maintainer related targets

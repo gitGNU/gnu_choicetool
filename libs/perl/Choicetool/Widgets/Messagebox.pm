@@ -1,5 +1,5 @@
 #
-# Textbox.pm
+# Messagebox.pm
 #
 # Copyright (C) 2007, 2008 Francesco Salvestrini
 #                          Alessandro Massignan
@@ -19,7 +19,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-package Choicetool::Widgets::Textbox;
+package Choicetool::Widgets::Messagebox;
 
 use 5.8.0;
 
@@ -87,7 +87,7 @@ sub m4ify_linear_body ($$)
 
     return
 	$prefix .
-	"CT_UI_TEXTBOX_DATA([" .
+	"CT_UI_MESSAGEBOX_DATA([" .
 	$self->id() .
 	"])\n";
 }
@@ -104,7 +104,7 @@ sub m4ify_hierarchical_header ($$)
 
     return
 	$prefix .
-	"CT_UI_TEXTBOX_WIDGET([" .
+	"CT_UI_MESSAGEBOX_WIDGET([" .
 	$self->id() .
 	"],[" .
 	$self->title() .

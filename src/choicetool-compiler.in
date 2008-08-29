@@ -72,7 +72,7 @@ use Choicetool::Compile;
 use Choicetool::Widgets::Widget;
 use Choicetool::Widgets::Checkbox;
 use Choicetool::Widgets::Menu;
-use Choicetool::Widgets::Textbox;
+use Choicetool::Widgets::Messagebox;
 use Choicetool::Widgets::Window;
 
 #
