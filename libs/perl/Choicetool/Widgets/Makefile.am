@@ -27,8 +27,6 @@ dist_perllib_DATA =				\
 	Window.pm				\
 	Menu.pm					\
 	Checkbox.pm				\
-	Label.pm				\
-	Listbox.pm				\
 	Textbox.pm
 
 ##
