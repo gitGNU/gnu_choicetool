@@ -25,56 +25,6 @@ m4_define([_WIDGET_REMARK],[
 
 
 m4_dnl
-m4_dnl CT_UI_LABEL
-m4_dnl
-
-m4_dnl
-m4_dnl $1 -> id
-m4_dnl
-m4_define([CT_UI_LABEL_DATA],[
-_DATA_REMARK([label],[$1])
-])
-m4_dnl
-m4_dnl $1 -> id
-m4_dnl
-m4_define([CT_UI_LABEL_WIDGET],[
-_WIDGET_REMARK([label],[$1])
-])
-m4_dnl
-m4_dnl $1 -> id
-m4_dnl
-m4_define([CT_UI_LABEL],[
-$0_DATA([$1])
-$0_WIDGET([$1])
-])
-
-
-m4_dnl
-m4_dnl CT_UI_LISTBOX
-m4_dnl
-
-m4_dnl
-m4_dnl $1 -> id
-m4_dnl
-m4_define([CT_UI_LISTBOX_DATA],[
-_DATA_REMARK([listbox],[$1])
-])
-m4_dnl
-m4_dnl $1 -> id
-m4_dnl
-m4_define([CT_UI_LISTBOX_WIDGET],[
-_WIDGET_REMARK([listbox],[$1])
-])
-m4_dnl
-m4_dnl $1 -> id
-m4_dnl
-m4_define([CT_UI_LISTBOX],[
-$0_DATA([$1])
-$0_WIDGET([$1])
-])
-
-
-m4_dnl
 m4_dnl CT_UI_CHECKBOX
 m4_dnl
 
@@ -95,6 +45,35 @@ _WIDGET_REMARK([checkbox],[$1])
 m4_define([CT_UI_CHECKBOX],[
 $0_DATA([$1])
 $0_WIDGET([$1])
+])
+
+
+m4_dnl
+m4_dnl CT_UI_TEXTBOX
+m4_dnl
+
+m4_dnl
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl
+m4_define([CT_UI_TEXTBOX_DATA],[
+_DATA_REMARK([textbox],[$1])
+])
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl $2 -> message
+m4_dnl
+m4_define([CT_UI_TEXTBOX_WIDGET],[
+_WIDGET_REMARK([textbox],[$1])
+$DIALOG $TITLE --msgbox "$2" 0 0
+])
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl $2 -> message
+m4_dnl
+m4_define([CT_UI_TEXTBOX],[
+$0_DATA([$1])
+$0_WIDGET([$1],[$2])
 ])
 
 
@@ -128,35 +107,6 @@ m4_dnl
 m4_define([CT_UI_WINDOW],[
 $0_DATA([$1],[$2])
 $0_WIDGET([$1])
-])
-
-
-m4_dnl
-m4_dnl CT_UI_TEXTBOX
-m4_dnl
-
-m4_dnl
-m4_dnl
-m4_dnl $1 -> id
-m4_dnl
-m4_define([CT_UI_TEXTBOX_DATA],[
-_DATA_REMARK([textbox],[$1])
-])
-m4_dnl
-m4_dnl $1 -> id
-m4_dnl $2 -> message
-m4_dnl
-m4_define([CT_UI_TEXTBOX_WIDGET],[
-_WIDGET_REMARK([textbox],[$1])
-$DIALOG $TITLE --msgbox "$2" 0 0
-])
-m4_dnl
-m4_dnl $1 -> id
-m4_dnl $2 -> message
-m4_dnl
-m4_define([CT_UI_TEXTBOX],[
-$0_DATA([$1])
-$0_WIDGET([$1],[$2])
 ])
 
 
