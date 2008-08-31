@@ -1,4 +1,4 @@
-Start symbol 'input'
+Start symbol input
 
 input:| newlines | stmt_list | newlines stmt_list;
 newlines:newline | newline newlines;
