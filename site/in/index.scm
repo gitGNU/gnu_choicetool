@@ -13,6 +13,11 @@
  (br)
  "Choicetool should work with (and even without) the "
  (a (@ (href "http://en.wikipedia.org/wiki/Autotools")) autotools)
+ "."
+ (br)
+ "A complete description of the input "
+ (a (@ (href "./grammar.html")) grammar)
+ " is available"
  ".")
 
 (h3 "COPYING")
