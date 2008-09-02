@@ -25,8 +25,13 @@ man_aux       = choicetool.x
 
 EXTRA_DIST = $(man_aux)
 
+##
+## NOTE:
+##     Distributed files should never depend on non-distributed built files
+##
+
 # CHOICETOOL_LIBRARY_PATH="$(top_builddir)/libs@PATH_SEPARATOR@$$PATH"
-choicetool.1: $(srcdir)/choicetool.x $(top_builddir)/src/choicetool.in
+choicetool.1: $(top_srcdir)/src/choicetool.in
 	CHOICETOOL_LIBRARY_PATH="$(top_builddir)/libs"; \
 	export CHOICETOOL_LIBRARY_PATH;	\
 	$(HELP2MAN) \
