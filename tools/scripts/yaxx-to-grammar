@@ -33,30 +33,41 @@ my $VERSION = "0.0.1";
 
 sub usage ($)
 {
-    my ($exit_code) = @_;
-    my $STREAM = ($exit_code == 0 ? *STDOUT : *STDERR);
+    my $message   = shift;
+    my $exit_code = ($message eq "" ? 0 : 1);
+    my $STREAM    = ($exit_code == 0 ? *STDOUT : *STDERR);
+
     if ($exit_code != 0) {
 	print $STREAM "Try `$ME --help' for more information.\n";
     } else {
 	print $STREAM <<EOF;
 Usage: $ME [OPTIONS] FILE
-    Extract grammar from a yacc/bison/yapp description
+
+Extract grammar from a yacc/bison/yapp parser description
 
 OPTIONS:
 
     --help       display this help and exit
     --version    output version information and exit
 
+Report bugs to <salvestrini\@gmail.com>
 EOF
     }
 
     exit $exit_code;
 }
 
+sub fatal ($)
+{
+    my $string = shift;
+    print "$ME: $string\n";
+    exit(1);
+}
+
 {
     GetOptions(
 	help    => sub {
-	    usage(0);
+	    usage("");
 	},
 	version => sub {
 	    print <<EOF;
@@ -71,11 +82,11 @@ There is NO WARRANTY, to the extent permitted by law.
 EOF
 exit(0);
 	},
-	) or usage(1);
+	) or usage("Unrecognized option");
 
     # Slurp the whole input file
-    defined($ARGV[0]) or die "Missing input file!";
-    open my $fh, $ARGV[0] or die $!;
+    defined($ARGV[0])     or usage("Missing input file!");
+    open my $fh, $ARGV[0] or fatal($!);
 
     local $/;
 
@@ -85,14 +96,14 @@ exit(0);
     $input =~ s/^\s*//;
     $input =~ s/\s*$//;
 
-# Declarations and grammar sections are required, but programs 
-# section's not
-my $declarations;
-my $grammar;
+    # Declarations and grammar sections are required, but programs
+    # section's not
+    my $declarations;
+    my $grammar;
 
     if (!(($input =~ m/^(.*)\s%%\s(.*)\s%%\s.*$/s) ||
 	  ($input =~ m/^(.*)\s%%\s(.*)/s))) {
-	die("Wrong input file format");
+	fatal("Wrong input file format");
     }
     $declarations = $1;
     $grammar      = $2;
@@ -103,7 +114,7 @@ my $grammar;
 
     $declarations =~ /\s*\%start\s+(.*)\s*\n/;
 
-    defined($1) or die("Missing start symbol in declarations");
+    defined($1) or fatal("Missing start symbol in declarations");
 
     $start = $1;
 
@@ -167,7 +178,7 @@ my $grammar;
 
 	    $output =~ s/\s*$/\ ;\n/;
 	} else {
-	    die("Bug hit!");
+	    fatal("Bug hit!");
 	}
     }
     $output = "Start symbol " . $start . "\n\n" . $output;
