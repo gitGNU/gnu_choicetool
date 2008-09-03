@@ -90,6 +90,7 @@ sub help ()
     print "\n";
     print "  -i, --input=FILE           get input from FILE\n";
     print "  -o, --output=FILE          output to file FILE\n";
+    print "  -n, --dry-run              display actions without modifying any files\n";
     print "  -W, --warnings=CATEGORY    report the warnings falling in CATEGORY\n";
     print "  -d, --debug                run in debugging mode\n";
     print "  -v, --verbose              verbose mode\n";
