@@ -28,7 +28,7 @@ EXTRA_DIST =					\
 	grammar.txt
 
 grammar.txt: $(YAXX_TO_GRAMMAR) $(top_srcdir)/libs/perl/Choicetool/Frontends/KConfig/Parse.yp
-	$(YAXX_TO_GRAMMAR) $(top_srcdir)/libs/perl/Choicetool/Frontends/KConfig/Parse.yp > grammar.txt || { \
+	$(YAXX_TO_GRAMMAR) $(top_srcdir)/libs/perl/Choicetool/Frontends/KConfig/Parse.yp grammar.txt || { \
 		rm -f grammar.txt ; \
 		exit 1 ; \
 	}
