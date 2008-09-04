@@ -84,8 +84,9 @@ exit(0);
 	},
 	) or usage("Unrecognized option");
 
+    defined($ARGV[0]) or usage("Missing input file!");
+
     # Slurp the whole input file
-    defined($ARGV[0])     or usage("Missing input file!");
     open my $fh, $ARGV[0] or fatal($!);
 
     local $/;
@@ -96,8 +97,7 @@ exit(0);
     $input =~ s/^\s*//;
     $input =~ s/\s*$//;
 
-    # Declarations and grammar sections are required, but programs
-    # section's not
+    # Only declarations and grammar sections are required
     my $declarations;
     my $grammar;
 
@@ -108,17 +108,20 @@ exit(0);
     $declarations = $1;
     $grammar      = $2;
 
+    defined($grammar) or fatal("Wrong grammar section in input file ?");
+
     # Handle declarations, extract the start symbol
     my $start;
-    my $output;
 
     $declarations =~ /\s*\%start\s+(.*)\s*\n/;
-
-    defined($1) or fatal("Missing start symbol in declarations");
-
     $start = $1;
 
+    defined($start) or fatal("Missing start symbol in declarations");
+
     # Begin parsing and cleaning
+    my $output;
+
+    $output = "";
     while (($grammar =~ s/^([^\'\{\#\;]+)//) ||
 	   ($grammar =~ /^[\'\{\#\;]/))       {
 	my $string;
@@ -132,19 +135,14 @@ exit(0);
 	    $string =~ s/\s*$//;
 	    $string =~ s/\s+/\ /g;
 
-	    if (defined($output)) {
-
-		if ($output =~ /\n$/) {
-		    $output = $output . $string;
-		} else {
-		    $output = $output . " " . $string;
-		}
+	    if (($output eq "") || ($output =~ /\n$/)) {
+		$output = $output . $string;
 	    } else {
-		$output = $string;
+		$output = $output . " " . $string;
 	    }
 	}
 
-	if (defined($grammar) && ($grammar !~ /^\s*$/)) {
+	if ($grammar !~ /^\s*$/) {
 	    $grammar    =~ /^(.)/;
 	    $next_token = $1;
 	} else {
