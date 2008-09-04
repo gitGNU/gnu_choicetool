@@ -119,69 +119,68 @@ exit(0);
     $start = $1;
 
     # Begin parsing and cleaning
-    while ($grammar =~ s/^([^\'\{\#\;]+)([\'\{\#\;])//) {
+    while (($grammar =~ s/^([^\'\{\#\;]+)//) ||
+	   ($grammar =~ /^[\'\{\#\;]/))       {
 	my $string;
-	my $char;
-
-	$string = $1;
+	my $next_token;
 
 	# Clean up string and append it to output
-	if (defined($string)) {
+	if (defined($1) && ($1 !~ /^\s*$/)) {
 
-	    if ($string !~ /^\s*$/) {
+	    $string = $1;
+	    $string =~ s/^\s*//;
+	    $string =~ s/\s*$//;
+	    $string =~ s/\s+/\ /g;
 
-		$string =~ s/^\s*//;
-		$string =~ s/\s*$//;
-		$string =~ s/\s+/\ /g;
+	    if (defined($output)) {
 
-		if (defined($output)) {
-
-		    if ($output =~ /\n$/) {
-			$output = $output . $string;
-		    } else {
-			$output = $output . " " . $string;
-		    }
+		if ($output =~ /\n$/) {
+		    $output = $output . $string;
 		} else {
-		    $output = $string;
+		    $output = $output . " " . $string;
 		}
+	    } else {
+		$output = $string;
 	    }
 	}
 
-	if (defined($2)) {
-	    $char = $2;
+	if (defined($grammar) && ($grammar !~ /^\s*$/)) {
+	    $grammar    =~ /^(.)/;
+	    $next_token = $1;
 	} else {
 	    last;
 	}
 
-	if ($char eq '\'') {
+	if ($next_token eq '\'') {
 	    # Preserve single-quoted string
 
 	    my $extracted;
 	    my $remainder;
 
 	    ($extracted, $remainder) =
-		Text::Balanced::extract_quotelike('\'' . $grammar);
+		Text::Balanced::extract_quotelike($grammar);
 
 	    $output  = $output . " " . $extracted;
 	    $grammar = $remainder;
-	} elsif ($char eq '{') {
+	} elsif ($next_token eq '{') {
 	    # Wipe out semantic action
 
 	    my $extracted;
 	    my $remainder;
 
 	    ($extracted, $remainder) =
-		Text::Balanced::extract_bracketed('{' . $grammar, '{}');
+		Text::Balanced::extract_bracketed($grammar, '{}');
 
 	    $grammar = $remainder;
-	} elsif ($char eq '#') {
+	} elsif ($next_token eq '#') {
 	    # Remove comments
 
-	    $grammar =~ s/^[^\n]*//;
-	} elsif ($char eq ';') {
+	    $grammar =~ s/^\#[^\n]*//;
+	} elsif ($next_token eq ';') {
 	    # Handling rule's end
 
-	    $output =~ s/\s*$/\ ;\n/;
+	    $grammar =~ s/^;\s*//;
+	    $output = $output . " ;\n";
 	} else {
 	    fatal("Bug hit!");
 	}
