@@ -31,7 +31,7 @@ EXTRA_DIST = $(man_aux)
 ##
 
 # CHOICETOOL_LIBRARY_PATH="$(top_builddir)/libs@PATH_SEPARATOR@$$PATH"
-choicetool.1: $(top_srcdir)/src/choicetool.in $(top_srcdir)/libs/perl/Choicetool/Base/Program.pm configure.ac
+choicetool.1: $(top_srcdir)/src/choicetool.in $(top_srcdir)/libs/perl/Choicetool/Base/Program.pm $(top_srcdir)/configure.ac
 	CHOICETOOL_LIBRARY_PATH="$(top_builddir)/libs"; \
 	export CHOICETOOL_LIBRARY_PATH;	\
 	$(HELP2MAN) \
