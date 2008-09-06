@@ -42,14 +42,23 @@ AM_INIT_AUTOMAKE([1.10 foreign -Wall])
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AC_PROG_LN_S
+AC_PROG_MKDIR_P
 AC_PROG_GREP
 AC_PROG_SED
+AC_PROG_AWK
 
 AX_PATH_MISSING([YAPP],     [yapp])
 AX_PATH_MISSING([HELP2MAN], [help2man])
 AX_PATH_MISSING([SITETOOL], [sitetool])
 
-AC_PATH_PROG([WGET],        [wget])
+#
+# NOTE:
+#     The following programs are used inside the libs (which will be installed)
+#     directory, no AX_PATH_MISSING use allowed
+#
+AC_PATH_PROG([TIDY], [tidy])
+AC_PATH_PROG([WPUT], [wput])
+AC_PATH_PROG([WGET], [wget])
 
 #
 # Runtime related programs
@@ -115,10 +124,11 @@ AC_SUBST(pkgvlibsdir, ["\${datadir}/${PACKAGE}-${API_VERSION}/libs"])
 AC_CONFIG_FILES([
 	Makefile
 
-	tools/Makefile
-	tools/scripts/Makefile
-	tools/autotools/Makefile
-	tools/autotools/m4/Makefile
+	docs/Makefile
+	docs/man/Makefile
+	docs/info/Makefile
+
+	src/Makefile
 
 	libs/Makefile
 	libs/scheme/Makefile
@@ -136,14 +146,13 @@ AC_CONFIG_FILES([
 	libs/perl/Choicetool/Frontends/Makefile
 	libs/perl/Choicetool/Frontends/KConfig/Makefile
 
-	src/Makefile
-
 	site/Makefile
 	site/in/Makefile
 
-	docs/Makefile
-	docs/info/Makefile
-	docs/man/Makefile
+	tools/Makefile
+	tools/scripts/Makefile
+	tools/autotools/Makefile
+	tools/autotools/m4/Makefile
 
 	tests/Makefile
 ])
