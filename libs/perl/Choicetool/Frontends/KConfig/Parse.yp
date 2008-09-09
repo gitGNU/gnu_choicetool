@@ -55,16 +55,12 @@ BEGIN {
 #   remove global variables ASAP
 #
 
-my $word;
-my $mainmenu;
-my $type_definition;
+my $parser_struct;
 my $parser_data;
 
 my $parse_help_text = 0;
 my $help_start      = 0;
-my $lineno          = 1;
-my $widget_id       = 0;
-my $rule_id         = 0;
+my $lineno          = 0;
 
 sub dtoken ($)
 {
@@ -83,7 +79,6 @@ sub drule ($)
 
     debug("Get rule: " . $string);
 }
-
 
 %}
 
@@ -172,7 +167,7 @@ word: 'T_WORD'
     assert(defined($_[1]));
 
     debug("Storing word: \`" . $_[1] . "'");
-    $word = $_[1];
+    ${$parser_data}->{WORD_BUFFER} = $_[1];
 
     drule("word");
 }
@@ -183,7 +178,7 @@ word_quote: 'T_WORD_QUOTE'
     assert(defined($_[1]));
 
     debug("Storing quoted word: \`" . $_[1] . "'");
-    $word = $_[1];
+    ${$parser_data}->{WORD_BUFFER} = $_[1];
 
     drule("word_quote");
 }
@@ -192,26 +187,10 @@ word_quote: 'T_WORD_QUOTE'
 menu_stmt: menu_entry 'T_ENDMENU' newlines
 {
     drule("menu_stmt");
-
-    my $node_ref = $$parser_data->{WIDGET};
-    assert(defined($$node_ref));
-
-    my $parent   = $$node_ref->parent();
-    assert(defined($parent));
-
-    $$parser_data->{WIDGET} = $parent;
 }
          | menu_entry menu_block_list 'T_ENDMENU' newlines
 {
     drule("menu_stmt");
-
-    my $node_ref = $$parser_data->{WIDGET};
-    assert(defined($$node_ref));
-
-    my $parent   = $$node_ref->parent();
-    assert(defined($parent));
-
-    $$parser_data->{WIDGET} = $parent;
 }
          ;
 
@@ -228,24 +207,6 @@ menu_entry: menu
 menu: 'T_MENU' words newlines
 {
     drule("menu");
-
-    my $node_ref = $$parser_data->{WIDGET};
-    assert(defined($$node_ref));
-
-    my $child = Choicetool::Widgets::Menu->new(++$widget_id);
-    assert(defined($child));
-
-    $child->label($word);
-    $child->parent($node_ref);
-
-    my @children = $$node_ref->children();
-    my $index    = @children;
-
-    if (!$$node_ref->add_child($index, \$child)) {
-	error("Failed to add child to Widget node " . $widget_id);
-	$_[0]->YYAbort;
-    }
-    $$parser_data->{WIDGET} = \$child;
 }
     ;
 
@@ -1050,13 +1011,19 @@ sub parse ($$$)
     $parser = Choicetool::Frontends::KConfig::Parse->new();
     assert(defined($parser));
 
-    $parser->YYData->{INPUT}   = $string;
-    $parser_data               = \$parser->YYData->{DATA}[0];
+    $parser->YYData->{INPUT}       = $string;
+    $parser_struct                 = \$parser->YYData->{DATA}[0];
 
-    ${$parser_data}->{WIDGET} = $widget_ref;
+    ${$parser_struct}->{WIDGET}    = $widget_ref;
 
-    ${$parser_data}->{STACK}  = Choicetool::Data::Stack->new();
-    assert(defined(${$parser_data}->{STACK}));
+    ${$parser_data}->{MENU}        = Choicetool::Data::Stack->new();
+    assert(defined(${$parser_data}->{MENU_STACK}));
+
+    # This should be used as temporary data saving before
+    # fill relative stack
+    ${$parser_data}->{SWAP}        = { };
+
+    ${$parser_data}->{WORD_BUFFER} = "";
 
     my $result;
     $result = $parser->YYParse(yylex   => \&lexer_callback,
@@ -1069,8 +1036,7 @@ sub parse ($$$)
     }
 
     # Final checks
-    assert(${$$parser_data->{WIDGET}}->is_root());
-    assert(${$parser_data}->{STACK}->is_empty());
+    assert(${$$parser_struct->{WIDGET}}->is_root());
 
     debug("Parsing completed successfully");
 
