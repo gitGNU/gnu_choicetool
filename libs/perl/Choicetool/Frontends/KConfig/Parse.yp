@@ -80,6 +80,31 @@ sub drule ($)
     debug("Get rule: " . $string);
 }
 
+sub add_window_widget ($)
+{
+    my $title = shift;
+
+    assert(defined($title));
+
+    my $node_ref = $$parser_struct->{WIDGET};
+    assert(defined($$node_ref));
+
+    my $child =
+	Choicetool::Widgets::Window->new(++$$parser_struct->{WIDGET_ID});
+    assert(defined($child));
+
+    $child->title($title);
+
+    if (!$$node_ref->add_child($$parser_struct->{WIDGET_ID}, \$child)) {
+	error("Failed to add Window Widget [" .
+	      $$parser_struct->{WIDGET_ID}    .
+	      "]");
+	return 0;
+    }
+
+    return 1;
+}
+
 %}
 
 %left  'T_AND'
@@ -111,8 +136,8 @@ newlines: newline
 {
     drule("newlines");
 }
-        | newline newlines
-        ;
+	| newline newlines
+	;
 
 newline: 'T_EOL'
 {
@@ -125,8 +150,8 @@ stmt_list: stmt
 {
     drule("stmt_list");
 }
-         | stmt stmt_list
-         ;
+	 | stmt stmt_list
+	 ;
 
 stmt: mainmenu_stmt
 {
@@ -149,8 +174,12 @@ stmt: mainmenu_stmt
 mainmenu_stmt: 'T_MAINMENU' words newlines
 {
     drule("mainmenu_stmt");
+
+    if (!add_window_widget($$parser_data->{WORD_BUFFER})) {
+	$_[0]->YYAbort;
+    }
 }
-             ;
+	     ;
 
 words: word
 {
@@ -182,27 +211,27 @@ word_quote: 'T_WORD_QUOTE'
 
     drule("word_quote");
 }
-          ;
+	  ;
 
 menu_stmt: menu_entry 'T_ENDMENU' newlines
 {
     drule("menu_stmt");
 }
-         | menu_entry menu_block_list 'T_ENDMENU' newlines
+	 | menu_entry menu_block_list 'T_ENDMENU' newlines
 {
     drule("menu_stmt");
 }
-         ;
+	 ;
 
 menu_entry: menu
 {
     drule("menu_entry");
 }
-          | menu depends_list
+	  | menu depends_list
 {
     drule("menu_entry");
 }
-          ;
+	  ;
 
 menu: 'T_MENU' words newlines
 {
@@ -214,29 +243,29 @@ menu_block_list: menu_block
 {
     drule("menu_block_list");
 }
-               | menu_block menu_block_list
-               ;
+	       | menu_block menu_block_list
+	       ;
 
 menu_block: menu_stmt
 {
     drule("menu_block");
 }
-          | choice_stmt
+	  | choice_stmt
 {
     drule("menu_block");
 }
-          | common_stmt
+	  | common_stmt
 {
     drule("menu_block");
 }
-          ;
+	  ;
 
 depends_list: depends
 {
     drule("depends_list");
 }
-            | depends depends_list
-            ;
+	    | depends depends_list
+	    ;
 
 depends: 'T_DEPENDS' 'T_ON' expr newlines
 {
@@ -286,98 +315,98 @@ choice_stmt: choice_entry 'T_ENDCHOICE' newlines
 {
     drule("choice_stmt");
 }
-           | choice_entry choice_block_list 'T_ENDCHOICE' newlines
+	   | choice_entry choice_block_list 'T_ENDCHOICE' newlines
 {
     drule("choice_stmt");
 }
-           ;
+	   ;
 
 choice_entry: 'T_CHOICE' newlines
 {
     drule("choice_entry");
 }
-            | 'T_CHOICE' newlines choice_options_block_list
+	    | 'T_CHOICE' newlines choice_options_block_list
 {
     drule("choice_entry");
 }
-            ;
+	    ;
 
 choice_options_block_list: choice_options_block
 {
     drule("choice_options_block_list");
 }
-                         | choice_options_block choice_options_block_list
-                         ;
+			 | choice_options_block choice_options_block_list
+			 ;
 
 choice_options_block: choice_option
 {
     drule("choice_options_block");
 }
-                    | depends
+		    | depends
 {
     drule("choice_options_block");
 }
-                    | help
+		    | help
 {
     drule("choice_options_block");
 }
-                    ;
+		    ;
 
 choice_option: 'T_PROMPT' words newlines
 {
     drule("choice_option");
 }
-             | 'T_PROMPT' words 'T_IF' expr newlines
+	     | 'T_PROMPT' words 'T_IF' expr newlines
 {
     drule("choice_option");
 }
-             | type_definition words 'T_IF' expr newlines
+	     | type_definition words 'T_IF' expr newlines
 {
     drule("config_option");
 }
-             | type_definition words newlines
+	     | type_definition words newlines
 {
     drule("choice_option");
 }
-             | type_definition newlines
+	     | type_definition newlines
 {
     drule("choice_option");
 }
-             | 'T_OPTIONAL' newlines
+	     | 'T_OPTIONAL' newlines
 {
     drule("choice_option");
 }
-             | 'T_DEFAULT' word newlines
+	     | 'T_DEFAULT' word newlines
 {
     drule("choice_option");
 }
-             | 'T_DEFAULT' word 'T_IF' expr newlines
+	     | 'T_DEFAULT' word 'T_IF' expr newlines
 {
     drule("choice_option");
 }
-             ;
+	     ;
 
 type_definition: 'T_BOOL'
 {
     drule("type_definition");
 }
-               | 'T_TRISTATE'
+	       | 'T_TRISTATE'
 {
     drule("type_definition");
 }
-               | 'T_STRING'
+	       | 'T_STRING'
 {
     drule("type_definition");
 }
-               | 'T_HEX'
+	       | 'T_HEX'
 {
     drule("type_definition");
 }
-               | 'T_INT'
+	       | 'T_INT'
 {
     drule("type_definition");
 }
-               ;
+	       ;
 
 help: 'T_HELP' newlines 'T_HELPTEXT' newlines
 {
@@ -389,158 +418,158 @@ choice_block_list: common_stmt
 {
     drule("choice_block_list");
 }
-                 | common_stmt choice_block_list
-                 ;
+		 | common_stmt choice_block_list
+		 ;
 
 common_stmt: config_stmt
 {
     drule("common_stmt");
 }
-           | if_stmt
+	   | if_stmt
 {
     drule("common_stmt");
 }
-           | comment_stmt
+	   | comment_stmt
 {
     drule("common_stmt");
 }
-           | menuconfig_stmt
+	   | menuconfig_stmt
 {
     drule("common_stmt");
 }
-           ;
+	   ;
 
 config_stmt: config_entry
 {
     drule("config_stmt");
 }
-           | config_entry config_options_block_list
+	   | config_entry config_options_block_list
 {
     drule("config_stmt");
 }
-           ;
+	   ;
 
 config_entry: 'T_CONFIG' word newlines
 {
     drule("config_entry");
 }
-            ;
+	    ;
 
 config_options_block_list: config_options_block
 {
     drule("config_options_block_list");
 }
-                         | config_options_block config_options_block_list
-                         ;
+			 | config_options_block config_options_block_list
+			 ;
 
 config_options_block: config_option
 {
     drule("config_options_block");
 }
-                    | symbol_option
+		    | symbol_option
 {
     drule("config_options_block");
 }
-                    | depends
+		    | depends
 {
     drule("config_options_block");
 }
-                    | help
+		    | help
 {
     drule("config_options_block");
 }
-                    ;
+		    ;
 
 config_option: type_default_definition expr newlines
 {
     drule("config_option");
 }
-             | type_default_definition expr 'T_IF' expr newlines
+	     | type_default_definition expr 'T_IF' expr newlines
 {
     drule("config_option");
 }
-             | type_definition words 'T_IF' expr newlines
+	     | type_definition words 'T_IF' expr newlines
 {
     drule("config_option");
 }
-             | type_definition words newlines
+	     | type_definition words newlines
 {
     drule("config_option");
 }
-             | type_definition newlines
+	     | type_definition newlines
 {
     drule("config_option");
 }
-             | 'T_PROMPT' words newlines
+	     | 'T_PROMPT' words newlines
 {
     drule("config_option");
 }
-             | 'T_PROMPT' words 'T_IF' expr newlines
+	     | 'T_PROMPT' words 'T_IF' expr newlines
 {
     drule("config_option");
 }
-             | 'T_DEFAULT' expr newlines
+	     | 'T_DEFAULT' expr newlines
 {
     drule("config_option");
 }
-             | 'T_DEFAULT' expr 'T_IF' expr newlines
+	     | 'T_DEFAULT' expr 'T_IF' expr newlines
 {
     drule("config_option");
 }
-             | 'T_SELECT' word newlines
+	     | 'T_SELECT' word newlines
 {
     drule("config_option");
 }
-             | 'T_SELECT' word 'T_IF' expr newlines
+	     | 'T_SELECT' word 'T_IF' expr newlines
 {
     drule("config_option");
 }
-             | 'T_RANGE' word word newlines
+	     | 'T_RANGE' word word newlines
 {
     drule("config_option");
 }
-             | 'T_RANGE' word word 'T_IF' expr newlines
+	     | 'T_RANGE' word word 'T_IF' expr newlines
 {
     drule("config_option");
 }
-             ;
+	     ;
 
 type_default_definition: 'T_DEF_TRISTATE'
 {
     drule("type_default_definition");
 }
-                       | 'T_DEF_BOOL'
+		       | 'T_DEF_BOOL'
 {
     drule("type_default_definition");
 }
-                       ;
+		       ;
 
 symbol_option: 'T_OPTION' newlines
 {
     drule("symbol_option");
 }
-             | 'T_OPTION' symbol_options_block_list newlines
+	     | 'T_OPTION' symbol_options_block_list newlines
 {
     drule("symbol_option");
 }
-             ;
+	     ;
 
 symbol_options_block_list: symbol_options_block
 {
     drule("symbol_options_block_list");
 }
-                         | symbol_options_block symbol_options_block_list
-                         ;
+			 | symbol_options_block symbol_options_block_list
+			 ;
 
 symbol_options_block: word
 {
     drule("symbol_options_block");
 }
-                    | word 'T_EQUAL' words
+		    | word 'T_EQUAL' words
 {
     drule("symbol_options_block");
 }
-                    ;
+		    ;
 
 if_stmt: if_entry 'T_ENDIF' newlines
 {
@@ -556,60 +585,60 @@ if_entry: 'T_IF' expr newlines
 {
     drule("if_entry");
 }
-        ;
+	;
 
 if_block_list: if_block
 {
     debug("if_block_list");
 }
-             | if_block if_block_list
-             ;
+	     | if_block if_block_list
+	     ;
 
 if_block: common_stmt
 {
     debug("if_block");
 }
-        | menu_stmt
+	| menu_stmt
 {
     debug("if_block");
 }
-        | choice_stmt
+	| choice_stmt
 {
     debug("if_block");
 }
-        ;
+	;
 
 comment_stmt: comment_entry
 {
     drule("comment_stmt");
 }
-            | comment_entry depends_list
+	    | comment_entry depends_list
 {
     drule("comment_stmt");
 }
-            ;
+	    ;
 
 comment_entry: 'T_COMMENT' words newlines
 {
     drule("comment_entry");
 }
-             ;
+	     ;
 
 menuconfig_stmt: menuconfig_entry
 {
     drule("menuconfig_stmt");
 }
-               | menuconfig_entry config_options_block_list
+	       | menuconfig_entry config_options_block_list
 {
     drule("menuconfig_stmt");
 }
-               ;
+	       ;
 
 menuconfig_entry: 'T_MENUCONFIG' word newlines
 {
     drule("menuconfig_stmt");
 }
-                ;
+		;
 
 %%
 
@@ -737,7 +766,7 @@ sub parse_quoted_text ($$$)
 		return 0;
 	    }
 	    $$quoted_text_ref = $quoted_text_ref .
-		                $tmp             .
+				$tmp             .
 				$quoting_char;
 	    next;
 	}
@@ -803,7 +832,7 @@ sub lexer_callback ($)
 
 	    if ($string ne "") {
 		$$stream_ref = $string                             .
-		               ((defined($spaces)) ? $spaces : "") .
+			       ((defined($spaces)) ? $spaces : "") .
 			       $$stream_ref;
 	    }
 	    $string = $new_string;
@@ -829,7 +858,7 @@ sub lexer_callback ($)
 	    my $text;
 
 	    $$stream_ref = (defined($string) ? $string : "") .
-		           (defined($spaces) ? $spaces : "") .
+			   (defined($spaces) ? $spaces : "") .
 			   $$stream_ref;
 	    $string      = "";
 
@@ -912,7 +941,7 @@ sub lexer_callback ($)
 	    $return_token = "T_HELP";
 	} elsif ($string =~ s/^---$//) {
 	    $$stream_ref = (defined($string) ? $string : "") .
-		           (defined($spaces) ? $spaces : "") .
+			   (defined($spaces) ? $spaces : "") .
 			   $$stream_ref;
 
 	    if ($$stream_ref =~ s/^[ \t]*help[ \t]*\-\-\-//) {
@@ -943,7 +972,7 @@ sub lexer_callback ($)
 
 	if ($string ne "") {
 	    $$stream_ref = $string                           .
-	                   (defined($spaces) ? $spaces : "") .
+			   (defined($spaces) ? $spaces : "") .
 			   $$stream_ref;
 	}
 
@@ -1011,24 +1040,25 @@ sub parse ($$$)
     $parser = Choicetool::Frontends::KConfig::Parse->new();
     assert(defined($parser));
 
-    $parser->YYData->{INPUT}       = $string;
-    $parser_struct                 = \$parser->YYData->{DATA}[0];
+    $parser->YYData->{INPUT}     = $string;
+    $parser_struct               = \$parser->YYData->{DATA}[0];
 
-    ${$parser_struct}->{WIDGET}    = $widget_ref;
+    $$parser_struct->{WIDGET}    = $widget_ref;
+    $$parser_struct->{WIDGET_ID} = 0;
 
-    ${$parser_data}->{MENU}        = Choicetool::Data::Stack->new();
-    assert(defined(${$parser_data}->{MENU_STACK}));
+    $$parser_data->{MENU}        = Choicetool::Data::Stack->new();
+    assert(defined($$parser_data->{MENU}));
 
     # This should be used as temporary data saving before
     # fill relative stack
-    ${$parser_data}->{SWAP}        = { };
+    $$parser_data->{SWAP}        = { };
 
-    ${$parser_data}->{WORD_BUFFER} = "";
+    $$parser_data->{WORD_BUFFER} = "";
 
     my $result;
     $result = $parser->YYParse(yylex   => \&lexer_callback,
 			       yyerror => \&error_callback,
-	                       yydebug => 0x00);
+			       yydebug => 0x00);
 
     if (($parser->YYNberr() > 0) || (!defined($result))) {
 	error("Cannot parse input file \`" . $input_filename . "'");
