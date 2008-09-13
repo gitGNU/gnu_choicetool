@@ -36,7 +36,7 @@ choicetool.1: $(top_srcdir)/src/choicetool.in $(top_srcdir)/libs/perl/Choicetool
 	export CHOICETOOL_LIBRARY_PATH;	\
 	$(HELP2MAN) \
 	    --include=$(srcdir)/choicetool.x \
-	    --source="FSF" \
+	    --source="@PACKAGE_NAME@" \
 	    --manual="User Commands" \
 	    --section=1	\
 	    --output=$@	\
