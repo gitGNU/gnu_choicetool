@@ -1,2 +1,2 @@
 [name]
-choicetool \- insert comment here
+choicetool \- build choice selection script
