@@ -207,7 +207,7 @@ mainmenu_stmt: 'T_MAINMENU' words newlines
 {
     drule("mainmenu_stmt");
 
-    assert($$parser_data->{STACK}->size() >= 0);
+    assert($$parser_data->{STACK}->size() > 0);
 
     my $mainmenu_data = $$parser_data->{STACK}->pop();
     assert(defined($mainmenu_data->{TITLE} eq ""));
