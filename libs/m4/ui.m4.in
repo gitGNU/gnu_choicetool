@@ -49,6 +49,78 @@ $0_WIDGET([$1])
 
 
 m4_dnl
+m4_dnl CT_UI_CONFIGBOX_ENUM
+m4_dnl
+
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl
+m4_define([CT_UI_CONFIGBOX_ENUM_DATA],[
+_DATA_REMARK([configbox enum],[$1])
+])
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl $2 -> title
+m4_dnl $3 -> symbol
+m4_dnl
+m4_define([CT_UI_CONFIGBOX_ENUM_WIDGET],[
+_WIDGET_REMARK([configbox enum],[$1])
+])
+m4_define([CT_UI_CONFIGBOX_ENUM],[
+$0_DATA([$1])
+$0_WIDGET([$1])
+])
+
+
+m4_dnl
+m4_dnl CT_UI_CONFIGBOX_NUMBER
+m4_dnl
+
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl
+m4_define([CT_UI_CONFIGBOX_NUMBER_DATA],[
+_DATA_REMARK([configbox number],[$1])
+])
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl $2 -> title
+m4_dnl $3 -> symbol
+m4_dnl
+m4_define([CT_UI_CONFIGBOX_NUMBER_WIDGET],[
+_WIDGET_REMARK([configbox number],[$1])
+])
+m4_define([CT_UI_CONFIGBOX_NUMBER],[
+$0_DATA([$1])
+$0_WIDGET([$1])
+])
+
+
+m4_dnl
+m4_dnl CT_UI_CONFIGBOX_STRING
+m4_dnl
+
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl
+m4_define([CT_UI_CONFIGBOX_STRING_DATA],[
+_DATA_REMARK([configbox string],[$1])
+])
+m4_dnl
+m4_dnl $1 -> id
+m4_dnl $2 -> title
+m4_dnl $3 -> symbol
+m4_dnl
+m4_define([CT_UI_CONFIGBOX_STRING_WIDGET],[
+_WIDGET_REMARK([configbox string],[$1])
+])
+m4_define([CT_UI_CONFIGBOX_STRING],[
+$0_DATA([$1])
+$0_WIDGET([$1])
+])
+
+
+m4_dnl
 m4_dnl CT_UI_MESSAGEBOX
 m4_dnl
 
