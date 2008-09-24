@@ -27,6 +27,9 @@ dist_perllib_DATA =				\
 	Window.pm				\
 	Menu.pm					\
 	Checkbox.pm				\
+	ConfigboxEnum.pm			\
+	ConfigboxNumber.pm			\
+	ConfigboxString.pm			\
 	Messagebox.pm
 
 ##
