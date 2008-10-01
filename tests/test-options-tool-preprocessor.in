@@ -21,8 +21,9 @@
 . @builddir@/defs
 
 MODE=preprocess
+TOOL=preprocessor
 
-$WRAPPER  choicetool-$MODE                         && exit 1
+$WRAPPER choicetool-$TOOL                          && exit 1
 $CHOICETOOL --dry-run -h                     $MODE || exit 1
 $CHOICETOOL --dry-run --verbose -h           $MODE || exit 1
 $CHOICETOOL --dry-run --debug   -h           $MODE || exit 1
