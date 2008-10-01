@@ -87,6 +87,7 @@ sub add_window_widget ($$$)
     my $stack_ref     = shift;
 
     assert(defined($$widget_ref));
+    assert($$widget_ref->id() == 0);
     assert($$widget_id_ref >= 0);
     assert(defined($stack_ref));
     assert($$stack_ref->size() == 1);
@@ -100,33 +101,14 @@ sub add_window_widget ($$$)
 
     $window->title($widget_data->{TITLE});
 
-    if ($$widget_ref->id() == 0) {
-
-	if (!$$widget_ref->add_child($window->id(), \$window)) {
-	    error("Failed to add children to parent widget [" .
-		  $$widget_ref->id()                          .
-		  "]");
-	    return 0;
-	}
-
-	$window->parent($widget_ref);
-
-	return 1;
-    }
-
-    my $widget = $$widget_ref;
-    assert(!defined($widget->parent()));
-
-    $widget->parent(\$window);
-
-    if (!$window->add_child($$widget_ref->id(), \$widget)) {
-	error("Failed to add children to window widget [" .
-	      $$widget_id_ref                             .
+    if (!$$widget_ref->add_child($window->id(), \$window)) {
+	error("Failed to add children to parent widget [" .
+	      $$widget_ref->id()                          .
 	      "]");
 	return 0;
     }
 
-    $$widget_ref = $window;
+    $window->parent($widget_ref);
 
     return 1;
 }
