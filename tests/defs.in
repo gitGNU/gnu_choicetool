@@ -76,6 +76,7 @@ FLAGS="$FLAGS --warnings all"
 test -n "$VERBOSE"    && FLAGS="$FLAGS --verbose"
 test -n "$DEBUG"      && FLAGS="$FLAGS --debug"
 test -z "$CHOICETOOL" && CHOICETOOL="wrapper choicetool $FLAGS"
+test -z "$WRAPPER"    && WRAPPER="wrapper"
 test -z "$AUTOCONF"   && AUTOCONF="autoconf"
 test -z "$ACLOCAL"    && ACLOCAL="aclocal -I @abs_top_builddir@/libs/aclocal"
 
