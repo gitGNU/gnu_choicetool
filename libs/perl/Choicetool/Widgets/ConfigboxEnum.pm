@@ -120,7 +120,7 @@ sub m4ify_hierarchical_header ($$)
 	"CT_UI_CONFIGBOXENUM_WIDGET([" .
 	$self->id() .
 	"],[" .
-	$self->title() .
+	(defined($self->title()) ? $self->title() : "" ) .
 	"],[" .
 	$self->symbol() .
 	"])\n";
