@@ -19,7 +19,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-package Choicetool::Widgets::ConfigBoxString;
+package Choicetool::Widgets::ConfigboxString;
 
 use 5.8.0;
 
@@ -100,7 +100,6 @@ sub m4ify_hierarchical_header ($$)
     assert(defined($self));
     assert(defined($prefix));
     assert(defined($self->id()));
-    assert(defined($self->title()));
     assert(defined($self->symbol()));
 
     return

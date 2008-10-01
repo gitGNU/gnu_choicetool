@@ -19,7 +19,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-package Choicetool::Widgets::ConfigBoxNumber;
+package Choicetool::Widgets::ConfigboxNumber;
 
 use 5.8.0;
 
@@ -72,6 +72,19 @@ sub symbol {
     return $self->{SYMBOL};
 }
 
+sub base {
+    my $self  = shift;
+    my $value = shift;
+
+    assert(defined($self));
+
+    if (($value == 10) || ($value == 16)) {
+	$self->{BASE} = $value;
+    }
+
+    return $self->{BASE};
+}
+
 #
 # M4 related methods
 #
@@ -100,7 +113,6 @@ sub m4ify_hierarchical_header ($$)
     assert(defined($self));
     assert(defined($prefix));
     assert(defined($self->id()));
-    assert(defined($self->title()));
     assert(defined($self->symbol()));
 
     return

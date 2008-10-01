@@ -19,7 +19,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-package Choicetool::Widgets::ConfigBoxEnum;
+package Choicetool::Widgets::ConfigboxEnum;
 
 use 5.8.0;
 
@@ -72,6 +72,19 @@ sub symbol {
     return $self->{SYMBOL};
 }
 
+sub enum {
+    my $self  = shift;
+    my $value = shift;
+
+    assert(defined($self));
+
+    if ($#{$value} > -1) {
+       $self->{ENUM} = $value;
+    }
+
+    return $self->{ENUM};
+}
+
 #
 # M4 related methods
 #
@@ -100,8 +113,8 @@ sub m4ify_hierarchical_header ($$)
     assert(defined($self));
     assert(defined($prefix));
     assert(defined($self->id()));
-    assert(defined($self->title()));
     assert(defined($self->symbol()));
+    assert(defined($self->base()));
 
     return
 	$prefix .

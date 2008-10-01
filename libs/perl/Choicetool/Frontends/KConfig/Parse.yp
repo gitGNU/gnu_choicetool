@@ -187,6 +187,244 @@ sub add_menu_widget ($$$)
     return 1;
 }
 
+sub add_configbox_widget($$$)
+{
+    my $widget_ref    = shift;
+    my $widget_id_ref = shift;
+    my $stack_ref     = shift;
+
+    assert(defined($$widget_ref));
+    assert($$widget_id_ref >= 0);
+    assert(defined($stack_ref));
+    assert($$stack_ref->size() > 1);
+
+    my $widget_data = $$stack_ref->pop();
+    assert(defined($widget_data));
+    assert(defined($widget_data->{TYPE}));
+    assert(defined($widget_data->{SYMBOL}));
+
+    my $type = $widget_data->{TYPE};
+    delete $widget_data->{TYPE};
+
+    if ($type eq "bool") {
+	@{$widget_data->{ENUM}} = ["y", "n"];
+	$$stack_ref->push($widget_data);
+
+	if (!add_configboxenum_widget($widget_ref,
+				      $widget_id_ref,
+				      $stack_ref)) {
+	    return 0;
+	}
+    } elsif ($type eq "tristate") {
+	@{$widget_data->{ENUM}} = ["y", "n", "m"];
+	$$stack_ref->push($widget_data);
+
+	if (!add_configboxenum_widget($widget_ref,
+				      $widget_id_ref,
+				      $stack_ref)) {
+	    return 0;
+	}
+     } elsif ($type eq "int") {
+	$widget_data->{BASE} = 10;
+	$$stack_ref->push($widget_data);
+
+	if (!add_configboxnumber_widget($widget_ref,
+					$widget_id_ref,
+					$stack_ref)) {
+	    return 0;
+	}
+    } elsif ($type eq "hex") {
+	$widget_data->{BASE} = 16;
+	$$stack_ref->push($widget_data);
+
+	if (!add_configboxnumber_widget($widget_ref,
+					$widget_id_ref,
+					$stack_ref)) {
+	    return 0;
+	}
+    } elsif ($type eq "string") {
+	$$stack_ref->push($widget_data);
+
+	if (!add_configboxstring_widget($widget_ref,
+					$widget_id_ref,
+					$stack_ref)) {
+	    return 0;
+	}
+    } else {
+	bug("Unreachable code");
+    }
+
+    return 1;
+}
+
+sub add_configboxenum_widget ($$$)
+{
+    my $widget_ref    = shift;
+    my $widget_id_ref = shift;
+    my $stack_ref     = shift;
+
+    assert(defined($$widget_ref));
+    assert($$widget_id_ref >= 0);
+    assert(defined($stack_ref));
+
+    my $widget_data = $$stack_ref->pop();
+    assert(defined($widget_data));
+    assert(defined($widget_data->{SYMBOL}));
+    assert($#{$widget_data->{ENUM}} > -1);
+
+    my $configbox =
+	Choicetool::Widgets::ConfigboxEnum->new(++$$widget_id_ref);
+    assert(defined($configbox));
+
+    $configbox->symbol($widget_data->{SYMBOL});
+    $configbox->enum(@{$widget_data->{ENUM}});
+
+    if (defined($widget_data->{TITLE})) {
+	$configbox->title($widget_data->{TITLE});
+    }
+
+    if ($$widget_ref->id() == 0) {
+
+	if (!$$widget_ref->add_child($configbox->id(), \$configbox)) {
+	    error("Failed to add children to parent widget [" .
+		  $$widget_ref->id()                          .
+		  "]");
+	    return 0;
+	}
+
+	$configbox->parent($widget_ref);
+
+	return 1;
+    }
+
+    my $widget = $$widget_ref;
+    assert(!defined($widget->parent()));
+
+    $widget->parent(\$configbox);
+
+    if (!$configbox->add_child($$widget_ref->id(), \$widget)) {
+	error("Failed to add children to config box widget [" .
+	      $$widget_id_ref                                 .
+	      "]");
+	return 0;
+    }
+
+    $$widget_ref = $configbox;
+
+    return 1;
+}
+
+sub add_configboxnumber_widget ($$$)
+{
+    my $widget_ref    = shift;
+    my $widget_id_ref = shift;
+    my $stack_ref     = shift;
+
+    assert(defined($$widget_ref));
+    assert($$widget_id_ref >= 0);
+    assert(defined($stack_ref));
+
+    my $widget_data = $$stack_ref->pop();
+    assert(defined($widget_data));
+    assert(defined($widget_data->{SYMBOL}));
+    assert(defined($widget_data->{BASE}));
+
+    my $configbox =
+	Choicetool::Widgets::ConfigboxNumber->new(++$$widget_id_ref);
+    assert(defined($configbox));
+
+    $configbox->symbol($widget_data->{SYMBOL});
+    $configbox->base($widget_data->{BASE});
+
+    if (defined($widget_data->{TITLE})) {
+	$configbox->title($widget_data->{TITLE});
+    }
+
+    if ($$widget_ref->id() == 0) {
+
+	if (!$$widget_ref->add_child($configbox->id(), \$configbox)) {
+	    error("Failed to add children to parent widget [" .
+		  $$widget_ref->id()                          .
+		  "]");
+	    return 0;
+	}
+
+	$configbox->parent($widget_ref);
+
+	return 1;
+    }
+
+    my $widget = $$widget_ref;
+    assert(!defined($widget->parent()));
+
+    $widget->parent(\$configbox);
+
+    if (!$configbox->add_child($$widget_ref->id(), \$widget)) {
+	error("Failed to add children to config box  widget [" .
+	      $$widget_id_ref                                  .
+	      "]");
+	return 0;
+    }
+
+     $$widget_ref = $configbox;
+
+    return 1;
+}
+
+sub add_configboxstring_widget ($$$)
+{
+    my $widget_ref    = shift;
+    my $widget_id_ref = shift;
+    my $stack_ref     = shift;
+
+    assert(defined($$widget_ref));
+    assert($$widget_id_ref >= 0);
+    assert(defined($stack_ref));
+
+    my $widget_data = $$stack_ref->pop();
+    assert(defined($widget_data));
+    assert(defined($widget_data->{SYMBOL}));
+
+    my $configbox =
+	Choicetool::Widgets::ConfigboxString->new(++$$widget_id_ref);
+    assert(defined($configbox));
+
+    $configbox->symbol($widget_data->{SYMBOL});
+
+    if (defined($widget_data->{TITLE})) {
+	$configbox->title($widget_data->{TITLE});
+    }
+
+    if ($$widget_ref->id() == 0) {
+
+	if (!$$widget_ref->add_child($configbox->id(), \$configbox)) {
+	    error("Failed to add children to parent widget [" .
+		  $$widget_ref->id()                          .
+		  "]");
+	    return 0;
+	}
+
+	$configbox->parent($widget_ref);
+
+	return 1;
+    }
+
+    my $widget = $$widget_ref;
+    assert(!defined($widget->parent()));
+
+    $widget->parent(\$configbox);
+
+    if (!$configbox->add_child($$widget_ref->id(), \$widget)) {
+	error("Failed to add children to config box widget [" .
+	      $$widget_id_ref                                 .
+	      "]");
+	return 0;
+    }
+
+    $$widget_ref = $configbox;
+
+    return 1;
+}
 
 %}
 
@@ -511,22 +749,83 @@ choice_option: 'T_PROMPT' words newlines
 type_definition: 'T_BOOL'
 {
     drule("type_definition");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+    assert(defined($data->{TYPE}));
+
+    if ($data->{TYPE} ne "") {
+	error("Type is already defined");
+	$_[0]->YYAbort();
+    }
+    $data->{TYPE} = "bool";
+
+    $$parser_data->{STACK}->push($data);
 }
 	       | 'T_TRISTATE'
 {
     drule("type_definition");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+    assert(defined($data->{TYPE}));
+
+    if ($data->{TYPE} ne "") {
+	error("Type is already defined");
+	$_[0]->YYAbort();
+    }
+    $data->{TYPE} = "tristate";
+
+    $$parser_data->{STACK}->push($data);
 }
 	       | 'T_STRING'
 {
     drule("type_definition");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+    assert(defined($data->{TYPE}));
+
+    if ($data->{TYPE} ne "") {
+	error("Type is already defined");
+	$_[0]->YYAbort();
+    }
+    $data->{TYPE} = "string";
+
+    $$parser_data->{STACK}->push($data);
 }
 	       | 'T_HEX'
 {
     drule("type_definition");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+    assert(defined($data->{TYPE}));
+
+    if ($data->{TYPE} ne "") {
+	error("Type is already defined");
+	$_[0]->YYAbort();
+    }
+    $data->{TYPE} = "hex";
+
+    $$parser_data->{STACK}->push($data);
 }
 	       | 'T_INT'
 {
     drule("type_definition");
+
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+    assert(defined($data->{TYPE}));
+
+    if ($data->{TYPE} ne "") {
+	error("Type is already defined");
+	$_[0]->YYAbort();
+    }
+    $data->{TYPE} = "int";
+
+    $$parser_data->{STACK}->push($data);
 }
 	       ;
 
@@ -564,16 +863,36 @@ common_stmt: config_stmt
 config_stmt: config_entry
 {
     drule("config_stmt");
+
+    if (!add_configbox_widget($$parser_data->{WIDGET},
+			      \$$parser_data->{WIDGET_ID},
+			      \$$parser_data->{STACK})) {
+	$_[0]->YYAbort;
+    }
 }
 	   | config_entry config_options_block_list
 {
     drule("config_stmt");
+
+    if (!add_configbox_widget($$parser_data->{WIDGET},
+			      \$$parser_data->{WIDGET_ID},
+			      \$$parser_data->{STACK})) {
+	$_[0]->YYAbort;
+    }
 }
 	   ;
 
 config_entry: 'T_CONFIG' word newlines
 {
     drule("config_entry");
+
+    my $config_data;
+
+    $config_data->{SYMBOL}  = $$parser_data->{BUFFER};
+    $config_data->{TYPE}    = "";
+    $config_data->{DEFAULT} = "";
+
+    $$parser_data->{STACK}->push($config_data);
 }
 	    ;
 
@@ -659,10 +978,34 @@ config_option: type_default_definition expr newlines
 type_default_definition: 'T_DEF_TRISTATE'
 {
     drule("type_default_definition");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+    assert(defined($data->{TYPE}));
+
+    if ($data->{TYPE} ne "") {
+	error("Type is already defined");
+	$_[0]->YYAbort();
+    }
+    $data->{TYPE} = "tristate";
+
+    $$parser_data->{STACK}->push($data);
 }
 		       | 'T_DEF_BOOL'
 {
     drule("type_default_definition");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+    assert(defined($data->{TYPE}));
+
+    if ($data->{TYPE} ne "") {
+	error("Type is already defined");
+	$_[0]->YYAbort();
+    }
+    $data->{TYPE} = "bool";
+
+    $$parser_data->{STACK}->push($data);
 }
 		       ;
 
