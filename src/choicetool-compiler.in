@@ -69,10 +69,13 @@ use Choicetool::Compile;
 #     The following modules are needed because we will evaluate the parsed
 #     structure, the Widget module needs to know all subclasses methods
 #
-use Choicetool::Widgets::Widget;
 use Choicetool::Widgets::Checkbox;
+use Choicetool::Widgets::ConfigboxEnum;
+use Choicetool::Widgets::ConfigboxNumber;
+use Choicetool::Widgets::ConfigboxString;
 use Choicetool::Widgets::Menu;
 use Choicetool::Widgets::Messagebox;
+use Choicetool::Widgets::Widget;
 use Choicetool::Widgets::Window;
 
 #
