@@ -251,7 +251,7 @@ sub add_configbox_widget($$$)
 	    return 0;
 	}
     } else {
-	bug("Unreachable code");
+	bug("Unreachable code, got type '$type'");
     }
 
     return 1;
