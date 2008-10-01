@@ -114,7 +114,6 @@ sub m4ify_hierarchical_header ($$)
     assert(defined($prefix));
     assert(defined($self->id()));
     assert(defined($self->symbol()));
-    assert(defined($self->base()));
 
     return
 	$prefix .
