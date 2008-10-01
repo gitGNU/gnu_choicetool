@@ -35,10 +35,11 @@ use Choicetool::Data::Set;
 use Choicetool::Data::Stack;
 
 use Choicetool::Widgets::Widget;
-use Choicetool::Widgets::Checkbox;
 use Choicetool::Widgets::Menu;
-use Choicetool::Widgets::Messagebox;
 use Choicetool::Widgets::Window;
+use Choicetool::Widgets::ConfigboxEnum;
+use Choicetool::Widgets::ConfigboxNumber;
+use Choicetool::Widgets::ConfigboxString;
 
 use Choicetool::Binder;
 
@@ -88,6 +89,7 @@ sub add_window_widget ($$$)
     assert(defined($$widget_ref));
     assert($$widget_id_ref >= 0);
     assert(defined($stack_ref));
+    assert($$stack_ref->size() == 1);
 
     my $widget_data = $$stack_ref->pop();
     assert(defined($widget_data));
@@ -97,6 +99,20 @@ sub add_window_widget ($$$)
     assert(defined($window));
 
     $window->title($widget_data->{TITLE});
+
+    if ($$widget_ref->id() == 0) {
+
+	if (!$$widget_ref->add_child($window->id(), \$window)) {
+	    error("Failed to add children to parent widget [" .
+		  $$widget_ref->id()                          .
+		  "]");
+	    return 0;
+	}
+
+	$window->parent($widget_ref);
+
+	return 1;
+    }
 
     my $widget = $$widget_ref;
     assert(!defined($widget->parent()));
@@ -140,21 +156,15 @@ input:
 {
     drule("input");
 
-    assert($$parser_data->{STACK}->size() == 1);
-
     if (!add_window_widget($$parser_data->{WIDGET},
 			   \$$parser_data->{WIDGET_ID},
 			   \$$parser_data->{STACK})) {
 	$_[0]->YYAbort;
     }
-
-    print $parser_data->{WIDGET} . " >>>\n";
 }
      | newlines stmt_list
 {
     drule("input");
-
-    assert($$parser_data->{STACK}->size() == 1);
 
     if (!add_window_widget($$parser_data->{WIDGET},
 			   \$$parser_data->{WIDGET_ID},
