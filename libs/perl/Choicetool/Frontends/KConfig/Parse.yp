@@ -101,17 +101,92 @@ sub add_window_widget ($$$)
 
     $window->title($widget_data->{TITLE});
 
-    if (!$$widget_ref->add_child($window->id(), \$window)) {
-	error("Failed to add children to parent widget [" .
-	      $$widget_ref->id()                          .
+    my $root_ref      = $$widget_ref->root();
+    my @root_children = $$root_ref->children();
+
+    for (my $i = 0; $i <= $#root_children; $i++) {
+	my $child_ref = $$root_ref->child($i);
+
+	if (!defined($child_ref)) {
+	    next;
+	}
+
+	if (!$window->add_child($$child_ref->id(), $child_ref)) {
+	    error("Failed to add child to window widget [" .
+		  $$child_ref->id()                        .
+		  "]");
+	    return 0;
+	}
+
+	$$child_ref->parent(\$window);
+	$$root_ref->remove_child($i);
+    }
+
+     if (!$$root_ref->add_child($window->id(), \$window)) {
+	 error("Failed to add child to root widget [" .
+	       $window->id()                          .
+	       "]");
+	 return 0;
+     }
+
+     $window->parent($root_ref);
+
+     $$widget_ref = $$root_ref;
+
+    return 1;
+}
+
+sub add_menu_widget ($$$)
+{
+    my $widget_ref    = shift;
+    my $widget_id_ref = shift;
+    my $stack_ref     = shift;
+
+    assert(defined($$widget_ref));
+    assert($$widget_id_ref >= 0);
+    assert(defined($stack_ref));
+    assert($$stack_ref->size() > 1);
+
+    my $widget_data = $$stack_ref->pop();
+    assert(defined($widget_data));
+    assert(defined($widget_data->{LABEL}));
+
+    my $menu = Choicetool::Widgets::Menu->new(++$$widget_id_ref);
+    assert(defined($menu));
+
+    $menu->label($widget_data->{LABEL});
+
+    if ($$widget_ref->id() == 0) {
+
+	if (!$$widget_ref->add_child($menu->id(), \$menu)) {
+	    error("Failed to add children to parent widget [" .
+		  $$widget_ref->id()                          .
+		  "]");
+	    return 0;
+	}
+
+	$menu->parent($widget_ref);
+
+	return 1;
+    }
+
+    my $widget = $$widget_ref;
+    assert(!defined($widget->parent()));
+
+    $widget->parent(\$menu);
+
+    if (!$menu->add_child($$widget_ref->id(), \$widget)) {
+	error("Failed to add children to menu widget [" .
+	      $$widget_id_ref                           .
 	      "]");
 	return 0;
     }
 
-    $window->parent($widget_ref);
+    $$widget_ref = $menu;
 
     return 1;
 }
+
 
 %}
 
@@ -184,6 +259,12 @@ stmt: mainmenu_stmt
     | menu_stmt
 {
     drule("stmt");
+
+    if (!add_menu_widget($$parser_data->{WIDGET},
+			 \$$parser_data->{WIDGET_ID},
+			 \$$parser_data->{STACK})) {
+	$_[0]->YYAbort;
+    }
 }
     | choice_stmt
 {
@@ -265,6 +346,12 @@ menu_entry: menu
 menu: 'T_MENU' words newlines
 {
     drule("menu");
+
+    my $menu_data;
+
+    $menu_data->{LABEL} = $$parser_data->{BUFFER};
+
+    $$parser_data->{STACK}->push($menu_data);
 }
     ;
 
@@ -278,6 +365,12 @@ menu_block_list: menu_block
 menu_block: menu_stmt
 {
     drule("menu_block");
+
+    if (!add_menu_widget($$parser_data->{WIDGET},
+			 \$$parser_data->{WIDGET_ID},
+			 \$$parser_data->{STACK})) {
+	$_[0]->YYAbort;
+    }
 }
 	  | choice_stmt
 {
@@ -630,6 +723,12 @@ if_block: common_stmt
 	| menu_stmt
 {
     debug("if_block");
+
+    if (!add_menu_widget($$parser_data->{WIDGET},
+			 \$$parser_data->{WIDGET_ID},
+			 \$$parser_data->{STACK})) {
+	$_[0]->YYAbort;
+    }
 }
 	| choice_stmt
 {
