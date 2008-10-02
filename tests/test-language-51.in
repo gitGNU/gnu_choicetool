@@ -30,7 +30,7 @@ config CONFIG_1
        hex "HEX"
        if OP1 = OP2
        	      config CONFIG_2
-	      	     bool
+                     bool
        endif
 EOF
 
