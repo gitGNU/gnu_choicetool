@@ -720,15 +720,15 @@ choice_option: 'T_PROMPT' words newlines
 {
     drule("choice_option");
 }
-	     | type_definition words 'T_IF' expr newlines
+	     | choice_type_definition words 'T_IF' expr newlines
 {
     drule("config_option");
 }
-	     | type_definition words newlines
+	     | choice_type_definition words newlines
 {
     drule("choice_option");
 }
-	     | type_definition newlines
+	     | choice_type_definition newlines
 {
     drule("choice_option");
 }
@@ -746,86 +746,25 @@ choice_option: 'T_PROMPT' words newlines
 }
 	     ;
 
-type_definition: 'T_BOOL'
+choice_type_definition: 'T_BOOL'
 {
     drule("type_definition");
-
-    my $data = $$parser_data->{STACK}->pop();
-    assert(defined($data));
-    assert(defined($data->{TYPE}));
-
-    if ($data->{TYPE} ne "") {
-	error("Type is already defined");
-	$_[0]->YYAbort();
-    }
-    $data->{TYPE} = "bool";
-
-    $$parser_data->{STACK}->push($data);
 }
 	       | 'T_TRISTATE'
 {
     drule("type_definition");
-
-    my $data = $$parser_data->{STACK}->pop();
-    assert(defined($data));
-    assert(defined($data->{TYPE}));
-
-    if ($data->{TYPE} ne "") {
-	error("Type is already defined");
-	$_[0]->YYAbort();
-    }
-    $data->{TYPE} = "tristate";
-
-    $$parser_data->{STACK}->push($data);
 }
 	       | 'T_STRING'
 {
     drule("type_definition");
-
-    my $data = $$parser_data->{STACK}->pop();
-    assert(defined($data));
-    assert(defined($data->{TYPE}));
-
-    if ($data->{TYPE} ne "") {
-	error("Type is already defined");
-	$_[0]->YYAbort();
-    }
-    $data->{TYPE} = "string";
-
-    $$parser_data->{STACK}->push($data);
 }
 	       | 'T_HEX'
 {
     drule("type_definition");
-
-    my $data = $$parser_data->{STACK}->pop();
-    assert(defined($data));
-    assert(defined($data->{TYPE}));
-
-    if ($data->{TYPE} ne "") {
-	error("Type is already defined");
-	$_[0]->YYAbort();
-    }
-    $data->{TYPE} = "hex";
-
-    $$parser_data->{STACK}->push($data);
 }
 	       | 'T_INT'
 {
     drule("type_definition");
-
-
-    my $data = $$parser_data->{STACK}->pop();
-    assert(defined($data));
-    assert(defined($data->{TYPE}));
-
-    if ($data->{TYPE} ne "") {
-	error("Type is already defined");
-	$_[0]->YYAbort();
-    }
-    $data->{TYPE} = "int";
-
-    $$parser_data->{STACK}->push($data);
 }
 	       ;
 
@@ -864,20 +803,38 @@ config_stmt: config_entry
 {
     drule("config_stmt");
 
-    if (!add_configbox_widget($$parser_data->{WIDGET},
-			      \$$parser_data->{WIDGET_ID},
-			      \$$parser_data->{STACK})) {
-	$_[0]->YYAbort;
+    my $data = $$parser_data->{STACK}->pop();
+
+    if (!defined($data->{TYPE})) {
+	error("Config symbol defined without a type");
+	$_[0]->YYAbort();
+    } else {
+	$$parser_data->{STACK}->push($data);
+
+	if (!add_configbox_widget($$parser_data->{WIDGET},
+				  \$$parser_data->{WIDGET_ID},
+				  \$$parser_data->{STACK})) {
+	    $_[0]->YYAbort;
+	}
     }
 }
 	   | config_entry config_options_block_list
 {
     drule("config_stmt");
 
-    if (!add_configbox_widget($$parser_data->{WIDGET},
-			      \$$parser_data->{WIDGET_ID},
-			      \$$parser_data->{STACK})) {
-	$_[0]->YYAbort;
+    my $data = $$parser_data->{STACK}->pop();
+
+    if (!defined($data->{TYPE})) {
+	error("Config symbol defined without a type");
+	$_[0]->YYAbort();
+    } else {
+	$$parser_data->{STACK}->push($data);
+
+	if (!add_configbox_widget($$parser_data->{WIDGET},
+				  \$$parser_data->{WIDGET_ID},
+				  \$$parser_data->{STACK})) {
+	    $_[0]->YYAbort;
+	}
     }
 }
 	   ;
@@ -889,7 +846,6 @@ config_entry: 'T_CONFIG' word newlines
     my $config_data;
 
     $config_data->{SYMBOL}  = $$parser_data->{BUFFER};
-    $config_data->{TYPE}    = "";
     $config_data->{DEFAULT} = "";
 
     $$parser_data->{STACK}->push($config_data);
@@ -921,23 +877,23 @@ config_options_block: config_option
 }
 		    ;
 
-config_option: type_default_definition expr newlines
+config_option: config_type_default_definition expr newlines
 {
     drule("config_option");
 }
-	     | type_default_definition expr 'T_IF' expr newlines
+	     | config_type_default_definition expr 'T_IF' expr newlines
 {
     drule("config_option");
 }
-	     | type_definition words 'T_IF' expr newlines
+	     | config_type_definition words 'T_IF' expr newlines
 {
     drule("config_option");
 }
-	     | type_definition words newlines
+	     | config_type_definition words newlines
 {
     drule("config_option");
 }
-	     | type_definition newlines
+	     | config_type_definition newlines
 {
     drule("config_option");
 }
@@ -975,15 +931,93 @@ config_option: type_default_definition expr newlines
 }
 	     ;
 
-type_default_definition: 'T_DEF_TRISTATE'
+config_type_definition: 'T_BOOL'
+{
+    drule("type_definition");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+
+    if (defined($data->{TYPE})) {
+	error("Type is already defined");
+	$_[0]->YYAbort();
+    }
+    $data->{TYPE} = "bool";
+
+    $$parser_data->{STACK}->push($data);
+}
+	       | 'T_TRISTATE'
+{
+    drule("type_definition");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+
+    if (defined($data->{TYPE})) {
+	error("Type is already defined");
+	$_[0]->YYAbort();
+    }
+    $data->{TYPE} = "tristate";
+
+    $$parser_data->{STACK}->push($data);
+}
+	       | 'T_STRING'
+{
+    drule("type_definition");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+
+    if (defined($data->{TYPE})) {
+	error("Type is already defined");
+	$_[0]->YYAbort();
+    }
+    $data->{TYPE} = "string";
+
+    $$parser_data->{STACK}->push($data);
+}
+	       | 'T_HEX'
+{
+    drule("type_definition");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+
+    if (defined($data->{TYPE})) {
+	error("Type is already defined");
+	$_[0]->YYAbort();
+    }
+
+    $data->{TYPE} = "hex";
+
+    $$parser_data->{STACK}->push($data);
+}
+	       | 'T_INT'
+{
+    drule("type_definition");
+
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+
+    if (defined($data->{TYPE})) {
+	error("Type is already defined");
+	$_[0]->YYAbort();
+    }
+    $data->{TYPE} = "int";
+
+    $$parser_data->{STACK}->push($data);
+}
+	       ;
+
+config_type_default_definition: 'T_DEF_TRISTATE'
 {
     drule("type_default_definition");
 
     my $data = $$parser_data->{STACK}->pop();
     assert(defined($data));
-    assert(defined($data->{TYPE}));
 
-    if ($data->{TYPE} ne "") {
+    if (defined($data->{TYPE})) {
 	error("Type is already defined");
 	$_[0]->YYAbort();
     }
@@ -997,9 +1031,8 @@ type_default_definition: 'T_DEF_TRISTATE'
 
     my $data = $$parser_data->{STACK}->pop();
     assert(defined($data));
-    assert(defined($data->{TYPE}));
 
-    if ($data->{TYPE} ne "") {
+    if (defined($data->{TYPE})) {
 	error("Type is already defined");
 	$_[0]->YYAbort();
     }
