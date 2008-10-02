@@ -27,6 +27,7 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_24
 config CONFIG_1
+       string "STRING" if OP1 || (OP2 && !OP3)
        menuconfig MENUCONFIG_1
        		  menuconfig MENUCONFIG_2
 EOF

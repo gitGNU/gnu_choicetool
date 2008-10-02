@@ -27,6 +27,7 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_16
 config CONFIG_1
+       def_tristate "y"
        menuconfig MENUCONFIG_1
        		  bool OP1 if !OP2
 EOF

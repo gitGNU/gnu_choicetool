@@ -27,6 +27,7 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_17
 config CONFIG_1
+       def_bool "n"
        menuconfig MENUCONFIG_1
        		  prompt "OP1" if !OP2
 EOF

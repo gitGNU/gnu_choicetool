@@ -28,6 +28,7 @@ cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_8
 config CONFIG_1
        option OP1 = OP2 OP3 = "OP 4"
+       bool "BOOL"
 EOF
 
 $CHOICETOOL -i ./choose.ct || exit 1

@@ -27,6 +27,7 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_14
 config CONFIG_1
+       bool "BOOL" if (OP1 && OP2)
        comment COMMENT_1
        	       depends on DEPEND_1
 EOF

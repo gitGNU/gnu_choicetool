@@ -27,6 +27,7 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_20
 config CONFIG_1
+       int "INT"
        menuconfig MENUCONFIG_1
        		  range OP1 OP2 if OP3 = OP4
 EOF

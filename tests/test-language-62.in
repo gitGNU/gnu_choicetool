@@ -27,6 +27,7 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_22
 config CONFIG_1
+       hex
        menuconfig MENUCONFIG_1
        		  if OP1
 			menu "MENU 1"

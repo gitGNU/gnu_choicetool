@@ -27,6 +27,7 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_11
 config CONFIG_1
+       int
        if OP1 = OP2
        	      choice
 	      endchoice

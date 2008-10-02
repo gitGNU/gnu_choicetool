@@ -27,6 +27,7 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_9
 config CONFIG_1
+       tristate "TRISTATE" if OP1
        if OP1 = OP2
        endif
 EOF

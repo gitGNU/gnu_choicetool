@@ -27,7 +27,9 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_15
 config CONFIG_1
+       bool
        menuconfig MENUCONFIG_1
+              int
 EOF
 
 $CHOICETOOL -i ./choose.ct || exit 1

@@ -27,6 +27,7 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_10
 config CONFIG_1
+       string "STRING"
        if OP1 = OP2
        	      menu "MENU 1"
 	      endmenu

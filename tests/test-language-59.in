@@ -27,6 +27,7 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_19
 config CONFIG_1
+       hex
        menuconfig MENUCONFIG_1
        		  select SELECT_1 if !OP1 && !OP2
 EOF

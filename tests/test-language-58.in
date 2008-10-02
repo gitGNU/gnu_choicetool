@@ -27,6 +27,7 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_18
 config CONFIG_1
+       int
        menuconfig MENUCONFIG_1
        		  default (OP1 && OP2) if (!OP1 || !OP2)
 EOF

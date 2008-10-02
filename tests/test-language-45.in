@@ -27,6 +27,7 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_7
 config CONFIG_1
+       string "STRING"
        option
 EOF
 

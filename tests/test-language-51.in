@@ -27,8 +27,10 @@
 cat > ./choose.ct <<EOF
 mainmenu COMMON_TEST_12
 config CONFIG_1
+       hex "HEX"
        if OP1 = OP2
        	      config CONFIG_2
+	      	     bool
        endif
 EOF
 
