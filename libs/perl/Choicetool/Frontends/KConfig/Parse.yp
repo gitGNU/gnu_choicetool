@@ -888,10 +888,24 @@ config_option: config_type_default_definition expr newlines
 	     | config_type_definition words 'T_IF' expr newlines
 {
     drule("config_option");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+
+    $data->{TITLE} = $$parser_data->{BUFFER};
+
+    $$parser_data->{STACK}->push($data);
 }
 	     | config_type_definition words newlines
 {
     drule("config_option");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+
+    $data->{TITLE} = $$parser_data->{BUFFER};
+
+    $$parser_data->{STACK}->push($data);
 }
 	     | config_type_definition newlines
 {
