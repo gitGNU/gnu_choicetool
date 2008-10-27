@@ -1,4 +1,5 @@
-(p (kbd (pre "
+(p (@ class "terminal")
+"
 Start symbol input
 
 input: | newlines | stmt_list | newlines stmt_list ;
@@ -45,4 +46,6 @@ comment_stmt: comment_entry | comment_entry depends_list ;
 comment_entry: 'T_COMMENT' words newlines ;
 menuconfig_stmt: menuconfig_entry | menuconfig_entry config_options_block_list ;
 menuconfig_entry: 'T_MENUCONFIG' word newlines ;
-") ) )
+
+"
+)
