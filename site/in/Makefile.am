@@ -38,12 +38,13 @@ EXTRA_DIST = $(SITE_SRCS)
 grammar.scm: $(top_srcdir)/docs/grammar.txt Makefile
 	rm -f grammar.scm                                 &&	\
 	touch grammar.scm                                 &&	\
+	echo "(pre"                        >> grammar.scm &&	\
 	echo "(p (@ class \"terminal\")"   >> grammar.scm &&	\
 	echo "\""                          >> grammar.scm &&	\
 	cat $(top_srcdir)/docs/grammar.txt >> grammar.scm &&	\
 	echo ""                            >> grammar.scm &&	\
 	echo "\""                          >> grammar.scm &&	\
-	echo ")" >> grammar.scm || {				\
+	echo ") )" >> grammar.scm || {				\
 	        rm -f grammar.scm ;				\
 	        exit 1 ;					\
 	}
@@ -51,6 +52,7 @@ grammar.scm: $(top_srcdir)/docs/grammar.txt Makefile
 site: $(SITE_SRCS)
 	$(SITETOOL) -v --mode initialize && \
 	$(SITETOOL) -v --mode build && \
+	$(SITETOOL) -v --mode validate && \
 	touch site.stamp || { \
 		$(SITETOOL) -v --mode clean ; \
 		rm -f site.stamp ; \

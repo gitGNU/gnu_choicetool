@@ -1,3 +1,4 @@
+(pre
 (p (@ class "terminal")
 "
 Start symbol input
@@ -48,4 +49,4 @@ menuconfig_stmt: menuconfig_entry | menuconfig_entry config_options_block_list ;
 menuconfig_entry: 'T_MENUCONFIG' word newlines ;
 
 "
-)
+) )
