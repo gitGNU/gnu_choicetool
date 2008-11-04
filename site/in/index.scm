@@ -3,16 +3,15 @@
    (a (@ (href "http://www.catb.org/~esr/cml2/cml2-reference.html")) "CML2")
    " or "
    (a (@ (href "http://kernel.org/doc/#kconfig")) "Linux kernel kconfig")
-   "."
-   (br)
-   "It uses an input description in order to know the configuration "
+   ".")
+(p "It uses an input description in order to know the configuration "
    "symbols and their inter-relations and creates an outputs a script "
    "that should be shipped with a package, in order to let the user tweak "
-   "the configuration parameters interactively."
-   (br)
-   "Choicetool should work with (and even without) the "
+   "the configuration parameters interactively.")
+(p "Choicetool should work with (and even without) the "
    (a (@ (href "http://en.wikipedia.org/wiki/Autotools")) autotools)
    ".")
+
 (h4 "Use")
 (p "The complete input " (a (@ (href "./grammar.html")) "grammar") " "
    "is available.")
@@ -26,9 +25,8 @@
 (p "Francesco Salvestrini <salvestrini AT gmail DOT com>")
 
 (h3 "AUTHORS")
-(p "Francesco Salvestrini <salvestrini AT gmail DOT com>"
-   (br)
-   "Alessandro Massignan <ff0000 DOT it AT gmail DOT com>")
+(p "Francesco Salvestrini <salvestrini AT gmail DOT com>")
+(p "Alessandro Massignan <ff0000 DOT it AT gmail DOT com>")
 
 (h3 "RELEASES")
 (p "Sorry, no public release available at the moment.")
@@ -47,14 +45,13 @@
    "<choicetool-generic AT nongnu DOT org>. "
    "An easy way to collect all the required information, such as platform and "
    "compiler, is to include in your report the config.log file available at "
-   "the end of the configuration procedure. "
-   (br)
-   (br)
-   "If you have a patch for a bug that hasn't yet been fixed in "
+   "the end of the configuration procedure.")
+(p "If you have a patch for a bug that hasn't yet been fixed in "
    "the latest repository sources, please be so kind to create it using the "
    "repository sources, not the release sources.")
 
 (h3 "DEVELOPMENT")
+
 (h4 "Browsing sources")
 (p "You can browse the "
    (a (@ (href "http://git.savannah.nongnu.org/gitweb/?p=choicetool.git"))
@@ -65,7 +62,7 @@
    "differences among two versions.")
 
 (h4 "Getting a copy of the Git Repository")
-(p "Anonymous checkout: ")
+(p "Anonymous checkout:")
 (pre (@ class "terminal")
      (a (@ (href "http://savannah.gnu.org/maintenance/UsingGit")) "git")
      " clone git://git.savannah.nongnu.org/choicetool.git")
@@ -77,8 +74,6 @@
    (a (@ (href "http://lists.nongnu.org/mailman/listinfo/choicetool-generic"))
       "mailing list")
    ", drop us a mail and start coding. Send your code to the "
-   "mailing list under the form of patches for the current revision system."
-   (br)
-   (br)
-   "If you have time but no programming skills, you can help with "
+   "mailing list under the form of patches for the current revision system.")
+(p "If you have time but no programming skills, you can help with "
    "documentation,  packaging, tests before releases etc ...")
