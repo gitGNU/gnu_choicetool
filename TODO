@@ -15,7 +15,9 @@ TO-BE-DONE:
 * Parse.yp: Rearrange the parser in order to speed-up big files parsing
 
 * Do a general clean-up of CHOICETOOL_BINARY_PATH, CHOICETOOL_DATA_PATH and
-  CHOICETOOL_LIBRARY_PATH environment variables
+  CHOICETOOL_LIBRARY_PATH environment variables. Consider removing the
+  CHOICETOOL_RC_FILES environment variable references or update all the src/*
+  scripts accordingly
 
 * Handle multiple configuration syntaxes, translating them into a common
   configuration syntax; this deserves an option switch both on choicetool,
