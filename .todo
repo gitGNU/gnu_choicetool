@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<todo version="0.1.20">
+    <note priority="medium" time="1226609119" done="1226609159">
+        Add sub-options handling in Options.pm module
+    </note>
+    <note priority="medium" time="1226609133" done="1226609175">
+        Rearrange the test-suite in order to avoid tests that require tools not installed on the host (e.g.: autotools)
+    </note>
+    <note priority="medium" time="1226608975">
+        Remove global variables from libs/perl/Choicetool/Frontends/KConfig/Parse.yp
+    </note>
+    <note priority="medium" time="1226609027">
+        Rearrange the output production in UI/m4ify, pass a stream instead of collecting strings in a stack-based approach
+    </note>
+    <note priority="medium" time="1226609050">
+        Rearrange the parser (Parse.yp) in order to speed-up big files parsing
+    </note>
+    <note priority="medium" time="1226609082">
+        Do a general clean-up of CHOICETOOL_BINARY_PATH, CHOICETOOL_DATA_PATH and CHOICETOOL_LIBRARY_PATH environment variables. Consider removing the CHOICETOOL_RC_FILES environment variable references or update all the src/* scripts accordingly
+    </note>
+    <note priority="medium" time="1226609103">
+        Handle multiple configuration syntaxes, translating them into a common configuration syntax; this deserves an option switch both on choicetool, choicetool-preprocess and choicetool-parse
+    </note>
+    <note priority="medium" time="1226609111">
+        Check all string-related assert
+    </note>
+    <note priority="medium" time="1226609147" done="1226609187">
+        Add code into the libs/perl/Choicetool/Options.pm module in order to have a cleaner option parsing method
+    </note>
+</todo>
