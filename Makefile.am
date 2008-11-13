@@ -57,7 +57,10 @@ EXTRA_DIST =							\
 ##
 
 TODO: .todo
-	$(DEVTODO) -T
+	$(DEVTODO) -T || {			\
+		rm -f TODO ;			\
+		exit 1 ;			\
+	}
 
 announcement:
 	$(ANNOUNCE_GEN)				\
