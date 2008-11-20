@@ -30,4 +30,7 @@
     <note priority="low" time="1226609050">
         Rearrange the parser (Parse.yp) in order to speed-up big files parsing
     </note>
+    <note priority="low" time="1227122770">
+        Rearrange the build process in order to use EXEEXT (if needed)
+    </note>
 </todo>
