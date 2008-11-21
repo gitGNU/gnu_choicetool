@@ -50,7 +50,8 @@ EXTRA_DIST =							\
 	bootstrap						\
 	configure.ac.in						\
 	guile.af						\
-	perl.af
+	perl.af							\
+	.todo
 
 ##
 ## Maintainer related targets
