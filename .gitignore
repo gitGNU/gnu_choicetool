@@ -68,6 +68,8 @@ tests/test-autotools-2
 tests/test-autotools-3
 tests/test-dry-run
 tests/test-fail
+tests/test-debug
+tests/test-verbose
 tests/test-input-name-1
 tests/test-output-name-1
 tests/test-language-01
