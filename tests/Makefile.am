@@ -111,6 +111,8 @@ FAIL_TESTS +=					\
 SUCCESS_TESTS +=				\
 	test-success				\
 	test-dry-run				\
+	test-verbose				\
+	test-debug				\
 	test-language-parse-1			\
 	test-language-comments-1		\
 	test-language-comments-2		\
@@ -1092,6 +1094,30 @@ test-dry-run: $(srcdir)/test-dry-run.in Makefile
 	}
 EXTRA_DIST += test-dry-run.in
 CLEANFILES += test-dry-run
+
+test-verbose: $(srcdir)/test-verbose.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-verbose.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-verbose.in
+CLEANFILES += test-verbose
+
+test-debug: $(srcdir)/test-debug.in Makefile
+	( rm -f $@ $@.tmp && \
+	  $(do_subst) < $(srcdir)/test-debug.in > $@.tmp && \
+	  chmod +x $@.tmp && \
+	  chmod a-w $@.tmp && \
+	  mv -f $@.tmp $@ ) || { \
+		rm -f $@ $@.tmp ; \
+		exit 1 ; \
+	}
+EXTRA_DIST += test-debug.in
+CLEANFILES += test-debug
 
 test-autotools-1: $(srcdir)/test-autotools-1.in Makefile
 	( rm -f $@ $@.tmp && \
