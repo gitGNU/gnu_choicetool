@@ -188,6 +188,7 @@ tests/test-options-tool-preprocessor
 tests/test-options-tool-parser
 tests/test-options-tool-compiler
 tests/test-options-tool-linker
+tests/test-options-error-1
 
 docs/man/choicetool.1
 docs/info/choicetool.info
