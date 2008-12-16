@@ -9,6 +9,9 @@
     <note priority="medium" time="1226609147" done="1226609187">
         Add code into the libs/perl/Choicetool/Options.pm module in order to have a cleaner option parsing method
     </note>
+    <note priority="veryhigh" time="1229454572">
+        Fix getopt related bug (run 'choicetool -n check' to reproduce)
+    </note>
     <note priority="high" time="1226608975">
         Remove global variables from libs/perl/Choicetool/Frontends/KConfig/Parse.yp
     </note>
