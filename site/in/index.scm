@@ -1,4 +1,4 @@
-(h3 "DESCRIPTION")
+(h2 "DESCRIPTION")
 (p "Choicetool is a configuration management tool like "
    (a (@ (href "http://www.catb.org/~esr/cml2/cml2-reference.html")) "CML2")
    " or "
@@ -12,26 +12,26 @@
    (a (@ (href "http://en.wikipedia.org/wiki/Autotools")) autotools)
    ".")
 
-(h4 "Use")
+(h3 "Use")
 (p "The complete input " (a (@ (href "./grammar.html")) "grammar") " "
    "is available.")
 
-(h3 "COPYING")
+(h2 "COPYING")
 (p "The project is licensed under the "
    (a (@ (href "http://www.gnu.org/licenses/licenses.html"))
       "GNU General Public License, version 2"))
 
-(h3 "MAINTAINERS")
+(h2 "MAINTAINERS")
 (p "Francesco Salvestrini <salvestrini AT gmail DOT com>")
 
-(h3 "AUTHORS")
+(h2 "AUTHORS")
 (p "Francesco Salvestrini <salvestrini AT gmail DOT com>")
 (p "Alessandro Massignan <ff0000 DOT it AT gmail DOT com>")
 
-(h3 "RELEASES")
+(h2 "RELEASES")
 (p "Sorry, no public release available at the moment.")
 
-(h3 "MAILING LISTS")
+(h2 "MAILING LISTS")
 (p "The project has a single moderated mailing list, with an archive. "
    "In order to post a message to the mailing list you must be subscribed. "
    "Please consult the "
@@ -39,7 +39,7 @@
       "mailing list page")
    " for more information on subscribing to the mailing list.")
 
-(h3 "REPORT A BUG")
+(h2 "REPORT A BUG")
 (p "If you think you have found a bug then please send as complete a report "
    "as possible to "
    "<choicetool-generic AT nongnu DOT org>. "
@@ -50,9 +50,9 @@
    "the latest repository sources, please be so kind to create it using the "
    "repository sources, not the release sources.")
 
-(h3 "DEVELOPMENT")
+(h2 "DEVELOPMENT")
 
-(h4 "Browsing sources")
+(h3 "Browsing sources")
 (p "You can browse the "
    (a (@ (href "http://git.savannah.nongnu.org/gitweb/?p=choicetool.git"))
       "Git repository")
@@ -61,13 +61,13 @@
    "the complete histories of any file in the repository as well as "
    "differences among two versions.")
 
-(h4 "Getting a copy of the Git Repository")
+(h3 "Getting a copy of the Git Repository")
 (p "Anonymous checkout:")
 (pre (@ class "terminal")
      (a (@ (href "http://savannah.gnu.org/maintenance/UsingGit")) "git")
      " clone git://git.savannah.nongnu.org/choicetool.git")
 
-(h4 "Contribute")
+(h3 "Contribute")
 (p "If you have time and programming skills, you can help us by developing "
    "missing features, regression tests or bug-fixing the present codebase. "
    "Subscribe to the "
