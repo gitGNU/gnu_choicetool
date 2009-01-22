@@ -25,13 +25,18 @@ SITE_SRCS =					\
 	files.as				\
 	footer.sxml				\
 	header.sxml				\
-	index.scm				\
-	grammar.scm				\
 	layout.sxml				\
 	map.as					\
 	pages.as				\
 	site.as					\
-	site.css
+	site.css				\
+						\
+	index.scm				\
+	installation.scm			\
+	downloads.scm				\
+	development.scm				\
+						\
+	grammar.scm
 
 EXTRA_DIST = $(SITE_SRCS)
 
