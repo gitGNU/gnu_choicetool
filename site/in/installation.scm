@@ -1,18 +1,19 @@
 (h2 "INSTALLATION")
 
 (h3 "Prerequisites")
-(p "In order to install Choicetool into your system you will need:")
-(ul
- (li (a (@ (href "http://www.perl.org"))               "Perl"     ) )
- (li (a (@ (href "http://www.gnu.org/software/guile")) "Guile"    ) )
- )
+(p "In order to install " ,as_site_variable_PROGRAMNAME " into your system "
+   "you will need:"
+   (ul
+    (li (a (@ (href "http://www.perl.org"))               "Perl"     ) )
+    (li (a (@ (href "http://www.gnu.org/software/guile")) "Guile"    ) )
+    )
+   )
 
 (h3 "Installation")
 (p "The following notes do not override your system's package management "
    "software, please follow your system's guidelines to install the software.")
 
-(p "Choicetool "
-   "uses the "
+(p ,as_site_variable_PROGRAMNAME " uses the "
    (a (@ (href "http://en.wikipedia.org/wiki/Autotools")) autotools)
    " facilities, the simplest way to install the package in your system is:")
 
