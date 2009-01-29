@@ -195,5 +195,7 @@ docs/info/choicetool.info
 
 site/in/.sitetool
 site/in/site.stamp
+site/in/todos.sxml
+site/in/todos.dump
 site/in/grammar.scm
 site/out/*
