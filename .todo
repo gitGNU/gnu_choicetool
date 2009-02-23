@@ -38,6 +38,9 @@
         <note priority="high" time="1226609027">
             Rearrange the output production in UI/m4ify, pass a stream instead of collecting strings in a stack-based approach
         </note>
+        <note priority="high" time="1235431273">
+            Fix the wrapper.in script in the test directory (find a better fix)
+        </note>
         <note priority="low" time="1227122770">
             Rearrange the build process in order to use EXEEXT (if needed)
         </note>
