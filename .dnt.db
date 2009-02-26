@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<root><entry priority="veryhigh" start="1233771201">
+        Release 0.1.0
+        <entry priority="veryhigh" start="1229454572" end="1229463302">
+            Fix getopt related bug (run 'choicetool -n check' to reproduce)
+            </entry><entry priority="high" start="1226871204" end="1233306179">
+            Rearrange the site in order to be multi-page
+            </entry><entry priority="medium" start="1226609119" end="1226609159">
+            Add sub-options handling in Options.pm module
+        </entry><entry priority="medium" start="1226609133" end="1226609175">
+            Rearrange the test-suite in order to avoid tests that require tools not installed on the host (e.g.: autotools)
+        </entry><entry priority="medium" start="1226609147" end="1226609187">
+            Add code into the libs/perl/Choicetool/Options.pm module in order to have a cleaner option parsing method
+        </entry><entry priority="veryhigh" start="1235495495">
+            Fix the NEWS and TODOs site pages generation in site/in directory
+        </entry><entry priority="medium" start="1226609082">
+            Do a general clean-up of CHOICETOOL_BINARY_PATH, CHOICETOOL_DATA_PATH and CHOICETOOL_LIBRARY_PATH environment variables. Consider removing the CHOICETOOL_RC_FILES environment variable references or update all the src/* scripts accordingly
+        </entry><entry priority="medium" start="1226609111">
+            Check all string-related assert() calls
+        </entry></entry><entry priority="high" start="1233771234">
+        Release 0.2.0
+        <entry priority="high" start="1226608975">
+            Remove global variables from libs/perl/Choicetool/Frontends/KConfig/Parse.yp
+        </entry><entry priority="high" start="1226609027">
+            Rearrange the output production in UI/m4ify, pass a stream instead of collecting strings in a stack-based approach
+        </entry><entry priority="high" start="1235431273">
+            Fix the wrapper.in script in the test directory (find a better fix)
+        </entry><entry priority="low" start="1227122770">
+            Rearrange the build process in order to use EXEEXT (if needed)
+        </entry></entry><entry priority="medium" start="1233771283">
+        Release 0.3.0
+        <entry priority="medium" start="1226609103">
+            Handle multiple configuration syntaxes, translating them into a common configuration syntax; this deserves an option switch both on choicetool, choicetool-preprocess and choicetool-parse
+        </entry></entry><entry priority="low" start="1233781692">
+        Release 0.4.0
+        <entry priority="low" start="1226609050">
+            Rearrange the parser (Parse.yp) in order to speed-up big files parsing
+        </entry></entry></root>
