@@ -11,9 +11,9 @@
             Rearrange the test-suite in order to avoid tests that require tools not installed on the host (e.g.: autotools)
         </entry><entry priority="medium" start="1226609147" end="1226609187">
             Add code into the libs/perl/Choicetool/Options.pm module in order to have a cleaner option parsing method
-        </entry><entry priority="veryhigh" start="1235495495">
+        </entry><entry priority="veryhigh" start="1235495495" end="1235682692">
             Fix the NEWS and TODOs site pages generation in site/in directory
-        </entry><entry priority="medium" start="1226609082">
+            </entry><entry priority="medium" start="1226609082">
             Do a general clean-up of CHOICETOOL_BINARY_PATH, CHOICETOOL_DATA_PATH and CHOICETOOL_LIBRARY_PATH environment variables. Consider removing the CHOICETOOL_RC_FILES environment variable references or update all the src/* scripts accordingly
         </entry><entry priority="medium" start="1226609111">
             Check all string-related assert() calls
