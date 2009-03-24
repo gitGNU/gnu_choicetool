@@ -9,7 +9,7 @@
 #   Makes sure that m4 supports the version indicated. If true the
 #   shell commands in ACTION-IF-TRUE are executed. If not the shell
 #   commands in ACTION-IF-FALSE are run. Note if $M4 is not set (for
-#   example by running AC_CHECK_PROG or AC_PATH_PROG),
+#   example by running AC_CHECK_PROG or AC_PATH_PROG) will fail.
 #
 #   Example:
 #
