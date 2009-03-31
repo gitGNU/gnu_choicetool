@@ -35,8 +35,11 @@
         <note priority="medium" time="1226609111">
             Check all string-related assert() calls
         </note>
-        <note priority="verylow" time="1238244121">
+        <note priority="verylow" time="1238244121" done="1238532907">
             Update all copyright dates
+            <comment>
+                Done
+            </comment>
         </note>
     </note>
     <note priority="high" time="1233771234">
