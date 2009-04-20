@@ -11,15 +11,15 @@
 #   Makes sure that perl supports the version indicated. If true the shell
 #   commands in ACTION-IF-TRUE are executed. If not the shell commands in
 #   ACTION-IF-FALSE are run. Note if $PERL is not set (for example by
-#   running AC_CHECK_PROG or AC_PATH_PROG) will fail.
+#   running AC_CHECK_PROG or AC_PATH_PROG) the macro will fail.
 #
 #   Example:
 #
 #     AC_PATH_PROG([PERL],[perl])
-#     AC_PROG_PERL_VERSION([5.8.0],[ ... ],[ ... ])
+#     AX_PROG_PERL_VERSION([5.8.0],[ ... ],[ ... ])
 #
 #   This will check to make sure that the perl you have supports at least
-#   version 1.6.0.
+#   version 5.8.0.
 #
 #   NOTE: This macro uses the $PERL variable to perform the check.
 #   AX_WITH_PERL can be used to set that variable prior to running this
@@ -28,7 +28,7 @@
 #
 # LAST MODIFICATION
 #
-#   2008-04-12
+#   2008-12-25
 #
 # COPYLEFT
 #
