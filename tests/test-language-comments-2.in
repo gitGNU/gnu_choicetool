@@ -22,37 +22,39 @@
 # types of comments
 # Report from Francesco Salvestrini
 
+required=""
+
 . $testdir/defs || exit 1
 
 cat > ./choose.ct <<EOF
 	# Single line comment
-	
+
 	#
 	# Multi-line comment
 	#
-	
+
 	## Another comment
-	
+
 	# Comment # Nested comment (?)
 
    # Single line comment
-	
+
    #
    # Multi-line comment
    #
-	
+
    ## Another comment
-	
+
    # Comment # Nested comment (?)
 
    	# Single line comment
-	
+
    	#
    	# Multi-line comment
    	#
-   		
+
    	## Another comment
-   		
+
    	# Comment # Nested comment (?)
 
 EOF

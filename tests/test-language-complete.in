@@ -21,6 +21,8 @@
 # Test to ensure that parsing of lkc configuration is working
 # Report from Francesco Salvestrini
 
+required=""
+
 . $testdir/defs || exit 1
 
 cat > ./choose.ct <<EOF
@@ -578,7 +580,7 @@ config KALLSYMS_ALL
 	help
 	   Normally kallsyms only contains the symbols of functions, for nicer
 	   OOPS messages.  Some debuggers can use kallsyms for other
-	   symbols too: say Y here to include all symbols, if you need them 
+	   symbols too: say Y here to include all symbols, if you need them
 	   and you don't care about adding 300k to the size of your kernel.
 
 	   Say N.
@@ -2656,7 +2658,7 @@ config PM_DEBUG
 	depends on PM
 	---help---
 	This option enables verbose debugging support in the Power Management
-	code. This is helpful when debugging and reporting various PM bugs, 
+	code. This is helpful when debugging and reporting various PM bugs,
 	like suspend support.
 
 config DISABLE_CONSOLE_SUSPEND
@@ -2743,20 +2745,20 @@ config PM_STD_PARTITION
 	default ""
 	---help---
 	  The default resume partition is the partition that the suspend-
-	  to-disk implementation will look for a suspended disk image. 
+	  to-disk implementation will look for a suspended disk image.
 
-	  The partition specified here will be different for almost every user. 
+	  The partition specified here will be different for almost every user.
 	  It should be a valid swap partition (at least for now) that is turned
-	  on before suspending. 
+	  on before suspending.
 
 	  The partition specified can be overridden by specifying:
 
-		resume=/dev/<other device> 
+		resume=/dev/<other device>
 
-	  which will set the resume partition to the device specified. 
+	  which will set the resume partition to the device specified.
 
 	  Note there is currently not a way to specify which device to save the
-	  suspended image to. It will simply pick the first available swap 
+	  suspended image to. It will simply pick the first available swap
 	  device.
 
 config SUSPEND_SMP
@@ -2815,21 +2817,21 @@ config ACPI
 	select PNP
 	default y
 	---help---
-	  Advanced Configuration and Power Interface (ACPI) support for 
+	  Advanced Configuration and Power Interface (ACPI) support for
 	  Linux requires an ACPI compliant platform (hardware/firmware),
 	  and assumes the presence of OS-directed configuration and power
-	  management (OSPM) software.  This option will enlarge your 
+	  management (OSPM) software.  This option will enlarge your
 	  kernel by about 70K.
 
-	  Linux ACPI provides a robust functional replacement for several 
+	  Linux ACPI provides a robust functional replacement for several
 	  legacy configuration and power management interfaces, including
-	  the Plug-and-Play BIOS specification (PnP BIOS), the 
-	  MultiProcessor Specification (MPS), and the Advanced Power 
-	  Management (APM) specification.  If both ACPI and APM support 
+	  the Plug-and-Play BIOS specification (PnP BIOS), the
+	  MultiProcessor Specification (MPS), and the Advanced Power
+	  Management (APM) specification.  If both ACPI and APM support
 	  are configured, whichever is loaded first shall be used.
 
-	  The ACPI SourceForge project contains the latest source code, 
-	  documentation, tools, mailing list subscription, and other 
+	  The ACPI SourceForge project contains the latest source code,
+	  documentation, tools, mailing list subscription, and other
 	  information.  This project is available at:
 	  <http://sourceforge.net/projects/acpi>
 
@@ -2837,8 +2839,8 @@ config ACPI
 	  Component Architecture (ACPI CA).  For more information see:
 	  <http://developer.intel.com/technology/iapc/acpi>
 
-	  ACPI is an open industry specification co-developed by Compaq, 
-	  Intel, Microsoft, Phoenix, and Toshiba.  The specification is 
+	  ACPI is an open industry specification co-developed by Compaq,
+	  Intel, Microsoft, Phoenix, and Toshiba.  The specification is
 	  available at:
 	  <http://www.acpi.info>
 
@@ -2850,9 +2852,9 @@ config ACPI_SLEEP
 	depends on PM
 	default y
 	---help---
-	  This option adds support for ACPI suspend states. 
+	  This option adds support for ACPI suspend states.
 
-	  With this option, you will be able to put the system "to sleep". 
+	  With this option, you will be able to put the system "to sleep".
 	  Sleep states are low power states for the system and devices. All
 	  of the system operating state is saved to either memory or disk
 	  (depending on the state), to allow the system to resume operation
@@ -2860,7 +2862,7 @@ config ACPI_SLEEP
 
 	  Although this option sounds really nifty, barely any of the device
 	  drivers have been converted to the new driver model and hence few
-	  have proper power management support. 
+	  have proper power management support.
 
 	  This option is not recommended for anyone except those doing driver
 	  power management development.
@@ -2907,7 +2909,7 @@ config ACPI_BATTERY
 	default y
 	help
 	  This driver adds support for battery information through
-	  /proc/acpi/battery. If you have a mobile system with a battery, 
+	  /proc/acpi/battery. If you have a mobile system with a battery,
 	  say Y.
 
 config ACPI_BUTTON
@@ -2936,7 +2938,7 @@ config ACPI_FAN
 	tristate "Fan"
 	default y
 	help
-	  This driver adds support for ACPI fan devices, allowing user-mode 
+	  This driver adds support for ACPI fan devices, allowing user-mode
 	  applications to perform basic fan control (on, off, status).
 
 config ACPI_DOCK
@@ -3046,7 +3048,7 @@ config ACPI_TOSHIBA
 config ACPI_CUSTOM_DSDT
 	bool "Include Custom DSDT"
 	depends on !STANDALONE
-	default n 
+	default n
 	help
 	  This option is to load a custom ACPI DSDT
 	  If you don't know what that is, say N.
@@ -3083,7 +3085,7 @@ config ACPI_EC
 	default y
 	help
 	  This driver is required on some systems for the proper operation of
-	  the battery and thermal drivers.  If you are compiling for a 
+	  the battery and thermal drivers.  If you are compiling for a
 	  mobile system, say Y.
 
 config ACPI_POWER
@@ -3111,7 +3113,7 @@ config X86_PM_TIMER
 	  (TSC) timing source.
 
 	  You should nearly always say Y here because many modern
-	  systems require this timer. 
+	  systems require this timer.
 
 config ACPI_CONTAINER
 	tristate "ACPI0004,PNP0A05 and PNP0A06 Container Driver (EXPERIMENTAL)"
@@ -3135,17 +3137,17 @@ config ACPI_HOTPLUG_MEMORY
 	  This driver adds supports for ACPI Memory Hotplug.  This driver
 	  provides support for fielding notifications on ACPI memory
 	  devices (PNP0C80) which represent memory ranges that may be
-	  onlined or offlined during runtime.  
+	  onlined or offlined during runtime.
 
 	  Enabling this driver assumes that your platform hardware
 	  and firmware have support for hot-plugging physical memory. If
-	  your system does not support physically adding or ripping out 
-	  memory DIMMs at some platform defined granularity (individually 
+	  your system does not support physically adding or ripping out
+	  memory DIMMs at some platform defined granularity (individually
 	  or as a bank) at runtime, then you need not enable this driver.
 
 	  If one selects "m," this driver can be loaded using the following
-	  command: 
-		\$>modprobe acpi_memhotplug 
+	  command:
+		\$>modprobe acpi_memhotplug
 
 config ACPI_SBS
 	tristate "Smart Battery System (EXPERIMENTAL)"
@@ -3307,8 +3309,8 @@ menu "CPU Frequency scaling"
 config CPU_FREQ
 	bool "CPU Frequency scaling"
 	help
-	  CPU Frequency scaling allows you to change the clock speed of 
-	  CPUs on the fly. This is a nice method to save power, because 
+	  CPU Frequency scaling allows you to change the clock speed of
+	  CPUs on the fly. This is a nice method to save power, because
 	  the lower the CPU clock speed, the less power the CPU consumes.
 
 	  Note that this driver doesn't automatically change the CPU
@@ -3335,7 +3337,7 @@ config CPU_FREQ_DEBUG
 	  command line by passing
 	     cpufreq.debug=<value>
 
-	  To get <value>, add 
+	  To get <value>, add
 	       1 to activate CPUfreq core debugging,
 	       2 to activate CPUfreq drivers debugging, and
 	       4 to activate CPUfreq governor debugging
@@ -3387,7 +3389,7 @@ config CPU_FREQ_DEFAULT_GOV_USERSPACE
 	select CPU_FREQ_GOV_USERSPACE
 	help
 	  Use the CPUFreq governor 'userspace' as default. This allows
-	  you to set the CPU frequency manually or when an userspace 
+	  you to set the CPU frequency manually or when an userspace
 	  program shall be able to set the CPU dynamically without having
 	  to enable the userspace governor manually.
 
@@ -3420,7 +3422,7 @@ config CPU_FREQ_GOV_USERSPACE
 	help
 	  Enable this cpufreq governor when you either want to set the
 	  CPU frequency manually or when an userspace program shall
-	  be able to set the CPU dynamically, like on LART 
+	  be able to set the CPU dynamically, like on LART
 	  <http://www.lartmaker.nl/>.
 
 	  To compile this driver as a module, choose M here: the
@@ -3435,11 +3437,11 @@ config CPU_FREQ_GOV_ONDEMAND
 	select CPU_FREQ_TABLE
 	help
 	  'ondemand' - This driver adds a dynamic cpufreq policy governor.
-	  The governor does a periodic polling and 
+	  The governor does a periodic polling and
 	  changes frequency based on the CPU utilization.
 	  The support for this governor depends on CPU capability to
 	  do fast frequency switching (i.e, very low latency frequency
-	  transitions). 
+	  transitions).
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called cpufreq_ondemand.
@@ -3837,9 +3839,9 @@ config HOTPLUG_PCI_PCIE_POLL_EVENT_MODE
 	bool "Use polling mechanism for hot-plug events (for testing purpose)"
 	depends on HOTPLUG_PCI_PCIE
 	help
-	  Say Y here if you want to use the polling mechanism for hot-plug 
+	  Say Y here if you want to use the polling mechanism for hot-plug
 	  events for early platform testing.
-	   
+
 	  When in doubt, say N.
 
 #file "drivers/pci/pcie/aer/Kconfig"
@@ -4150,7 +4152,7 @@ config PCMCIA_IOCTL
 	  If unsure, say Y.
 
 config CARDBUS
-	bool "32-bit CardBus support"	
+	bool "32-bit CardBus support"
 	depends on PCI
 	default y
 	---help---
@@ -4173,8 +4175,8 @@ config YENTA
 	select PCCARD_NONSTATIC
 	---help---
 	  This option enables support for CardBus host bridges.  Virtually
-	  all modern PCMCIA bridges are CardBus compatible.  A "bridge" is 
-	  the hardware inside your computer that PCMCIA cards are plugged 
+	  all modern PCMCIA bridges are CardBus compatible.  A "bridge" is
+	  the hardware inside your computer that PCMCIA cards are plugged
 	  into.
 
 	  To compile this driver as modules, choose M here: the
@@ -4247,7 +4249,7 @@ config TCIC
 
 config PCMCIA_M8XX
         tristate "MPC8xx PCMCIA support"
-        depends on PCMCIA && PPC && 8xx 
+        depends on PCMCIA && PPC && 8xx
         select PCCARD_IODYN
         help
         Say Y here to include support for PowerPC 8xx series PCMCIA
@@ -4515,7 +4517,7 @@ config HOTPLUG_PCI_RPA_DLPAR
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called rpadlpar_io.
- 
+
  	  When in doubt, say N.
 
 config HOTPLUG_PCI_SGI
@@ -4695,7 +4697,7 @@ config NET
 	  The reason is that some programs need kernel networking support even
 	  when running on a stand-alone machine that isn't connected to any
 	  other computer.
-	  
+
 	  If you are upgrading from an older kernel, you
 	  should consider updating your networking tools too because changes
 	  in the kernel and the tools often go hand in hand. The tools are
@@ -4941,7 +4943,7 @@ config IP_ADVANCED_ROUTER
 
 	  If unsure, say N here.
 
-choice 
+choice
 	prompt "Choose IP: FIB lookup algorithm (choose FIB_HASH if unsure)"
 	depends on IP_ADVANCED_ROUTER
 	default ASK_IP_FIB_HASH
@@ -4954,22 +4956,22 @@ config ASK_IP_FIB_HASH
 config IP_FIB_TRIE
 	bool "FIB_TRIE"
 	---help---
-	Use new experimental LC-trie as FIB lookup algorithm. 
+	Use new experimental LC-trie as FIB lookup algorithm.
         This improves lookup performance if you have a large
 	number of routes.
 
 	LC-trie is a longest matching prefix lookup algorithm which
 	performs better than FIB_HASH for large routing tables.
 	But, it consumes more memory and is more complex.
-	
+
 	LC-trie is described in:
-	
+
  	IP-address lookup using LC-tries. Stefan Nilsson and Gunnar Karlsson
  	IEEE Journal on Selected Areas in Communications, 17(6):1083-1092, June 1999
 	An experimental study of compression methods for dynamic tries
  	Stefan Nilsson and Matti Tikkanen. Algorithmica, 33(1):19-33, 2002.
  	http://www.nada.kth.se/~snilsson/public/papers/dyntrie2/
-       
+
 endchoice
 
 config IP_FIB_HASH
@@ -5035,7 +5037,7 @@ config IP_ROUTE_MULTIPATH_WRANDOM
 	tristate "MULTIPATH: weighted random algorithm"
 	depends on IP_ROUTE_MULTIPATH_CACHED
 	help
-	  Multipath routes are chosen in a weighted random fashion. 
+	  Multipath routes are chosen in a weighted random fashion.
 	  The per route weights are the weights visible via ip route 2. As the
 	  corresponding state management introduces some overhead routing delay
 	  is increased.
@@ -5045,8 +5047,8 @@ config IP_ROUTE_MULTIPATH_DRR
 	depends on IP_ROUTE_MULTIPATH_CACHED
 	help
 	  Connections are distributed in a round robin fashion over the
-	  available interfaces. This policy makes sense if the connections 
-	  should be primarily distributed on interfaces and not on routes. 
+	  available interfaces. This policy makes sense if the connections
+	  should be primarily distributed on interfaces and not on routes.
 
 config IP_ROUTE_VERBOSE
 	bool "IP: verbose route monitoring"
@@ -5116,7 +5118,7 @@ config IP_PNP_RARP
 	  details.
 
 # not yet ready..
-#   bool '    IP: ARP support' CONFIG_IP_PNP_ARP		
+#   bool '    IP: ARP support' CONFIG_IP_PNP_ARP
 config NET_IPIP
 	tristate "IP: tunneling"
 	select INET_TUNNEL
@@ -5287,7 +5289,7 @@ config INET_IPCOMP
 	---help---
 	  Support for IP Payload Compression Protocol (IPComp) (RFC3173),
 	  typically needed for IPsec.
-	  
+
 	  If unsure, say Y.
 
 config INET_XFRM_TUNNEL
@@ -5333,7 +5335,7 @@ config INET_DIAG
 	  Support for INET (TCP, DCCP, etc) socket monitoring interface used by
 	  native Linux tools such as ss. ss is included in iproute2, currently
 	  downloadable at <http://linux-net.osdl.org/index.php/Iproute2>.
-	  
+
 	  If unsure, say Y.
 
 config INET_TCP_DIAG
@@ -5587,7 +5589,7 @@ config	IP_VS_DEBUG
 
 config	IP_VS_TAB_BITS
 	int "IPVS connection table size (the Nth power of 2)"
-	default "12" 
+	default "12"
 	---help---
 	  The IPVS connection hash table uses the chaining scheme to handle
 	  hash collisions. Using a big IPVS connection hash table will greatly
@@ -5647,9 +5649,9 @@ config	IP_VS_RR
 
 	  If you want to compile it in kernel, say Y. To compile it as a
 	  module, choose M here. If unsure, say N.
- 
+
 config	IP_VS_WRR
-        tristate "weighted round-robin scheduling" 
+        tristate "weighted round-robin scheduling"
 	---help---
 	  The weighted robin-robin scheduling algorithm directs network
 	  connections to different real servers based on server weights
@@ -5665,7 +5667,7 @@ config	IP_VS_LC
         tristate "least-connection scheduling"
 	---help---
 	  The least-connection scheduling algorithm directs network
-	  connections to the server with the least number of active 
+	  connections to the server with the least number of active
 	  connections.
 
 	  If you want to compile it in kernel, say Y. To compile it as a
@@ -5699,7 +5701,7 @@ config  IP_VS_LBLCR
 	tristate "locality-based least-connection with replication scheduling"
 	---help---
 	  The locality-based least-connection with replication scheduling
-	  algorithm is also for destination IP load balancing. It is 
+	  algorithm is also for destination IP load balancing. It is
 	  usually used in cache cluster. It differs from the LBLC scheduling
 	  as follows: the load balancer maintains mappings from a target
 	  to a set of server nodes that can serve the target. Requests for
@@ -5737,8 +5739,8 @@ config	IP_VS_SED
 	tristate "shortest expected delay scheduling"
 	---help---
 	  The shortest expected delay scheduling algorithm assigns network
-	  connections to the server with the shortest expected delay. The 
-	  expected delay that the job will experience is (Ci + 1) / Ui if 
+	  connections to the server with the shortest expected delay. The
+	  expected delay that the job will experience is (Ci + 1) / Ui if
 	  sent to the ith server, in which Ci is the number of connections
 	  on the ith server and Ui is the fixed service rate (weight)
 	  of the ith server.
@@ -5803,7 +5805,7 @@ config IPV6
 	  For specific information about IPv6 under Linux, read the HOWTO at
 	  <http://www.bieringer.de/linux/IPv6/>.
 
-	  To compile this protocol support as a module, choose M here: the 
+	  To compile this protocol support as a module, choose M here: the
 	  module will be called ipv6.
 
 config IPV6_PRIVACY
@@ -5811,17 +5813,17 @@ config IPV6_PRIVACY
 	depends on IPV6
 	---help---
 	  Privacy Extensions for Stateless Address Autoconfiguration in IPv6
-	  support.  With this option, additional periodically-alter 
+	  support.  With this option, additional periodically-alter
 	  pseudo-random global-scope unicast address(es) will assigned to
 	  your interface(s).
-	
+
 	  We use our standard pseudo random algorithm to generate randomized
 	  interface identifier, instead of one described in RFC 3041.
 
 	  By default, kernel do not generate temporary addresses.
 	  To use temporary addresses, do
-	
-	        echo 2 >/proc/sys/net/ipv6/conf/all/use_tempaddr 
+
+	        echo 2 >/proc/sys/net/ipv6/conf/all/use_tempaddr
 
 	  See <file:Documentation/networking/ip-sysctl.txt> for details.
 
@@ -6129,7 +6131,7 @@ config NETFILTER_NETLINK_QUEUE
 	help
 	  If this option is enabled, the kernel will include support
 	  for queueing packets via NFNETLINK.
-	  
+
 config NETFILTER_NETLINK_LOG
 	tristate "Netfilter LOG over NFNETLINK interface"
 	depends on NETFILTER_NETLINK
@@ -6393,7 +6395,7 @@ config NETFILTER_XT_TARGET_CONNMARK
 	  This option adds a \`CONNMARK' target, which allows one to manipulate
 	  the connection mark value.  Similar to the MARK target, but
 	  affects the connection mark value rather than the packet mark value.
-	
+
 	  If you want to compile it as a module, say M here and read
 	  <file:Documentation/kbuild/modules.txt>.  The module will be called
 	  ipt_CONNMARK.ko.  If unsure, say \`N'.
@@ -6455,7 +6457,7 @@ config NETFILTER_XT_TARGET_NOTRACK
 	  which packets *not* to enter the conntrack/NAT
 	  subsystem with all the consequences (no ICMP error tracking,
 	  no protocol helpers for the selected packets).
-	
+
 	  If you want to compile it as a module, say M here and read
 	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
@@ -6534,8 +6536,8 @@ config NETFILTER_XT_MATCH_CONNMARK
 	select NF_CONNTRACK_MARK
 	help
 	  This option adds a \`connmark' match, which allows you to match the
-	  connection mark value previously set for the session by \`CONNMARK'. 
-	
+	  connection mark value previously set for the session by \`CONNMARK'.
+
 	  If you want to compile it as a module, say M here and read
 	  <file:Documentation/kbuild/modules.txt>.  The module will be called
 	  ipt_connmark.ko.  If unsure, say \`N'.
@@ -6690,10 +6692,10 @@ config NETFILTER_XT_MATCH_REALM
 	help
 	  This option adds a \`realm' match, which allows you to use the realm
 	  key from the routing subsystem inside iptables.
-	
-	  This match pretty much resembles the CONFIG_NET_CLS_ROUTE4 option 
+
+	  This match pretty much resembles the CONFIG_NET_CLS_ROUTE4 option
 	  in tc world.
-	
+
 	  If you want to compile it as a module, say M here and read
 	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
@@ -6701,7 +6703,7 @@ config NETFILTER_XT_MATCH_SCTP
 	tristate  '"sctp" protocol match support (EXPERIMENTAL)'
 	depends on NETFILTER_XTABLES && EXPERIMENTAL
 	help
-	  With this option enabled, you will be able to use the 
+	  With this option enabled, you will be able to use the
 	  \`sctp' match in order to match on SCTP source/destination ports
 	  and SCTP chunk types.
 
@@ -6901,7 +6903,7 @@ config IP_NF_MATCH_ADDRTYPE
 	help
 	  This option allows you to match what routing thinks of an address,
 	  eg. UNICAST, LOCAL, BROADCAST, ...
-	
+
 	  If you want to compile it as a module, say M here and read
 	  <file:Documentation/modules.txt>.  If unsure, say \`N'.
 
@@ -7101,7 +7103,7 @@ config IP_NF_TARGET_ECN
 	depends on IP_NF_MANGLE
 	---help---
 	  This option adds a \`ECN' target, which can be used in the iptables mangle
-	  table.  
+	  table.
 
 	  You can use this target to remove the ECN bits from the IPv4 header of
 	  an IP packet.  This is particularly useful, if you need to work around
@@ -7133,7 +7135,7 @@ config IP_NF_TARGET_CLUSTERIP
 	  The CLUSTERIP target allows you to build load-balancing clusters of
 	  network servers without having a dedicated load-balancing
 	  router/server/switch.
-	
+
 	  To compile it as a module, choose M here.  If unsure, say N.
 
 # raw + specific targets
@@ -7144,7 +7146,7 @@ config IP_NF_RAW
 	  This option adds a \`raw' table to iptables. This table is the very
 	  first in the netfilter framework and hooks in at the PREROUTING
 	  and OUTPUT chains.
-	
+
 	  If you want to compile it as a module, say M here and read
 	  <file:Documentation/modules.txt>.  If unsure, say \`N'.
 
@@ -7367,12 +7369,12 @@ config IP6_NF_TARGET_HL
 	  This option adds a \`HL' target, which enables the user to decrement
 	  the hoplimit value of the IPv6 header or set it to a given (lower)
 	  value.
-	
+
 	  While it is safe to decrement the hoplimit value, this option also
 	  enables functionality to increment and set the hoplimit value of the
 	  IPv6 header to arbitrary values.  This is EXTREMELY DANGEROUS since
 	  you can easily create immortal packets that loop forever on the
-	  network.  
+	  network.
 
 	  To compile it as a module, choose M here.  If unsure, say N.
 
@@ -7383,7 +7385,7 @@ config IP6_NF_RAW
 	  This option adds a \`raw' table to ip6tables. This table is the very
 	  first in the netfilter framework and hooks in at the PREROUTING
 	  and OUTPUT chains.
-	
+
 	  If you want to compile it as a module, say M here and read
 	  <file:Documentation/kbuild/modules.txt>.  If unsure, say \`N'.
 
@@ -7743,7 +7745,7 @@ config IP_DCCP_CCID3
 
 	  This text was extracted from RFC 4340 (sec. 10.2),
 	  http://www.ietf.org/rfc/rfc4340.txt
-	  
+
 	  To compile this CCID as a module, choose M here: the module will be
 	  called dccp_ccid3.
 
@@ -7880,18 +7882,18 @@ if IP_SCTP
 config SCTP_DBG_MSG
 	bool "SCTP: Debug messages"
 	help
-	  If you say Y, this will enable verbose debugging messages. 
+	  If you say Y, this will enable verbose debugging messages.
 
-	  If unsure, say N.  However, if you are running into problems, use 
+	  If unsure, say N.  However, if you are running into problems, use
 	  this option to gather detailed trace information
 
 config SCTP_DBG_OBJCNT
 	bool "SCTP: Debug object counts"
 	help
-	  If you say Y, this will enable debugging support for counting the 
-	  type of objects that are currently allocated.  This is useful for 
-	  identifying memory leaks.   If the /proc filesystem is enabled this 
-	  debug information can be viewed by 
+	  If you say Y, this will enable debugging support for counting the
+	  type of objects that are currently allocated.  This is useful for
+	  identifying memory leaks.   If the /proc filesystem is enabled this
+	  debug information can be viewed by
 	  'cat /proc/net/sctp/sctp_dbg_objcnt'
 
 	  If unsure, say N
@@ -7901,26 +7903,26 @@ choice
 	default SCTP_HMAC_MD5
 	help
 	  HMAC algorithm to be used during association initialization.  It
-	  is strongly recommended to use HMAC-SHA1 or HMAC-MD5.  See 
+	  is strongly recommended to use HMAC-SHA1 or HMAC-MD5.  See
 	  configuration for Cryptographic API and enable those algorithms
-          to make usable by SCTP. 
+          to make usable by SCTP.
 
 config SCTP_HMAC_NONE
 	bool "None"
-	help 
-	  Choosing this disables the use of an HMAC during association 
+	help
+	  Choosing this disables the use of an HMAC during association
 	  establishment.  It is advised to use either HMAC-MD5 or HMAC-SHA1.
 
 config SCTP_HMAC_SHA1
 	bool "HMAC-SHA1"
-	help 
-	  Enable the use of HMAC-SHA1 during association establishment.  It 
+	help
+	  Enable the use of HMAC-SHA1 during association establishment.  It
 	  is advised to use either HMAC-MD5 or HMAC-SHA1.
 
 config SCTP_HMAC_MD5
 	bool "HMAC-MD5"
 	help
-	  Enable the use of HMAC-MD5 during association establishment.  It is 
+	  Enable the use of HMAC-MD5 during association establishment.  It is
 	  advised to use either HMAC-MD5 or HMAC-SHA1.
 
 endchoice
@@ -7944,7 +7946,7 @@ menuconfig TIPC
 	  specially designed for intra cluster communication. This protocol
 	  originates from Ericsson where it has been used in carrier grade
 	  cluster applications for many years.
-	
+
 	  For more information about TIPC, see http://tipc.sourceforge.net.
 
 	  This protocol support is also available as a module ( = code which
@@ -7969,7 +7971,7 @@ config TIPC_ZONES
 	depends on TIPC_ADVANCED
 	default "3"
 	help
-	 Max number of zones inside TIPC network. Max supported value 
+	 Max number of zones inside TIPC network. Max supported value
          is 255 zones, minimum is 1
 
 	 Default is 3 zones in a network; setting this to higher
@@ -7983,10 +7985,10 @@ config TIPC_CLUSTERS
           ***Only 1 (one cluster in a zone) is supported by current code.
           Any value set here will be overridden.***
 
-          (Max number of clusters inside TIPC zone. Max supported 
+          (Max number of clusters inside TIPC zone. Max supported
           value is 4095 clusters, minimum is 1.
 
-	  Default is 1; setting this to smaller value might save 
+	  Default is 1; setting this to smaller value might save
           some memory, setting it to higher
 	  allows more clusters and might consume more memory.)
 
@@ -7995,10 +7997,10 @@ config TIPC_NODES
 	depends on TIPC_ADVANCED
 	default "255"
 	help
-	  Maximum number of nodes inside a TIPC cluster. Maximum 
-          supported value is 2047 nodes, minimum is 8. 
+	  Maximum number of nodes inside a TIPC cluster. Maximum
+          supported value is 2047 nodes, minimum is 8.
 
-	  Setting this to a smaller value saves some memory, 
+	  Setting this to a smaller value saves some memory,
 	  setting it to higher allows more nodes.
 
 config TIPC_SLAVE_NODES
@@ -8007,11 +8009,11 @@ config TIPC_SLAVE_NODES
 	default "0"
 	help
           ***This capability is not supported by current code.***
-	  
-	  Maximum number of slave nodes inside a TIPC cluster. Maximum 
-          supported value is 2047 nodes, minimum is 0. 
 
-	  Setting this to a smaller value saves some memory, 
+	  Maximum number of slave nodes inside a TIPC cluster. Maximum
+          supported value is 2047 nodes, minimum is 0.
+
+	  Setting this to a smaller value saves some memory,
 	  setting it to higher allows more nodes.
 
 config TIPC_PORTS
@@ -8019,10 +8021,10 @@ config TIPC_PORTS
 	depends on TIPC_ADVANCED
 	default "8191"
 	help
-	  Maximum number of ports within a node. Maximum 
-          supported value is 64535 nodes, minimum is 127. 
+	  Maximum number of ports within a node. Maximum
+          supported value is 64535 nodes, minimum is 127.
 
-	  Setting this to a smaller value saves some memory, 
+	  Setting this to a smaller value saves some memory,
 	  setting it to higher allows more ports.
 
 config TIPC_LOG
@@ -8253,7 +8255,7 @@ config LLC2
 	tristate "ANSI/IEEE 802.2 LLC type 2 Support"
 	select LLC
 	help
-	  This is a Logical Link Layer type 2, connection oriented support. 
+	  This is a Logical Link Layer type 2, connection oriented support.
 	  Select this if you want to have support for PF_LLC sockets.
 #file "net/llc/Kconfig"
 #line 207
@@ -8365,7 +8367,7 @@ config DEV_APPLETALK
 	  on a network.  If your Linux box is connected to such a network, and wish
 	  to do IP over it, or you have a LocalTalk card and wish to use it to
 	  connect to the AppleTalk network, say Y.
-	  
+
 
 config LTPC
 	tristate "Apple/Farallon LocalTalk PC support"
@@ -8529,7 +8531,7 @@ config LAPB
 #file "/usr/src/linux-2.6.22-gentoo-r9/net/econet/Kconfig"
 #line 0
 #
-# Acorn Econet/AUN protocols 
+# Acorn Econet/AUN protocols
 #
 
 config ECONET
@@ -8607,7 +8609,7 @@ config WAN_ROUTER
 #line 0
 #
 # Traffic control configuration.
-# 
+#
 
 menu "QoS and/or fair queueing"
 
@@ -9001,7 +9003,7 @@ config NET_CLS_ACT
 
 config NET_ACT_POLICE
 	tristate "Traffic Policing"
-        depends on NET_CLS_ACT 
+        depends on NET_CLS_ACT
         ---help---
 	  Say Y here if you want to do traffic policing, i.e. strict
 	  bandwidth limiting. This action replaces the existing policing
@@ -9455,7 +9457,7 @@ config YAM
 	  To compile this driver as a module, choose M here: the module
 	  will be called yam.
 
- 
+
 #file "drivers/net/hamradio/Kconfig"
 #line 121
 
@@ -9940,12 +9942,12 @@ config SIGMATEL_FIR
 	select CRC32
 	---help---
 	  Say Y here if you want to build support for the SigmaTel STIr4200
-	  USB IrDA FIR bridge device driver.  
+	  USB IrDA FIR bridge device driver.
 
 	  USB bridge based on the SigmaTel STIr4200 don't conform to the
 	  IrDA-USB device class specification, and therefore need their
 	  own specific driver. Those dongles support SIR and FIR (4Mbps)
-	  speeds. 
+	  speeds.
 
 	  To compile it as a module, choose M here: the module will be called
 	  stir4200.
@@ -10097,7 +10099,7 @@ menuconfig BT
 	     HCI Device drivers (Interface to the hardware)
 	     SCO Module (SCO audio links)
 	     L2CAP Module (Logical Link Control and Adaptation Protocol)
-	     RFCOMM Module (RFCOMM Protocol)  
+	     RFCOMM Module (RFCOMM Protocol)
 	     BNEP Module (Bluetooth Network Encapsulation Protocol)
 	     CMTP Module (CAPI Message Transport Protocol)
 	     HIDP Module (Human Interface Device Protocol)
@@ -10256,8 +10258,8 @@ config BT_HCIUART
 	help
 	  Bluetooth HCI UART driver.
 	  This driver is required if you want to use Bluetooth devices with
-	  serial port interface. You will also need this driver if you have 
-	  UART based Bluetooth PCMCIA and CF devices like Xircom Credit Card 
+	  serial port interface. You will also need this driver if you have
+	  UART based Bluetooth PCMCIA and CF devices like Xircom Credit Card
 	  adapter and BrainBoxes Bluetooth PC Card.
 
 	  Say Y here to compile support for Bluetooth UART devices into the
@@ -10267,9 +10269,9 @@ config BT_HCIUART_H4
 	bool "UART (H4) protocol support"
 	depends on BT_HCIUART
 	help
-	  UART (H4) is serial protocol for communication between Bluetooth 
-	  device and host. This protocol is required for most Bluetooth devices 
-	  with UART interface, including PCMCIA and CF cards. 
+	  UART (H4) is serial protocol for communication between Bluetooth
+	  device and host. This protocol is required for most Bluetooth devices
+	  with UART interface, including PCMCIA and CF cards.
 
 	  Say Y here to compile support for HCI UART (H4) protocol.
 
@@ -10277,7 +10279,7 @@ config BT_HCIUART_BCSP
 	bool "BCSP protocol support"
 	depends on BT_HCIUART
 	help
-	  BCSP (BlueCore Serial Protocol) is serial protocol for communication 
+	  BCSP (BlueCore Serial Protocol) is serial protocol for communication
 	  between Bluetooth device and host. This protocol is required for non
 	  USB Bluetooth devices based on CSR BlueCore chip, including PCMCIA and
 	  CF cards.
@@ -13522,13 +13524,13 @@ config CISS_SCSI_TAPE
 	depends on SCSI=y || SCSI=BLK_CPQ_CISS_DA
 	help
 	  When enabled (Y), this option allows SCSI tape drives and SCSI medium
-	  changers (tape robots) to be accessed via a Compaq 5xxx array 
+	  changers (tape robots) to be accessed via a Compaq 5xxx array
 	  controller.  (See <file:Documentation/cciss.txt> for more details.)
 
-	  "SCSI support" and "SCSI tape support" must also be enabled for this 
+	  "SCSI support" and "SCSI tape support" must also be enabled for this
 	  option to work.
 
-	  When this option is disabled (N), the SCSI portion of the driver 
+	  When this option is disabled (N), the SCSI portion of the driver
 	  is not compiled.
 
 config BLK_DEV_DAC960
@@ -13659,7 +13661,7 @@ config BLK_DEV_CRYPTOLOOP
 	select CRYPTO_CBC
 	depends on BLK_DEV_LOOP
 	---help---
-	  Say Y here if you want to be able to use the ciphers that are 
+	  Say Y here if you want to be able to use the ciphers that are
 	  provided by the CryptoAPI as loop transformation. This might be
 	  used as hard disk encryption.
 
@@ -13699,7 +13701,7 @@ config BLK_DEV_SX8
 	tristate "Promise SATA SX8 support"
 	depends on PCI
 	---help---
-	  Saying Y or M here will enable support for the 
+	  Saying Y or M here will enable support for the
 	  Promise SATA SX8 controllers.
 
 	  Use devices /dev/sx8/\$N and /dev/sx8/\$Np\$M.
@@ -14037,7 +14039,7 @@ config THINKPAD_ACPI
 	  This is a driver for the IBM and Lenovo ThinkPad laptops. It adds
 	  support for Fn-Fx key combinations, Bluetooth control, video
 	  output switching, ThinkLight control, UltraBay eject and more.
-	  For more information about this driver see 
+	  For more information about this driver see
 	  <file:Documentation/thinkpad-acpi.txt> and <http://ibm-acpi.sf.net/> .
 
 	  This driver was formely known as ibm-acpi.
@@ -14989,8 +14991,8 @@ config BLK_DEV_BUDDHA
 	bool "Buddha/Catweasel/X-Surf IDE interface support (EXPERIMENTAL)"
 	depends on ZORRO && EXPERIMENTAL
 	help
-	  This is the IDE driver for the IDE interfaces on the Buddha, 
-	  Catweasel and X-Surf expansion boards.  It supports up to two interfaces 
+	  This is the IDE driver for the IDE interfaces on the Buddha,
+	  Catweasel and X-Surf expansion boards.  It supports up to two interfaces
 	  on the Buddha, three on the Catweasel and two on the X-Surf.
 
 	  Say Y if you have a Buddha or Catweasel expansion board and want to
@@ -15364,13 +15366,13 @@ config CHR_DEV_SCH
 	  changers are listed as "Type: Medium Changer" in /proc/scsi/scsi.
 	  If you have such hardware and want to use it with linux, say Y
 	  here.  Check <file:Documentation/scsi-changer.txt> for details.
-	
+
 	  If you want to compile this as a module ( = code which can be
 	  inserted in and removed from the running kernel whenever you want),
 	  say M here and read <file:Documentation/kbuild/modules.txt> and
 	  <file:Documentation/scsi.txt>. The module will be called ch.o.
 	  If unsure, say N.
-	
+
 
 comment "Some SCSI devices (e.g. CD jukebox) support multiple LUNs"
 	depends on SCSI
@@ -15384,7 +15386,7 @@ config SCSI_MULTI_LUN
 	  can say Y here to force the SCSI driver to probe for multiple LUNs.
 	  A SCSI device with multiple LUNs acts logically like multiple SCSI
 	  devices. The vast majority of SCSI devices have only one LUN, and
-	  so most people can say N here. The max_luns boot/module parameter 
+	  so most people can say N here. The max_luns boot/module parameter
 	  allows to override this setting.
 
 config SCSI_CONSTANTS
@@ -15954,7 +15956,7 @@ config SCSI_DPT_I2O
 	tristate "Adaptec I2O RAID support "
 	depends on !64BIT && SCSI && PCI
 	help
-	  This driver supports all of Adaptec's I2O based RAID controllers as 
+	  This driver supports all of Adaptec's I2O based RAID controllers as
 	  well as the DPT SmartRaid V cards.  This is an Adaptec maintained
 	  driver by Deanna Bonds.  See <file:Documentation/scsi/dpti.txt>.
 
@@ -16247,7 +16249,7 @@ config SCSI_GDTH
 	---help---
 	  Formerly called GDT SCSI Disk Array Controller Support.
 
-	  This is a driver for RAID/SCSI Disk Array Controllers (EISA/ISA/PCI) 
+	  This is a driver for RAID/SCSI Disk Array Controllers (EISA/ISA/PCI)
 	  manufactured by Intel Corporation/ICP vortex GmbH. It is documented
 	  in the kernel source in <file:drivers/scsi/gdth.c> and
 	  <file:drivers/scsi/gdth.h.>
@@ -16281,7 +16283,7 @@ config SCSI_GENERIC_NCR5380_MMIO
 	select SCSI_SPI_ATTRS
 	---help---
 	  This is a driver for the old NCR 53c80 series of SCSI controllers
-	  on boards using memory mapped I/O. 
+	  on boards using memory mapped I/O.
 	  It is explained in section 3.8 of the SCSI-HOWTO, available from
 	  <http://www.tldp.org/docs.html#howto>.  If it doesn't work out
 	  of the box, you may have to change some settings in
@@ -17087,7 +17089,7 @@ config SCSI_DEBUG
 	  each with multiple dummy SCSI devices (disks). It defaults to one
 	  host adapter with one dummy SCSI disk. Each dummy disk uses kernel
 	  RAM as storage (i.e. it is a ramdisk). To save space when multiple
-	  dummy disks are simulated, they share the same kernel RAM for 
+	  dummy disks are simulated, they share the same kernel RAM for
 	  their storage. See <http://www.torque.net/sg/sdebug.html> for more
 	  information. This driver is primarily of use to those testing the
 	  SCSI and block subsystems. If unsure, say N.
@@ -17543,7 +17545,7 @@ config PCMCIA_NINJA_SCSI
 	  NinjaSCSI-3: (version string: "WBT","NinjaSCSI-3","R1.0")
 	    IO-DATA     PCSC-FP
 	    ALPHA DATA  AD-PCS201
-	    CyQ've      SFC-201  
+	    CyQ've      SFC-201
 	    LOGITECH    LPM-SCSI2E
 	    Pioneer PCR-PR24's card
 	    I-O DATA CDPS-PX24's card (PCSC-F)
@@ -19395,7 +19397,7 @@ config THERM_PM72
 	depends on I2C && I2C_POWERMAC && PPC_PMAC64
 	help
 	  This driver provides thermostat and fan control for the desktop
-	  G5 machines. 
+	  G5 machines.
 
 config WINDFARM
 	tristate "New PowerMac thermal control infrastructure"
@@ -19752,7 +19754,7 @@ config MARVELL_PHY
 	tristate "Drivers for Marvell PHYs"
 	---help---
 	  Currently has a driver for the 88E1011S
-	
+
 config DAVICOM_PHY
 	tristate "Drivers for Davicom PHYs"
 	---help---
@@ -20597,12 +20599,12 @@ config SMC911X
 	help
 	  This is a driver for SMSC's LAN911x series of Ethernet chipsets
 	  including the new LAN9115, LAN9116, LAN9117, and LAN9118.
-	  Say Y if you want it compiled into the kernel, 
+	  Say Y if you want it compiled into the kernel,
 	  and read the Ethernet-HOWTO, available from
 	  <http://www.linuxdoc.org/docs.html#howto>.
 
-	  This driver is also available as a module. The module will be 
-	  called smc911x.  If you want to compile it as a module, say M 
+	  This driver is also available as a module. The module will be
+	  called smc911x.  If you want to compile it as a module, say M
 	  here and read <file:Documentation/kbuild/modules.txt>
 
 config NET_VENDOR_RACAL
@@ -20695,7 +20697,7 @@ config TULIP
 	select CRC32
 	---help---
 	  This driver is developed for the SMC EtherPower series Ethernet
-	  cards and also works with cards based on the DECchip 
+	  cards and also works with cards based on the DECchip
 	  21140 (Tulip series) chips.  Some LinkSys PCI cards are
 	  of this type.  (If your card is NOT SMC EtherPower 10/100 PCI
 	  (smc9332dst), you can also try the driver for "Generic DECchip"
@@ -20777,7 +20779,7 @@ config WINBOND_840
 	select CRC32
 	select MII
 	help
-	  This driver is for the Winbond W89c840 chip.  It also works with 
+	  This driver is for the Winbond W89c840 chip.  It also works with
 	  the TX9882 chip on the Compex RL100-ATX board.
 	  More specific information and updates are available from
 	  <http://www.scyld.com/network/drivers.html>.
@@ -20807,7 +20809,7 @@ config ULI526X
 	  To compile this driver as a module, choose M here and read
 	  <file:Documentation/networking/net-modules.txt>.  The module will
 	  be called uli526x.
-	  
+
 config PCMCIA_XIRCOM
 	tristate "Xircom CardBus support (new driver)"
 	depends on NET_TULIP && CARDBUS
@@ -21118,7 +21120,7 @@ config IBM_EMAC_RX_SKB_HEADROOM
 	  will always reserve at least 2 bytes to make IP header
 	  aligned, so usually there is no need to add any additional
 	  headroom.
-	  
+
 	  If unsure, set to 0.
 
 config IBM_EMAC_PHY_RX_CLK_FIX
@@ -21126,10 +21128,10 @@ config IBM_EMAC_PHY_RX_CLK_FIX
 	depends on IBM_EMAC && (405EP || 440GX || 440EP || 440GR)
 	help
 	  Enable this if EMAC attached to a PHY which doesn't generate
-	  RX clock if there is no link, if this is the case, you will 
+	  RX clock if there is no link, if this is the case, you will
 	  see "TX disable timeout" or "RX disable timeout" in the system
 	  log.
-	  
+
 	  If unsure, say N.
 
 config IBM_EMAC_DEBUG
@@ -21146,7 +21148,7 @@ config IBM_EMAC_RGMII
 	bool
 	depends on IBM_EMAC && 440GX
 	default y
-		
+
 config IBM_EMAC_TAH
 	bool
 	depends on IBM_EMAC && 440GX
@@ -21379,9 +21381,9 @@ config E100
 	select MII
 	---help---
 	  This driver supports Intel(R) PRO/100 family of adapters.
-	  To verify that your adapter is supported, find the board ID number 
-	  on the adapter. Look for a label that has a barcode and a number 
-	  in the format 123456-001 (six digits hyphen three digits). 
+	  To verify that your adapter is supported, find the board ID number
+	  on the adapter. Look for a label that has a barcode and a number
+	  in the format 123456-001 (six digits hyphen three digits).
 
 	  Use the above information and the Adapter & Driver ID Guide at:
 
@@ -21393,7 +21395,7 @@ config E100
 
 	  <http://appsr.intel.com/scripts-df/support_intel.asp>
 
-	  More specific information on configuring the driver is in 
+	  More specific information on configuring the driver is in
 	  <file:Documentation/networking/e100.txt>.
 
 	  To compile this driver as a module, choose M here and read
@@ -21897,7 +21899,7 @@ config E1000
 	depends on PCI
 	---help---
 	  This driver supports Intel(R) PRO/1000 gigabit ethernet family of
-	  adapters.  For more information on how to identify your adapter, go 
+	  adapters.  For more information on how to identify your adapter, go
 	  to the Adapter & Driver ID Guide at:
 
 	  <http://support.intel.com/support/network/adapter/pro100/21397.htm>
@@ -21907,7 +21909,7 @@ config E1000
 
 	  <http://support.intel.com>
 
-	  More specific information on configuring the driver is in 
+	  More specific information on configuring the driver is in
 	  <file:Documentation/networking/e1000.txt>.
 
 	  To compile this driver as a module, choose M here and read
@@ -22032,7 +22034,7 @@ config R8169_VLAN
 	---help---
 	  Say Y here for the r8169 driver to support the functions required
 	  by the kernel 802.1Q code.
-	  
+
 	  If in doubt, say Y.
 
 config SIS190
@@ -22058,7 +22060,7 @@ config SKGE
 	  and related Gigabit Ethernet adapters. It is a new smaller driver
 	  with better performance and more complete ethtool support.
 
-	  It does not support the link failover and network management 
+	  It does not support the link failover and network management
 	  features that "portable" vendor supplied sk98lin driver does.
 
 	  This driver supports adapters based on the original Yukon chipset:
@@ -22159,16 +22161,16 @@ config SK98LIN
 	    - SK-9871 V2.0 Gigabit Ethernet 1000Base-ZX Adapter
 	    - SK-9872 Gigabit Ethernet Server Adapter (SK-NET GE-ZX dual link)
 	    - SMC EZ Card 1000 (SMC9452TXV.2)
-	  
+
 	  The adapters support Jumbo Frames.
 	  The dual link adapters support link-failover and dual port features.
-	  Both Marvell Yukon and SysKonnect SK-98xx/SK-95xx adapters support 
-	  the scatter-gather functionality with sendfile(). Please refer to 
+	  Both Marvell Yukon and SysKonnect SK-98xx/SK-95xx adapters support
+	  the scatter-gather functionality with sendfile(). Please refer to
 	  <file:Documentation/networking/sk98lin.txt> for more information about
 	  optional driver parameters.
 	  Questions concerning this driver may be addressed to:
 	      <linux@syskonnect.de>
-	  
+
 	  If you want to compile this driver as a module ( = code which can be
 	  inserted in and removed from the running kernel whenever you want),
 	  say M here and read <file:Documentation/kbuild/modules.txt>. The module will
@@ -22379,7 +22381,7 @@ config IXGB
 
 	  <http://support.intel.com>
 
-	  More specific information on configuring the driver is in 
+	  More specific information on configuring the driver is in
 	  <file:Documentation/networking/ixgb.txt>.
 
 	  To compile this driver as a module, choose M here and read
@@ -22407,8 +22409,8 @@ config S2IO
 	tristate "S2IO 10Gbe XFrame NIC"
 	depends on PCI
 	---help---
-	  This driver supports the 10Gbe XFrame NIC of S2IO. 
-	  More specific information on configuring the driver is in 
+	  This driver supports the 10Gbe XFrame NIC of S2IO.
+	  More specific information on configuring the driver is in
 	  <file:Documentation/networking/s2io.txt>.
 
 config S2IO_NAPI
@@ -22560,7 +22562,7 @@ config 3C359
 	  To compile this driver as a module, choose M here: the module will be
 	  called 3c359.
 
-	  Also read the file <file:Documentation/networking/3c359.txt> or check the 
+	  Also read the file <file:Documentation/networking/3c359.txt> or check the
 	  Linux Token Ring Project site for the latest information at
 	  <http://www.linuxtr.net>
 
@@ -22809,7 +22811,7 @@ config IPW2100
 	select FW_LOADER
 	select IEEE80211
 	---help---
-          A driver for the Intel PRO/Wireless 2100 Network 
+          A driver for the Intel PRO/Wireless 2100 Network
 	  Connection 802.11b wireless network adapter.
 
           See <file:Documentation/networking/README.ipw2100> for information on
@@ -22818,25 +22820,25 @@ config IPW2100
 
 	  In order to use this driver, you will need a firmware image for it.
           You can obtain the firmware from
-	  <http://ipw2100.sf.net/>.  Once you have the firmware image, you 
+	  <http://ipw2100.sf.net/>.  Once you have the firmware image, you
 	  will need to place it in /lib/firmware.
 
           You will also very likely need the Wireless Tools in order to
           configure your card:
 
           <http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html>.
- 
+
           If you want to compile the driver as a module ( = code which can be
           inserted in and removed from the running kernel whenever you want),
           say M here and read <file:Documentation/kbuild/modules.txt>.
           The module will be called ipw2100.ko.
-	
+
 config IPW2100_MONITOR
         bool "Enable promiscuous mode"
         depends on IPW2100
         ---help---
 	  Enables promiscuous/monitor mode support for the ipw2100 driver.
-	  With this feature compiled into the driver, you can switch to 
+	  With this feature compiled into the driver, you can switch to
 	  promiscuous mode via the Wireless Tool's Monitor mode.  While in this
 	  mode, no packets can be sent.
 
@@ -22844,17 +22846,17 @@ config IPW2100_DEBUG
 	bool "Enable full debugging output in IPW2100 module."
 	depends on IPW2100
 	---help---
-	  This option will enable debug tracing output for the IPW2100.  
+	  This option will enable debug tracing output for the IPW2100.
 
-	  This will result in the kernel module being ~60k larger.  You can 
-	  control which debug output is sent to the kernel log by setting the 
-	  value in 
+	  This will result in the kernel module being ~60k larger.  You can
+	  control which debug output is sent to the kernel log by setting the
+	  value in
 
 	  /sys/bus/pci/drivers/ipw2100/debug_level
 
 	  This entry will only exist if this option is enabled.
 
-	  If you are not trying to debug or develop the IPW2100 driver, you 
+	  If you are not trying to debug or develop the IPW2100 driver, you
 	  most likely want to say N here.
 
 config IPW2200
@@ -22865,22 +22867,22 @@ config IPW2200
 	select IEEE80211
 	---help---
           A driver for the Intel PRO/Wireless 2200BG and 2915ABG Network
-	  Connection adapters. 
+	  Connection adapters.
 
-          See <file:Documentation/networking/README.ipw2200> for 
-	  information on the capabilities currently enabled in this 
+          See <file:Documentation/networking/README.ipw2200> for
+	  information on the capabilities currently enabled in this
 	  driver and for tips for debugging issues and problems.
 
 	  In order to use this driver, you will need a firmware image for it.
           You can obtain the firmware from
-	  <http://ipw2200.sf.net/>.  See the above referenced README.ipw2200 
+	  <http://ipw2200.sf.net/>.  See the above referenced README.ipw2200
 	  for information on where to install the firmware images.
 
           You will also very likely need the Wireless Tools in order to
           configure your card:
 
           <http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html>.
- 
+
           If you want to compile the driver as a module ( = code which can be
           inserted in and removed from the running kernel whenever you want),
           say M here and read <file:Documentation/kbuild/modules.txt>.
@@ -22891,7 +22893,7 @@ config IPW2200_MONITOR
         depends on IPW2200
         ---help---
 	  Enables promiscuous/monitor mode support for the ipw2200 driver.
-	  With this feature compiled into the driver, you can switch to 
+	  With this feature compiled into the driver, you can switch to
 	  promiscuous mode via the Wireless Tool's Monitor mode.  While in this
 	  mode, no packets can be sent.
 
@@ -22904,7 +22906,7 @@ config IPW2200_PROMISCUOUS
 	depends on IPW2200_MONITOR
 	select IPW2200_RADIOTAP
 	---help---
-          Enables the creation of a second interface prefixed 'rtap'. 
+          Enables the creation of a second interface prefixed 'rtap'.
           This second interface will provide every received in radiotap
 	  format.
 
@@ -22917,10 +22919,10 @@ config IPW2200_PROMISCUOUS
             % ifconfig rtap0 up
             % tethereal -i rtap0
 
-          If you do not specify 'rtap_iface=1' as a module parameter then 
-          the rtap interface will not be created and you will need to turn 
+          If you do not specify 'rtap_iface=1' as a module parameter then
+          the rtap interface will not be created and you will need to turn
           it on via sysfs:
-	
+
             % echo 1 > /sys/bus/pci/drivers/ipw2200/*/rtap_iface
 
 config IPW2200_QOS
@@ -23007,7 +23009,7 @@ config APPLE_AIRPORT
 	help
 	  Say Y here to support the Airport 802.11b wireless Ethernet hardware
 	  built into the Macintosh iBook and other recent PowerPC-based
-	  Macintosh machines. This is essentially a Lucent Orinoco card with 
+	  Macintosh machines. This is essentially a Lucent Orinoco card with
 	  a non-standard interface.
 
 	  This driver does not support the Airport Extreme (802.11b/g). Use
@@ -23061,10 +23063,10 @@ config ATMEL
       select CRC32
        ---help---
         A driver 802.11b wireless cards based on the Atmel fast-vnet
-        chips. This driver supports standard Linux wireless extensions. 
- 
+        chips. This driver supports standard Linux wireless extensions.
+
         Many  cards based on this chipset do not have flash memory
-        and need their firmware loaded at start-up. If yours is 
+        and need their firmware loaded at start-up. If yours is
         one of these, you will need to provide a firmware image
         to be loaded into the card by the driver. The Atmel
         firmware package can be downloaded from
@@ -23156,7 +23158,7 @@ config PCMCIA_WL3501
 	 micro support for ethtool.
 
 config PRISM54
-	tristate 'Intersil Prism GT/Duette/Indigo PCI/Cardbus' 
+	tristate 'Intersil Prism GT/Duette/Indigo PCI/Cardbus'
 	depends on PCI && EXPERIMENTAL && WLAN_80211
 	select WIRELESS_EXT
 	select FW_LOADER
@@ -23166,7 +23168,7 @@ config PRISM54
 	  ISL3880 - Prism GT            802.11 b/g
 	  ISL3877 - Prism Indigo        802.11 a
 	  ISL3890 - Prism Duette        802.11 a/b/g
-	  
+
 	  For a complete list of supported cards visit <http://prism54.org>.
 	  Here is the latest confirmed list of supported cards:
 
@@ -23195,8 +23197,8 @@ config PRISM54
 	  You will also need the /etc/hotplug/firmware.agent script from
 	  a current hotplug package.
 
-	  Note: You need a motherboard with DMA support to use any of these cards 
-	  
+	  Note: You need a motherboard with DMA support to use any of these cards
+
 	  If you want to compile the driver as a module ( = code which can be
 	  inserted in and removed from the running kernel whenever you want),
 	  say M here and read <file:Documentation/kbuild/modules.txt>.
@@ -24871,7 +24873,7 @@ config LCS
 	help
 	   Select this option if you want to use LCS networking  on IBM S/390
   	   or zSeries. This device driver supports Token Ring (IEEE 802.5),
-  	   FDDI (IEEE 802.7) and Ethernet. 
+  	   FDDI (IEEE 802.7) and Ethernet.
 	   This option is also available as a module which will be
 	   called lcs.ko. If you do not know what it is, it's safe to say "Y".
 
@@ -24921,8 +24923,8 @@ config QETH
 	  This driver supports the IBM S/390 and zSeries OSA Express adapters
 	  in QDIO mode (all media types), HiperSockets interfaces and VM GuestLAN
 	  interfaces in QDIO and HIPER mode.
-	
-	  For details please refer to the documentation provided by IBM at   
+
+	  For details please refer to the documentation provided by IBM at
 	  <http://www10.software.ibm.com/developerworks/opensource/linux390>
 
 	  To compile this driver as a module, choose M here: the
@@ -24938,7 +24940,7 @@ config QETH_IPV6
 	help
 	  If CONFIG_QETH is switched on, this option will include IPv6
 	  support in the qeth device driver.
-	
+
 config QETH_VLAN
 	bool "VLAN support for gigabit ethernet"
 	depends on (QETH = VLAN_8021Q) || (QETH && VLAN_8021Q = 'y')
@@ -25246,9 +25248,9 @@ config PPPOE
 	  Support for PPP over Ethernet.
 
 	  This driver requires the latest version of pppd from the CVS
-	  repository at cvs.samba.org.  Alternatively, see the 
+	  repository at cvs.samba.org.  Alternatively, see the
 	  RoaringPenguin package (<http://www.roaringpenguin.com/pppoe>)
-	  which contains instruction on how to use this driver (under 
+	  which contains instruction on how to use this driver (under
 	  the heading "Kernel mode PPPoE").
 
 config PPPOATM
@@ -25654,7 +25656,7 @@ config HISAX_MAX_CARDS
 	default "8"
 	help
 	  This option allows you to specify the maximum number of cards which
-	  the HiSax driver will be able to handle.  
+	  the HiSax driver will be able to handle.
 
 comment "HiSax supported cards"
 
@@ -25926,7 +25928,7 @@ config HISAX_DEBUG
 	bool "HiSax debugging"
 	help
 	  This enables debugging code in the new-style HiSax drivers, i.e.
-	  the ST5481 USB driver currently. 
+	  the ST5481 USB driver currently.
 	  If in doubt, say yes.
 
 comment "HiSax PCMCIA card service modules"
@@ -28351,7 +28353,7 @@ config ROCKETPORT
 	tristate "Comtrol RocketPort support"
 	depends on SERIAL_NONSTANDARD
 	help
-	  This driver supports Comtrol RocketPort and RocketModem PCI boards.   
+	  This driver supports Comtrol RocketPort and RocketModem PCI boards.
           These boards provide 2, 4, 8, 16, or 32 high-speed serial ports or
           modems.  For information about the RocketPort/RocketModem  boards
           and this driver read <file:Documentation/rocket.txt>.
@@ -29430,8 +29432,8 @@ config PDC_CONSOLE
 	depends on PARISC && !SERIAL_MUX && VT
 	default n
 	help
-	  Saying Y here will enable the software based PDC console to be 
-	  used as the system console.  This is useful for machines in 
+	  Saying Y here will enable the software based PDC console to be
+	  used as the system console.  This is useful for machines in
 	  which the hardware based console has not been written yet.  The
 	  following steps must be competed to use the PDC console:
 
@@ -29611,7 +29613,7 @@ config SERIAL_CPM
 	depends on CPM2 || 8xx
 	select SERIAL_CORE
 	help
-	  This driver supports the SCC and SMC serial ports on Motorola 
+	  This driver supports the SCC and SMC serial ports on Motorola
 	  embedded PowerPC that contain a CPM1 (8xx) or CPM2 (8xxx)
 
 config SERIAL_CPM_CONSOLE
@@ -30509,7 +30511,7 @@ config PC87413_WDT
 	  module will be called pc87413_wdt.
 
 	  Most people will say N.
- 
+
 config 60XX_WDT
 	tristate "SBC-60XX Watchdog Timer"
 	depends on X86
@@ -31479,7 +31481,7 @@ config DRM_RADEON
 	  Choose this option if you have an ATI Radeon graphics card.  There
 	  are both PCI and AGP versions.  You don't need to choose this to
 	  run the Radeon in plain VGA mode.
-	  
+
 	  If M is selected, the module will be called radeon.
 
 config DRM_I810
@@ -31512,9 +31514,9 @@ config DRM_I915
 	  852GM, 855GM 865G or 915G integrated graphics.  If M is selected, the
 	  module will be called i915.  AGP support is required for this driver
 	  to work. This driver is used by the Intel driver in X.org 6.8 and
-	  XFree86 4.4 and above. If unsure, build this and i830 as modules and 
+	  XFree86 4.4 and above. If unsure, build this and i830 as modules and
 	  the X server will load the correct one.
-	
+
 endchoice
 
 config DRM_MGA
@@ -31529,7 +31531,7 @@ config DRM_SIS
 	tristate "SiS video cards"
 	depends on DRM && AGP
 	help
-	  Choose this option if you have a SiS 630 or compatible video 
+	  Choose this option if you have a SiS 630 or compatible video
           chipset. If M is selected the module will be called sis. AGP
           support is required for this driver to work.
 
@@ -31680,8 +31682,8 @@ config RAW_DRIVER
 	tristate "RAW driver (/dev/raw/rawN) (OBSOLETE)"
 	depends on BLOCK
 	help
-	  The raw driver permits block devices to be bound to /dev/raw/rawN. 
-	  Once bound, I/O against /dev/raw/rawN uses efficient zero-copy I/O. 
+	  The raw driver permits block devices to be bound to /dev/raw/rawN.
+	  Once bound, I/O against /dev/raw/rawN uses efficient zero-copy I/O.
 	  See the raw(8) manpage for more details.
 
           The raw driver is deprecated and will be removed soon.
@@ -31762,11 +31764,11 @@ config TCG_TPM
 	  If you have a TPM security chip in your system, which
 	  implements the Trusted Computing Group's specification,
 	  say Yes and it will be accessible from within Linux.  For
-	  more information see <http://www.trustedcomputinggroup.org>. 
-	  An implementation of the Trusted Software Stack (TSS), the 
-	  userspace enablement piece of the specification, can be 
-	  obtained at: <http://sourceforge.net/projects/trousers>.  To 
-	  compile this driver as a module, choose M here; the module 
+	  more information see <http://www.trustedcomputinggroup.org>.
+	  An implementation of the Trusted Software Stack (TSS), the
+	  userspace enablement piece of the specification, can be
+	  obtained at: <http://sourceforge.net/projects/trousers>.  To
+	  compile this driver as a module, choose M here; the module
 	  will be called tpm. If unsure, say N.
 	  Note: For more TPM drivers enable CONFIG_PNP, CONFIG_ACPI
 	  and CONFIG_PNPACPI.
@@ -31784,17 +31786,17 @@ config TCG_NSC
 	tristate "National Semiconductor TPM Interface"
 	depends on TCG_TPM && PNPACPI
 	---help---
-	  If you have a TPM security chip from National Semiconductor 
-	  say Yes and it will be accessible from within Linux.  To 
-	  compile this driver as a module, choose M here; the module 
+	  If you have a TPM security chip from National Semiconductor
+	  say Yes and it will be accessible from within Linux.  To
+	  compile this driver as a module, choose M here; the module
 	  will be called tpm_nsc.
 
 config TCG_ATMEL
 	tristate "Atmel TPM Interface"
 	depends on TCG_TPM
 	---help---
-	  If you have a TPM security chip from Atmel say Yes and it 
-	  will be accessible from within Linux.  To compile this driver 
+	  If you have a TPM security chip from Atmel say Yes and it
+	  will be accessible from within Linux.  To compile this driver
 	  as a module, choose M here; the module will be called tpm_atmel.
 
 config TCG_INFINEON
@@ -32052,7 +32054,7 @@ config I2C_CHARDEV
 	  programs use the I2C bus.  Information on how to do this is
 	  contained in the file <file:Documentation/i2c/dev-interface>.
 
-	  This support is also available as a module.  If so, the module 
+	  This support is also available as a module.  If so, the module
 	  will be called i2c-dev.
 
 #file "drivers/i2c/algos/Kconfig"
@@ -32072,7 +32074,7 @@ config I2C_ALGOBIT
 	  adapters.  Say Y if you own an I2C adapter belonging to this class
 	  and then say Y to the specific driver for you adapter below.
 
-	  This support is also available as a module.  If so, the module 
+	  This support is also available as a module.  If so, the module
 	  will be called i2c-algo-bit.
 
 config I2C_ALGOPCF
@@ -32082,7 +32084,7 @@ config I2C_ALGOPCF
 	  Say Y if you own an I2C adapter belonging to this class and then say
 	  Y to the specific driver for you adapter below.
 
-	  This support is also available as a module.  If so, the module 
+	  This support is also available as a module.  If so, the module
 	  will be called i2c-algo-pcf.
 
 config I2C_ALGOPCA
@@ -32092,7 +32094,7 @@ config I2C_ALGOPCA
 	  Say Y if you own an I2C adapter belonging to this class and then say
 	  Y to the specific driver for you adapter below.
 
-	  This support is also available as a module.  If so, the module 
+	  This support is also available as a module.  If so, the module
 	  will be called i2c-algo-pca.
 
 config I2C_ALGO8XX
@@ -32230,7 +32232,7 @@ config I2C_ELEKTOR
 	  This supports the PCF8584 ISA bus I2C adapter.  Say Y if you own
 	  such an adapter.
 
-	  This support is also available as a module.  If so, the module 
+	  This support is also available as a module.  If so, the module
 	  will be called i2c-elektor.
 
 config I2C_GPIO
@@ -32282,7 +32284,7 @@ config I2C_I810
 	select I2C_ALGOBIT
 	help
 	  If you say yes to this option, support will be included for the Intel
-	  810/815 family of mainboard I2C interfaces.  Specifically, the 
+	  810/815 family of mainboard I2C interfaces.  Specifically, the
 	  following versions of the chipset are supported:
 	    i810AA
 	    i810AB
@@ -32336,8 +32338,8 @@ config I2C_IBM_IIC
 	tristate "IBM PPC 4xx on-chip I2C interface"
 	depends on IBM_OCP
 	help
-	  Say Y here if you want to use IIC peripheral found on 
-	  embedded IBM PPC 4xx based systems. 
+	  Say Y here if you want to use IIC peripheral found on
+	  embedded IBM PPC 4xx based systems.
 
 	  This driver can also be built as a module.  If so, the module
 	  will be called i2c-ibm_iic.
@@ -32360,7 +32362,7 @@ config I2C_IXP4XX
 	depends on ARCH_IXP4XX
 	select I2C_ALGOBIT
 	help
-	  Say Y here if you have an Intel IXP4xx(420,421,422,425) based 
+	  Say Y here if you have an Intel IXP4xx(420,421,422,425) based
 	  system and are using GPIO lines for an I2C bus.
 
 	  This support is also available as a module. If so, the module
@@ -32374,7 +32376,7 @@ config I2C_IXP2000
 	depends on ARCH_IXP2000
 	select I2C_ALGOBIT
 	help
-	  Say Y here if you have an Intel IXP2000(2400, 2800, 2850) based 
+	  Say Y here if you have an Intel IXP2000(2400, 2800, 2850) based
 	  system and are using GPIO lines for an I2C bus.
 
 	  This support is also available as a module. If so, the module
@@ -32459,7 +32461,7 @@ config I2C_PARPORT
 	  on the parport driver.  This is meant for embedded systems. Don't say
 	  Y here if you intend to say Y or M there.
 
-	  This support is also available as a module.  If so, the module 
+	  This support is also available as a module.  If so, the module
 	  will be called i2c-parport.
 
 config I2C_PARPORT_LIGHT
@@ -32477,12 +32479,12 @@ config I2C_PARPORT_LIGHT
 	  the clean but heavy parport handling is not an option.  The
 	  drawback is a reduced portability and the impossibility to
 	  daisy-chain other parallel port devices.
-	  
+
 	  Don't say Y here if you said Y or M to i2c-parport.  Saying M to
 	  both is possible but both modules should not be loaded at the same
 	  time.
 
-	  This support is also available as a module.  If so, the module 
+	  This support is also available as a module.  If so, the module
 	  will be called i2c-parport-light.
 
 config I2C_PASEMI
@@ -32503,7 +32505,7 @@ config I2C_PROSAVAGE
 	    S3/VIA KM266/VT8375 aka ProSavage8
 	    S3/VIA KM133/VT8365 aka Savage4
 
-	  This support is also available as a module.  If so, the module 
+	  This support is also available as a module.  If so, the module
 	  will be called i2c-prosavage.
 
 config I2C_RPXLITE
@@ -32523,7 +32525,7 @@ config I2C_SAVAGE4
 	depends on PCI && EXPERIMENTAL
 	select I2C_ALGOBIT
 	help
-	  If you say yes to this option, support will be included for the 
+	  If you say yes to this option, support will be included for the
 	  S3 Savage 4 I2C interface.
 
 	  This driver can also be built as a module.  If so, the module
@@ -32556,7 +32558,7 @@ config SCx200_I2C
 
 	  If you don't know what to do here, say N.
 
-	  This support is also available as a module.  If so, the module 
+	  This support is also available as a module.  If so, the module
 	  will be called scx200_i2c.
 
 	  This driver is deprecated and will be dropped soon. Use i2c-gpio
@@ -32587,14 +32589,14 @@ config SCx200_ACB
 
 	  If you don't know what to do here, say N.
 
-	  This support is also available as a module.  If so, the module 
+	  This support is also available as a module.  If so, the module
 	  will be called scx200_acb.
 
 config I2C_SIS5595
 	tristate "SiS 5595"
 	depends on PCI
 	help
-	  If you say yes to this option, support will be included for the 
+	  If you say yes to this option, support will be included for the
 	  SiS5595 SMBus (a subset of I2C) interface.
 
 	  This driver can also be built as a module.  If so, the module
@@ -32604,7 +32606,7 @@ config I2C_SIS630
 	tristate "SiS 630/730"
 	depends on PCI
 	help
-	  If you say yes to this option, support will be included for the 
+	  If you say yes to this option, support will be included for the
 	  SiS630 and SiS730 SMBus (a subset of I2C) interface.
 
 	  This driver can also be built as a module.  If so, the module
@@ -32722,7 +32724,7 @@ config I2C_PCA_ISA
 	help
 	  This driver supports ISA boards using the Philips PCA 9564
 	  Parallel bus to I2C bus controller
-	  
+
 	  This driver can also be built as a module.  If so, the module
 	  will be called i2c-pca-isa.
 
@@ -32800,7 +32802,7 @@ config SENSORS_PCF8574
 	depends on EXPERIMENTAL
 	default n
 	help
-	  If you say yes here you get support for Philips PCF8574 and 
+	  If you say yes here you get support for Philips PCF8574 and
 	  PCF8574A chips.
 
 	  This driver can also be built as a module.  If so, the module
@@ -32840,7 +32842,7 @@ config ISP1301_OMAP
 	  USB-On-The-Go transceiver working with the OMAP OTG controller.
 	  The ISP1301 is used in products including H2 and H3 development
 	  boards for Texas Instruments OMAP processors.
-	  
+
 	  This driver can also be built as a module.  If so, the module
 	  will be called isp1301_omap.
 
@@ -37435,7 +37437,7 @@ config FB_STI
 	  BIOS routines contained in a ROM chip in HP PA-RISC based machines.
 	  Enabling this option will implement the linux framebuffer device
 	  using calls to the STI BIOS routines for initialisation.
-	
+
 	  If you enable this option, you will get a planar framebuffer device
 	  /dev/fb which will work on the most common HP graphic cards of the
 	  NGLE family, including the artist chips (in the 7xx and Bxxx series),
@@ -37489,7 +37491,7 @@ config FB_VESA
 	  You will get a boot time penguin logo at no additional cost. Please
 	  read <file:Documentation/fb/vesafb.txt>. If unsure, say Y.
 
-choice 
+choice
 	prompt "VESA driver type"
 	depends on FB_VESA
 	default FB_VESA_STD if X86_64
@@ -37533,7 +37535,7 @@ config FB_VESA_DEFAULT_MODE
 	string "VESA default mode"
 	depends on FB_VESA_TNG
 	default "640x480@60"
-	help 
+	help
 	  This option is used to determine the default mode vesafb is
 	  supposed to switch to in case no mode is provided as a kernel
 	  command line parameter.
@@ -37900,36 +37902,36 @@ config FB_I810
 	select FB_CFB_IMAGEBLIT
 	select VGASTATE
 	help
-	  This driver supports the on-board graphics built in to the Intel 810 
+	  This driver supports the on-board graphics built in to the Intel 810
           and 815 chipsets.  Say Y if you have and plan to use such a board.
 
           To compile this driver as a module, choose M here: the
 	  module will be called i810fb.
 
-          For more information, please read 
+          For more information, please read
 	  <file:Documentation/fb/intel810.txt>
 
 config FB_I810_GTF
 	bool "use VESA Generalized Timing Formula"
 	depends on FB_I810
 	help
-	  If you say Y, then the VESA standard, Generalized Timing Formula 
+	  If you say Y, then the VESA standard, Generalized Timing Formula
           or GTF, will be used to calculate the required video timing values
-	  per video mode.  Since the GTF allows nondiscrete timings 
+	  per video mode.  Since the GTF allows nondiscrete timings
           (nondiscrete being a range of values as opposed to discrete being a
-          set of values), you'll be able to use any combination of horizontal 
+          set of values), you'll be able to use any combination of horizontal
 	  and vertical resolutions, and vertical refresh rates without having
 	  to specify your own timing parameters.  This is especially useful
-	  to maximize the performance of an aging display, or if you just 
-          have a display with nonstandard dimensions. A VESA compliant 
+	  to maximize the performance of an aging display, or if you just
+          have a display with nonstandard dimensions. A VESA compliant
 	  monitor is recommended, but can still work with non-compliant ones.
-	  If you need or want this, then select this option. The timings may 
-	  not be compliant with Intel's recommended values. Use at your own 
+	  If you need or want this, then select this option. The timings may
+	  not be compliant with Intel's recommended values. Use at your own
 	  risk.
 
-          If you say N, the driver will revert to discrete video timings 
+          If you say N, the driver will revert to discrete video timings
 	  using a set recommended by Intel in their documentation.
-  
+
           If unsure, say N.
 
 config FB_I810_I2C
@@ -38053,10 +38055,10 @@ config FB_MATROX_G
 	  framebuffer section. G450/G550 secondary head and digital output
 	  are supported without additional modules.
 
-	  The driver starts in monitor mode. You must use the matroxset tool 
-	  (available at <ftp://platan.vc.cvut.cz/pub/linux/matrox-latest/>) to 
-	  swap primary and secondary head outputs, or to change output mode.  
-	  Secondary head driver always start in 640x480 resolution and you 
+	  The driver starts in monitor mode. You must use the matroxset tool
+	  (available at <ftp://platan.vc.cvut.cz/pub/linux/matrox-latest/>) to
+	  swap primary and secondary head outputs, or to change output mode.
+	  Secondary head driver always start in 640x480 resolution and you
 	  must use fbset to change it.
 
 	  Do not forget that second head supports only 16 and 32 bpp
@@ -38154,7 +38156,7 @@ config FB_RADEON
 	  "I2C support" and "I2C bit-banging support" in the character devices
 	  section.
 
-	  If you say M here then "I2C support" and "I2C bit-banging support" 
+	  If you say M here then "I2C support" and "I2C bit-banging support"
 	  can be build either as modules or built-in.
 
 	  There is a product page at
@@ -38166,7 +38168,7 @@ config FB_RADEON_I2C
 	select FB_DDC
 	default y
 	help
-	  Say Y here if you want DDC/I2C support for your Radeon board. 
+	  Say Y here if you want DDC/I2C support for your Radeon board.
 
 config FB_RADEON_BACKLIGHT
 	bool "Support for backlight control"
@@ -38347,7 +38349,7 @@ config FB_NEOMAGIC
 	select VGASTATE
 	help
 	  This driver supports notebooks with NeoMagic PCI chips.
-	  Say Y if you have such a graphics card. 
+	  Say Y if you have such a graphics card.
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called neofb.
@@ -38393,7 +38395,7 @@ config FB_VOODOO1
 	select FB_CFB_COPYAREA
 	select FB_CFB_IMAGEBLIT
 	---help---
-	  Say Y here if you have a 3Dfx Voodoo Graphics (Voodoo1/sst1) or 
+	  Say Y here if you have a 3Dfx Voodoo Graphics (Voodoo1/sst1) or
 	  Voodoo2 (cvg) based graphics card.
 
 	  To compile this driver as a module, choose M here: the
@@ -38935,7 +38937,7 @@ config MDA_CONSOLE
 
 config SGI_NEWPORT_CONSOLE
         tristate "SGI Newport Console support"
-        depends on SGI_IP22 
+        depends on SGI_IP22
         help
           Say Y here if you want the console on the Newport aka XL graphics
           card of your Indy.  Most people say Y here.
@@ -38951,7 +38953,7 @@ config PROM_CONSOLE
 
 config DUMMY_CONSOLE
 	bool
-	depends on PROM_CONSOLE!=y || VGA_CONSOLE!=y || SGI_NEWPORT_CONSOLE!=y 
+	depends on PROM_CONSOLE!=y || VGA_CONSOLE!=y || SGI_NEWPORT_CONSOLE!=y
 	default y
 
 config DUMMY_CONSOLE_COLUMNS
@@ -38988,7 +38990,7 @@ config FRAMEBUFFER_CONSOLE_ROTATION
          oriented.
 
 config STI_CONSOLE
-        tristate "STI text console" 
+        tristate "STI text console"
         depends on PARISC
         default y
         help
@@ -39025,7 +39027,7 @@ config FONT_8x8
 
 config FONT_8x16
 	bool "VGA 8x16 font" if FONTS
-	depends on FRAMEBUFFER_CONSOLE || SGI_NEWPORT_CONSOLE=y || STI_CONSOLE || USB_SISUSBVGA_CON 
+	depends on FRAMEBUFFER_CONSOLE || SGI_NEWPORT_CONSOLE=y || STI_CONSOLE || USB_SISUSBVGA_CON
 	default y if !SPARC && !FONTS
 	help
 	  This is the "high resolution" font for the VGA frame buffer (the one
@@ -39183,7 +39185,7 @@ config FB_SPLASH
 	---help---
 	  This option enables support for the Linux boot-up splash screen and
 	  graphical backgrounds on consoles. Note that you will need userspace
-	  splash utilities in order to take advantage of these features. Refer 
+	  splash utilities in order to take advantage of these features. Refer
 	  to Documentation/fb/splash.txt for more information.
 
 	  If unsure, say N.
@@ -39565,12 +39567,12 @@ config SND_MTS64
 	depends on SND && PARPORT
 	select SND_RAWMIDI
 	help
-	  The ESI Miditerminal 4140 is a 4 In 4 Out MIDI Interface with 
+	  The ESI Miditerminal 4140 is a 4 In 4 Out MIDI Interface with
           additional SMPTE Timecode capabilities for the parallel port.
 
 	  Say 'Y' to include support for this device.
 
-	  To compile this driver as a module, chose 'M' here: the module 
+	  To compile this driver as a module, chose 'M' here: the module
           will be called snd-mts64.
 
 config SND_SERIAL_U16550
@@ -39663,7 +39665,7 @@ config SND_AD1848
 	help
 	  Say Y here to include support for AD1848 (Analog Devices) or
 	  CS4248 (Cirrus Logic - Crystal Semiconductors) chips.
-	  
+
 	  For newer chips from Cirrus Logic, use the CS4231, CS4232 or
 	  CS4236+ drivers.
 
@@ -39931,7 +39933,7 @@ config SND_MIRO
 	select SND_MPU401_UART
 	select SND_PCM
 	help
-	  Say 'Y' or 'M' to include support for Miro miroSOUND PCM1 pro, 
+	  Say 'Y' or 'M' to include support for Miro miroSOUND PCM1 pro,
 	  miroSOUND PCM12 and miroSOUND PCM20 Radio soundcards.
 
 	  To compile this driver as a module, choose M here: the module
@@ -40913,7 +40915,7 @@ config SND_AOA_FABRIC_LAYOUT
 	This enables the layout-id fabric for the Apple Onboard
 	Audio driver, the module holding it all together
 	based on the device-tree's layout-id property.
-	
+
 	If you are unsure and have a later Apple machine,
 	compile it as a module.
 #file "sound/aoa/fabrics/Kconfig"
@@ -40973,7 +40975,7 @@ config SND_AOA_SOUNDBUS
 	---help---
 	This option enables the generic driver for the soundbus
 	support on Apple machines.
-	
+
 	It is required for the sound bus implementations.
 
 config SND_AOA_SOUNDBUS_I2S
@@ -41247,7 +41249,7 @@ config SND_SOC
 
 	  If you want ASoC support, you should say Y here and also to the
 	  specific driver for your SoC platform below.
-	  
+
 	  ASoC provides power efficient ALSA support for embedded battery powered
 	  SoC based systems like PDA's, Phones and Personal Media Players.
 
@@ -42432,7 +42434,7 @@ config USB
 	  traditional PC serial port.  The bus supplies power to peripherals
 	  and allows for hot swapping.  Up to 127 USB peripherals can be
 	  connected to a single USB host in a tree structure.
-	  
+
 	  The USB host is the root of the tree, the peripherals are the
 	  leaves and the inner nodes are special USB devices called hubs.
 	  Most PCs now have USB host ports, used to connect peripherals
@@ -42601,9 +42603,9 @@ config USB_EHCI_HCD
 	  The Enhanced Host Controller Interface (EHCI) is standard for USB 2.0
 	  "high speed" (480 Mbit/sec, 60 Mbyte/sec) host controller hardware.
 	  If your USB host controller supports USB 2.0, you will likely want to
-	  configure this Host Controller Driver.  At the time of this writing, 
+	  configure this Host Controller Driver.  At the time of this writing,
 	  the primary implementation of EHCI is a chip from NEC, widely available
-	  in add-on PCI cards, but implementations are in the works from other 
+	  in add-on PCI cards, but implementations are in the works from other
 	  vendors including Intel and Philips.  Motherboard support is appearing.
 
 	  EHCI controllers are packaged with "companion" host controllers (OHCI
@@ -42798,7 +42800,7 @@ config USB_SL811_HCD
 	help
 	  The SL811HS is a single-port USB controller that supports either
 	  host side or peripheral side roles.  Enable this option if your
-	  board has this chip, and you want to use it as a host controller. 
+	  board has this chip, and you want to use it as a host controller.
 	  If unsure, say N.
 
 	  To compile this driver as a module, choose M here: the
@@ -43259,7 +43261,7 @@ config USB_SERIAL_CYPRESS_M8
 
 	  Supported microcontrollers in the CY4601 family are:
 		CY7C63741 CY7C63742 CY7C63743 CY7C64013
-	
+
 	  To compile this driver as a module, choose M here: the
 	  module will be called cypress_m8.
 
@@ -43806,7 +43808,7 @@ config USB_LED
 	tristate "USB LED driver support"
 	depends on USB
 	help
-	  Say Y here if you want to connect an USBLED device to your 
+	  Say Y here if you want to connect an USBLED device to your
 	  computer's USB port.
 
 	  To compile this driver as a module, choose M here: the
@@ -43833,7 +43835,7 @@ config USB_CYTHERM
 	  Say Y here if you want to connect a Cypress USB thermometer
 	  device to your computer's USB port. This device is also known
 	  as the Cypress USB Starter kit or demo board. The Elektor
-	  magazine published a modified version of this device in issue 
+	  magazine published a modified version of this device in issue
 	  #291.
 
 	  To compile this driver as a module, choose M here: the
@@ -43870,7 +43872,7 @@ config USB_PHIDGETSERVO
 	tristate "USB PhidgetServo support"
 	depends on USB_PHIDGET
 	help
-	  Say Y here if you want to connect an 1 or 4 Motor PhidgetServo 
+	  Say Y here if you want to connect an 1 or 4 Motor PhidgetServo
 	  servo controller version 2.0 or 3.0.
 
 	  Phidgets Inc. has a web page at <http://www.phidgets.com/>.
@@ -44056,7 +44058,7 @@ config USB_SPEEDTOUCH
 	select FW_LOADER
 	help
 	  Say Y here if you have an SpeedTouch USB or SpeedTouch 330
-	  modem.  In order to use your modem you will need to install the 
+	  modem.  In order to use your modem you will need to install the
 	  two parts of the firmware, extracted by the user space tools; see
 	  <http://www.linux-usb.org/SpeedTouch/> for details.
 
@@ -44207,8 +44209,8 @@ config USB_GADGET_NET2280
 	select USB_GADGET_DUALSPEED
 	help
 	   NetChip 2280 / 2282 is a PCI based USB peripheral controller which
-	   supports both full and high speed USB 2.0 data transfers.  
-	   
+	   supports both full and high speed USB 2.0 data transfers.
+
 	   It has six configurable endpoints, as well as endpoint zero
 	   (for control transfers) and several endpoints with dedicated
 	   functions.
@@ -44260,7 +44262,7 @@ config USB_GADGET_GOKU
 	help
 	   The Toshiba TC86C001 is a PCI device which includes controllers
 	   for full speed USB devices, IDE, I2C, SIO, plus a USB host (OHCI).
-	   
+
 	   The device controller has three configurable (bulk or interrupt)
 	   endpoints, plus endpoint zero (for control transfers).
 
@@ -44348,11 +44350,11 @@ config USB_GADGET_DUMMY_HCD
 	  side is the master; the gadget side is the slave.  Gadget drivers
 	  can be high, full, or low speed; and they have access to endpoints
 	  like those from NET2280, PXA2xx, or SA1100 hardware.
-	  
+
 	  This may help in some stages of creating a driver to embed in a
 	  Linux device, since it lets you debug several parts of the gadget
 	  driver without its hardware or drivers being involved.
-	  
+
 	  Since such a gadget side driver needs to interoperate with a host
 	  side Linux-USB device driver, this may help to debug both sides
 	  of a USB protocol stack.
@@ -44446,7 +44448,7 @@ config USB_ETH
 	help
 	  This driver implements Ethernet style communication, in either
 	  of two ways:
-	  
+
 	   - The "Communication Device Class" (CDC) Ethernet Control Model.
 	     That protocol is often avoided with pure Ethernet adapters, in
 	     favor of simpler vendor-specific hardware, but is widely
@@ -44482,7 +44484,7 @@ config USB_ETH_RNDIS
 	   If you say "y" here, the Ethernet gadget driver will try to provide
 	   a second device configuration, supporting RNDIS to talk to such
 	   Microsoft USB hosts.
-	   
+
 	   To make MS-Windows work with this, use Documentation/usb/linux.inf
 	   as the "driver info file".  For versions of MS-Windows older than
 	   XP, you'll need to download drivers from Microsoft's website; a URL
@@ -47188,7 +47190,7 @@ config BEFS_DEBUG
 	depends on BEFS_FS
 	help
 	  If you say Y here, you can use the 'debug' mount option to enable
-	  debugging output from the driver. 
+	  debugging output from the driver.
 
 config BFS_FS
 	tristate "BFS file system support (EXPERIMENTAL)"
@@ -47291,7 +47293,7 @@ config JFFS2_FS_XATTR
 	  Extended attributes are name:value pairs associated with inodes by
 	  the kernel or by users (see the attr(5) manual page, or visit
 	  <http://acl.bestbits.at/> for details).
-	  
+
 	  If unsure, say N.
 
 config JFFS2_FS_POSIX_ACL
@@ -47302,10 +47304,10 @@ config JFFS2_FS_POSIX_ACL
 	help
 	  Posix Access Control Lists (ACLs) support permissions for users and
 	  groups beyond the owner/group/world scheme.
-	  
+
 	  To learn more about Access Control Lists, visit the Posix ACLs for
 	  Linux website <http://acl.bestbits.at/>.
-	  
+
 	  If you don't know what Access Control Lists are, say N
 
 config JFFS2_FS_SECURITY
@@ -47317,7 +47319,7 @@ config JFFS2_FS_SECURITY
 	  implemented by security modules like SELinux.  This option
 	  enables an extended attribute handler for file security
 	  labels in the jffs2 filesystem.
-	  
+
 	  If you are not using a security module that requires using
 	  extended attributes for file security labels, say N.
 
@@ -47436,7 +47438,7 @@ config SQUASHFS
 
 config SQUASHFS_EMBEDDED
 
-	bool "Additional options for memory-constrained systems" 
+	bool "Additional options for memory-constrained systems"
 	depends on SQUASHFS
 	default n
 	help
@@ -47947,10 +47949,10 @@ config CIFS
 	select NLS
 	help
 	  This is the client VFS module for the Common Internet File System
-	  (CIFS) protocol which is the successor to the Server Message Block 
+	  (CIFS) protocol which is the successor to the Server Message Block
 	  (SMB) protocol, the native file sharing mechanism for most early
-	  PC operating systems.  The CIFS protocol is fully supported by 
-	  file servers such as Windows 2000 (including Windows 2003, NT 4  
+	  PC operating systems.  The CIFS protocol is fully supported by
+	  file servers such as Windows 2000 (including Windows 2003, NT 4
 	  and Windows XP) as well by Samba (which provides excellent CIFS
 	  server support for Linux and many other operating systems). Limited
 	  support for OS/2 and Windows ME and similar servers is provided as well.
@@ -47959,7 +47961,7 @@ config CIFS
 	  network file system client for mounting to CIFS compliant servers,
 	  including support for dfs (hierarchical name space), secure per-user
 	  session establishment, safe distributed caching (oplock), optional
-	  packet signing, Unicode and other internationalization improvements. 
+	  packet signing, Unicode and other internationalization improvements.
 	  If you need to mount to Samba or Windows from this machine, say Y.
 
 config CIFS_STATS
@@ -47997,16 +47999,16 @@ config CIFS_WEAK_PW_HASH
 	  LANMAN based servers such as OS/2 and Windows 95, but such
 	  mounts may be less secure than mounts using NTLM or more recent
 	  security mechanisms if you are on a public network.  Unless you
-	  have a need to access old SMB servers (and are on a private 
+	  have a need to access old SMB servers (and are on a private
 	  network) you probably want to say N.  Even if this support
 	  is enabled in the kernel build, they will not be used
 	  automatically. At runtime LANMAN mounts are disabled but
 	  can be set to required (or optional) either in
 	  /proc/fs/cifs (see fs/cifs/README for more detail) or via an
-	  option on the mount command. This support is disabled by 
+	  option on the mount command. This support is disabled by
 	  default in order to reduce the possibility of a downgrade
 	  attack.
- 
+
 	  If unsure, say N.
 
 config CIFS_XATTR
@@ -48047,18 +48049,18 @@ config CIFS_DEBUG2
 	   messages in some error paths, slowing performance. This
 	   option can be turned off unless you are debugging
 	   cifs problems.  If unsure, say N.
-	   
+
 config CIFS_EXPERIMENTAL
 	  bool "CIFS Experimental Features (EXPERIMENTAL)"
 	  depends on CIFS && EXPERIMENTAL
 	  help
 	    Enables cifs features under testing. These features are
-	    experimental and currently include DFS support and directory 
+	    experimental and currently include DFS support and directory
 	    change notification ie fcntl(F_DNOTIFY), as well as the upcall
 	    mechanism which will be used for Kerberos session negotiation
-	    and uid remapping.  Some of these features also may depend on 
+	    and uid remapping.  Some of these features also may depend on
 	    setting a value of 1 to the pseudo-file /proc/fs/cifs/Experimental
-	    (which is disabled by default). See the file fs/cifs/README 
+	    (which is disabled by default). See the file fs/cifs/README
 	    for more details.  If unsure, say N.
 
 config CIFS_UPCALL
@@ -48220,7 +48222,7 @@ config CODA_FS_OLD_API
 	  However this new API is not backward compatible with older
 	  clients. If you really need to run the old Coda userspace
 	  cache manager then say Y.
-	  
+
 	  For most cases you probably want to say N.
 
 config AFS_FS
@@ -49077,7 +49079,7 @@ config PROFILING
 	help
 	  Say Y here to enable the extended profiling support mechanisms used
 	  by profilers such as OProfile.
-	  
+
 
 config OPROFILE
 	tristate "OProfile system profiling (EXPERIMENTAL)"
@@ -49423,7 +49425,7 @@ config DEBUG_KOBJECT
 	depends on DEBUG_KERNEL
 	help
 	  If you say Y here, some extra kobject debugging messages will be sent
-	  to the syslog. 
+	  to the syslog.
 
 config DEBUG_HIGHMEM
 	bool "Highmem debugging"
@@ -49746,7 +49748,7 @@ config SECURITY_ROOTPLUG
 
 	  See <http://www.linuxjournal.com/article.php?sid=6279> for
 	  more information about this module.
-	  
+
 	  If you are unsure how to answer this question, answer N.
 
 #file "security/selinux/Kconfig"
@@ -50013,7 +50015,7 @@ config CRYPTO_SHA256
 	select CRYPTO_ALGAPI
 	help
 	  SHA256 secure hash standard (DFIPS 180-2).
-	  
+
 	  This version of SHA implements a 256 bit hash with 128 bits of
 	  security against collision attacks.
 
@@ -50022,7 +50024,7 @@ config CRYPTO_SHA512
 	select CRYPTO_ALGAPI
 	help
 	  SHA512 secure hash standard (DFIPS 180-2).
-	  
+
 	  This version of SHA implements a 512 bit hash with 256 bits of
 	  security against collision attacks.
 
@@ -50132,11 +50134,11 @@ config CRYPTO_BLOWFISH
 	select CRYPTO_ALGAPI
 	help
 	  Blowfish cipher algorithm, by Bruce Schneier.
-	  
+
 	  This is a variable key length cipher which can use keys from 32
 	  bits to 448 bits in length.  It's fast, simple and specifically
 	  designed for use on "large microprocessors".
-	  
+
 	  See also:
 	  <http://www.schneier.com/blowfish.html>
 
@@ -50146,12 +50148,12 @@ config CRYPTO_TWOFISH
 	select CRYPTO_TWOFISH_COMMON
 	help
 	  Twofish cipher algorithm.
-	  
+
 	  Twofish was submitted as an AES (Advanced Encryption Standard)
 	  candidate cipher by researchers at CounterPane Systems.  It is a
 	  16 round block cipher supporting key sizes of 128, 192, and 256
 	  bits.
-	  
+
 	  See also:
 	  <http://www.schneier.com/twofish.html>
 
@@ -50210,19 +50212,19 @@ config CRYPTO_AES
 	tristate "AES cipher algorithms"
 	select CRYPTO_ALGAPI
 	help
-	  AES cipher algorithms (FIPS-197). AES uses the Rijndael 
+	  AES cipher algorithms (FIPS-197). AES uses the Rijndael
 	  algorithm.
 
 	  Rijndael appears to be consistently a very good performer in
-	  both hardware and software across a wide range of computing 
-	  environments regardless of its use in feedback or non-feedback 
-	  modes. Its key setup time is excellent, and its key agility is 
-	  good. Rijndael's very low memory requirements make it very well 
-	  suited for restricted-space environments, in which it also 
-	  demonstrates excellent performance. Rijndael's operations are 
-	  among the easiest to defend against power and timing attacks.	
+	  both hardware and software across a wide range of computing
+	  environments regardless of its use in feedback or non-feedback
+	  modes. Its key setup time is excellent, and its key agility is
+	  good. Rijndael's very low memory requirements make it very well
+	  suited for restricted-space environments, in which it also
+	  demonstrates excellent performance. Rijndael's operations are
+	  among the easiest to defend against power and timing attacks.
 
-	  The AES specifies three key sizes: 128, 192 and 256 bits	  
+	  The AES specifies three key sizes: 128, 192 and 256 bits
 
 	  See <http://csrc.nist.gov/CryptoToolkit/aes/> for more information.
 
@@ -50231,19 +50233,19 @@ config CRYPTO_AES_586
 	depends on (X86 || UML_X86) && !64BIT
 	select CRYPTO_ALGAPI
 	help
-	  AES cipher algorithms (FIPS-197). AES uses the Rijndael 
+	  AES cipher algorithms (FIPS-197). AES uses the Rijndael
 	  algorithm.
 
 	  Rijndael appears to be consistently a very good performer in
-	  both hardware and software across a wide range of computing 
-	  environments regardless of its use in feedback or non-feedback 
-	  modes. Its key setup time is excellent, and its key agility is 
-	  good. Rijndael's very low memory requirements make it very well 
-	  suited for restricted-space environments, in which it also 
-	  demonstrates excellent performance. Rijndael's operations are 
-	  among the easiest to defend against power and timing attacks.	
+	  both hardware and software across a wide range of computing
+	  environments regardless of its use in feedback or non-feedback
+	  modes. Its key setup time is excellent, and its key agility is
+	  good. Rijndael's very low memory requirements make it very well
+	  suited for restricted-space environments, in which it also
+	  demonstrates excellent performance. Rijndael's operations are
+	  among the easiest to defend against power and timing attacks.
 
-	  The AES specifies three key sizes: 128, 192 and 256 bits	  
+	  The AES specifies three key sizes: 128, 192 and 256 bits
 
 	  See <http://csrc.nist.gov/encryption/aes/> for more information.
 
@@ -50252,19 +50254,19 @@ config CRYPTO_AES_X86_64
 	depends on (X86 || UML_X86) && 64BIT
 	select CRYPTO_ALGAPI
 	help
-	  AES cipher algorithms (FIPS-197). AES uses the Rijndael 
+	  AES cipher algorithms (FIPS-197). AES uses the Rijndael
 	  algorithm.
 
 	  Rijndael appears to be consistently a very good performer in
-	  both hardware and software across a wide range of computing 
-	  environments regardless of its use in feedback or non-feedback 
-	  modes. Its key setup time is excellent, and its key agility is 
-	  good. Rijndael's very low memory requirements make it very well 
-	  suited for restricted-space environments, in which it also 
-	  demonstrates excellent performance. Rijndael's operations are 
-	  among the easiest to defend against power and timing attacks.	
+	  both hardware and software across a wide range of computing
+	  environments regardless of its use in feedback or non-feedback
+	  modes. Its key setup time is excellent, and its key agility is
+	  good. Rijndael's very low memory requirements make it very well
+	  suited for restricted-space environments, in which it also
+	  demonstrates excellent performance. Rijndael's operations are
+	  among the easiest to defend against power and timing attacks.
 
-	  The AES specifies three key sizes: 128, 192 and 256 bits	  
+	  The AES specifies three key sizes: 128, 192 and 256 bits
 
 	  See <http://csrc.nist.gov/encryption/aes/> for more information.
 
@@ -50296,7 +50298,7 @@ config CRYPTO_TEA
 	  the TEA algorithm to address a potential key weakness
 	  in the TEA algorithm.
 
-	  Xtendend Encryption Tiny Algorithm is a mis-implementation 
+	  Xtendend Encryption Tiny Algorithm is a mis-implementation
 	  of the XTEA algorithm for compatibility purposes.
 
 config CRYPTO_ARC4
@@ -50306,7 +50308,7 @@ config CRYPTO_ARC4
 	  ARC4 cipher algorithm.
 
 	  ARC4 is a stream cipher using keys ranging from 8 bits to 2048
-	  bits in length.  This algorithm is required for driver-based 
+	  bits in length.  This algorithm is required for driver-based
 	  WEP, but it should not be for other purposes because of the
 	  weakness of the algorithm.
 
@@ -50329,10 +50331,10 @@ config CRYPTO_ANUBIS
 	help
 	  Anubis cipher algorithm.
 
-	  Anubis is a variable key length cipher which can use keys from 
+	  Anubis is a variable key length cipher which can use keys from
 	  128 bits to 320 bits in length.  It was evaluated as a entrant
 	  in the NESSIE competition.
-	  
+
 	  See also:
 	  <https://www.cosic.esat.kuleuven.ac.be/nessie/reports/>
 	  <http://planeta.terra.com.br/informatica/paulobarreto/AnubisPage.html>
@@ -50346,7 +50348,7 @@ config CRYPTO_DEFLATE
 	help
 	  This is the Deflate algorithm (RFC1951), specified for use in
 	  IPSec with the IPCOMP protocol (RFC3173, RFC2394).
-	  
+
 	  You will most probably want this if using IPSec.
 
 config CRYPTO_MICHAEL_MIC
@@ -50406,7 +50408,7 @@ config CRYPTO_DEV_PADLOCK
 	  (so called VIA PadLock ACE, Advanced Cryptography Engine)
 	  that provides instructions for very fast cryptographic
 	  operations with supported algorithms.
-	  
+
 	  The instructions are used only when the CPU supports them.
 	  Otherwise software encryption is used.
 
@@ -50630,7 +50632,7 @@ config GENERIC_ALLOCATOR
 #
 config REED_SOLOMON
 	tristate
-	
+
 config REED_SOLOMON_ENC8
 	boolean
 

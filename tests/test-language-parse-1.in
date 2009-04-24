@@ -21,6 +21,8 @@
 # Test to ensure that parsing is working
 # Report from Francesco Salvestrini
 
+required=""
+
 . $testdir/defs || exit 1
 
 cat > ./choose.ct <<EOF

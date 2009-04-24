@@ -22,6 +22,8 @@
 # with an input file name different from the default one
 # Report from Francesco Salvestrini
 
+required=""
+
 . $testdir/defs || exit 1
 
 cat > ./alfa.ct <<EOF
