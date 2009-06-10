@@ -29,17 +29,17 @@
         <note priority="medium" time="1226609147" done="1226609187">
             Add code into the libs/perl/Choicetool/Options.pm module in order to have a cleaner option parsing method
         </note>
-        <note priority="medium" time="1226609082">
-            Do a general clean-up of CHOICETOOL_BINARY_PATH, CHOICETOOL_DATA_PATH and CHOICETOOL_LIBRARY_PATH environment variables. Consider removing the CHOICETOOL_RC_FILES environment variable references or update all the src/* scripts accordingly
-        </note>
-        <note priority="medium" time="1226609111">
-            Check all string-related assert() calls
-        </note>
         <note priority="verylow" time="1238244121" done="1238532907">
             Update all copyright dates
             <comment>
                 Done
             </comment>
+        </note>
+        <note priority="medium" time="1226609082">
+            Do a general clean-up of CHOICETOOL_BINARY_PATH, CHOICETOOL_DATA_PATH and CHOICETOOL_LIBRARY_PATH environment variables. Consider removing the CHOICETOOL_RC_FILES environment variable references or update all the src/* scripts accordingly
+        </note>
+        <note priority="medium" time="1226609111">
+            Check all string-related assert() calls
         </note>
     </note>
     <note priority="high" time="1233771234">
@@ -65,6 +65,9 @@
     </note>
     <note priority="low" time="1233781692">
         Release 0.4.0
+        <note priority="medium" time="1244669257">
+            Fix bootstrap in order to exit when a missing program is called
+        </note>
         <note priority="low" time="1226609050">
             Rearrange the parser (Parse.yp) in order to speed-up big files parsing
         </note>
