@@ -31,10 +31,10 @@ BEGIN
     my $perllibdir;
 
     $perllibdir = defined($ENV{'CHOICETOOL_LIBRARY_PATH'}) ?
-	$ENV{'CHOICETOOL_LIBRARY_PATH'} : '@pkgvlibsdir@';
+        $ENV{'CHOICETOOL_LIBRARY_PATH'} : '@pkgvlibsdir@';
 
     unshift(@INC, map(File::Spec->catfile($_, "perl"),
-		      (split '@PATH_SEPARATOR@', $perllibdir)));
+                      (split '@PATH_SEPARATOR@', $perllibdir)));
 
     # Override SHELL.  On DJGPP SHELL may not be set to a shell
     # that can handle redirection and quote arguments correctly,
@@ -87,8 +87,8 @@ my %tools = (
         HANDLER        => "choicetool-preprocessor",
         DESCRIPTION    => "preprocess",
         FLAGS          =>
-	    "-i %input_file% " .
-	    "-o %preprocessed_file%",
+            "-i %input_file% " .
+            "-o %preprocessed_file%",
         PRE_REQUISITE  => [ ],
         POST_REQUISITE => [ ],
     },
@@ -96,8 +96,8 @@ my %tools = (
         HANDLER        => "choicetool-parser",
         DESCRIPTION    => "parse",
         FLAGS          =>
-	    "-i %preprocessed_file% " .
-	    "-o %parsed_file%",
+            "-i %preprocessed_file% " .
+            "-o %parsed_file%",
         PRE_REQUISITE  => [ "preprocess" ],
         POST_REQUISITE => [ ],
     },
@@ -105,21 +105,21 @@ my %tools = (
         HANDLER        => "choicetool-compiler",
         DESCRIPTION    => "compile",
         FLAGS          =>
-	    "-i %parsed_file% " .
-	    "-o %compiled_file%",
+            "-i %parsed_file% " .
+            "-o %compiled_file%",
         PRE_REQUISITE  => [ "preprocess",
-			    "parse" ],
+                            "parse" ],
         POST_REQUISITE => [ ],
     },
     "link" => {
         HANDLER        => "choicetool-linker",
         DESCRIPTION    => "link",
         FLAGS          =>
-	    "-i %compiled_file% " .
-	    "-o %output_file%",
+            "-i %compiled_file% " .
+            "-o %output_file%",
         PRE_REQUISITE  => [ "preprocess",
-			    "parse",
-			    "compile" ],
+                            "parse",
+                            "compile" ],
         POST_REQUISITE => [ ],
     },
     );
@@ -154,11 +154,11 @@ sub help ()
 
     print "MODE must be one of the following:\n";
     for my $tool (keys(%tools)) {
-	assert(defined($tools{$tool}{DESCRIPTION}));
+        assert(defined($tools{$tool}{DESCRIPTION}));
 
-	printf("        %-11s          %-s\n",
-	       $tool,
-	       $tools{$tool}{DESCRIPTION});
+        printf("        %-11s          %-s\n",
+               $tool,
+               $tools{$tool}{DESCRIPTION});
     }
     print "\n";
 
@@ -205,15 +205,15 @@ sub run_tool ($$@)
     }
 
     {
-	my $time1;
-	my $time2;
+        my $time1;
+        my $time2;
 
-	$time1 = 0 + time();
-	if (!shell_execute($command)) {
-	    return 0;
-	}
-	$time2 = 0 + time();
-	verbose("Elapsed " . ($time2 - $time1) . " seconds");
+        $time1 = 0 + time();
+        if (!shell_execute($command)) {
+            return 0;
+        }
+        $time2 = 0 + time();
+        verbose("Elapsed " . ($time2 - $time1) . " seconds");
     }
 
     return 1;
@@ -224,34 +224,34 @@ sub help_mode ($)
     my $mode = shift;
 
     if (defined($mode)) {
-	debug("Producing help for mode \`" . $mode . "'");
-	my $found;
+        debug("Producing help for mode \`" . $mode . "'");
+        my $found;
 
-	# Yes, let us provide help for that mode
-	debug("Mode should be \`" . $mode . "'");
-	$found = 0;
-	for my $tool (keys(%tools)) {
-	    debug("Tool = \`" . $tool . "'");
-	    if ($tool eq $mode) {
-		debug("Got tool \`" . $tool . "' for the requested mode");
-		$found = 1;
-		last;
-	    }
-	}
+        # Yes, let us provide help for that mode
+        debug("Mode should be \`" . $mode . "'");
+        $found = 0;
+        for my $tool (keys(%tools)) {
+            debug("Tool = \`" . $tool . "'");
+            if ($tool eq $mode) {
+                debug("Got tool \`" . $tool . "' for the requested mode");
+                $found = 1;
+                last;
+            }
+        }
 
-	if (!$found) {
-	    error("Unknown MODE \`" . $mode . "'");
-	    return 0;
-	}
+        if (!$found) {
+            error("Unknown MODE \`" . $mode . "'");
+            return 0;
+        }
 
-	if (!run_tool($mode, 0, "-h")) {
-	    error("Cannot get help for MODE \`" . $mode . "'");
-	    return 0;
-	}
+        if (!run_tool($mode, 0, "-h")) {
+            error("Cannot get help for MODE \`" . $mode . "'");
+            return 0;
+        }
     } else {
-	debug("Mode is not defined, producing generic help");
-	# No, let us provide the generic help
-	help();
+        debug("Mode is not defined, producing generic help");
+        # No, let us provide the generic help
+        help();
     }
 
     return 1;
@@ -287,7 +287,7 @@ my @options_list = (
     [ "d", "debug",    sub { debug_set(1);            return 1; }, 0 ],
     [ "v", "verbose",  sub { verbose_set(1);          return 1; }, 0 ],
     [ "h", "help",     sub {
-	$run = 0; return (help_mode($_[0]) ? 0 : -1);           }, 2 ],
+        $run = 0; return (help_mode($_[0]) ? 0 : -1);           }, 2 ],
     [ "V", "version",  sub { version();     $run = 0; return 0; }, 0 ],
     );
 
@@ -324,11 +324,11 @@ for my $tool (keys(%tools)) {
     assert(defined($string));
 
     $string = string_replace_many($string, {
-	"%input_file%"        => $input_file,
-	"%preprocessed_file%" => $preprocessed_file,
-	"%parsed_file%"       => $parsed_file,
-	"%compiled_file%"     => $compiled_file,
-	"%output_file%"       => $output_file});
+        "%input_file%"        => $input_file,
+        "%preprocessed_file%" => $preprocessed_file,
+        "%parsed_file%"       => $parsed_file,
+        "%compiled_file%"     => $compiled_file,
+        "%output_file%"       => $output_file});
 
     assert(defined($string));
     $tools{$tool}->{FLAGS} = $string;
@@ -348,9 +348,9 @@ my $found = 0;
 for my $tool (keys(%tools)) {
     debug("Tool = \`" . $tool . "'");
     if ($running_mode eq $tool) {
-	debug("Got tool \`" . $tool . "' for the requested mode");
-	$found = 1;
-	last;
+        debug("Got tool \`" . $tool . "' for the requested mode");
+        $found = 1;
+        last;
     }
 }
 if (!$found) {
@@ -370,13 +370,13 @@ debug("Running mode is \`$running_mode'");
     my $flags = "";
 
     for (my $count = verbose_get(); $count > 0; $count--) {
-	$flags = "-v $flags";
+        $flags = "-v $flags";
     }
     for (my $count = debug_get(); $count > 0; $count--) {
-	$flags = "-d $flags";
+        $flags = "-d $flags";
     }
     if ($force_mode != 0) {
-	$flags = "$flags -f";
+        $flags = "$flags -f";
     }
     $flags = "-W " . warning_get() . " " . $flags;
 
@@ -446,7 +446,7 @@ assert($#tools_chain >= 0);
 
 for my $tool (@tools_chain) {
     if (!run_tool($tool, $dry_run, @options_slack)) {
-	exit 1;
+        exit 1;
     }
 }
 

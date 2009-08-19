@@ -31,10 +31,10 @@ BEGIN
     my $perllibdir;
 
     $perllibdir = defined($ENV{'CHOICETOOL_LIBRARY_PATH'}) ?
-	$ENV{'CHOICETOOL_LIBRARY_PATH'} : '@pkgvlibsdir@';
+        $ENV{'CHOICETOOL_LIBRARY_PATH'} : '@pkgvlibsdir@';
 
     unshift(@INC, map(File::Spec->catfile($_, "perl"),
-		      (split '@PATH_SEPARATOR@', $perllibdir)));
+                      (split '@PATH_SEPARATOR@', $perllibdir)));
 
     # Override SHELL.  On DJGPP SHELL may not be set to a shell
     # that can handle redirection and quote arguments correctly,
@@ -177,13 +177,13 @@ assert(defined($output_file));
 
 if (!$force_mode) {
     if (!file_isnewer($input_file, $output_file)) {
-	warning("Output file "              .
-		"\`" . $output_file . "' "  .
-		"seems not to be obsolete " .
-		"(input file is "           .
-		"\`" . $input_file . "'). " .
-		"Use --force to rebuild");
-	exit 0;
+        warning("Output file "              .
+                "\`" . $output_file . "' "  .
+                "seems not to be obsolete " .
+                "(input file is "           .
+                "\`" . $input_file . "'). " .
+                "Use --force to rebuild");
+        exit 0;
     }
 }
 
@@ -216,7 +216,7 @@ my $string;
 $string = "";
 
 if (!Choicetool::Frontends::KConfig::Preprocess::preprocess($input_file,
-							    \$string)) {
+                                                            \$string)) {
     error("Failed to preprocess file `" . $input_file . "\'");
     exit 1;
 }

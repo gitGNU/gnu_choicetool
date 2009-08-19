@@ -53,7 +53,7 @@ sub title {
     assert(defined($self));
 
     if (defined($value)) {
-	$self->{TITLE} = $value;
+        $self->{TITLE} = $value;
     }
 
     return $self->{TITLE};
@@ -86,10 +86,10 @@ sub m4ify_linear_body ($$)
     assert(defined($self->id()));
 
     return
-	$prefix .
-	"CT_UI_CHECKBOX_DATA([" .
-	$self->id() .
-	"])\n";
+        $prefix .
+        "CT_UI_CHECKBOX_DATA([" .
+        $self->id() .
+        "])\n";
 }
 
 sub m4ify_hierarchical_header ($$)
@@ -104,14 +104,14 @@ sub m4ify_hierarchical_header ($$)
     assert(defined($self->symbol()));
 
     return
-	$prefix .
-	"CT_UI_CHECKBOX_WIDGET([" .
-	$self->id() .
-	"],[" .
-	$self->title() .
-	"],[" .
-	$self->symbol() .
-	"])\n";
+        $prefix .
+        "CT_UI_CHECKBOX_WIDGET([" .
+        $self->id() .
+        "],[" .
+        $self->title() .
+        "],[" .
+        $self->symbol() .
+        "])\n";
 }
 
 sub m4ify_hierarchical_footer ($$)

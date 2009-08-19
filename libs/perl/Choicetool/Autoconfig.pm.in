@@ -31,22 +31,22 @@ use vars qw (@ISA @EXPORT);
 
 @ISA    = qw (Exporter);
 @EXPORT = qw (
-	      $PACKAGE_NAME
-	      $PACKAGE_VERSION
-	      $PACKAGE_BUGREPORT
+              $PACKAGE_NAME
+              $PACKAGE_VERSION
+              $PACKAGE_BUGREPORT
 
-	      $bin_dir
-	      $libs_dir
-	      );
+              $bin_dir
+              $libs_dir
+              );
 
 use vars qw (
-	     $PACKAGE_NAME
-	     $PACKAGE_VERSION
-	     $PACKAGE_BUGREPORT
+             $PACKAGE_NAME
+             $PACKAGE_VERSION
+             $PACKAGE_BUGREPORT
 
-	     $bin_dir
-	     $libs_dir
-	     );
+             $bin_dir
+             $libs_dir
+             );
 
 $PACKAGE_NAME      = '@PACKAGE_NAME@';
 $PACKAGE_BUGREPORT = '@PACKAGE_BUGREPORT@';

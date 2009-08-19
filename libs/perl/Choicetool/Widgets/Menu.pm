@@ -52,7 +52,7 @@ sub type {
     assert(defined($self));
 
     if (defined($value)) {
-	$self->{TYPE} = $value;
+        $self->{TYPE} = $value;
     }
 
     return $self->{TYPE};
@@ -65,7 +65,7 @@ sub label {
     assert(defined($self));
 
     if (defined($value)) {
-	$self->{LABEL} = $value;
+        $self->{LABEL} = $value;
     }
 
     return $self->{LABEL};
@@ -78,7 +78,7 @@ sub default {
     assert(defined($self));
 
     if (defined($value)) {
-	$self->{DEFAULT} = $value;
+        $self->{DEFAULT} = $value;
     }
 
     return $self->{DEFAULT};
@@ -91,7 +91,7 @@ sub range {
     assert(defined($self));
 
     if (defined($value)) {
-	$self->{RANGE} = $value;
+        $self->{RANGE} = $value;
     }
 
     return $self->{RANGE};
@@ -104,7 +104,7 @@ sub help {
     assert(defined($self));
 
     if (defined($value)) {
-	$self->{HELP} = $value;
+        $self->{HELP} = $value;
     }
 
     return $self->{HELP};
@@ -133,10 +133,10 @@ sub m4ify_linear_body ($$)
     assert(defined($self->id()));
 
     return
-	$prefix .
-	"CT_UI_MENU_DATA([" .
-	$self->id() .
-	"])\n";
+        $prefix .
+        "CT_UI_MENU_DATA([" .
+        $self->id() .
+        "])\n";
 }
 
 sub m4ify_hierarchical_header ($$)
@@ -150,11 +150,11 @@ sub m4ify_hierarchical_header ($$)
     assert(defined($self->label()));
 
     return
-	$prefix .
-	"CT_UI_MENU_WIDGET([". $self->id() .
-	"],[" .
-	$self->label() .
-	"],[\n";
+        $prefix .
+        "CT_UI_MENU_WIDGET([". $self->id() .
+        "],[" .
+        $self->label() .
+        "],[\n";
 }
 
 sub m4ify_hierarchical_footer ($$)

@@ -105,28 +105,28 @@ sub add_window_widget ($$$)
     my @root_children = $$root_ref->children();
 
     for (my $i = 0; $i <= $#root_children; $i++) {
-	my $child_ref = $$root_ref->child($i);
+        my $child_ref = $$root_ref->child($i);
 
-	if (!defined($child_ref)) {
-	    next;
-	}
+        if (!defined($child_ref)) {
+            next;
+        }
 
-	if (!$window->add_child($$child_ref->id(), $child_ref)) {
-	    error("Failed to add child to window widget [" .
-		  $$child_ref->id()                        .
-		  "]");
-	    return 0;
-	}
+        if (!$window->add_child($$child_ref->id(), $child_ref)) {
+            error("Failed to add child to window widget [" .
+                  $$child_ref->id()                        .
+                  "]");
+            return 0;
+        }
 
-	$$child_ref->parent(\$window);
-	$$root_ref->remove_child($i);
+        $$child_ref->parent(\$window);
+        $$root_ref->remove_child($i);
     }
 
      if (!$$root_ref->add_child($window->id(), \$window)) {
-	 error("Failed to add child to root widget [" .
-	       $window->id()                          .
-	       "]");
-	 return 0;
+         error("Failed to add child to root widget [" .
+               $window->id()                          .
+               "]");
+         return 0;
      }
 
      $window->parent($root_ref);
@@ -158,16 +158,16 @@ sub add_menu_widget ($$$)
 
     if ($$widget_ref->id() == 0) {
 
-	if (!$$widget_ref->add_child($menu->id(), \$menu)) {
-	    error("Failed to add children to parent widget [" .
-		  $$widget_ref->id()                          .
-		  "]");
-	    return 0;
-	}
+        if (!$$widget_ref->add_child($menu->id(), \$menu)) {
+            error("Failed to add children to parent widget [" .
+                  $$widget_ref->id()                          .
+                  "]");
+            return 0;
+        }
 
-	$menu->parent($widget_ref);
+        $menu->parent($widget_ref);
 
-	return 1;
+        return 1;
     }
 
     my $widget = $$widget_ref;
@@ -176,10 +176,10 @@ sub add_menu_widget ($$$)
     $widget->parent(\$menu);
 
     if (!$menu->add_child($$widget_ref->id(), \$widget)) {
-	error("Failed to add children to menu widget [" .
-	      $$widget_id_ref                           .
-	      "]");
-	return 0;
+        error("Failed to add children to menu widget [" .
+              $$widget_id_ref                           .
+              "]");
+        return 0;
     }
 
     $$widget_ref = $menu;
@@ -207,51 +207,51 @@ sub add_configbox_widget($$$)
     delete $widget_data->{TYPE};
 
     if ($type eq "bool") {
-	@{$widget_data->{ENUM}} = ["y", "n"];
-	$$stack_ref->push($widget_data);
+        @{$widget_data->{ENUM}} = ["y", "n"];
+        $$stack_ref->push($widget_data);
 
-	if (!add_configboxenum_widget($widget_ref,
-				      $widget_id_ref,
-				      $stack_ref)) {
-	    return 0;
-	}
+        if (!add_configboxenum_widget($widget_ref,
+                                      $widget_id_ref,
+                                      $stack_ref)) {
+            return 0;
+        }
     } elsif ($type eq "tristate") {
-	@{$widget_data->{ENUM}} = ["y", "n", "m"];
-	$$stack_ref->push($widget_data);
+        @{$widget_data->{ENUM}} = ["y", "n", "m"];
+        $$stack_ref->push($widget_data);
 
-	if (!add_configboxenum_widget($widget_ref,
-				      $widget_id_ref,
-				      $stack_ref)) {
-	    return 0;
-	}
+        if (!add_configboxenum_widget($widget_ref,
+                                      $widget_id_ref,
+                                      $stack_ref)) {
+            return 0;
+        }
      } elsif ($type eq "int") {
-	$widget_data->{BASE} = 10;
-	$$stack_ref->push($widget_data);
+        $widget_data->{BASE} = 10;
+        $$stack_ref->push($widget_data);
 
-	if (!add_configboxnumber_widget($widget_ref,
-					$widget_id_ref,
-					$stack_ref)) {
-	    return 0;
-	}
+        if (!add_configboxnumber_widget($widget_ref,
+                                        $widget_id_ref,
+                                        $stack_ref)) {
+            return 0;
+        }
     } elsif ($type eq "hex") {
-	$widget_data->{BASE} = 16;
-	$$stack_ref->push($widget_data);
+        $widget_data->{BASE} = 16;
+        $$stack_ref->push($widget_data);
 
-	if (!add_configboxnumber_widget($widget_ref,
-					$widget_id_ref,
-					$stack_ref)) {
-	    return 0;
-	}
+        if (!add_configboxnumber_widget($widget_ref,
+                                        $widget_id_ref,
+                                        $stack_ref)) {
+            return 0;
+        }
     } elsif ($type eq "string") {
-	$$stack_ref->push($widget_data);
+        $$stack_ref->push($widget_data);
 
-	if (!add_configboxstring_widget($widget_ref,
-					$widget_id_ref,
-					$stack_ref)) {
-	    return 0;
-	}
+        if (!add_configboxstring_widget($widget_ref,
+                                        $widget_id_ref,
+                                        $stack_ref)) {
+            return 0;
+        }
     } else {
-	bug("Unreachable code, got type '$type'");
+        bug("Unreachable code, got type '$type'");
     }
 
     return 1;
@@ -273,28 +273,28 @@ sub add_configboxenum_widget ($$$)
     assert($#{$widget_data->{ENUM}} > -1);
 
     my $configbox =
-	Choicetool::Widgets::ConfigboxEnum->new(++$$widget_id_ref);
+        Choicetool::Widgets::ConfigboxEnum->new(++$$widget_id_ref);
     assert(defined($configbox));
 
     $configbox->symbol($widget_data->{SYMBOL});
     $configbox->enum(@{$widget_data->{ENUM}});
 
     if (defined($widget_data->{TITLE})) {
-	$configbox->title($widget_data->{TITLE});
+        $configbox->title($widget_data->{TITLE});
     }
 
     if ($$widget_ref->id() == 0) {
 
-	if (!$$widget_ref->add_child($configbox->id(), \$configbox)) {
-	    error("Failed to add children to parent widget [" .
-		  $$widget_ref->id()                          .
-		  "]");
-	    return 0;
-	}
+        if (!$$widget_ref->add_child($configbox->id(), \$configbox)) {
+            error("Failed to add children to parent widget [" .
+                  $$widget_ref->id()                          .
+                  "]");
+            return 0;
+        }
 
-	$configbox->parent($widget_ref);
+        $configbox->parent($widget_ref);
 
-	return 1;
+        return 1;
     }
 
     my $widget = $$widget_ref;
@@ -303,10 +303,10 @@ sub add_configboxenum_widget ($$$)
     $widget->parent(\$configbox);
 
     if (!$configbox->add_child($$widget_ref->id(), \$widget)) {
-	error("Failed to add children to config box widget [" .
-	      $$widget_id_ref                                 .
-	      "]");
-	return 0;
+        error("Failed to add children to config box widget [" .
+              $$widget_id_ref                                 .
+              "]");
+        return 0;
     }
 
     $$widget_ref = $configbox;
@@ -330,28 +330,28 @@ sub add_configboxnumber_widget ($$$)
     assert(defined($widget_data->{BASE}));
 
     my $configbox =
-	Choicetool::Widgets::ConfigboxNumber->new(++$$widget_id_ref);
+        Choicetool::Widgets::ConfigboxNumber->new(++$$widget_id_ref);
     assert(defined($configbox));
 
     $configbox->symbol($widget_data->{SYMBOL});
     $configbox->base($widget_data->{BASE});
 
     if (defined($widget_data->{TITLE})) {
-	$configbox->title($widget_data->{TITLE});
+        $configbox->title($widget_data->{TITLE});
     }
 
     if ($$widget_ref->id() == 0) {
 
-	if (!$$widget_ref->add_child($configbox->id(), \$configbox)) {
-	    error("Failed to add children to parent widget [" .
-		  $$widget_ref->id()                          .
-		  "]");
-	    return 0;
-	}
+        if (!$$widget_ref->add_child($configbox->id(), \$configbox)) {
+            error("Failed to add children to parent widget [" .
+                  $$widget_ref->id()                          .
+                  "]");
+            return 0;
+        }
 
-	$configbox->parent($widget_ref);
+        $configbox->parent($widget_ref);
 
-	return 1;
+        return 1;
     }
 
     my $widget = $$widget_ref;
@@ -360,10 +360,10 @@ sub add_configboxnumber_widget ($$$)
     $widget->parent(\$configbox);
 
     if (!$configbox->add_child($$widget_ref->id(), \$widget)) {
-	error("Failed to add children to config box  widget [" .
-	      $$widget_id_ref                                  .
-	      "]");
-	return 0;
+        error("Failed to add children to config box  widget [" .
+              $$widget_id_ref                                  .
+              "]");
+        return 0;
     }
 
      $$widget_ref = $configbox;
@@ -386,27 +386,27 @@ sub add_configboxstring_widget ($$$)
     assert(defined($widget_data->{SYMBOL}));
 
     my $configbox =
-	Choicetool::Widgets::ConfigboxString->new(++$$widget_id_ref);
+        Choicetool::Widgets::ConfigboxString->new(++$$widget_id_ref);
     assert(defined($configbox));
 
     $configbox->symbol($widget_data->{SYMBOL});
 
     if (defined($widget_data->{TITLE})) {
-	$configbox->title($widget_data->{TITLE});
+        $configbox->title($widget_data->{TITLE});
     }
 
     if ($$widget_ref->id() == 0) {
 
-	if (!$$widget_ref->add_child($configbox->id(), \$configbox)) {
-	    error("Failed to add children to parent widget [" .
-		  $$widget_ref->id()                          .
-		  "]");
-	    return 0;
-	}
+        if (!$$widget_ref->add_child($configbox->id(), \$configbox)) {
+            error("Failed to add children to parent widget [" .
+                  $$widget_ref->id()                          .
+                  "]");
+            return 0;
+        }
 
-	$configbox->parent($widget_ref);
+        $configbox->parent($widget_ref);
 
-	return 1;
+        return 1;
     }
 
     my $widget = $$widget_ref;
@@ -415,10 +415,10 @@ sub add_configboxstring_widget ($$$)
     $widget->parent(\$configbox);
 
     if (!$configbox->add_child($$widget_ref->id(), \$widget)) {
-	error("Failed to add children to config box widget [" .
-	      $$widget_id_ref                                 .
-	      "]");
-	return 0;
+        error("Failed to add children to config box widget [" .
+              $$widget_id_ref                                 .
+              "]");
+        return 0;
     }
 
     $$widget_ref = $configbox;
@@ -452,9 +452,9 @@ input:
     drule("input");
 
     if (!add_window_widget($$parser_data->{WIDGET},
-			   \$$parser_data->{WIDGET_ID},
-			   \$$parser_data->{STACK})) {
-	$_[0]->YYAbort;
+                           \$$parser_data->{WIDGET_ID},
+                           \$$parser_data->{STACK})) {
+        $_[0]->YYAbort;
     }
 }
      | newlines stmt_list
@@ -462,9 +462,9 @@ input:
     drule("input");
 
     if (!add_window_widget($$parser_data->{WIDGET},
-			   \$$parser_data->{WIDGET_ID},
-			   \$$parser_data->{STACK})) {
-	$_[0]->YYAbort;
+                           \$$parser_data->{WIDGET_ID},
+                           \$$parser_data->{STACK})) {
+        $_[0]->YYAbort;
     }
 }
      ;
@@ -473,8 +473,8 @@ newlines: newline
 {
     drule("newlines");
 }
-	| newline newlines
-	;
+        | newline newlines
+        ;
 
 newline: 'T_EOL'
 {
@@ -487,8 +487,8 @@ stmt_list: stmt
 {
     drule("stmt_list");
 }
-	 | stmt stmt_list
-	 ;
+         | stmt stmt_list
+         ;
 
 stmt: mainmenu_stmt
 {
@@ -499,9 +499,9 @@ stmt: mainmenu_stmt
     drule("stmt");
 
     if (!add_menu_widget($$parser_data->{WIDGET},
-			 \$$parser_data->{WIDGET_ID},
-			 \$$parser_data->{STACK})) {
-	$_[0]->YYAbort;
+                         \$$parser_data->{WIDGET_ID},
+                         \$$parser_data->{STACK})) {
+        $_[0]->YYAbort;
     }
 }
     | choice_stmt
@@ -527,7 +527,7 @@ mainmenu_stmt: 'T_MAINMENU' words newlines
 
     $$parser_data->{STACK}->push($mainmenu_data);
 }
-	     ;
+             ;
 
 words: word
 {
@@ -559,27 +559,27 @@ word_quote: 'T_WORD_QUOTE'
 
     drule("word_quote");
 }
-	  ;
+          ;
 
 menu_stmt: menu_entry 'T_ENDMENU' newlines
 {
     drule("menu_stmt");
 }
-	 | menu_entry menu_block_list 'T_ENDMENU' newlines
+         | menu_entry menu_block_list 'T_ENDMENU' newlines
 {
     drule("menu_stmt");
 }
-	 ;
+         ;
 
 menu_entry: menu
 {
     drule("menu_entry");
 }
-	  | menu depends_list
+          | menu depends_list
 {
     drule("menu_entry");
 }
-	  ;
+          ;
 
 menu: 'T_MENU' words newlines
 {
@@ -597,35 +597,35 @@ menu_block_list: menu_block
 {
     drule("menu_block_list");
 }
-	       | menu_block menu_block_list
-	       ;
+               | menu_block menu_block_list
+               ;
 
 menu_block: menu_stmt
 {
     drule("menu_block");
 
     if (!add_menu_widget($$parser_data->{WIDGET},
-			 \$$parser_data->{WIDGET_ID},
-			 \$$parser_data->{STACK})) {
-	$_[0]->YYAbort;
+                         \$$parser_data->{WIDGET_ID},
+                         \$$parser_data->{STACK})) {
+        $_[0]->YYAbort;
     }
 }
-	  | choice_stmt
+          | choice_stmt
 {
     drule("menu_block");
 }
-	  | common_stmt
+          | common_stmt
 {
     drule("menu_block");
 }
-	  ;
+          ;
 
 depends_list: depends
 {
     drule("depends_list");
 }
-	    | depends depends_list
-	    ;
+            | depends depends_list
+            ;
 
 depends: 'T_DEPENDS' 'T_ON' expr newlines
 {
@@ -675,98 +675,98 @@ choice_stmt: choice_entry 'T_ENDCHOICE' newlines
 {
     drule("choice_stmt");
 }
-	   | choice_entry choice_block_list 'T_ENDCHOICE' newlines
+           | choice_entry choice_block_list 'T_ENDCHOICE' newlines
 {
     drule("choice_stmt");
 }
-	   ;
+           ;
 
 choice_entry: 'T_CHOICE' newlines
 {
     drule("choice_entry");
 }
-	    | 'T_CHOICE' newlines choice_options_block_list
+            | 'T_CHOICE' newlines choice_options_block_list
 {
     drule("choice_entry");
 }
-	    ;
+            ;
 
 choice_options_block_list: choice_options_block
 {
     drule("choice_options_block_list");
 }
-			 | choice_options_block choice_options_block_list
-			 ;
+                         | choice_options_block choice_options_block_list
+                         ;
 
 choice_options_block: choice_option
 {
     drule("choice_options_block");
 }
-		    | depends
+                    | depends
 {
     drule("choice_options_block");
 }
-		    | help
+                    | help
 {
     drule("choice_options_block");
 }
-		    ;
+                    ;
 
 choice_option: 'T_PROMPT' words newlines
 {
     drule("choice_option");
 }
-	     | 'T_PROMPT' words 'T_IF' expr newlines
+             | 'T_PROMPT' words 'T_IF' expr newlines
 {
     drule("choice_option");
 }
-	     | choice_type_definition words 'T_IF' expr newlines
+             | choice_type_definition words 'T_IF' expr newlines
 {
     drule("config_option");
 }
-	     | choice_type_definition words newlines
+             | choice_type_definition words newlines
 {
     drule("choice_option");
 }
-	     | choice_type_definition newlines
+             | choice_type_definition newlines
 {
     drule("choice_option");
 }
-	     | 'T_OPTIONAL' newlines
+             | 'T_OPTIONAL' newlines
 {
     drule("choice_option");
 }
-	     | 'T_DEFAULT' word newlines
+             | 'T_DEFAULT' word newlines
 {
     drule("choice_option");
 }
-	     | 'T_DEFAULT' word 'T_IF' expr newlines
+             | 'T_DEFAULT' word 'T_IF' expr newlines
 {
     drule("choice_option");
 }
-	     ;
+             ;
 
 choice_type_definition: 'T_BOOL'
 {
     drule("type_definition");
 }
-	       | 'T_TRISTATE'
+               | 'T_TRISTATE'
 {
     drule("type_definition");
 }
-	       | 'T_STRING'
+               | 'T_STRING'
 {
     drule("type_definition");
 }
-	       | 'T_HEX'
+               | 'T_HEX'
 {
     drule("type_definition");
 }
-	       | 'T_INT'
+               | 'T_INT'
 {
     drule("type_definition");
 }
-	       ;
+               ;
 
 help: 'T_HELP' newlines 'T_HELPTEXT' newlines
 {
@@ -778,26 +778,26 @@ choice_block_list: common_stmt
 {
     drule("choice_block_list");
 }
-		 | common_stmt choice_block_list
-		 ;
+                 | common_stmt choice_block_list
+                 ;
 
 common_stmt: config_stmt
 {
     drule("common_stmt");
 }
-	   | if_stmt
+           | if_stmt
 {
     drule("common_stmt");
 }
-	   | comment_stmt
+           | comment_stmt
 {
     drule("common_stmt");
 }
-	   | menuconfig_stmt
+           | menuconfig_stmt
 {
     drule("common_stmt");
 }
-	   ;
+           ;
 
 config_stmt: config_entry
 {
@@ -806,38 +806,38 @@ config_stmt: config_entry
     my $data = $$parser_data->{STACK}->pop();
 
     if (!defined($data->{TYPE})) {
-	error("Config symbol defined without a type");
-	$_[0]->YYAbort();
+        error("Config symbol defined without a type");
+        $_[0]->YYAbort();
     } else {
-	$$parser_data->{STACK}->push($data);
+        $$parser_data->{STACK}->push($data);
 
-	if (!add_configbox_widget($$parser_data->{WIDGET},
-				  \$$parser_data->{WIDGET_ID},
-				  \$$parser_data->{STACK})) {
-	    $_[0]->YYAbort;
-	}
+        if (!add_configbox_widget($$parser_data->{WIDGET},
+                                  \$$parser_data->{WIDGET_ID},
+                                  \$$parser_data->{STACK})) {
+            $_[0]->YYAbort;
+        }
     }
 }
-	   | config_entry config_options_block_list
+           | config_entry config_options_block_list
 {
     drule("config_stmt");
 
     my $data = $$parser_data->{STACK}->pop();
 
     if (!defined($data->{TYPE})) {
-	error("Config symbol defined without a type");
-	$_[0]->YYAbort();
+        error("Config symbol defined without a type");
+        $_[0]->YYAbort();
     } else {
-	$$parser_data->{STACK}->push($data);
+        $$parser_data->{STACK}->push($data);
 
-	if (!add_configbox_widget($$parser_data->{WIDGET},
-				  \$$parser_data->{WIDGET_ID},
-				  \$$parser_data->{STACK})) {
-	    $_[0]->YYAbort;
-	}
+        if (!add_configbox_widget($$parser_data->{WIDGET},
+                                  \$$parser_data->{WIDGET_ID},
+                                  \$$parser_data->{STACK})) {
+            $_[0]->YYAbort;
+        }
     }
 }
-	   ;
+           ;
 
 config_entry: 'T_CONFIG' word newlines
 {
@@ -850,53 +850,42 @@ config_entry: 'T_CONFIG' word newlines
 
     $$parser_data->{STACK}->push($config_data);
 }
-	    ;
+            ;
 
 config_options_block_list: config_options_block
 {
     drule("config_options_block_list");
 }
-			 | config_options_block config_options_block_list
-			 ;
+                         | config_options_block config_options_block_list
+                         ;
 
 config_options_block: config_option
 {
     drule("config_options_block");
 }
-		    | symbol_option
+                    | symbol_option
 {
     drule("config_options_block");
 }
-		    | depends
+                    | depends
 {
     drule("config_options_block");
 }
-		    | help
+                    | help
 {
     drule("config_options_block");
 }
-		    ;
+                    ;
 
 config_option: config_type_default_definition expr newlines
 {
     drule("config_option");
 }
-	     | config_type_default_definition expr 'T_IF' expr newlines
+             | config_type_default_definition expr 'T_IF' expr newlines
 {
     drule("config_option");
 }
-	     | config_type_definition words 'T_IF' expr newlines
-{
-    drule("config_option");
-
-    my $data = $$parser_data->{STACK}->pop();
-    assert(defined($data));
-
-    $data->{TITLE} = $$parser_data->{BUFFER};
-
-    $$parser_data->{STACK}->push($data);
-}
-	     | config_type_definition words newlines
+             | config_type_definition words 'T_IF' expr newlines
 {
     drule("config_option");
 
@@ -907,43 +896,54 @@ config_option: config_type_default_definition expr newlines
 
     $$parser_data->{STACK}->push($data);
 }
-	     | config_type_definition newlines
+             | config_type_definition words newlines
+{
+    drule("config_option");
+
+    my $data = $$parser_data->{STACK}->pop();
+    assert(defined($data));
+
+    $data->{TITLE} = $$parser_data->{BUFFER};
+
+    $$parser_data->{STACK}->push($data);
+}
+             | config_type_definition newlines
 {
     drule("config_option");
 }
-	     | 'T_PROMPT' words newlines
+             | 'T_PROMPT' words newlines
 {
     drule("config_option");
 }
-	     | 'T_PROMPT' words 'T_IF' expr newlines
+             | 'T_PROMPT' words 'T_IF' expr newlines
 {
     drule("config_option");
 }
-	     | 'T_DEFAULT' expr newlines
+             | 'T_DEFAULT' expr newlines
 {
     drule("config_option");
 }
-	     | 'T_DEFAULT' expr 'T_IF' expr newlines
+             | 'T_DEFAULT' expr 'T_IF' expr newlines
 {
     drule("config_option");
 }
-	     | 'T_SELECT' word newlines
+             | 'T_SELECT' word newlines
 {
     drule("config_option");
 }
-	     | 'T_SELECT' word 'T_IF' expr newlines
+             | 'T_SELECT' word 'T_IF' expr newlines
 {
     drule("config_option");
 }
-	     | 'T_RANGE' word word newlines
+             | 'T_RANGE' word word newlines
 {
     drule("config_option");
 }
-	     | 'T_RANGE' word word 'T_IF' expr newlines
+             | 'T_RANGE' word word 'T_IF' expr newlines
 {
     drule("config_option");
 }
-	     ;
+             ;
 
 config_type_definition: 'T_BOOL'
 {
@@ -953,14 +953,14 @@ config_type_definition: 'T_BOOL'
     assert(defined($data));
 
     if (defined($data->{TYPE})) {
-	error("Type is already defined");
-	$_[0]->YYAbort();
+        error("Type is already defined");
+        $_[0]->YYAbort();
     }
     $data->{TYPE} = "bool";
 
     $$parser_data->{STACK}->push($data);
 }
-	       | 'T_TRISTATE'
+               | 'T_TRISTATE'
 {
     drule("type_definition");
 
@@ -968,14 +968,14 @@ config_type_definition: 'T_BOOL'
     assert(defined($data));
 
     if (defined($data->{TYPE})) {
-	error("Type is already defined");
-	$_[0]->YYAbort();
+        error("Type is already defined");
+        $_[0]->YYAbort();
     }
     $data->{TYPE} = "tristate";
 
     $$parser_data->{STACK}->push($data);
 }
-	       | 'T_STRING'
+               | 'T_STRING'
 {
     drule("type_definition");
 
@@ -983,14 +983,14 @@ config_type_definition: 'T_BOOL'
     assert(defined($data));
 
     if (defined($data->{TYPE})) {
-	error("Type is already defined");
-	$_[0]->YYAbort();
+        error("Type is already defined");
+        $_[0]->YYAbort();
     }
     $data->{TYPE} = "string";
 
     $$parser_data->{STACK}->push($data);
 }
-	       | 'T_HEX'
+               | 'T_HEX'
 {
     drule("type_definition");
 
@@ -998,15 +998,15 @@ config_type_definition: 'T_BOOL'
     assert(defined($data));
 
     if (defined($data->{TYPE})) {
-	error("Type is already defined");
-	$_[0]->YYAbort();
+        error("Type is already defined");
+        $_[0]->YYAbort();
     }
 
     $data->{TYPE} = "hex";
 
     $$parser_data->{STACK}->push($data);
 }
-	       | 'T_INT'
+               | 'T_INT'
 {
     drule("type_definition");
 
@@ -1015,14 +1015,14 @@ config_type_definition: 'T_BOOL'
     assert(defined($data));
 
     if (defined($data->{TYPE})) {
-	error("Type is already defined");
-	$_[0]->YYAbort();
+        error("Type is already defined");
+        $_[0]->YYAbort();
     }
     $data->{TYPE} = "int";
 
     $$parser_data->{STACK}->push($data);
 }
-	       ;
+               ;
 
 config_type_default_definition: 'T_DEF_TRISTATE'
 {
@@ -1032,14 +1032,14 @@ config_type_default_definition: 'T_DEF_TRISTATE'
     assert(defined($data));
 
     if (defined($data->{TYPE})) {
-	error("Type is already defined");
-	$_[0]->YYAbort();
+        error("Type is already defined");
+        $_[0]->YYAbort();
     }
     $data->{TYPE} = "tristate";
 
     $$parser_data->{STACK}->push($data);
 }
-		       | 'T_DEF_BOOL'
+                       | 'T_DEF_BOOL'
 {
     drule("type_default_definition");
 
@@ -1047,41 +1047,41 @@ config_type_default_definition: 'T_DEF_TRISTATE'
     assert(defined($data));
 
     if (defined($data->{TYPE})) {
-	error("Type is already defined");
-	$_[0]->YYAbort();
+        error("Type is already defined");
+        $_[0]->YYAbort();
     }
     $data->{TYPE} = "bool";
 
     $$parser_data->{STACK}->push($data);
 }
-		       ;
+                       ;
 
 symbol_option: 'T_OPTION' newlines
 {
     drule("symbol_option");
 }
-	     | 'T_OPTION' symbol_options_block_list newlines
+             | 'T_OPTION' symbol_options_block_list newlines
 {
     drule("symbol_option");
 }
-	     ;
+             ;
 
 symbol_options_block_list: symbol_options_block
 {
     drule("symbol_options_block_list");
 }
-			 | symbol_options_block symbol_options_block_list
-			 ;
+                         | symbol_options_block symbol_options_block_list
+                         ;
 
 symbol_options_block: word
 {
     drule("symbol_options_block");
 }
-		    | word 'T_EQUAL' words
+                    | word 'T_EQUAL' words
 {
     drule("symbol_options_block");
 }
-		    ;
+                    ;
 
 if_stmt: if_entry 'T_ENDIF' newlines
 {
@@ -1097,66 +1097,66 @@ if_entry: 'T_IF' expr newlines
 {
     drule("if_entry");
 }
-	;
+        ;
 
 if_block_list: if_block
 {
     debug("if_block_list");
 }
-	     | if_block if_block_list
-	     ;
+             | if_block if_block_list
+             ;
 
 if_block: common_stmt
 {
     debug("if_block");
 }
-	| menu_stmt
+        | menu_stmt
 {
     debug("if_block");
 
     if (!add_menu_widget($$parser_data->{WIDGET},
-			 \$$parser_data->{WIDGET_ID},
-			 \$$parser_data->{STACK})) {
-	$_[0]->YYAbort;
+                         \$$parser_data->{WIDGET_ID},
+                         \$$parser_data->{STACK})) {
+        $_[0]->YYAbort;
     }
 }
-	| choice_stmt
+        | choice_stmt
 {
     debug("if_block");
 }
-	;
+        ;
 
 comment_stmt: comment_entry
 {
     drule("comment_stmt");
 }
-	    | comment_entry depends_list
+            | comment_entry depends_list
 {
     drule("comment_stmt");
 }
-	    ;
+            ;
 
 comment_entry: 'T_COMMENT' words newlines
 {
     drule("comment_entry");
 }
-	     ;
+             ;
 
 menuconfig_stmt: menuconfig_entry
 {
     drule("menuconfig_stmt");
 }
-	       | menuconfig_entry config_options_block_list
+               | menuconfig_entry config_options_block_list
 {
     drule("menuconfig_stmt");
 }
-	       ;
+               ;
 
 menuconfig_entry: 'T_MENUCONFIG' word newlines
 {
     drule("menuconfig_stmt");
 }
-		;
+                ;
 
 %%
 
@@ -1170,63 +1170,63 @@ sub parse_help_text ($$)
     assert(defined($$string_ref));
 
     while ($$stream_ref =~ s/^([^\n]*)(\n?)//) {
-	my $string = $1;
+        my $string = $1;
 
-	if (defined($2)) {
-	    $lineno++;
-	}
+        if (defined($2)) {
+            $lineno++;
+        }
 
-	if ($string =~ s/^([ \t]*)$//) {
-	    $$string_ref = $$string_ref . "\n";
+        if ($string =~ s/^([ \t]*)$//) {
+            $$string_ref = $$string_ref . "\n";
 
-	} elsif ($string =~ s/^([ \t]+)(.+)$//) {
-	    my $ws             = $1;
-	    my $text           = $2;
-	    my $curr_ws_length = 0;
-	    my $tmp            = $ws;
+        } elsif ($string =~ s/^([ \t]+)(.+)$//) {
+            my $ws             = $1;
+            my $text           = $2;
+            my $curr_ws_length = 0;
+            my $tmp            = $ws;
 
-	    for (my $i = 0; $i < length($ws); $i++) {
-		$tmp =~ s/^(.)//;
+            for (my $i = 0; $i < length($ws); $i++) {
+                $tmp =~ s/^(.)//;
 
-		if ($1 =~ /\ /) {
-		    $curr_ws_length++;
-		} elsif ($1 =~ /\t/) {
-		    $curr_ws_length = ($curr_ws_length & ~7) + 8;
-		} else {
-		    bug("Unreachable!");
-		}
-	    }
+                if ($1 =~ /\ /) {
+                    $curr_ws_length++;
+                } elsif ($1 =~ /\t/) {
+                    $curr_ws_length = ($curr_ws_length & ~7) + 8;
+                } else {
+                    bug("Unreachable!");
+                }
+            }
 
-	    if (!defined($ws_length)) {
-		$ws_length = $curr_ws_length;
-	    }
+            if (!defined($ws_length)) {
+                $ws_length = $curr_ws_length;
+            }
 
-	    if ($curr_ws_length < $ws_length) {
-		$$stream_ref = $ws . $text . "\n" . $$stream_ref;
+            if ($curr_ws_length < $ws_length) {
+                $$stream_ref = $ws . $text . "\n" . $$stream_ref;
 
-		$lineno--;
-		last;
-	    }
+                $lineno--;
+                last;
+            }
 
-	    if ($curr_ws_length > $ws_length) {
-		$text = " " x ($curr_ws_length - $ws_length) . $text;
-	    }
+            if ($curr_ws_length > $ws_length) {
+                $text = " " x ($curr_ws_length - $ws_length) . $text;
+            }
 
-	    $$string_ref = $$string_ref . $text . "\n";
+            $$string_ref = $$string_ref . $text . "\n";
 
-	} elsif ($string =~ s/^([^ \t])(.*)$//) {
+        } elsif ($string =~ s/^([^ \t])(.*)$//) {
 
-	    if (defined($2)) {
-		$$stream_ref = $1 . $2 . "\n" . $$stream_ref;
-	    } else {
-		$$stream_ref = $1 . "\n". $$stream_ref;
-	    }
+            if (defined($2)) {
+                $$stream_ref = $1 . $2 . "\n" . $$stream_ref;
+            } else {
+                $$stream_ref = $1 . "\n". $$stream_ref;
+            }
 
-	    $lineno--;
-	    last;
-	} else {
-	    bug("Unreachable!");
-	}
+            $lineno--;
+            last;
+        } else {
+            bug("Unreachable!");
+        }
     }
 
     $$string_ref =~ s/\s+$//;
@@ -1249,10 +1249,10 @@ sub parse_quoted_text ($$$)
     assert(defined($quoting_char));
 
     if (($$stream_ref eq "")                ||
-	((length($$stream_ref) == 1)        &&
-	 ($$stream_ref ne "$quoting_char"))) {
-	error("Multiline quoted string is not supported");
-	return 0;
+        ((length($$stream_ref) == 1)        &&
+         ($$stream_ref ne "$quoting_char"))) {
+        error("Multiline quoted string is not supported");
+        return 0;
     }
 
     $$stream_ref      =~ s/^([^\n]+)//;
@@ -1261,39 +1261,39 @@ sub parse_quoted_text ($$$)
     my $string = $1;
 
     while ($string ne "") {
-	$string =~ s/^([^$quoting_char]+)//;
+        $string =~ s/^([^$quoting_char]+)//;
 
-	if ((!defined($1)) && ($string eq "$quoting_char")) {
-	    return 1;
-	}
-	my $tmp = $1;
-	$string =~ s/^($quoting_char)//;
+        if ((!defined($1)) && ($string eq "$quoting_char")) {
+            return 1;
+        }
+        my $tmp = $1;
+        $string =~ s/^($quoting_char)//;
 
-	if (!defined($1)) {
-	    error("Multiline quoted string is not supported");
-	    return 0;
-	}
+        if (!defined($1)) {
+            error("Multiline quoted string is not supported");
+            return 0;
+        }
 
-	$tmp       =~ /(.)$/;
-	my $p_char = $1;
+        $tmp       =~ /(.)$/;
+        my $p_char = $1;
 
-	if ($p_char eq "\\") {
+        if ($p_char eq "\\") {
 
-	    if ($string eq "") {
-		error("Multiline quoted string is not supported");
-		return 0;
-	    }
-	    $$quoted_text_ref = $quoted_text_ref .
-				$tmp             .
-				$quoting_char;
-	    next;
-	}
+            if ($string eq "") {
+                error("Multiline quoted string is not supported");
+                return 0;
+            }
+            $$quoted_text_ref = $quoted_text_ref .
+                                $tmp             .
+                                $quoting_char;
+            next;
+        }
 
-	$$quoted_text_ref = $$quoted_text_ref . $tmp;
-	$string           =~ s/^[ \t]*//;
-	$$stream_ref      = $string . $$stream_ref;
+        $$quoted_text_ref = $$quoted_text_ref . $tmp;
+        $string           =~ s/^[ \t]*//;
+        $$stream_ref      = $string . $$stream_ref;
 
-	last;
+        last;
     }
 
     return 1;
@@ -1311,197 +1311,197 @@ sub lexer_callback ($)
 
     if ($parse_help_text == 1) {
 
-	if (!parse_help_text($stream_ref, \$help_text)) {
-	    error("Failed to parse help text");
-	    exit 1;
-	}
+        if (!parse_help_text($stream_ref, \$help_text)) {
+            error("Failed to parse help text");
+            exit 1;
+        }
 
-	$parse_help_text = 0;
-	$help_start      = 0;
+        $parse_help_text = 0;
+        $help_start      = 0;
 
-	dtoken("T_HELPTEXT");
+        dtoken("T_HELPTEXT");
 
-	return ('T_HELPTEXT', $help_text);
+        return ('T_HELPTEXT', $help_text);
     }
 
     while ($$stream_ref =~ s/^\#[^\n]*//) {
-	# Cleaning comments
+        # Cleaning comments
     }
 
     # Removing useless whitespaces
     if ($help_start != 1) {
-	$$stream_ref =~ s/^[ \t]*//;
+        $$stream_ref =~ s/^[ \t]*//;
     }
 
     while ($$stream_ref =~ s/^([^ \t]+)([ \t]*)//) {
-	my $string;
-	my $spaces;
+        my $string;
+        my $spaces;
 
-	assert(defined($1));
-	$string = $1;
+        assert(defined($1));
+        $string = $1;
 
-	if (defined($2)) {
-	    $spaces = $2;
-	}
+        if (defined($2)) {
+            $spaces = $2;
+        }
 
-	# Handling newlines
-	if ($string =~ s/^([^\n]+)//) {
-	    my $new_string = $1;
+        # Handling newlines
+        if ($string =~ s/^([^\n]+)//) {
+            my $new_string = $1;
 
-	    if ($string ne "") {
-		$$stream_ref = $string                             .
-			       ((defined($spaces)) ? $spaces : "") .
-			       $$stream_ref;
-	    }
-	    $string = $new_string;
-	}
+            if ($string ne "") {
+                $$stream_ref = $string                             .
+                               ((defined($spaces)) ? $spaces : "") .
+                               $$stream_ref;
+            }
+            $string = $new_string;
+        }
 
-	my $return_token;
-	my $return_text;
+        my $return_token;
+        my $return_text;
 
-	#
-	# Pay attention to the following if/substitution order,
-	# it weighs upon right token recognition. For example
-	# Don't put "bool" before "boolean" or the last will
-	# never be recognized.
-	#
+        #
+        # Pay attention to the following if/substitution order,
+        # it weighs upon right token recognition. For example
+        # Don't put "bool" before "boolean" or the last will
+        # never be recognized.
+        #
 
-	if ($string =~ s/^\n//) {
-	    $return_token = "T_EOL";
+        if ($string =~ s/^\n//) {
+            $return_token = "T_EOL";
 
-	    if ($help_start == 1) {
-		$parse_help_text = 1;
-	    }
-	} elsif ($string =~ s/^([\"\'])//) {
-	    my $text;
+            if ($help_start == 1) {
+                $parse_help_text = 1;
+            }
+        } elsif ($string =~ s/^([\"\'])//) {
+            my $text;
 
-	    $$stream_ref = (defined($string) ? $string : "") .
-			   (defined($spaces) ? $spaces : "") .
-			   $$stream_ref;
-	    $string      = "";
+            $$stream_ref = (defined($string) ? $string : "") .
+                           (defined($spaces) ? $spaces : "") .
+                           $$stream_ref;
+            $string      = "";
 
-	    if (!parse_quoted_text($stream_ref, \$text, $1)) {
-		exit 1;
-	    }
-	    $return_token = "T_WORD_QUOTE";
-	    $return_text  = $text;
-	} elsif ($string =~ s/^\)//) {
-	    $return_token = "T_CLOSE_PAREN";
-	} elsif ($string =~ s/^\(//) {
-	    $return_token = "T_OPEN_PAREN";
-	} elsif ($string =~ s/^\!\=//) {
-	    $return_token = "T_UNEQUAL";
-	} elsif ($string =~ s/^\&\&//) {
-	    $return_token = "T_AND";
-	} elsif ($string =~ s/^\|\|//) {
-	    $return_token = "T_OR";
-	} elsif ($string =~ s/^\!//) {
-	    $return_token = "T_NOT";
-	} elsif ($string =~ s/^\=//) {
-	    $return_token = "T_EQUAL";
-	} elsif ($string =~ s/^def_tristate$//) {
-	    $return_token = "T_DEF_TRISTATE";
-	} elsif ($string =~ s/^menuconfig$//) {
-	    $return_token = "T_MENUCONFIG";
-	} elsif (($string =~ s/^def_boolean$//) ||
-		 ($string =~ s/^def_bool$//))    {
-	    $return_token = "T_DEF_BOOL";
-	} elsif ($string =~ s/^endchoice$//) {
-	    $return_token = "T_ENDCHOICE";
-	} elsif ($string =~ s/^mainmenu$//) {
-	    $return_token = "T_MAINMENU";
-	} elsif ($string =~ s/^requires$//) {
-	    $return_token = "T_REQUIRES";
-	} elsif ($string =~ s/^optional$//) {
-	    $return_token = "T_OPTIONAL";
-	} elsif ($string =~ s/^tristate$//) {
-	    $return_token = "T_TRISTATE";
-	} elsif ($string =~ s/^endmenu$//) {
-	    $return_token = "T_ENDMENU";
-	} elsif ($string =~ s/^comment$//) {
-	    $return_token = "T_COMMENT";
-	} elsif ($string =~ s/^depends$//) {
-	    $return_token = "T_DEPENDS";
-	} elsif ($string =~ s/^default$//) {
-	    $return_token = "T_DEFAULT";
-	} elsif ($string =~ s/^select$//) {
-	    $return_token = "T_SELECT";
-	} elsif ($string =~ s/^config$//) {
-	    $return_token = "T_CONFIG";
-	} elsif ($string =~ s/^string$//) {
-	    $return_token = "T_STRING";
-	} elsif ($string =~ s/^choice$//) {
-	    $return_token = "T_CHOICE";
-	} elsif ($string =~ s/^option$//) {
-	    $return_token = "T_OPTION";
-	} elsif ($string =~ s/^prompt$//) {
-	    $return_token = "T_PROMPT";
-	} elsif ($string =~ s/^endif$//) {
-	    $return_token = "T_ENDIF";
-	} elsif ($string =~ s/^range$//) {
-	    $return_token = "T_RANGE";
-	} elsif ($string =~ s/^menu$//) {
-	    $return_token = "T_MENU";
-	} elsif (($string =~ s/^boolean$//) ||
-		 ($string =~ s/^bool$//))    {
-	    $return_token = "T_BOOL";
-	} elsif ($string =~ s/^hex$//) {
-	    $return_token = "T_HEX";
-	} elsif ($string =~ s/^int$//) {
-	    $return_token = "T_INT";
-	} elsif ($string =~ s/^if$//) {
-	    $return_token = "T_IF";
-	} elsif ($string =~ s/^on$//) {
-	    $return_token = "T_ON";
-	} elsif (($string =~ s/^help$//)        ||
-		 ($string =~ s/^---help---$//))  {
-	    $help_start  = 1;
-	    $return_token = "T_HELP";
-	} elsif ($string =~ s/^---$//) {
-	    $$stream_ref = (defined($string) ? $string : "") .
-			   (defined($spaces) ? $spaces : "") .
-			   $$stream_ref;
+            if (!parse_quoted_text($stream_ref, \$text, $1)) {
+                exit 1;
+            }
+            $return_token = "T_WORD_QUOTE";
+            $return_text  = $text;
+        } elsif ($string =~ s/^\)//) {
+            $return_token = "T_CLOSE_PAREN";
+        } elsif ($string =~ s/^\(//) {
+            $return_token = "T_OPEN_PAREN";
+        } elsif ($string =~ s/^\!\=//) {
+            $return_token = "T_UNEQUAL";
+        } elsif ($string =~ s/^\&\&//) {
+            $return_token = "T_AND";
+        } elsif ($string =~ s/^\|\|//) {
+            $return_token = "T_OR";
+        } elsif ($string =~ s/^\!//) {
+            $return_token = "T_NOT";
+        } elsif ($string =~ s/^\=//) {
+            $return_token = "T_EQUAL";
+        } elsif ($string =~ s/^def_tristate$//) {
+            $return_token = "T_DEF_TRISTATE";
+        } elsif ($string =~ s/^menuconfig$//) {
+            $return_token = "T_MENUCONFIG";
+        } elsif (($string =~ s/^def_boolean$//) ||
+                 ($string =~ s/^def_bool$//))    {
+            $return_token = "T_DEF_BOOL";
+        } elsif ($string =~ s/^endchoice$//) {
+            $return_token = "T_ENDCHOICE";
+        } elsif ($string =~ s/^mainmenu$//) {
+            $return_token = "T_MAINMENU";
+        } elsif ($string =~ s/^requires$//) {
+            $return_token = "T_REQUIRES";
+        } elsif ($string =~ s/^optional$//) {
+            $return_token = "T_OPTIONAL";
+        } elsif ($string =~ s/^tristate$//) {
+            $return_token = "T_TRISTATE";
+        } elsif ($string =~ s/^endmenu$//) {
+            $return_token = "T_ENDMENU";
+        } elsif ($string =~ s/^comment$//) {
+            $return_token = "T_COMMENT";
+        } elsif ($string =~ s/^depends$//) {
+            $return_token = "T_DEPENDS";
+        } elsif ($string =~ s/^default$//) {
+            $return_token = "T_DEFAULT";
+        } elsif ($string =~ s/^select$//) {
+            $return_token = "T_SELECT";
+        } elsif ($string =~ s/^config$//) {
+            $return_token = "T_CONFIG";
+        } elsif ($string =~ s/^string$//) {
+            $return_token = "T_STRING";
+        } elsif ($string =~ s/^choice$//) {
+            $return_token = "T_CHOICE";
+        } elsif ($string =~ s/^option$//) {
+            $return_token = "T_OPTION";
+        } elsif ($string =~ s/^prompt$//) {
+            $return_token = "T_PROMPT";
+        } elsif ($string =~ s/^endif$//) {
+            $return_token = "T_ENDIF";
+        } elsif ($string =~ s/^range$//) {
+            $return_token = "T_RANGE";
+        } elsif ($string =~ s/^menu$//) {
+            $return_token = "T_MENU";
+        } elsif (($string =~ s/^boolean$//) ||
+                 ($string =~ s/^bool$//))    {
+            $return_token = "T_BOOL";
+        } elsif ($string =~ s/^hex$//) {
+            $return_token = "T_HEX";
+        } elsif ($string =~ s/^int$//) {
+            $return_token = "T_INT";
+        } elsif ($string =~ s/^if$//) {
+            $return_token = "T_IF";
+        } elsif ($string =~ s/^on$//) {
+            $return_token = "T_ON";
+        } elsif (($string =~ s/^help$//)        ||
+                 ($string =~ s/^---help---$//))  {
+            $help_start  = 1;
+            $return_token = "T_HELP";
+        } elsif ($string =~ s/^---$//) {
+            $$stream_ref = (defined($string) ? $string : "") .
+                           (defined($spaces) ? $spaces : "") .
+                           $$stream_ref;
 
-	    if ($$stream_ref =~ s/^[ \t]*help[ \t]*\-\-\-//) {
-		$help_start   = 1;
-		$return_token = "T_HELP";
-	    } else {
-		error("Undefined lexer input \`" . $string .
-		      "' at line \`"             . $lineno .
-		      "'");
-		exit 1;
-	    }
-	} elsif ($string =~ s/^([\-]?[A-Za-z0-9_]+)//) {
-	    $return_token = "T_WORD";
+            if ($$stream_ref =~ s/^[ \t]*help[ \t]*\-\-\-//) {
+                $help_start   = 1;
+                $return_token = "T_HELP";
+            } else {
+                error("Undefined lexer input \`" . $string .
+                      "' at line \`"             . $lineno .
+                      "'");
+                exit 1;
+            }
+        } elsif ($string =~ s/^([\-]?[A-Za-z0-9_]+)//) {
+            $return_token = "T_WORD";
 
-	    assert(defined($1));
-	    $return_text  = $1;
-	} else {
-	    undef($return_token);
-	    undef($return_text);
-	}
+            assert(defined($1));
+            $return_text  = $1;
+        } else {
+            undef($return_token);
+            undef($return_text);
+        }
 
-	if (!defined($return_token)) {
-	    error("Undefined lexer input \`" . $string .
-		  "' at line \`"             . $lineno .
-		  "'");
-	    exit 1;
-	}
+        if (!defined($return_token)) {
+            error("Undefined lexer input \`" . $string .
+                  "' at line \`"             . $lineno .
+                  "'");
+            exit 1;
+        }
 
-	if ($string ne "") {
-	    $$stream_ref = $string                           .
-			   (defined($spaces) ? $spaces : "") .
-			   $$stream_ref;
-	}
+        if ($string ne "") {
+            $$stream_ref = $string                           .
+                           (defined($spaces) ? $spaces : "") .
+                           $$stream_ref;
+        }
 
-	if (defined($spaces) && ($parse_help_text == 1)) {
-	    $$stream_ref = $spaces . $$stream_ref;
-	}
+        if (defined($spaces) && ($parse_help_text == 1)) {
+            $$stream_ref = $spaces . $$stream_ref;
+        }
 
-	dtoken($return_token);
+        dtoken($return_token);
 
-	return ($return_token,
-		(defined($return_text)) ? $return_text : "");
+        return ($return_token,
+                (defined($return_text)) ? $return_text : "");
     }
     return ('', undef);
 }
@@ -1543,14 +1543,14 @@ sub parse ($$$)
     debug("Parsing file \`" . $input_filename . "'");
 
     if (!file_ispresent($input_filename)) {
-	return 0;
+        return 0;
     }
 
     my $string;
 
     $string = "";
     if (!file_tostring($input_filename, \$string)) {
-	return 0;
+        return 0;
     }
 
     # Parse !
@@ -1578,12 +1578,12 @@ sub parse ($$$)
 
     my $result;
     $result = $parser->YYParse(yylex   => \&lexer_callback,
-			       yyerror => \&error_callback,
-			       yydebug => 0x00);
+                               yyerror => \&error_callback,
+                               yydebug => 0x00);
 
     if (($parser->YYNberr() > 0) || (!defined($result))) {
-	error("Cannot parse input file \`" . $input_filename . "'");
-	return 0;
+        error("Cannot parse input file \`" . $input_filename . "'");
+        return 0;
     }
 
     # Final checks

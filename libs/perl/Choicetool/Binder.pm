@@ -57,13 +57,13 @@ sub add ($$$)
     assert(defined($ui_id));
 
     if (defined($self->{RULE2UI}->{$rule_id})) {
-	#debug("Rule id `" . $rule_id . "' already bound");
-	return 0;
+        #debug("Rule id `" . $rule_id . "' already bound");
+        return 0;
     }
 
     if (defined($self->{UI2RULE}->{$ui_id})) {
-	#debug("UI id `" . $rule_id . "' already bound");
-	return 0;
+        #debug("UI id `" . $rule_id . "' already bound");
+        return 0;
     }
 
     $self->{RULE2UI}->{$rule_id} = $ui_id;
@@ -83,13 +83,13 @@ sub remove ($$$)
     assert(defined($ui_id));
 
     if (!defined($self->{RULE2UI}->{$rule_id})) {
-	#debug("Rule id `" . $rule_id . "' not bound");
-	return 0;
+        #debug("Rule id `" . $rule_id . "' not bound");
+        return 0;
     }
 
     if (!defined($self->{UI2RULE}->{$ui_id})) {
-	#debug("UI id `" . $rule_id . "' not bound");
-	return 0;
+        #debug("UI id `" . $rule_id . "' not bound");
+        return 0;
     }
 
     $self->{RULE2UI}->{$rule_id} = undef;
@@ -109,16 +109,16 @@ sub ispresent ($$$)
     assert(defined($ui_id));
 
     if (!defined($self->{RULE2UI}->{$rule_id})) {
-	return 0;
+        return 0;
     }
 
     if (!defined($self->{UI2RULE}->{$ui_id})) {
-	return 0;
+        return 0;
     }
 
     if (($self->{RULE2UI}->{$rule_id} != $ui_id) ||
-	($self->{RULE2UI}->{$ui_id}   != $rule_id)) {
-	return 0;
+        ($self->{RULE2UI}->{$ui_id}   != $rule_id)) {
+        return 0;
     }
 
     return 1;

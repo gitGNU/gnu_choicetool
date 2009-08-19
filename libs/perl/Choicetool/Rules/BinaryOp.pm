@@ -55,7 +55,7 @@ sub lhs ($$)
     assert(defined($self));
 
     if (defined($oper)) {
-	$self->{LEFT} = $oper;
+        $self->{LEFT} = $oper;
     }
 
     return $self->{LEFT};
@@ -70,7 +70,7 @@ sub rhs ($$)
     assert(defined($self));
 
     if (defined($oper)) {
-	$self->{RIGHT} = $oper;
+        $self->{RIGHT} = $oper;
     }
 
     return $self->{RIGHT};

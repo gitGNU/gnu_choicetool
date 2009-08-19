@@ -68,25 +68,25 @@ sub m4ify_linear_walk ($$)
     $string = $string . $self->m4ify_linear_body($prefix);
 
     for my $child_ref (@{$self->{CHILDREN}}) {
-	if (ref($child_ref)) {
-	    my $child;
-	    $child = ${$child_ref};
+        if (ref($child_ref)) {
+            my $child;
+            $child = ${$child_ref};
 
-	    my $child_prefix;
-	    $child_prefix = $self->m4ify_linear_indent();
-	    assert(defined($child_prefix));
+            my $child_prefix;
+            $child_prefix = $self->m4ify_linear_indent();
+            assert(defined($child_prefix));
 
-	    debug("Calling child m4ify_linear_walk with prefix " .
-		  "\`" . $prefix . $child_prefix . "'");
-	    assert(defined($child->can('m4ify_linear_walk')));
-	    $string = $string .
-		$child->m4ify_linear_walk($prefix . $child_prefix);
+            debug("Calling child m4ify_linear_walk with prefix " .
+                  "\`" . $prefix . $child_prefix . "'");
+            assert(defined($child->can('m4ify_linear_walk')));
+            $string = $string .
+                $child->m4ify_linear_walk($prefix . $child_prefix);
 
-	} elsif (!defined($child_ref)) {
-	    debug("No child");
-	} else {
-	    bug("Unreacheable code");
-	}
+        } elsif (!defined($child_ref)) {
+            debug("No child");
+        } else {
+            bug("Unreacheable code");
+        }
     }
 
     return $string;
@@ -108,25 +108,25 @@ sub m4ify_hierarchical_walk ($$)
     $string = $string . $self->m4ify_hierarchical_header($prefix);
 
     for my $child_ref (@{$self->{CHILDREN}}) {
-	if (ref($child_ref)) {
-	    my $child;
-	    $child = ${$child_ref};
+        if (ref($child_ref)) {
+            my $child;
+            $child = ${$child_ref};
 
-	    my $child_prefix;
-	    $child_prefix = $self->m4ify_hierarchical_indent();
-	    assert(defined($child_prefix));
+            my $child_prefix;
+            $child_prefix = $self->m4ify_hierarchical_indent();
+            assert(defined($child_prefix));
 
-	    debug("Calling child m4ify with prefix " .
-		  "\`" . $prefix . $child_prefix . "'");
-	    assert(defined($child->can('m4ify_hierarchical_walk')));
-	    $string = $string .
-		$child->m4ify_hierarchical_walk($prefix . $child_prefix);
+            debug("Calling child m4ify with prefix " .
+                  "\`" . $prefix . $child_prefix . "'");
+            assert(defined($child->can('m4ify_hierarchical_walk')));
+            $string = $string .
+                $child->m4ify_hierarchical_walk($prefix . $child_prefix);
 
-	} elsif (!defined($child_ref)) {
-	    debug("No child");
-	} else {
-	    bug("Unreacheable code");
-	}
+        } elsif (!defined($child_ref)) {
+            debug("No child");
+        } else {
+            bug("Unreacheable code");
+        }
     }
 
     debug("Calling m4ify_footer with prefix \`" . $prefix . "'");

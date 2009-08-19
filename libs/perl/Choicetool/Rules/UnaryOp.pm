@@ -53,7 +53,7 @@ sub operand ($$)
     assert(defined($self));
 
     if (defined($oper)) {
-	$self->{OPERAND} = $oper;
+        $self->{OPERAND} = $oper;
     }
 
     return $self->{OPERAND};

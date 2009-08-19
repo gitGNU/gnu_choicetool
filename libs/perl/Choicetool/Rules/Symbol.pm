@@ -50,7 +50,7 @@ sub name ($$)
     assert(defined($self));
 
     if (defined($value)) {
-	$self->{NAME} = $value;
+        $self->{NAME} = $value;
     }
 
     return $self->{NAME};

@@ -57,13 +57,13 @@ sub dump ($)
     assert(defined($self));
 
     if ($self->is_empty()) {
-	debug("Stack is empty");
+        debug("Stack is empty");
     } else {
-	debug("Dumping stack:");
+        debug("Dumping stack:");
 
-	for my $i (@{$self->{VALUES}}) {
-	    debug("  " . $i);
-	}
+        for my $i (@{$self->{VALUES}}) {
+            debug("  " . $i);
+        }
     }
 }
 
