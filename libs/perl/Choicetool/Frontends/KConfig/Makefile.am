@@ -54,5 +54,7 @@ EXTRA_DIST =					\
 ##
 update-local: Makefile
 
-maintainer-check-local: Makefile
-	$(WHITESPACE_DETECT) $(dist_perllib_DATA) $(nodist_perllib_DATA)
+maintainer-check-whitespaces: Makefile
+#	$(WHITESPACE_DETECT) $(dist_perllib_DATA) $(nodist_perllib_DATA)
+
+maintainer-check-local: Makefile maintainer-check-whitespaces
