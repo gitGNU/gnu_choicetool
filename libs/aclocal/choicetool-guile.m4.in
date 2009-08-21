@@ -19,13 +19,13 @@
 AC_DEFUN([CT_PROG_GUILE],[
   AC_PATH_PROG(GUILE,guile)
   if test "x$GUILE" = "x"; then
-	AC_MSG_ERROR(guile required but not found)
+        AC_MSG_ERROR(guile required but not found)
   fi
   AC_SUBST(GUILE)
 
   AC_PATH_PROG(GUILE_TOOLS,guile-tools)
   if test "x$GUILE_TOOLS" = "x"; then
-	AC_MSG_ERROR(guile-tools required but not found)
+        AC_MSG_ERROR(guile-tools required but not found)
   fi
   AC_SUBST(GUILE_TOOLS)
 
