@@ -38,7 +38,6 @@ DOWNLOAD = 					\
 
 MACROS =					\
 	$(DOWNLOAD)				\
-	ax_prog_perl_modules.m4			\
 	ax_with_m4.m4				\
 	ax_prog_m4_version.m4
 
