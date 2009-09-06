@@ -131,7 +131,7 @@ ui.m4: Makefile $(srcdir)/ui.m4.in
 ##
 update-local: Makefile
 
-maintainer-check-whitespaces: Makefile
+maintainer-check-whitespaces: Makefile $(EXTRA_DIST)
 	$(WHITESPACE_DETECT) $(EXTRA_DIST)
 
 maintainer-check-local: Makefile maintainer-check-whitespaces

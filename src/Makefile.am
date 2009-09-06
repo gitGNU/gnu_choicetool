@@ -135,7 +135,7 @@ maintainer-check-parameters: Makefile $(bin_SCRIPTS) $(pkgvbin_SCRIPTS)
 		fi ; \
 	done
 
-maintainer-check-whitespaces: Makefile
+maintainer-check-whitespaces: Makefile $(pl_scripts_SRCS)
 	$(WHITESPACE_DETECT) $(pl_scripts_SRCS)
 
 maintainer-check-local: Makefile maintainer-check-whitespaces maintainer-check-parameters
