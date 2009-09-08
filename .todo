@@ -35,6 +35,9 @@
                 Done
             </comment>
         </note>
+        <note priority="veryhigh" time="1252443510">
+            Rearrange the build-related code (macros, makefiles, bootstrap, gnulib-use)
+        </note>
         <note priority="medium" time="1226609082">
             Do a general clean-up of CHOICETOOL_BINARY_PATH, CHOICETOOL_DATA_PATH and CHOICETOOL_LIBRARY_PATH environment variables. Consider removing the CHOICETOOL_RC_FILES environment variable references or update all the src/* scripts accordingly
         </note>
