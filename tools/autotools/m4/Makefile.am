@@ -38,6 +38,7 @@ EXTERNAL =					\
 	$(URL_AA)/ax_with_prog.m4
 
 INTERNAL =					\
+	gnulib-cache.m4				\
 	ax_with_m4.m4				\
 	ax_prog_m4_version.m4
 
