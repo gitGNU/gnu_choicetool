@@ -45,6 +45,24 @@
 		<entry priority="medium" start="1226609111">
 			Check all string-related assert() calls
 		</entry>
+		<entry priority="high" start="1253138736">
+			Update build
+			<entry priority="high" start="1253138736">
+				Fix package version in order to handle git versioning
+			</entry>
+			<entry priority="medium" start="1253138736">
+				Use PACKAGE_URL in site building
+			</entry>
+			<entry priority="high" start="1253138736">
+				Move internal macros to build-utils package
+			</entry>
+			<entry priority="high" start="1253138736">
+				Create AX_PACKAGE_API macro
+				<entry priority="high" start="1253138736">
+					Update configure.ac replacing API-handling with AX_PACKAGE_API
+				</entry>
+			</entry>
+		</entry>
 	</entry>
 	<entry priority="high" start="1233771234">
 		Release 0.2.0
