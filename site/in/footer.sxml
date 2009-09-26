@@ -21,7 +21,7 @@
 
 (p
  (script
-  (@ (src  "http://www.ohloh.net/p/26031/widgets/project_partner_badge.js")
+  (@ (src  ,OHLOH_BADGE_URL)
      (type "text/javascript")))
 
  (a (@ (href "http://jigsaw.w3.org/css-validator/check?uri=referer"))
@@ -32,13 +32,14 @@
           (src "http://www.w3.org/Icons/valid-xhtml10.png"))))
  "Powered by "
  (a (@ (href "http://www.nongnu.org/sitetool"))
-  ,as_site_variable_PROGRAMNAME)
+    "Sitetool")
  ", hosted at "
  (a (@ (href "http://savannah.nongnu.org/projects/choicetool"))
   "Savannah")
  (br)
  "Please send broken links and other web page suggestions to "
- "<choicetool-generic AT nongnu DOT org>, thank you."
+ ,PACKAGE_BUGREPORT
+ ", thank you."
  (br)
  "This page was last modified on "
  ,(strftime "%A %d %B %Y" (localtime (current-time)))
