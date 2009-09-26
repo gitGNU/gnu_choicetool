@@ -22,7 +22,7 @@
 
 AC_INIT([Choicetool],
         m4_esyscmd([tools/maint/git-version-gen .tarball-version]),
-        [salvestrini@gmail.com],
+        [choicetool-generic@nongnu.org],
         [choicetool],
         [http://savannah.nongnu.org/projects/choicetool])
 
