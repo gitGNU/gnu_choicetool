@@ -195,12 +195,12 @@ Makefile
 /docs/man/choicetool.1
 /docs/info/choicetool.info
 
+/site/out/*
 /site/in/.sitetool
+/site/in/site.as
 /site/in/site.stamp
 /site/in/todos.sxml
 /site/in/todos.dump
 /site/in/news.sxml
 /site/in/news.dump
 /site/in/grammar.scm
-/site/in/site.as
-/site/out/*
