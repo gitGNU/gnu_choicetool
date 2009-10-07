@@ -5,7 +5,7 @@ common = {
 };
 
 vars = {
-	var-sitename      = "Choicetool";
+	sitename          = "Choicetool";
         package_url       = "http://savannah.nongnu.org/projects/choicetool";
         package_bugreport = "choicetool-generic@nongnu.org";
         ohloh_badge_url   = "http://www.ohloh.net/p/26031/widgets/project_partner_badge.js";

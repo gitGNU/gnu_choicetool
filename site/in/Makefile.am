@@ -37,8 +37,8 @@ SITE_SRCS =					\
 
 SITE_BUILT_SRCS =				\
 	site.as					\
-	todos.sxml				\
 	news.sxml				\
+	todos.sxml				\
 	grammar.scm
 
 EXTRADIST  = $(SITE_SRCS) site.as.in
