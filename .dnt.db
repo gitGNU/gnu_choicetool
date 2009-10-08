@@ -47,10 +47,10 @@
 		</entry>
 		<entry priority="high" start="1253138736">
 			Update build
-			<entry priority="high" start="1253138736">
+			<entry end="1255031636" priority="high" start="1253138736">
 				Fix package version in order to handle git versioning
 			</entry>
-			<entry priority="medium" start="1253138736">
+			<entry end="1255031638" priority="medium" start="1253138736">
 				Use PACKAGE_URL in site building
 			</entry>
 			<entry end="1253650607" priority="high" start="1253138736">
