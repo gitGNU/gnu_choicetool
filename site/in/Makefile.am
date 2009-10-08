@@ -22,8 +22,13 @@ include $(top_srcdir)/Makefile.sub
 
 SITE_SRCS =					\
 	contents.as				\
+	files.as                                \
+	footer.sxml                             \
+	header.sxml                             \
+	layout.sxml                             \
 	map.as					\
 	pages.as				\
+	site.css				\
 						\
 	index.scm				\
 	installation.scm			\
@@ -31,36 +36,13 @@ SITE_SRCS =					\
 	development.scm
 
 SITE_BUILT_SRCS =				\
-	site.as				\
+	site.as					\
 	news.sxml				\
 	todos.sxml				\
 	grammar.scm
 
-URL_SITE = "http://github.com/salvestrini/build-utils/tree/master/site"
-
-SITE_SRCS_EXTERNAL =				\
-	$(URL_SITE)/files.as			\
-	$(URL_SITE)/footer.sxml		\
-	$(URL_SITE)/header.sxml		\
-	$(URL_SITE)/layout.sxml		\
-	$(URL_SITE)/site.css
-
 EXTRADIST  = $(SITE_SRCS) site.as.in
 CLEANFILES =
-
-update-local-site: Makefile
-	rm -r -f fetch-dir && \
-	mkdir fetch-dir && \
-	for i in $(SITE_SRCS_EXTERNAL) ; do \
-	        URL="$$i" ; \
-	        NAME=`echo "$$i" | $(SED) -e 's,^.*/,,'` ; \
-	        $(FETCH) $$URL?raw=true fetch-dir/$$NAME && \
-	        mv fetch-dir/$$NAME $$NAME || { \
-	                rm -f fetch-dir/$$NAME ; \
-	                exit 1 ; \
-	        } \
-	done && \
-	rm -r -f fetch-dir
 
 site.as: $(srcdir)/site.as.in Makefile
 	( rm -f $@ $@.tmp && \
@@ -154,6 +136,28 @@ maintainer-clean-local:
 ##
 ## Maintainer related targets
 ##
+URL_SITE = "http://github.com/salvestrini/build-utils/tree/master/site"
+
+SITE_SRCS_EXTERNAL =				\
+	$(URL_SITE)/footer.sxml			\
+	$(URL_SITE)/header.sxml			\
+	$(URL_SITE)/layout.sxml			\
+	$(URL_SITE)/site.css
+
+update-local-site: Makefile
+	rm -r -f fetch-dir && \
+	mkdir fetch-dir && \
+	for i in $(SITE_SRCS_EXTERNAL) ; do \
+	        URL="$$i" ; \
+	        NAME=`echo "$$i" | $(SED) -e 's,^.*/,,'` ; \
+	        $(FETCH) $$URL?raw=true fetch-dir/$$NAME && \
+	        mv fetch-dir/$$NAME $$NAME || { \
+	                rm -f fetch-dir/$$NAME ; \
+	                exit 1 ; \
+	        } \
+	done && \
+	rm -r -f fetch-dir
+
 update-local: Makefile update-local-site
 
 maintainer-check-local: Makefile
