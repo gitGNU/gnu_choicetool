@@ -59,5 +59,12 @@ choicetool-guile.m4: Makefile $(srcdir)/choicetool-guile.m4.in
 ##
 update-local: Makefile
 
-maintainer-check-local: Makefile
+maintainer-check-local-whitespaces: Makefile
 	$(WHITESPACE_DETECT) $(m4_DATA)
+
+maintainer-check-local-wordwraps: Makefile
+	$(WORDWRAP_DETECT) --tab-size 8 --columns 80 $(m4_DATA)
+
+maintainer-check-local: Makefile		\
+	maintainer-check-whitespaces		\
+	maintainer-check-wordwraps

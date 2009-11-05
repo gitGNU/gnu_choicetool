@@ -57,4 +57,9 @@ update-local: Makefile
 maintainer-check-whitespaces: Makefile
 #	$(WHITESPACE_DETECT) $(dist_perllib_DATA) $(nodist_perllib_DATA)
 
-maintainer-check-local: Makefile maintainer-check-whitespaces
+maintainer-check-wordwraps: Makefile
+#	$(WORDWRAP_DETECT) --tab-size 8 --columns 80 $(dist_perllib_DATA) $(nodist_perllib_DATA)
+
+maintainer-check-local: Makefile		\
+	maintainer-check-whitespaces		\
+	maintainer-check-wordwraps

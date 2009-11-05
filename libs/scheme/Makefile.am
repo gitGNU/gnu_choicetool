@@ -45,4 +45,9 @@ update-local: Makefile
 maintainer-check-whitespaces: Makefile $(EXTRA_DIST)
 	$(WHITESPACE_DETECT) $(EXTRA_DIST)
 
-maintainer-check-local: Makefile maintainer-check-whitespaces
+maintainer-check-wordwraps: Makefile $(EXTRA_DIST)
+	$(WORDWRAP_DETECT) --tab-size 8 --columns 80 $(EXTRA_DIST)
+
+maintainer-check-local: Makefile		\
+	maintainer-check-whitespaces		\
+	maintainer-check-wordwraps

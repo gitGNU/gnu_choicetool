@@ -48,12 +48,16 @@ sub version ()
     assert(defined($::PROGRAM_NAME));
     assert($::PROGRAM_NAME ne "");
 
-    print $::PROGRAM_NAME . " (" . $Choicetool::Autoconfig::PACKAGE_NAME . ") " . $Choicetool::Autoconfig::PACKAGE_VERSION . "\n";
+    print $::PROGRAM_NAME .
+        " (" . $Choicetool::Autoconfig::PACKAGE_NAME . ") " .
+        $Choicetool::Autoconfig::PACKAGE_VERSION . "\n";
     print "\n";
     print "Copyright (C) 2008, 2009 Francesco Salvestrini\n";
     print "\n";
-    print "This is free software.  You may redistribute copies of it under the terms of\n";
-    print "the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n";
+    print "This is free software.  You may redistribute copies of it under " .
+        "the terms of\n";
+    print "the GNU General Public License " .
+        "<http://www.gnu.org/licenses/gpl.html>.\n";
     print "There is NO WARRANTY, to the extent permitted by law.\n";
 }
 
