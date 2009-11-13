@@ -1,3 +1,5 @@
+# -*- perl -*-
+
 #
 # Window.pm
 #

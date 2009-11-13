@@ -1,3 +1,5 @@
+# -*- perl -*-
+
 #
 # ConfigBoxString.pm
 #
